@@ -8,4 +8,4 @@ Earn **FunkBucks** by completing Songs or Levels (Weeks), then go to Ophelia's s
 
 *Will you be lucky enough to obtain the rarest of pins?*
 
-You can download the mod by either getting it on [GameBanana](https://gamebanana.com/mods/655831) or by checking out the [Releases](https://github.com/Keoiki/BetterAlphabet/releases), scrolling down to Assets and picking the appropriate `.zip` file.
+You can download the mod by either getting it on [GameBanana](https://gamebanana.com/mods/655831) or by checking out the [Releases](https://github.com/Keoiki/PointlessPins/releases), scrolling down to Assets and picking the appropriate `.zip` file.
