@@ -1,0 +1,409 @@
+package pointlesspins;
+
+import pointlesspins.objects.PinSprite;
+import funkin.util.TouchUtil;
+import funkin.util.SwipeUtil;
+import funkin.util.ReflectUtil;
+import funkin.util.MathUtil;
+import funkin.ui.MusicBeatSubState;
+import funkin.mobile.ui.FunkinBackButton;
+import funkin.graphics.FunkinSprite;
+import funkin.graphics.FunkinCamera;
+import funkin.audio.FunkinSound;
+import flixel.util.FlxSort;
+import flixel.tweens.FlxTween;
+import flixel.tweens.FlxEase;
+import flixel.math.FlxRect;
+import flixel.math.FlxPoint;
+import flixel.input.mouse.FlxMouseEvent;
+import flixel.addons.display.FlxSliceSprite;
+import flixel.FlxObject;
+import balphabet.BAlphabet;
+
+class PinBoard extends MusicBeatSubState
+{   
+    var PINS_PER_ROW:Int = 16;
+    var PIN_X_START:Int = 140;
+    var PIN_X_RANGE:Int = 2200;
+    var PIN_X_DIFF:Float = PIN_X_RANGE / (PINS_PER_ROW - 1);
+    var PIN_Y_START:Int = 220;
+
+    var PINS_BY_RARITY:Array<Int> = [];
+    var PIN_RARITIES:Array<String> = [];
+
+    var pinsCreated:Bool = false;
+    var pinCount:Int = 0;
+    var pinRows:Int = 0;
+    var pinRowLengths:Array<Int> = [];
+
+    var pinMoveSound:FunkinSound;
+
+    var cursorX:Float = 0;
+    var cursorY:Float = 0;
+    var pinMidpoint:FlxPoint = null;
+
+    var subCamHUD:FunkinCamera;
+    var cameraFollowPoint:FlxObject;
+
+    var cursor:FunkinSprite;
+    var pins = [];
+    var pinNameBox:FunkinSprite;
+    var pinName:BAlphabet;
+    var pinDescription:BAlphabet;
+    var pinArtist:BAlphabet;
+    var pinUnlockCount:BAlphabet;
+
+    var unlockedPinsData;
+    var unlockedPins:Int = 0;
+    var unlockedPinsPerRarity:Array<Int> = [];
+
+    var hasUpdatedPinText:Bool = false;
+
+    var coolBackButton:FunkinBackButton;
+
+    override function new():Void
+    {
+        super();
+    }
+
+    override function create():Void
+    {
+        var pinJSON = PointlessPins.pinData;
+        PIN_RARITIES = ReflectUtil.getAnonymousFieldsOf(pinJSON);
+
+        var rarityByOrder = function(a, b) {
+            return FlxSort.byValues(-1, ReflectUtil.getAnonymousField(pinJSON, a).order, ReflectUtil.getAnonymousField(pinJSON, b).order);
+        }
+        PIN_RARITIES.sort(rarityByOrder);
+
+        var a:Int = 0;
+        for (tier in PIN_RARITIES)
+        {
+            PINS_BY_RARITY[a] = ReflectUtil.getAnonymousField(pinJSON, tier).pins;
+            a++;
+        }
+
+        subCamHUD = new FunkinCamera("pinsSubCamHUD");
+		FlxG.cameras.add(subCamHUD, false);
+        subCamHUD.bgColor = 0x007F7F7F;
+
+		cameraFollowPoint = new FlxObject(640, 360, 1, 1);
+        add(cameraFollowPoint);
+        camera.follow(cameraFollowPoint, null, 0.07);
+
+        var dzW:Float = camera.width;
+        var dzH:Float = 0;
+        camera.deadzone = FlxRect.get(camera.width / 4, (camera.height - dzH) / 2 - dzH * 0.25, dzW / 3, dzH);
+
+        pinMoveSound = new FunkinSound();
+        pinMoveSound.loadEmbedded(Paths.sound("unfav"));
+        pinMoveSound.volume = 0.5;
+
+        FlxG.sound.defaultSoundGroup.add(pinMoveSound);
+        FlxG.sound.list.add(pinMoveSound);
+
+        cursor = new FunkinSprite(60, 140).loadTexture("cursor");
+        add(cursor);
+
+        unlockedPinsData = PointlessPins.getObtainedPins();
+        // trace(unlockedPinsData);
+
+        var currentRow:Int = -1;
+        var categoryRow:Int = -1;
+        var categoryOffset:Int = 0;
+        var textOffset:Float = 80;
+        for (i in 0...PIN_RARITIES.length)
+        {
+            if (PINS_BY_RARITY[i].length == 0) continue;
+
+            pinRows = Math.ceil(PINS_BY_RARITY[i].length / PINS_PER_ROW);
+
+            for (j in 0...PINS_BY_RARITY[i].length)
+            {
+                if (j % PINS_PER_ROW == 0)
+                {
+                    currentRow++;
+                    categoryRow++;
+                }
+
+                var pinX:Float = PIN_X_START + (j % PINS_PER_ROW) * PIN_X_DIFF;
+                var pinY:Float = PIN_Y_START + currentRow * 150;
+                var pinColumn:Int = j % PINS_PER_ROW;
+
+                pinY += categoryOffset;
+
+                // Makes this look a bit cleaner some amount of lines down the... line.
+                var pinData = PINS_BY_RARITY[i][j];
+                var pin:PinSprite = new PinSprite(pinX, pinY);
+                pin.position = [pinColumn, currentRow];
+                pin.rarity = PIN_RARITIES[i];
+                var isPinUnlocked:Bool = unlockedPinsData.exists(pinData.id);
+                if (isPinUnlocked)
+                {
+                    unlockedPins++;
+                    unlockedPinsPerRarity[i]++;
+                    pin.unlockCount = unlockedPinsData.get(pinData.id);
+                }
+                pin.isUnlocked = isPinUnlocked;
+                pin.artist = pinData.artist;
+                pin.special = pinData.special ?? false;
+                pin.setupPin(pinData.id, pinData.name, pinData.description, pinData.scale);
+                add(pin);
+                pins.push(pin);
+
+                pinRowLengths[currentRow]++;
+                pinCount++;
+            }
+
+            var tc:String = ReflectUtil.getAnonymousField(pinJSON, PIN_RARITIES[i]).color;
+            var star:String = unlockedPinsPerRarity[i] == PINS_BY_RARITY[i].length ? "&#xE011; " : "";
+            var rarityText = new BAlphabet(PIN_X_START - 24, textOffset, "<b>" + star + "<c=" + tc + ">" + PIN_RARITIES[i] + "</c>  <s=0.5>(" + (unlockedPinsPerRarity[i] ?? 0) + "/" + PINS_BY_RARITY[i].length + ")</s></b>");
+            rarityText.setScale(0.8);
+            add(rarityText);
+
+            textOffset += (150 * (categoryRow + 1)) + 75;
+            categoryRow = -1;
+            categoryOffset += 75;
+        }
+        // trace(pinRowLengths);
+
+        pinRows = pinRowLengths.length;
+        pinsCreated = true;
+
+        pinNameBox = new FunkinSprite(140, 530);
+        pinNameBox.makeSolidColor(1000, 120, 0xFF000000);
+        pinNameBox.alpha = 0.75;
+        pinNameBox.screenCenter(0x01);
+        add(pinNameBox);
+
+        pinName = new BAlphabet(FlxG.width / 2, pinNameBox.y + 40, "");
+        pinName.setScale(0.55);
+        pinName.alignment = "center";
+        add(pinName);
+
+        pinDescription = new BAlphabet(FlxG.width / 2, pinNameBox.y + 65, "");
+        pinDescription.setScale(0.4);
+        pinDescription.alignment = "center";
+        add(pinDescription);
+
+        pinArtist = new BAlphabet(pinNameBox.x + pinNameBox.width - 10, pinNameBox.y + 95, "");
+        pinArtist.setScale(0.3);
+        pinArtist.alignment = "right";
+        add(pinArtist);
+
+        pinUnlockCount = new BAlphabet(pinNameBox.x + 10, pinNameBox.y + 95, "");
+        pinUnlockCount.setScale(0.3);
+        add(pinUnlockCount);
+
+        var menuUnlockedText = new BAlphabet(FlxG.width / 2, pinNameBox.y + pinNameBox.height + 20, "<b>Total Unlocked: " + unlockedPins + "/" + pinCount + "</b>");
+        menuUnlockedText.setScale(0.5);
+        menuUnlockedText.alignment = "center";
+        add(menuUnlockedText);
+
+        pinNameBox.cameras = [subCamHUD];
+        pinName.cameras = [subCamHUD];
+        pinDescription.cameras = [subCamHUD];
+        pinArtist.cameras = [subCamHUD];
+        pinUnlockCount.cameras = [subCamHUD];
+        menuUnlockedText.cameras = [subCamHUD];
+
+        var boardWidth:Float = pins[15].getGraphicMidpoint(pinMidpoint).x - pins[0].getGraphicMidpoint(pinMidpoint).x + 300;
+        var boardHeight:Float = pins[pins.length - 1].getGraphicMidpoint(pinMidpoint).y - pins[0].getGraphicMidpoint(pinMidpoint).y + 350;
+        var pinBoard:FlxSliceSprite = new FlxSliceSprite(Assets.getBitmapData("images/pinboard.png"), FlxRect.get(40, 40, 220, 220), boardWidth, boardHeight);
+        add(pinBoard);
+        pinBoard.x = pins[0].getGraphicMidpoint(pinMidpoint).x - 150;
+        pinBoard.y = pins[0].getGraphicMidpoint(pinMidpoint).y - 225;
+        pinBoard.zIndex = -1000;
+        
+        camera.minScrollX = pins[0].getGraphicMidpoint(pinMidpoint).x - 200;
+        camera.maxScrollX = pins[15].getGraphicMidpoint(pinMidpoint).x + 200;
+        camera.minScrollY = pins[0].getGraphicMidpoint(pinMidpoint).y - 250;
+        camera.maxScrollY = pins[pins.length - 1].getGraphicMidpoint(pinMidpoint).y + 300;
+
+        pinMidpoint = pins[0].getGraphicMidpoint(pinMidpoint);
+        cursor.x = pinMidpoint.x - cursor.width / 2;
+        cursor.y = pinMidpoint.y - cursor.height / 2;
+
+        FlxG.touches.swipeThreshold.set(100, 100);
+        coolBackButton = new FunkinBackButton(FlxG.width - 220, FlxG.height - 200, 0xFFFFFFFF, goBack, 1.0, true);
+        if (!FlxG.onMobile)
+        {
+            coolBackButton.visible = PointlessPins.isMouseActive;
+            FlxMouseEvent.add(coolBackButton, coolBackButton.playHoldAnim, coolBackButton.playConfirmAnim);
+        }
+        coolBackButton.zIndex = 100000;
+        add(coolBackButton);
+
+        coolBackButton.cameras = [subCamHUD];
+
+        refresh();
+
+        super.create();
+    }
+
+    public function update(elapsed:Float):Void
+    {
+        if (controls.BACK_P)
+        {
+            goBack();
+        }
+
+        handleControls(elapsed);
+        handleTouchControls();
+
+        coolBackButton.visible = FlxG.onMobile ? true : PointlessPins.isMouseActive;
+
+        // trace(FlxG.mouse.wheel);
+
+        super.update(elapsed);
+    }
+
+    function goBack():Void
+    {
+        close();
+    }
+
+    public function handleControls(elapsed:Float):Void
+    {
+        if (!pinsCreated) return;
+
+        var prevCurX:Int = cursorX;
+        var prevCurY:Int = cursorY;
+
+        if (controls.UI_LEFT_P ||
+            (FlxG.onMobile && SwipeUtil.swipeLeft) ||
+            (!FlxG.onMobile && FlxG.mouse.justMovedRight && FlxG.mouse.pressed))
+        {
+            cursorX--;
+        }
+        if (controls.UI_RIGHT_P ||
+            (FlxG.onMobile && SwipeUtil.swipeRight) ||
+            (!FlxG.onMobile && FlxG.mouse.justMovedLeft && FlxG.mouse.pressed))
+        {
+            cursorX++;
+        }
+        if (controls.UI_UP_P ||
+            (FlxG.onMobile && SwipeUtil.swipeUp) ||
+            (!FlxG.onMobile && FlxG.mouse.justMovedDown && FlxG.mouse.pressed) ||
+            (!FlxG.onMobile && FlxG.mouse.wheel >= 1))
+        {
+            cursorY--;
+        }
+        if (controls.UI_DOWN_P ||
+            (FlxG.onMobile && SwipeUtil.swipeDown) ||
+            (!FlxG.onMobile && FlxG.mouse.justMovedUp && FlxG.mouse.pressed) ||
+            (!FlxG.onMobile && FlxG.mouse.wheel <= -1))
+        {
+            cursorY++;
+        }
+        if (controls.ACCEPT)
+        {
+
+        }
+
+        if (cursorY < 0) cursorY = pinRows - 1;
+        if (cursorY > pinRows - 1) cursorY = 0;
+        if (cursorX < 0) cursorX = pinRowLengths[cursorY] - 1;
+        if (cursorX > pinRowLengths[cursorY] - 1) cursorX = prevCurY == cursorY ? 0 : (pinRowLengths[cursorY] - 1);
+
+        if (prevCurX != cursorX || prevCurY != cursorY)
+        {
+            pinMoveSound.play(true);
+            hasUpdatedPinText = false;
+        }
+
+        var availablePin = pins.filter(function(pin) {
+            return pin.position[0] == cursorX && pin.position[1] == cursorY;
+        })[0];
+
+        if (!hasUpdatedPinText)
+        {
+            pinDescription.alpha = 0;
+            pinArtist.alpha = 0;
+            pinUnlockCount.alpha = 0;
+            pinName.y = pinNameBox.y + 40;
+            if (!availablePin.isUnlocked)
+            {
+                if (pinName.text != 'Not unlocked yet!')
+                {
+                    pinName.text = 'Not unlocked yet!';
+                }
+            }
+            else
+            {
+                if (availablePin.description != null)
+                {
+                    pinDescription.text = availablePin.description;
+                    pinDescription.alpha = 1;
+                    pinName.y = pinNameBox.y + 25;
+                }
+                if (availablePin.artist != null)
+                {
+                    pinArtist.text = 'Created by: ${availablePin.artist}';
+                    pinArtist.alpha = 1;
+                }
+                pinName.text = availablePin.name;
+
+                if (!availablePin.special)
+                {
+                    pinUnlockCount.alpha = 1;
+                    pinUnlockCount.text = 'Unlocked ${availablePin.unlockCount} time${availablePin.unlockCount == 1 ? "" : "s"}';
+                }
+                else
+                {
+                    pinUnlockCount.alpha = 1;
+                    pinUnlockCount.text = 'One-Time Reward';
+                }
+                
+                availablePin?.rotationTween?.cancel();
+                availablePin.angle = 0;
+                var rotationAngle:Int = FlxG.random.bool(50) ? FlxG.random.int(-30, -21) : FlxG.random.int(21, 30);
+                availablePin.rotationTween = FlxTween.tween(availablePin, { angle: rotationAngle }, 0.75, { ease: FlxEase.backOut, type: 16 });
+            }
+            hasUpdatedPinText = true;
+        }
+
+        pinMidpoint = availablePin.getGraphicMidpoint(pinMidpoint);
+        var intendedCursorX:Float = pinMidpoint.x - cursor.width / 2;
+        var intendedCursorY:Float = pinMidpoint.y - cursor.height / 2;
+
+        cursor.x = MathUtil.smoothLerpPrecision(cursor.x, intendedCursorX, elapsed, 0.5);
+        cursor.y = MathUtil.smoothLerpPrecision(cursor.y, intendedCursorY, elapsed, 0.5);
+        cameraFollowPoint.setPosition(cursor.x, cursor.y + 75);
+    }
+
+    function handleTouchControls():Void
+    {
+        if (TouchUtil.pressAction())
+        {
+            for (i in 0...pins.length)
+            {
+                var pin = pins[i];
+
+                if (pin == null) continue;
+                if (!TouchUtil.overlaps(pin, camera)) continue;
+                if (TouchUtil.overlaps(coolBackButton, subCamHUD)) continue;
+                if (SwipeUtil.swipeAny) continue;
+
+                if (pin.position[0] == cursorX && pin.position[1] == cursorY)
+                {
+                    trace("Pin clicked/touched.");
+                }
+                else
+                {
+                    cursorX = pin.position[0];
+                    cursorY = pin.position[1];
+                    pinMoveSound.play(true);
+                    hasUpdatedPinText = false;
+                }
+                break;
+            }
+        }
+    }
+
+    override function destroy():Void
+    {
+        if (!FlxG.onMobile) FlxMouseEvent.remove(coolBackButton);
+        super.destroy();
+    }
+}

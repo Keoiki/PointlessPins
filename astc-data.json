@@ -1,0 +1,19 @@
+{
+    "input": "./images",
+    "output": "./astc-images",
+    "quality": "medium",
+    "blocksize": "8x8",
+    "colorprofile": "cl",
+    "custom": [
+        {
+            "asset": "images/shop/wall.png",
+            "blocksize": "12x12"
+        }
+    ],
+    "excludes": [
+        "images/shop/lamp/spritemap1.png",
+        "images/shop/ophelia/spritemap1.png",
+        "images/shop/lighting.png",
+        "images/pointlesspins/boxes/"
+    ]
+}

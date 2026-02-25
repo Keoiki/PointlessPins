@@ -1,0 +1,48 @@
+package pointlesspins;
+
+import funkin.util.ReflectUtil;
+import funkin.graphics.FunkinSprite;
+using StringTools;
+
+class Ophelia extends FunkinSprite
+{
+    var annoyance:Int = 0;
+    var animationsWithVariations:Array<String> = ["Idle", "Talk"];
+
+    override function new(x:Float, y:Float):Void
+    {
+        super(x, y, "shop/ophelia", {
+            applyStageMatrix: true
+        });
+        playAnimation("Idle", true);
+
+        animation.onFinish.add((name:String) ->
+        {
+            if (name.startsWith("GetTapped") || name.startsWith("Talk"))
+            {
+                playAnimation("Idle", true);
+            }
+        });
+    }
+
+    function playAnimation(name:String, looped:Bool = false, forced:Bool = false):Void
+    {
+        var anger:Int = PointlessPins.getOpheliaAnger();
+        if (animationsWithVariations.contains(name))
+        {
+            var nameToUse:String = name;
+
+            if (anger > 0 || annoyance > 50)
+            {
+                nameToUse += "Annoyed";
+            }
+
+            if (hasAnimation(nameToUse))
+            {
+                name = nameToUse;
+            }
+        }
+        animation.play(name, forced);
+        animation.curAnim.looped = looped;
+    }
+}

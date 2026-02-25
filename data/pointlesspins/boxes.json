@@ -1,0 +1,28 @@
+[
+    {
+        "id": "cardboard",
+        "name": "Cheap Cardboard Box",
+        "description": "An inexpensive cardboard box.\nContents are equally inexpensive.",
+        "revealTime": 26,
+        "chances": [
+            [ "Common", 900 ],
+            [ "Uncommon", 100 ]
+        ],
+        "cost": 10,
+        "order": 0
+    },
+    {
+        "id": "smallgiftbox",
+        "name": "<c=2BFF31>Small Giftbox</c>",
+        "description": "Oooh, I wonder what's inside!\nIt's a pin, yeah.",
+        "revealTime": 26,
+        "chances": [
+            [ "Common", 749 ],
+            [ "Uncommon", 200 ],
+            [ "Rare", 50 ],
+            [ "Mythic", 1 ]
+        ],
+        "cost": 25,
+        "order": 1
+    }
+]

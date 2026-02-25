@@ -1,0 +1,100 @@
+package pointlesspins;
+
+import pointlesspins.objects.PinSprite;
+import funkin.util.TouchUtil;
+import funkin.util.ReflectUtil;
+import funkin.ui.MusicBeatSubState;
+import funkin.graphics.FunkinSprite;
+import funkin.audio.FunkinSound;
+import flixel.util.FlxTimer;
+import flixel.tweens.FlxTween;
+import flixel.tweens.FlxEase;
+import balphabet.BAlphabet;
+
+class PinUnlockState extends MusicBeatSubState
+{
+    var pinData;
+    var canClose:Bool = false;
+    var closeTimer:Float = 0.0;
+
+    override function new(_pinData, _time:Float = 1.0):Void
+    {
+        this.pinData = _pinData;
+        this.closeTimer = _time;
+        super();
+    }
+
+    override function create():Void
+    {
+        if (pinData == null)
+        {
+            // trace("You forgot your Pin Data!");
+            throw "PinUnlockState was given no PinData!";
+            close();
+        }
+
+        var darkOverlay:FunkinSprite = new FunkinSprite(-64, -64).makeSolidColor(FlxG.width + 128, FlxG.height + 128, 0xFF000000);
+        darkOverlay.alpha = 0;
+        add(darkOverlay);
+
+        var pin:PinSprite = new PinSprite(FlxG.width / 2, 400);
+        pin.isUnlocked = true;
+        pin.setupPin(pinData.id, pinData.name, pinData.description, 0.2);
+        add(pin);
+
+        var unlockMsgText:String = "";
+        if (PointlessPins.setObtainedPin(pinData.id))
+        {
+            unlockMsgText = "<b>You got a <c=00FF00>NEW</c> pin!</b>";
+        }
+        else
+        {
+            var duplicatePinCount:Int = PointlessPins.getObtainedPins().get(pinData.id);
+            unlockMsgText = "<b>You got a <c=434253>duplicate (" + duplicatePinCount + ")</c> pin!</b>";
+        }
+
+        var unlockMessage:BAlphabet = new BAlphabet(FlxG.width / 2, 420, unlockMsgText);
+        unlockMessage.alignment = "center";
+        unlockMessage.setScale(0.55);
+        add(unlockMessage);
+
+        if (pinData.rarity == null)
+        {   
+            trace("Pin " + pinData.name + " has no rarity! Defaulting to Common.");
+            pinData.rarity = "Common";
+        }
+        var rarityColor:String = ReflectUtil.getAnonymousField(PointlessPins.pinData, pinData.rarity).color;
+        var unlockedPinName:BAlphabet = new BAlphabet(FlxG.width / 2, 480, "<b><s=0.75><c=" + rarityColor + ">" + pinData.rarity + "</c></s>\n" + pinData.name + "</b>");
+        unlockedPinName.alignment = "center";
+        unlockedPinName.setScale(0.75);
+        add(unlockedPinName);
+
+        if (pinData.description != "")
+        {
+            var unlockedPinDescription:BAlphabet = new BAlphabet(FlxG.width / 2, unlockedPinName.y + 150, pinData.description);
+            unlockedPinDescription.alignment = "center";
+            unlockedPinDescription.setScale(0.5);
+            add(unlockedPinDescription);
+        }
+
+        FunkinSound.playOnce(Paths.sound("tickleFight"));
+        FlxTween.tween(darkOverlay, { alpha: 0.85 }, 0.5, { ease: FlxEase.cubeOut });
+        FlxTween.tween(pin, { y: pin.y - 150 }, 0.8, { ease: FlxEase.quintOut });
+        FlxTween.tween(pin.scale, { x: 1, y: 1 }, 1.0, { ease: FlxEase.backOut });
+        new FlxTimer().start(closeTimer, function(_:FlxTimer) {
+            canClose = true;
+        });
+
+        super.create();
+    }
+
+    override function update():Void
+    {
+        if (canClose && ((controls.ACCEPT_P || controls.BACK_P) || TouchUtil.pressAction()))
+        {
+            close();
+        }
+
+        super.update();
+    }
+}

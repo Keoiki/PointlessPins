@@ -1,0 +1,86 @@
+{
+    "Common": {
+        "order": 0,
+        "color": "FFFFFF",
+        "pins":
+        [
+            { "id": "boyfriend", "name": "Boyfriend", "scale": 0.47 },
+            { "id": "girlfriend", "name": "Girlfriend", "scale": 0.45 },
+            { "id": "daddydearest", "name": "Daddy Dearest", "scale": 0.47 },
+            { "id": "spookykids", "name": "Skid 'n Pump" },
+            { "id": "monster", "name": "Monster" },
+            { "id": "pico", "name": "Pico" },
+            { "id": "mommymearest", "name": "Mommy Mearest" },
+            { "id": "senpai", "name": "Senpai" },
+            { "id": "spirit", "name": "Spirit" },
+            { "id": "tankmancaptain", "name": "Sergeant John Captain" },
+            { "id": "darnell", "name": "Darnell", "scale": 0.47 },
+            { "id": "nene", "name": "Nene", "scale": 0.46 },
+            { "id": "otis", "name": "Otis", "scale": 0.47 },
+            { "id": "henchman", "name": "Henchman" },
+            { "id": "steve", "name": "Steve", "scale": 0.47 },
+            { "id": "boombox", "name": "Speaker" },
+            { "id": "microphone", "name": "Microphone" },
+            { "id": "abot", "name": "A-Bot" },
+            { "id": "spraycan", "name": "Spraycan" },
+            { "id": "knife", "name": "Knife" },
+            { "id": "bulletcasing", "name": "Bullet Casing" },
+            { "id": "bundleofcash", "name": "Bundle of Cash" }
+        ]
+    },
+    "Uncommon": {
+        "order": 1,
+        "color": "2BFF31",
+        "pins":
+        [
+            { "id": "boyfriend-christmas", "name": "Boyfriend (Christmas)" },
+            { "id": "girlfriend-christmas", "name": "Girlfriend (Christmas)", "scale": 0.48 },
+            { "id": "monster-christmas", "name": "Monster (Christmas)", "scale": 0.47 },
+            { "id": "pico-christmas", "name": "Pico (Christmas)" },
+            { "id": "nene-christmas", "name": "Nene (Christmas)" },
+            { "id": "santa", "name": "Mall Santa" },
+            { "id": "pico-picoschool", "name": "Pico (Original)", "description": "from \"Pico's School\"", "scale": 0.47 }
+        ]
+    },
+    "Rare": {
+        "order": 2,
+        "color": "2A4DFF",
+        "pins":
+        [
+            { "id": "nessie-funkinnews", "name": "Nessie", "description": "Mascot for \"Funkin News\"" },
+            { "id": "ophelia", "name": "Ophelia", "description": "You'll stop annoying her now, right?" , "special": true}
+        ]
+    },
+    "Epic": {
+        "order": 3,
+        "color": "A426FF",
+        "pins": [ ]
+    },
+    "Legendary": {
+        "order": 4,
+        "color": "FFB51C",
+        "pins": [ ]
+    },
+    "Mythic": {
+        "order": 5,
+        "color": "FF57F7",
+        "pins":
+        [
+            { "id": "weekend1kid", "name": "Leashed Kid" },
+            { "id": "true", "name": "True...", "description": "The Funkin' Contributors told me to add this one." }
+        ]
+    },
+    "Divine": {
+        "order": 6,
+        "color": "66FFFF",
+        "pins": [ ]
+    },
+    "Special": {
+        "order": 7,
+        "color": "FF4C50",
+        "pins":
+        [
+            { "id": "spaghetti", "name": "Spaghetti", "description": "Obtained by completing \"SPAGHETTI\"", "special": true }
+        ]
+    }
+}

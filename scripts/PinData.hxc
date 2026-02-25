@@ -1,0 +1,530 @@
+package pointlesspins;
+
+import pointlesspins.objects.PinSprite;
+import funkin.util.VersionUtil;
+import funkin.util.TouchUtil;
+import funkin.util.SerializerUtil;
+import funkin.util.ReflectUtil;
+import funkin.ui.mainmenu.MainMenuState;
+import funkin.save.Save;
+import funkin.play.ResultState;
+import funkin.play.PlayStatePlaylist;
+import funkin.play.PlayState;
+import funkin.modding.module.ModuleHandler;
+import funkin.modding.module.Module;
+import funkin.modding.base.ScriptedFlxSpriteGroup;
+import funkin.modding.ModStore;
+import funkin.modding.PolymodHandler;
+import funkin.graphics.FunkinSprite;
+import funkin.data.song.SongRegistry;
+import funkin.audio.FunkinSound;
+import funkin.Highscore;
+import flixel.util.FlxTimer;
+import flixel.util.FlxSort;
+import flixel.tweens.FlxTween;
+import flixel.tweens.FlxEase;
+import haxe.ds.StringMap;
+import balphabet.BAlphabet;
+using StringTools;
+import DateTools;
+import Date;
+
+/**
+ * Use trace for debugging/minor errors, only use throw for important errors.
+ */
+
+typedef PinData = {
+    id:String, // The ID of a pin.
+    name:String, // The visible name of a pin.
+    description:String, // The description of a pin. (optional)
+    scale:Float, // The scale of a pin in the Pins Menu. (optional, default: 0.5)
+    ?special:Bool // Whether or not a pin can only be unlocked once. Excludes them from Mystery Boxes (optional, default: false)
+}
+
+typedef BoxData = {
+    id:String,
+    name:String,
+    description:String,
+    revealTime:Int, // Frames until the pin is shown.
+    chances:Array<Array<String, Int>>, // The numerical chance for each rarity is its WEIGHT. Double-check chances in the Box Menu to make sure they're correct.
+    cost:Int,
+    order:Float,
+    ?special:Bool // Is the box only obtainable by special means, and not purchasable? (optional, default: false)
+}
+
+class PointlessPins extends Module
+{
+    var menuPin;
+    var menuPin2;
+
+    static final penalties:Array<Float> = [1.0, 0.66, 0.33, 0.0, -0.5, -1];
+    static final opheliaAngerCooldown:Int = 1000 * 60 * 60 * 4;
+    static var save;
+
+	public static var pinData;
+    public static var boxData;
+    public static var isMouseActive:Bool = false;
+
+    function new():Void
+    {
+        super('PointlessPins', -20000000000);
+
+        // FlxG.signals.postGameStart.addOnce(versionCheck);
+    }
+
+    function onCreate(event:ScriptEvent):Void
+    {
+        PointlessPins.save = Save.instance.getModOptions("keoiki.funkbucks");
+
+        loadPinData();
+        versionCheck();
+
+        super.onCreate(event);
+    }
+
+    function versionCheck():Void
+    {
+        var modVersion:String = null;
+        try
+        {
+            modVersion = PolymodHandler.modFileSystem.getMetadata("PointlessPins").modVersion.version.join(".");
+        }
+        catch (err:Dynamic)
+        {
+            trace(err);
+            ModStore.register("pinsIsOutdated", false);
+            throw "Local mod version could not be found!\nDid you change the folder name to something other than \"PointlessPins\"?";
+            return;
+        }
+        var onlineVersion:String = "1.0.0";
+        ModStore.register("pinsIsOutdated", VersionUtil.validateVersionStr(onlineVersion, ">" + modVersion));
+        ModStore.register("pinsOnlineVersion", onlineVersion);
+    }
+
+    function loadPinData():Void
+    {
+        PointlessPins.pinData = SerializerUtil.fromJSON(Assets.getText("data/pointlesspins/pins.json"));
+
+        PointlessPins.boxData = SerializerUtil.fromJSON(Assets.getText("data/pointlesspins/boxes.json"));
+        var orderByOrder = function(a, b)
+        {
+            return FlxSort.byValues(-1, PointlessPins.boxData[a].order, PointlessPins.boxData[b].order);
+        }
+        PointlessPins.boxData.sort(orderByOrder);
+    }
+
+    public static function getPinByID(pinID:String):Void
+    {
+        for (rarity in ReflectUtil.getAnonymousFieldsOf(PointlessPins.pinData))
+        {
+            for (pin in ReflectUtil.getAnonymousField(PointlessPins.pinData, rarity).pins)
+            {
+                if (pin.id == pinID)
+                {
+                    pin.rarity = rarity;
+                    return pin;
+                }
+            }
+        }
+        return null;
+    }
+
+    public static function addFunkCoins(amount:Int, addToLifetime:Bool = true):Void
+    {
+        setFunkCoins(amount, addToLifetime);
+    }
+
+    public static function setFunkCoins(amount:Int, addToLifetime:Bool = true):Void
+    {
+        PointlessPins.save.funkBucks = getFunkCoins() + Std.int(amount);
+        if (addToLifetime)
+        {
+            // Do not decrease the lifetime amount.
+            PointlessPins.save.funkBucksLifetime = getFunkCoinsLifeTime() + Math.max(0, Std.int(amount));
+        }
+        PointlessPins.saveTheData();
+        trace("Current FunkBucks: " + PointlessPins.getFunkCoins());
+        trace("Lifetime FunkBucks: " + PointlessPins.getFunkCoinsLifeTime());
+    }
+
+    public static function getFunkCoins():Int
+    {
+        return PointlessPins.save.funkBucks ?? 0;
+    }
+
+    public static function getFunkCoinsLifeTime():Int
+    {
+        return PointlessPins.save.funkBucksLifetime ?? 0;
+    }
+
+    public static function addOpenedBox(boxID:String)
+    {
+        var boxesMap = getOpenedBoxCounts();
+        boxesMap.set(boxID, (boxesMap.get(boxID) ?? 0) + 1);
+        PointlessPins.save.openedBoxes = boxesMap;
+        PointlessPins.saveTheData();
+    }
+
+    public static function getOpenedBoxCounts():StringMap<String, Int>
+    {
+        return PointlessPins.save.openedBoxes ?? new StringMap();
+    }
+
+    public static function getOpenedBoxCount(boxID:String):Int
+    {
+        return getOpenedBoxCounts().get(boxID) ?? 0;
+    }
+
+    public static function setObtainedPin(pinID:String):Bool
+    {
+        if (getPinByID(pinID) == null)
+        {
+            throw 'Could not find pin $pinID! Was the name misspelled?';
+            return false;
+        }
+        var isNewPin:Bool = !hasObtainedPin(pinID);
+        var isPinSpecial:Bool = getPinByID(pinID)?.special ?? false;
+        if (!isNewPin && isPinSpecial)
+        {
+            trace("Pin is special and has already been unlocked!");
+            return false;
+        }
+        var pinsMap = getObtainedPins();
+        pinsMap.set(pinID, isNewPin ? 1 : pinsMap.get(pinID) + 1);
+        PointlessPins.save.obtainedPins = pinsMap;
+        PointlessPins.saveTheData();
+        return isNewPin;
+    }
+
+    public static function hasObtainedPin(pinID:String):Bool
+    {
+        return getObtainedPins().exists(pinID) ? getObtainedPins().get(pinID) > 0 : false;
+    }
+
+    public static function getObtainedPins():StringMap<String, Int>
+    {
+        return PointlessPins.save.obtainedPins ?? new StringMap();
+    }
+
+    public static function getObtainedPin(pinID:String):Int
+    {
+        return getObtainedPins().get(pinID) ?? 0;
+    }
+
+    public static function setPrevSongs(songs:Array<String>):Void
+    {
+        PointlessPins.save.previousSongs = songs;
+        PointlessPins.saveTheData();
+    }
+
+    public static function getPrevSongs():Array<String>
+    {
+        return PointlessPins.save.previousSongs ?? [];
+    }
+
+    public static function addOpheliaAnger(anger:Int, addToTotal:Bool = true):Void
+    {
+        PointlessPins.save.opheliaAnger += anger;
+        if (addToTotal)
+        {
+            PointlessPins.save.opheliaAngerTotal += anger;
+        }
+        PointlessPins.saveTheData();
+    }
+
+    public static function getOpheliaAnger():Int
+    {
+        var prevAngerTimestamp:Float = PointlessPins.save.opheliaAngerTime ?? -1;
+        if (prevAngerTimestamp == -1)
+        {
+            // trace("No stored anger timestamp!");
+            return 0;
+        }
+        var currentAnger:Int = PointlessPins.save.opheliaAnger ?? 0;
+        if (currentAnger == 0)
+        {
+            // trace("No stored anger!");
+            return 0;
+        }
+        var currentTimestamp:Float = Date.now().getTime();
+        var angerGone:Int = Math.floor((Math.floor(currentTimestamp - prevAngerTimestamp)) / opheliaAngerCooldown);
+        // trace(currentTimestamp, prevAngerTimestamp);
+        // trace(PointlessPins.save.opheliaAnger);
+        // trace(Math.floor(currentTimestamp) - Math.floor(prevAngerTimestamp));
+        // trace("Anger gone: " + angerGone);
+        PointlessPins.save.opheliaAnger = Math.max(0, currentAnger - angerGone);
+        if (PointlessPins.save.opheliaAnger == 0)
+        {
+            PointlessPins.save.opheliaAngerTime = -1;
+        }
+        else
+        {
+            PointlessPins.save.opheliaAngerTime = prevAngerTimestamp + angerGone * opheliaAngerCooldown;
+        }
+        PointlessPins.saveTheData();
+        return PointlessPins.save.opheliaAnger;
+    }
+
+    public static function getOpheliaAngerTotal():Int
+    {
+        return PointlessPins.save.opheliaAngerTotal ?? 0;
+    }
+
+    /**
+     * DAILIES
+     * Each day, 3 songs are randomly picked that will have a +50% FunkBuck modifier on them.
+     * The +50% modifier will override any negative modifiers, however the song will still be added to the list of previous songs.
+     * The following are not eligible for daily bonuses:
+     * - modded songs,
+     * - modded variations to base game songs, and
+     * - any and all levels.
+     */
+    public static function setDailies(dailies:Array<String>):Void
+    {
+        PointlessPins.save.dailies = dailies;
+        PointlessPins.saveTheData();
+    }
+
+    public static function getDailies():Array<String>
+    {
+        var dailyDateNum:Int = PointlessPins.save.dailyDate ?? -1;
+        var date:Date = Date.now();
+        var currentDate:Int = date.getDate();
+        if (dailyDateNum != currentDate)
+        {
+            var baseGameSongIDs:Array<String> = SongRegistry.instance.listBaseGameEntryIds();
+            baseGameSongIDs.remove("test"); // Test isn't easily available. (Does it even work properly? No.)
+            baseGameSongIDs.remove("tutorial"); // Boring.
+            baseGameSongIDs.remove("spaghetti"); // I'm removing this out of spite for how many DAMN TIMES it has appeared. No game, I do NOT want SPAGHETTI (feat. j-hope of BTS) (Clean ver.) 4 days IN A ROW!
+            var dailies:Array<String> = [];
+            for (i in 0...3)
+            {
+                var songID:String = baseGameSongIDs[FlxG.random.int(0, baseGameSongIDs.length - 1)];
+                var songVariations:Array<String> = SongRegistry.instance.fetchEntry(songID).variations;
+                // Remove modded character remix variations, though modded songs for the default songs on default variations will still pass through.
+                // (Like a fanmade Blazin' Erect for example, in case the sentence above didn't make sense.)
+                songVariations = songVariations.filter(function(variationID:String):Bool
+                {
+                    return Constants.DEFAULT_VARIATION_LIST.contains(variationID);
+                });
+                dailies.push(songID + "-" + songVariations[FlxG.random.int(0, songVariations.length - 1)]);
+                // Only one variation per song, thanks!
+                baseGameSongIDs.remove(songID);
+            }
+            PointlessPins.save.dailyDate = currentDate;
+            PointlessPins.setDailies(dailies);
+            return dailies;
+        }
+        else
+        {
+            // The default empty array should never get returned, but I'll keep it here just in case.
+            return PointlessPins.save.dailies ?? [];
+        }
+    }
+
+    public static function saveTheData():Void
+    {
+        Save.instance.setModOptions("keoiki.funkbucks", save);
+    }
+
+    function onUpdate(event:UpdateScriptEvent):Void
+    {
+        super.onUpdate(event);
+
+        if (!FlxG.onMobile)
+        {
+            if (FlxG.keys.pressed.ANY)
+            {
+                PointlessPins.isMouseActive = false;
+            }
+            else if (Math.abs(FlxG.mouse.deltaViewX) > 24 || Math.abs(FlxG.mouse.deltaViewY) > 24)
+            {
+                PointlessPins.isMouseActive = true;
+            }
+        }
+        else
+        {
+            PointlessPins.isMouseActive = true;
+        }
+
+        if (FlxG.state is MainMenuState && FlxG.state.subState == null)
+        {
+            if (FlxG.keys.justPressed.P || TouchUtil.pressAction(menuPin))
+            {
+                FlxG.switchState(new Shop());
+            }
+
+            if (FlxG.keys.justPressed.J)
+            {
+                trace(getDailies());
+            }
+
+            if (FlxG.keys.justPressed.T)
+            {
+                trace(getPrevSongs());
+            }
+        }
+    }
+
+    function onSongStart(event)
+    {
+        // trace(FlxG.sound.music.length);
+        // trace(Math.ceil((6000 * 500) / (1020000 * 0.01) / 4 * 1.0 * 1.2 * 1.3));
+        // trace(Math.ceil((Highscore.tallies.totalNotes * 500) / (FlxG.sound.music.length / 100) / 4 * 1.0 * 1.2 * 1.3));
+    }
+
+    override function onStateChangeEnd(event:StateChangeScriptEvent):Void
+    {
+        if (event.targetState is MainMenuState)
+        {
+            menuPin = new PinSprite(100, 100);
+            menuPin.isUnlocked = true;
+            menuPin.setupPin("funkbuck", "", "", 0.5);
+            menuPin.alpha = 1;
+            menuPin.scrollFactor.set(0, 0);
+            event.targetState.add(menuPin);
+
+            if (!FlxG.onMobile)
+            {
+                var keycap01 = new LetterKeyCap(115, 115, "P");
+                event.targetState.add(keycap01);
+            }
+        }
+
+        super.onStateChangeEnd(event);
+    }
+
+    override function onSubStateOpenEnd(event:SubStateScriptEvent):Void
+    {
+        /**
+         * Change this later to be on song end instead?
+         * So that mods that don't use the default results can still give FunkBucks on song/week completions.
+         */
+        if (event.targetState is ResultState)
+        {
+            if (PlayState.instance == null) return;
+
+            // :whattheshit:
+            if (PlayState.instance.isPlaytestResults) return;
+            
+            // Effectively 40 coins per 100k score. (10 per 25k)
+            var bucksToAward:Float = (PlayStatePlaylist.isStoryMode ? PlayStatePlaylist.campaignScore : PlayState.instance.songScore) / 2500;
+            // +50% for All Sicks, the great get richer, yikes.
+            if (Highscore.tallies.totalNotes == Highscore.tallies.sick) bucksToAward *= 1.5;
+
+            // No playing the same songs or weeks multiple times in a row!
+            var previousSongs:Array<String> = getPrevSongs();
+            var currentDailies:Array<String> = getDailies();
+            var currentSongOrWeek:String = PlayStatePlaylist.isStoryMode ? PlayStatePlaylist.campaignId :
+                    Std.string(PlayState.instance.currentChart.song.id + "-" + PlayState.instance.currentVariation);
+            var repeatPenalty:Float = PointlessPins.penalties[previousSongs.filter(entry -> entry == currentSongOrWeek).length];
+
+            // Sorry Endless Mode...
+            // NVM Endless Mode players stay winning!
+            if (ModuleHandler.getModule("EndlessMode") != null && EndlessStatus.isEndless)
+            {
+                bucksToAward *= 0.25;
+                trace("Endless Mode! Cut your earnings in 4, ha!");
+            }
+            else if (currentDailies.contains(currentSongOrWeek))
+            {
+                bucksToAward *= 1.5;
+                currentDailies.remove(currentSongOrWeek);
+                setDailies(currentDailies);
+                trace("Daily Bonus +50%! Remaining dailies: " + currentDailies);
+            }
+            else
+            {
+                bucksToAward *= repeatPenalty;
+                trace("Repeat penalty: " + repeatPenalty * 100 + "%");
+            }
+
+            if (ModuleHandler.getModule("EndlessMode") != null && EndlessStatus.isEndless && EndlessStatus.currentLoop < 2)
+            {
+                trace("Thought you could easily clear your penalties by giving up immediately in Endless Mode? Think again!");
+            }
+            else
+            {
+                previousSongs.unshift(currentSongOrWeek);
+                while (previousSongs.length > 5)
+                {
+                    // Make sure we're working with a 5 long array at most.
+                    previousSongs.pop();
+                }
+                setPrevSongs(previousSongs);
+            }
+            
+            bucksToAward = Math.ceil(bucksToAward);
+            addFunkCoins(bucksToAward, true);
+
+            trace(currentSongOrWeek, bucksToAward, previousSongs);
+
+            var funkBucksText = new BAlphabet(FlxG.width - 100, 20, '<b>${bucksToAward > 0 ? "+" : ""}$bucksToAward &#xE000;</b>');
+            funkBucksText.setScale(0.65);
+            funkBucksText.alignment = "right";
+            funkBucksText.alpha = 0;
+            funkBucksText.zIndex = 5000;
+            event.targetState.add(funkBucksText);
+            event.targetState.refresh();
+
+            new FlxTimer().start(103 / 24, _ -> {
+                if (funkBucksText != null && FlxG.state.subState is ResultState)
+                {
+                    funkBucksText.alpha = 1;
+                    FlxTween.tween(funkBucksText, { x: funkBucksText.x + 15 }, 0.75, { ease: FlxEase.backOut, type: 16 });
+                    FunkinSound.playOnce(Paths.sound(bucksToAward >= 0 ? "fav" : "unfav"), 1.5);
+                }
+            });
+
+            checkForSpecials(currentSongOrWeek);
+        }
+
+        super.onSubStateOpenEnd(event);
+    }
+
+    function checkForSpecials(completionID:String):Void
+    {
+        if (ModuleHandler.getModule("EndlessMode") != null && EndlessStatus.isEndless) return;
+
+        var wantedPinID:Null<String> = null;
+        switch (completionID)
+        {
+            case "sserafim", "spaghetti-default": wantedPinID = "spaghetti";
+            default:
+        }
+        if (wantedPinID != null) setObtainedPin(wantedPinID);
+    }
+}
+
+class LetterKeyCap extends ScriptedFlxSpriteGroup
+{
+    public var keycap:FunkinSprite;
+    public var letter:BAlphabet;
+
+    public function new(x:Float, y:Float, character:String, ?isUI:Bool = true):Void
+    {
+        super(x, y);
+
+        keycap = new FunkinSprite(0, 0).loadTexture("keycap");
+        keycap.scale.set(0.75, 0.75);
+        keycap.zIndex = this.zIndex;
+        this.add(keycap);
+
+        letter = new BAlphabet(keycap.width / 2, 21, character);
+        letter.alignment = "center";
+        letter.setScale(0.6);
+        letter.zIndex = this.zIndex + 1;
+        this.add(letter);
+
+        if (isUI) this.scrollFactor.set(0, 0);
+
+        if (FlxG.onMobile) this.visible = false;
+    }
+
+    override function update(elapsed:Float):Void
+    {
+        this.visible = !PointlessPins.isMouseActive;
+
+        super.update(elapsed);
+    }
+}

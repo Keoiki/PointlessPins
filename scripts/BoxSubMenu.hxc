@@ -1,0 +1,316 @@
+package pointlesspins;
+
+import pointlesspins.objects.BoxSprite;
+import funkin.util.TouchUtil;
+import funkin.util.ReflectUtil;
+import funkin.ui.MusicBeatSubState;
+import funkin.mobile.ui.FunkinBackButton;
+import funkin.graphics.FunkinSprite;
+import flixel.util.FlxTimer;
+import flixel.tweens.FlxTween;
+import flixel.tweens.FlxEase;
+import flixel.math.FlxMath;
+import flixel.input.mouse.FlxMouseEvent;
+import flixel.FlxObject;
+import balphabet.BAlphabet;
+
+class BoxSubMenu extends MusicBeatSubState
+{
+    // Important
+    var STATE:String = "CHOOSING";
+
+    var darkOverlay:FunkinSprite;
+    var box:BoxSprite;
+    var arrowLeft:FunkinSprite;
+    var arrowRight:FunkinSprite;
+
+    // Text
+    var boxName:BAlphabet;
+    var boxDescription:BAlphabet;
+    var boxPrice:BAlphabet;
+    var boxOdds:BAlphabet;
+    var boxPurchaseLable:BAlphabet;
+    var boxPurchaseCount:BAlphabet;
+
+    var coolBackButton:FunkinBackButton;
+
+    var leftArrowHitbox:FlxObject;
+    var rightArrowHitbox:FlxObject;
+    var boxHitbox:FlxObject;
+
+    override function create():Void
+    {
+        darkOverlay = new FunkinSprite(-64, -64).makeSolidColor(FlxG.width + 128, FlxG.height + 128, 0xFF000000);
+        darkOverlay.alpha = 0;
+        add(darkOverlay);
+
+        boxName = new BAlphabet(FlxG.width / 2, 510, "");
+        boxName.alignment = "center";
+        boxName.setScale(0.7);
+        add(boxName);
+
+        boxPrice = new BAlphabet(FlxG.width / 2, boxName.y + 60, "");
+        boxPrice.alignment = "center";
+        boxPrice.setScale(0.5);
+        add(boxPrice);
+
+        boxDescription = new BAlphabet(30, boxPrice.y, "");
+        boxDescription.setScale(0.4);
+        add(boxDescription);
+
+        boxOdds = new BAlphabet(FlxG.width - 30, boxPrice.y, "");
+        boxOdds.alignment = "right";
+        boxOdds.setScale(0.3);
+        add(boxOdds);
+
+        boxPurchaseLable = new BAlphabet(30, 450, "");
+        boxPurchaseLable.setScale(0.4);
+        add(boxPurchaseLable);
+
+        boxPurchaseCount = new BAlphabet(FlxG.width / 2, FlxG.height - 45, "");
+        boxPurchaseCount.alignment = "center";
+        boxPurchaseCount.setScale(0.3);
+        boxPurchaseCount.alpha = 0.5;
+        add(boxPurchaseCount);
+
+        box = new BoxSprite(FlxG.width / 2, 490);
+        add(box);
+        
+        arrowLeft = new FunkinSprite(FlxG.width / 2 - 250, 315).loadTexture("shop/boxarrow");
+        arrowLeft.flipX = true;
+        add(arrowLeft);
+
+        arrowRight = new FunkinSprite(FlxG.width / 2 + 250, 315).loadTexture("shop/boxarrow");
+        arrowRight.x -= arrowRight.width;
+        add(arrowRight);
+
+        leftArrowHitbox = new FlxObject(arrowLeft.x - arrowLeft.width, arrowLeft.y - arrowLeft.height, arrowLeft.width * 3, arrowLeft.height * 3);
+        add(leftArrowHitbox);
+
+        rightArrowHitbox = new FlxObject(arrowRight.x - arrowRight.width, arrowRight.y - arrowRight.height, arrowRight.width * 3, arrowRight.height * 3);
+        add(rightArrowHitbox);
+
+        boxHitbox = new FlxObject(leftArrowHitbox.x + leftArrowHitbox.width, leftArrowHitbox.y, rightArrowHitbox.x - leftArrowHitbox.x - leftArrowHitbox.width, leftArrowHitbox.height);
+        add(boxHitbox);
+
+        coolBackButton = new FunkinBackButton(FlxG.width - 220, FlxG.height / 2, 0xFFFFFFFF, goBack, 1.0, true);
+        coolBackButton.y -= coolBackButton.height / 2;
+        if (!FlxG.onMobile)
+        {
+            coolBackButton.visible = PointlessPins.isMouseActive;
+            FlxMouseEvent.add(coolBackButton, coolBackButton.playHoldAnim, coolBackButton.playConfirmAnim);
+        }
+        add(coolBackButton);
+
+        updateBoxInfoText();
+        updateOpenedCount();
+        updatePurchaseLable();
+
+        persistentUpdate = true;
+
+        super.create();
+    }
+
+    var prevMouseActive:Bool = PointlessPins.isMouseActive;
+    public function update(elapsed:Float):Void
+    {
+        if (controls.BACK_P)
+        {
+            goBack();
+        }
+
+        var isMouseTooFast:Bool = FlxG.onMobile ? false : Math.abs(FlxG.mouse.deltaViewX) > 2 || Math.abs(FlxG.mouse.deltaViewY) > 2;
+
+        if (controls.UI_LEFT_P || (TouchUtil.pressAction(leftArrowHitbox, camera) && !isMouseTooFast))
+        {
+            changeSelection(-1);
+        }
+
+        if (controls.UI_RIGHT_P || (TouchUtil.pressAction(rightArrowHitbox, camera) && !isMouseTooFast))
+        {
+            changeSelection(1);
+        }
+
+        if (controls.ACCEPT_P || (TouchUtil.pressAction(boxHitbox, camera) && !isMouseTooFast))
+        {
+            pressedAccept();
+        }
+
+        coolBackButton.visible = FlxG.onMobile ? true : PointlessPins.isMouseActive;
+
+        if (prevMouseActive != PointlessPins.isMouseActive)
+        {
+            updatePurchaseLable();
+        }
+        prevMouseActive = PointlessPins.isMouseActive;
+
+        super.update(elapsed);
+    }
+
+    function goBack():Void
+    {
+        switch (STATE)
+        {
+            case "CHOOSING":
+                close();
+            case "CONFIRMING":
+                STATE = "CHOOSING";
+                updatePurchaseLable();
+            default:
+        }
+    }
+
+    function pressedAccept():Void
+    {
+        switch (STATE)
+        {
+            case "CHOOSING":
+                if (checkIfPlayerIsRichEnough())
+                {
+                    STATE = "CONFIRMING";
+                    updatePurchaseLable();
+                }
+            case "CONFIRMING":
+                STATE = "OPENING";
+                openBox();
+            default:
+        }
+    }
+
+    function changeSelection(change:Int = 0):Void
+    {
+        if (STATE != "CHOOSING") return;
+
+        if (change > 0)
+        {
+			FlxTween.completeTweensOf(arrowRight);
+			FlxTween.completeTweensOf(arrowRight.scale);
+			FlxTween.tween(arrowRight, { x: arrowRight.x + 30 }, 0.4, { ease: FlxEase.backOut, type: 16 });
+			FlxTween.tween(arrowRight.scale, { y: 0.5 }, 0.4, { ease: FlxEase.backOut, type: 16 });
+        }
+        else if (change < 0)
+        {
+			FlxTween.completeTweensOf(arrowLeft);
+			FlxTween.completeTweensOf(arrowLeft.scale);
+			FlxTween.tween(arrowLeft, { x: arrowLeft.x - 30 }, 0.4, { ease: FlxEase.backOut, type: 16 });
+			FlxTween.tween(arrowLeft.scale, { y: 0.5 }, 0.4, { ease: FlxEase.backOut, type: 16 });
+        }
+
+        STATE = "COOLDOWN";
+        new FlxTimer().start(0.25, function(_:FlxTimer) {
+            STATE = "CHOOSING";
+        });
+
+        box.updateBoxInfo(change);
+        updateBoxInfoText();
+        updateOpenedCount();
+    }
+
+    function updatePurchaseLable():Void
+    {
+        switch (STATE)
+        {
+            case "CHOOSING", "COOLDOWN":
+                boxPurchaseLable.text = PointlessPins.isMouseActive ? "<b><c=00FFFF>TAP</c> the box to purchase.</b>" : "<b>Press <c=00FFFF>ACCEPT</c> to purchase.</b>";
+            case "CONFIRMING":
+                boxPurchaseLable.text = PointlessPins.isMouseActive ? "<b><c=00FFFF>TAP</c> the box again to confirm.</b>" : "<b>Press <c=00FFFF>ACCEPT</c> again to confirm.</b>";
+        }
+    }
+
+    function updateOpenedCount():Void
+    {
+        boxPurchaseCount.text = 'You have opened ${PointlessPins.getOpenedBoxCount(box.bID)} of these boxes.';
+    }
+
+    function updateBoxInfoText():Void
+    {
+        boxName.text = '<b>${box.name}</b>';
+        boxDescription.text = box.description;
+
+        if (box.priceModifier == 1.0)
+        {
+            boxPrice.text = '<b>${box.price} &#xE000;</b>';
+        }
+        else
+        {
+            boxPrice.text = '<b>${box.price} &#xE000; <s=0.75>(&#xE010; <c=FF0000>x${box.priceModifier}</c>)</s></b>';
+        }
+
+        var boxOddsText = "";
+        for (i in 0...box.chances.length)
+        {
+            var rarityColor:String = ReflectUtil.getAnonymousField(PointlessPins.pinData, box.chances[i][0]).color;
+            boxOddsText += "<c=" + rarityColor + ">" + box.chances[i][0] + "</c>: " + FlxMath.roundDecimal(box.chances[i][1] / box.totalWeight * 100, 2) + "%";
+            if (i < box.chances.length - 1) boxOddsText += "\n";
+        }
+        boxOdds.text = boxOddsText;
+        boxOdds.y = FlxG.height - 20 - boxOdds.height;
+    }
+
+    function checkIfPlayerIsRichEnough():Bool
+    {
+        if (PointlessPins.getFunkCoins() < box.price)
+        {
+            _parentState.insufficientFunkBucks();
+            return false;
+        }
+        return true;
+    }
+
+    function openBox():Void
+    {
+        _parentState.deductFunkBucks(box.price);
+        PointlessPins.addOpenedBox(box.bID);
+
+        var randomPin:PinData = box.rollRandomPin();
+        var unlockState:PinUnlockState = new PinUnlockState(randomPin);
+        unlockState.closeCallback = closeBox;
+        unlockState.cameras = [camera];
+
+        new FlxTimer().start(1, function(_:FlxTimer) {
+            FlxTween.tween(darkOverlay, { alpha: 0.33 }, 1.1 + box.revealTime / 24, { ease: FlxEase.quadInOut });
+            FlxTween.tween(_parentState.camera, { zoom: 1.15 }, 1 + box.revealTime / 24, { ease: FlxEase.quadInOut });
+            FlxTween.tween(camera, { zoom: 1.25 }, 1 + box.revealTime / 24, { ease: FlxEase.quadInOut });
+        });
+
+        new FlxTimer().start(2.25, function(_:FlxTimer) {
+            box.animation.play("Opening");
+            new FlxTimer().start(box.revealTime / 24, function(_:FlxTimer) {
+                FlxTween.tween(darkOverlay, { alpha: 0 }, 0.5, { ease: FlxEase.expoOut });
+                FlxTween.tween(_parentState.camera, { zoom: 0.9 }, 1, { ease: FlxEase.backOut });
+                FlxTween.tween(camera, { zoom: 1 }, 1, { ease: FlxEase.backOut, onComplete: () -> {
+                    STATE = "OPENED";
+                }});
+                openSubState(unlockState);
+            });
+        });
+
+        FlxTween.tween(boxName, { alpha: 0 }, 0.5, { ease: FlxEase.quartOut });
+        FlxTween.tween(boxDescription, { alpha: 0 }, 0.5, { ease: FlxEase.quartOut });
+        FlxTween.tween(boxPrice, { alpha: 0 }, 0.5, { ease: FlxEase.quartOut });
+        FlxTween.tween(boxOdds, { alpha: 0 }, 0.5, { ease: FlxEase.quartOut });
+        FlxTween.tween(boxPurchaseLable, { alpha: 0 }, 0.5, { ease: FlxEase.quartOut });
+        FlxTween.tween(boxPurchaseCount, { alpha: 0 }, 0.5, { ease: FlxEase.quartOut });
+        FlxTween.tween(arrowLeft, { alpha: 0 }, 0.5, { ease: FlxEase.quartOut });
+        FlxTween.tween(arrowRight, { alpha: 0 }, 0.5, { ease: FlxEase.quartOut });
+        FlxTween.tween(coolBackButton, { alpha: 0 }, 0.5, { ease: FlxEase.quartOut });
+    }
+
+    function closeBox():Void
+    {
+        box.animation.play("Closed");
+        STATE = "CHOOSING";
+        updatePurchaseLable();
+        updateOpenedCount();
+
+        FlxTween.tween(boxName, { alpha: 1 }, 0.5, { ease: FlxEase.quartOut });
+        FlxTween.tween(boxDescription, { alpha: 1 }, 0.5, { ease: FlxEase.quartOut });
+        FlxTween.tween(boxPrice, { alpha: 1 }, 0.5, { ease: FlxEase.quartOut });
+        FlxTween.tween(boxOdds, { alpha: 1 }, 0.5, { ease: FlxEase.quartOut });
+        FlxTween.tween(boxPurchaseLable, { alpha: 1 }, 0.5, { ease: FlxEase.quartOut });
+        FlxTween.tween(boxPurchaseCount, { alpha: 0.5 }, 0.5, { ease: FlxEase.quartOut });
+        FlxTween.tween(arrowLeft, { alpha: 1 }, 0.5, { ease: FlxEase.quartOut });
+        FlxTween.tween(arrowRight, { alpha: 1 }, 0.5, { ease: FlxEase.quartOut });
+        FlxTween.tween(coolBackButton, { alpha: 1 }, 0.5, { ease: FlxEase.quartOut });
+    }
+}
