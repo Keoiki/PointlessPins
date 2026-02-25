@@ -23,6 +23,8 @@ import flixel.util.FlxTimer;
 import flixel.util.FlxSort;
 import flixel.tweens.FlxTween;
 import flixel.tweens.FlxEase;
+import openfl.net.URLRequest;
+import openfl.net.URLLoader;
 import haxe.ds.StringMap;
 import balphabet.BAlphabet;
 using StringTools;
@@ -69,7 +71,7 @@ class PointlessPins extends Module
     {
         super('PointlessPins', -20000000000);
 
-        // FlxG.signals.postGameStart.addOnce(versionCheck);
+        FlxG.signals.postGameStart.addOnce(versionCheck);
     }
 
     function onCreate(event:ScriptEvent):Void
@@ -77,7 +79,6 @@ class PointlessPins extends Module
         PointlessPins.save = Save.instance.getModOptions("keoiki.funkbucks");
 
         loadPinData();
-        versionCheck();
 
         super.onCreate(event);
     }
@@ -85,6 +86,7 @@ class PointlessPins extends Module
     function versionCheck():Void
     {
         var modVersion:String = null;
+        var onlineVersion:String = "0.0.0";
         try
         {
             modVersion = PolymodHandler.modFileSystem.getMetadata("PointlessPins").modVersion.version.join(".");
@@ -96,9 +98,23 @@ class PointlessPins extends Module
             throw "Local mod version could not be found!\nDid you change the folder name to something other than \"PointlessPins\"?";
             return;
         }
-        var onlineVersion:String = "1.0.0";
-        ModStore.register("pinsIsOutdated", VersionUtil.validateVersionStr(onlineVersion, ">" + modVersion));
-        ModStore.register("pinsOnlineVersion", onlineVersion);
+        var request:URLRequest = new URLRequest("https://raw.githubusercontent.com/Keoiki/PointlessPins/main/version.txt");
+        var loader:URLLoader = new URLLoader();
+        loader.dataFormat = "text";
+        var loadSuccessful = () -> {
+            onlineVersion = loader.data;
+            ModStore.register("pinsIsOutdated", VersionUtil.validateVersionStr(onlineVersion, ">" + modVersion));
+            ModStore.register("pinsOnlineVersion", onlineVersion);
+        }
+        var loadFailed = () -> {
+            ModStore.register("pinsIsOutdated", false);
+            ModStore.register("pinsOnlineVersion", onlineVersion);
+            trace("Failed to load online version!");
+        }
+        loader.addEventListener("complete", loadSuccessful);
+        loader.addEventListener("ioError", loadFailed);
+        loader.addEventListener("securityError", loadFailed);
+        loader.load(request);
     }
 
     function loadPinData():Void

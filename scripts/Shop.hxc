@@ -289,16 +289,15 @@ class Shop extends MusicBeatState
 
         if (ModStore.get("pinsIsOutdated") && ModStore.get("pinsHasShownOutdate") == null)
         {
-            var alert:BAlphabet = new BAlphabet(FlxG.width / 2, FlxG.height - 45, '<c=00FF00><b>Version ${ModStore.get("pinsOnlineVersion")} is available!</b></c>');
-            alert.alignment = "center";
-            alert.setScale(0.5);
+            var alert:BAlphabet = new BAlphabet(30, 30, '<c=00FF00><b>Version ${ModStore.get("pinsOnlineVersion")} is available!</b></c>');
+            alert.setScale(0.4);
             alert.zIndex = 100000;
             add(alert);
             alert.cameras = [cameraHUD];
             new FlxTimer().start(8, (_:FlxTimer) -> {
                 FlxTween.tween(alert, { alpha: 0 }, 2, { ease: FlxEase.quintOut });
             });
-            ModStore.set("pinsHasShownOutdate", true);
+            ModStore.register("pinsHasShownOutdate", true);
         }
 
         persistentUpdate = true;
