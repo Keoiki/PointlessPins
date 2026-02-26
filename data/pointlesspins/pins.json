@@ -25,7 +25,8 @@
             { "id": "spraycan", "name": "Spraycan" },
             { "id": "knife", "name": "Knife" },
             { "id": "bulletcasing", "name": "Bullet Casing" },
-            { "id": "bundleofcash", "name": "Bundle of Cash" }
+            { "id": "bundleofcash", "name": "Bundle of Cash" },
+            { "id": "cardboardbox", "name": "Cardboard Box", "description": "The cheapest of them all.", "special": true }
         ]
     },
     "Uncommon": {
@@ -39,7 +40,8 @@
             { "id": "pico-christmas", "name": "Pico (Christmas)" },
             { "id": "nene-christmas", "name": "Nene (Christmas)" },
             { "id": "santa", "name": "Mall Santa" },
-            { "id": "pico-picoschool", "name": "Pico (Original)", "description": "from \"Pico's School\"", "scale": 0.47 }
+            { "id": "pico-picoschool", "name": "Pico (Original)", "description": "from \"Pico's School\"", "scale": 0.47 },
+            { "id": "smallgiftbox", "name": "Small Giftbox", "description": "Did you notice the FunkBuck badge?", "special": true }
         ]
     },
     "Rare": {
@@ -48,7 +50,9 @@
         "pins":
         [
             { "id": "nessie-funkinnews", "name": "Nessie", "description": "Mascot for \"Funkin News\"" },
-            { "id": "ophelia", "name": "Ophelia", "description": "You'll stop annoying her now, right?" , "special": true}
+            { "id": "ophelia", "name": "Ophelia", "description": "You'll stop annoying her now, right?" , "special": true },
+            { "id": "funkbuck", "name": "FunkBuck", "description": "Your local currency!", "special": true }
+
         ]
     },
     "Epic": {

@@ -423,15 +423,27 @@ class Shop extends MusicBeatState
 
         // Rewards
 
-        // if (FlxG.keys.justPressed.M || (TouchUtil.pressAction(lableRewards) && !isMouseTooFast && !TouchUtil.overlaps(coolBackButton, cameraHUD)))
-        // {
-            // disallowInputs = true;
-            // cameraFollowPoint.setPosition(lableRewards.x - 150, 300);
-            // showMenuItems(false);
-            // ophelia.playAnimation("IdleHandDown", true, true);
-            // FlxTween.tween(camera, { zoom: 1.5 }, 1, { ease: FlxEase.cubeOut });
-            // FlxTween.tween(counter, { alpha: 0 }, 1, { ease: FlxEase.cubeOut });
-        // }
+        if (FlxG.keys.justPressed.THREE || (TouchUtil.pressAction(lableRewards) && !isMouseTooFast && !TouchUtil.overlaps(coolBackButton, cameraHUD)))
+        {
+            disallowInputs = true;
+            cameraFollowPoint.setPosition(lableRewards.x - 10, 275);
+            showMenuItems(false);
+
+            var substate = new RewardsSubMenu();
+            substate.closeCallback = function()
+            {
+                FlxTween.tween(coolBackButton, { alpha: 0.5 }, 1, { ease: FlxEase.cubeOut });
+                FlxTween.tween(camera, { zoom: 1 }, 1, { ease: FlxEase.cubeOut });
+                showMenuItems();
+            }
+            substate.cameras = [cameraSubState];
+
+            FlxTween.tween(coolBackButton, { alpha: 0 }, 1, { ease: FlxEase.cubeIn });
+            FlxTween.tween(camera, { zoom: 1.5 }, 1, { ease: FlxEase.cubeOut, onComplete: function()
+            {
+                openSubState(substate);
+            }});
+        }
 
         justGainedFocus = false;
     }

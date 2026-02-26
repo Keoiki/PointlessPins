@@ -1,3 +1,14 @@
+## [2.0.0] - ??/03/2026
+
+### Added
+
+- Added the Rewards section to the Shop.
+    - You can claim extra FunkBucks, Boxes, and Pins based on your lifetime FunkBucks collected or how many of each box you've opened.
+
+### Removed
+
+- Removed the Help option.
+
 ## [1.1.2] - 26/03/2026
 
 ### Changed
