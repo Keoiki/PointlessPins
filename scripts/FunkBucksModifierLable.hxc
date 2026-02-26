@@ -146,6 +146,7 @@ class FunkBucksModifierLable extends Module
     override public function onFreeplayOutro(event:FreeplayScriptEvent)
     {
         canBeUpdated = false;
+        addedToState = false;
 
         if (modifierText == null) return;
 

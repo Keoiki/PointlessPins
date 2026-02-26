@@ -1,3 +1,9 @@
+## [1.1.1] - 26/02/2026
+
+### Fixed
+
+- Fixed a crash when closing Freeplay on a song that requires scrolling to show its full name.
+
 ## [1.1.0] - 25/02/2026
 
 ## Added
