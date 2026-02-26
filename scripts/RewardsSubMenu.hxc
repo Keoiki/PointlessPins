@@ -5,6 +5,7 @@ import pointlesspins.objects.BoxSprite;
 import funkin.util.TouchUtil;
 import funkin.util.ReflectUtil;
 import funkin.ui.MusicBeatSubState;
+import funkin.modding.base.ScriptedFlxSpriteGroup;
 import funkin.mobile.ui.FunkinBackButton;
 import funkin.graphics.FunkinSprite;
 import flixel.util.FlxTimer;
@@ -19,6 +20,8 @@ class RewardsSubMenu extends MusicBeatSubState
 {
     // Important
     var STATE:String = "CHOOSING";
+    var POSITION:Int = 0;
+    var CATEGORY:String = "none";
     final categories = [
         "funkbucks" => {
             name: "Total FunkBucks obtained.",
@@ -31,31 +34,42 @@ class RewardsSubMenu extends MusicBeatSubState
         "cardboardbox" => {
             name: "Total Cardboard Boxes opened.",
             rewards: [
-                "cardboard01" => {amount: 50, type: RewardType.FUNKBUCK, reward: 100},
-                "cardboard02" => {amount: 100, type: RewardType.PIN, reward: "cardboardbox"},
-                "cardboard03" => {amount: 250, type: RewardType.FUNKBUCK, reward: 500}
+                "cardboardbox01" => {amount: 50, type: RewardType.FUNKBUCK, reward: 100},
+                "cardboardbox02" => {amount: 100, type: RewardType.PIN, reward: "cardboardbox"},
+                "cardboardbox03" => {amount: 250, type: RewardType.FUNKBUCK, reward: 500}
             ]
         },
         "smallgiftbox" => {
             name: "Total Small Gift Boxes opened.",
             rewards: [
-                "smallgift01" => {amount: 50, type: RewardType.FUNKBUCK, reward: 250},
-                "smallgift02" => {amount: 100, type: RewardType.PIN, reward: "smallgiftbox"},
-                "smallgift03" => {amount: 250, type: RewardType.FUNKBUCK, reward: 1000}
+                "smallgiftbox01" => {amount: 50, type: RewardType.FUNKBUCK, reward: 250},
+                "smallgiftbox02" => {amount: 100, type: RewardType.PIN, reward: "smallgiftbox"},
+                "smallgiftbox03" => {amount: 250, type: RewardType.FUNKBUCK, reward: 1000}
             ]
         }
     ];
 
     // UI
 
+    var cursor:FunkinSprite;
+
     var bottomBar:FunkinSprite;
+    var rewardText:BAlphabet;
 
     var coolBackButton:FunkinBackButton;
 
     override function create():Void
     {
+        cursor = new FunkinSprite(60, 140).loadTexture("cursor");
+        add(cursor);
+
         bottomBar = new FunkinSprite(0, FlxG.height - 130).makeSolidColor(FlxG.width, 130, 0xBF000000);
         add(bottomBar);
+
+        rewardText = new BAlphabet(FlxG.width / 2, FlxG.height - 100, "Reward Text Here");
+        rewardText.alignment = "center";
+        rewardText.setScale(0.5);
+        add(rewardText);
 
         coolBackButton = new FunkinBackButton(FlxG.width - 220, FlxG.height / 2, 0xFFFFFFFF, goBack, 1.0, true);
         coolBackButton.y -= coolBackButton.height / 2;
@@ -114,6 +128,16 @@ class RewardsSubMenu extends MusicBeatSubState
             default:
         }
     }
+
+    function updateCursorPosition(location:Int):Void
+    {
+
+    }
+}
+
+class RewardItem extends ScriptedFlxSpriteGroup
+{
+    
 }
 
 enum RewardType
