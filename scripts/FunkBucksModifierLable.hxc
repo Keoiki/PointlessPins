@@ -23,8 +23,6 @@ class FunkBucksModifierLable extends Module
 
     var prevStorySel:String = "tutorial";
 
-    final penaltyModiferColors:Array<String> = ["FFFFFF", "FFAAAA", "FF5555", "FF0000", "AA0000", "550000"];
-
     var canBeUpdated:Bool = false;
     var prevText:String = "";
     var onRandom:Bool = false;
@@ -126,7 +124,7 @@ class FunkBucksModifierLable extends Module
         var currentWeek:String = FlxG.state.currentLevelId;
         var repeatPenalty:Float = PointlessPins.getPrevSongs().filter(week -> week == currentWeek).length;
 
-        modifierText.text = '<b><c=${penaltyModiferColors[repeatPenalty]}>${formatModifier(PointlessPins.penalties[repeatPenalty])}</c></b> &#xE000;';
+        modifierText.text = '<b><c=${PointlessPins.penaltyColors[repeatPenalty]}>${formatModifier(PointlessPins.penalties[repeatPenalty])}</c></b> &#xE000;';
     }
 
     override public function onFreeplayIntroDone(event:FreeplayScriptEvent)
@@ -181,7 +179,7 @@ class FunkBucksModifierLable extends Module
             else
             {
                 var repeatPenalty:Float = PointlessPins.getPrevSongs().filter(song -> song == currentSong).length;
-                modifierText.text = '<b><c=${penaltyModiferColors[repeatPenalty]}>${formatModifier(PointlessPins.penalties[repeatPenalty])}</c></b> &#xE000;';
+                modifierText.text = '<b><c=${PointlessPins.penaltyColors[repeatPenalty]}>${formatModifier(PointlessPins.penalties[repeatPenalty])}</c></b> &#xE000;';
             }
         }
     }
