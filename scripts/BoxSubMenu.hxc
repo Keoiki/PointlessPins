@@ -6,6 +6,7 @@ import funkin.util.ReflectUtil;
 import funkin.ui.MusicBeatSubState;
 import funkin.mobile.ui.FunkinBackButton;
 import funkin.graphics.FunkinSprite;
+import funkin.audio.FunkinSound;
 import flixel.util.FlxTimer;
 import flixel.tweens.FlxTween;
 import flixel.tweens.FlxEase;
@@ -169,6 +170,8 @@ class BoxSubMenu extends MusicBeatSubState
                 {
                     STATE = "CONFIRMING";
                     updatePurchaseLable();
+                    FunkinSound.playOnce(Paths.sound("chartingSounds/noteLay"));
+                    FlxTween.tween(boxPurchaseLable, { y: boxPurchaseLable.y - 10 }, 0.6, { ease: FlxEase.backOut, type: 16 });
                 }
             case "CONFIRMING":
                 STATE = "OPENING";
@@ -211,9 +214,9 @@ class BoxSubMenu extends MusicBeatSubState
         switch (STATE)
         {
             case "CHOOSING", "COOLDOWN":
-                boxPurchaseLable.text = PointlessPins.isMouseActive ? "<b><c=00FFFF>TAP</c> the box to purchase.</b>" : "<b>Press <c=00FFFF>ACCEPT</c> to purchase.</b>";
+                boxPurchaseLable.text = PointlessPins.isMouseActive ? "<b><c=2A4DFF>TAP</c> the box to purchase.</b>" : "<b>Press <c=2A4DFF>ACCEPT</c> to purchase.</b>";
             case "CONFIRMING":
-                boxPurchaseLable.text = PointlessPins.isMouseActive ? "<b><c=00FFFF>TAP</c> the box again to confirm.</b>" : "<b>Press <c=00FFFF>ACCEPT</c> again to confirm.</b>";
+                boxPurchaseLable.text = PointlessPins.isMouseActive ? "<b><c=2BFF31>TAP</c> the box again to confirm.</b>" : "<b>Press <c=2BFF31>ACCEPT</c> again to confirm.</b>";
         }
     }
 
