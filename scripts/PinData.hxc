@@ -60,6 +60,7 @@ class PointlessPins extends Module
     var menuPin2;
 
     static final penalties:Array<Float> = [1.0, 0.66, 0.33, 0.0, -0.5, -1];
+    static final penaltyColors:Array<String> = ["FFFFFF", "FFAAAA", "FF5555", "FF0000", "AA0000", "550000"];
     static final opheliaAngerCooldown:Int = 1000 * 60 * 60 * 4;
     static var save;
 
@@ -434,13 +435,16 @@ class PointlessPins extends Module
             var currentDailies:Array<String> = getDailies();
             var currentSongOrWeek:String = PlayStatePlaylist.isStoryMode ? PlayStatePlaylist.campaignId :
                     Std.string(PlayState.instance.currentChart.song.id + "-" + PlayState.instance.currentVariation);
-            var repeatPenalty:Float = PointlessPins.penalties[previousSongs.filter(entry -> entry == currentSongOrWeek).length];
+            var penaltyCount:Int = previousSongs.filter(entry -> entry == currentSongOrWeek).length;
+            var repeatPenalty:Float = PointlessPins.penalties[penaltyCount];
+            var resultTextColor:String = PointlessPins.penaltyColors[penaltyCount];
 
             // Sorry Endless Mode...
             // NVM Endless Mode players stay winning!
             if (ModuleHandler.getModule("EndlessMode") != null && EndlessStatus.isEndless)
             {
                 bucksToAward *= 0.25;
+                resultTextColor = "00BBFF";
                 trace("Endless Mode! Cut your earnings in 4, ha!");
             }
             else if (currentDailies.contains(currentSongOrWeek))
@@ -448,6 +452,7 @@ class PointlessPins extends Module
                 bucksToAward *= 1.5;
                 currentDailies.remove(currentSongOrWeek);
                 setDailies(currentDailies);
+                resultTextColor = "00FF00";
                 trace("Daily Bonus +50%! Remaining dailies: " + currentDailies);
             }
             else
@@ -476,7 +481,7 @@ class PointlessPins extends Module
 
             trace(currentSongOrWeek, bucksToAward, previousSongs);
 
-            var funkBucksText = new BAlphabet(FlxG.width - 100, 20, '<b>${bucksToAward > 0 ? "+" : ""}$bucksToAward &#xE000;</b>');
+            var funkBucksText = new BAlphabet(FlxG.width - 100, 20, '<b><c=$resultTextColor>${bucksToAward > 0 ? "+" : ""}$bucksToAward</c> &#xE000;</b>');
             funkBucksText.setScale(0.65);
             funkBucksText.alignment = "right";
             funkBucksText.alpha = 0;
@@ -484,7 +489,7 @@ class PointlessPins extends Module
             event.targetState.add(funkBucksText);
             event.targetState.refresh();
 
-            new FlxTimer().start(103 / 24, _ -> {
+            new FlxTimer().start(37 / 24, _ -> {
                 if (funkBucksText != null && FlxG.state.subState is ResultState)
                 {
                     funkBucksText.alpha = 1;
