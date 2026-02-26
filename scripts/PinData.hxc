@@ -470,6 +470,7 @@ class PointlessPins extends Module
                 resultTextColor = "00FF00";
                 currentDailies.remove(currentSongOrWeek);
                 setDailies(currentDailies);
+                resultTextColor = "00FF00";
                 trace("Daily Bonus +50%! Remaining dailies: " + currentDailies);
             }
             else
