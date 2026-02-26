@@ -1,3 +1,14 @@
+## [2.0.0] - ??/03/2026
+
+### Added
+
+- Added the Rewards section to the Shop.
+    - You can claim extra FunkBucks, Boxes, and Pins based on your lifetime FunkBucks collected or how many of each box you've opened.
+
+### Removed
+
+- Removed the Help option.
+
 ## [1.1.1] - 26/02/2026
 
 ### Fixed
@@ -6,26 +17,26 @@
 
 ## [1.1.0] - 25/02/2026
 
-## Added
+### Added
 
 - Added an option to display the Modifier Text as either: Percentage or Multiplier.
     - Percentage is the default.
 - Implemented a version check system. Your local version and the version number from GitHub are compared, and alerts you if a new version exists.
 
-## Changed
+### Changed
 
 - Shop Upgrade! The Daily Board now has it's own light, so a part of it is no longer dark.
 - Changed the Pin in the Main Menu from Boyfriend to a FunkBuck.
 - Increased the size of the textbox in the Pins menu.
 - Moved the text in the Boxes menu to be slightly further away from the edges of the screen.
 
-## Fixed
+### Fixed
 
 - Fixed "PinData" throwing errors when accessing the save's fields. :obese_cat:
 
 ## [1.0.1] - 25/02/2026
 
-## Fixed
+### Fixed
 
 - Attempt at fixing an occasional crash when exiting Freeplay.
 - Force visibility on the back button on Mobile, HOPEFULLY fixing them not appearing sometimes, apparently.
@@ -36,7 +47,7 @@
 
 Initial Release
 
-## Added
+### Added
 
 - Added FunkBucks, the currency used in this mod. Can be obtained by beating weeks or individual songs.
 - Added Penalties.
