@@ -10,6 +10,17 @@
 - The box purchase confirmation is more clearly indicated.
 - The FunkBuck text in the Results now shows up faster and follows the coloring scheme used for the Modifier lable.
 
+## [2.0.0] - ??/03/2026
+
+### Added
+
+- Added the Rewards section to the Shop.
+    - You can claim extra FunkBucks, Boxes, and Pins based on your lifetime FunkBucks collected or how many of each box you've opened.
+
+### Removed
+
+- Removed the Help option.
+
 ## [1.1.2] - 26/03/2026
 
 ### Changed

@@ -1,0 +1,126 @@
+package pointlesspins;
+
+import pointlesspins.objects.PinSprite;
+import pointlesspins.objects.BoxSprite;
+import funkin.util.TouchUtil;
+import funkin.util.ReflectUtil;
+import funkin.ui.MusicBeatSubState;
+import funkin.mobile.ui.FunkinBackButton;
+import funkin.graphics.FunkinSprite;
+import flixel.util.FlxTimer;
+import flixel.tweens.FlxTween;
+import flixel.tweens.FlxEase;
+import flixel.math.FlxMath;
+import flixel.input.mouse.FlxMouseEvent;
+import flixel.FlxObject;
+import balphabet.BAlphabet;
+
+class RewardsSubMenu extends MusicBeatSubState
+{
+    // Important
+    var STATE:String = "CHOOSING";
+    final categories = [
+        "funkbucks" => {
+            name: "Total FunkBucks obtained.",
+            rewards: [
+                "funkbucks01" => {amount: 500, type: RewardType.BOX, reward: "cardboardbox"},
+                "funkbucks02" => {amount: 2500, type: RewardType.BOX, reward: "smallgiftbox"},
+                "funkbucks03" => {amount: 10000, type: RewardType.PIN, reward: "funkbuck"}
+            ]
+        },
+        "cardboardbox" => {
+            name: "Total Cardboard Boxes opened.",
+            rewards: [
+                "cardboard01" => {amount: 50, type: RewardType.FUNKBUCK, reward: 100},
+                "cardboard02" => {amount: 100, type: RewardType.PIN, reward: "cardboardbox"},
+                "cardboard03" => {amount: 250, type: RewardType.FUNKBUCK, reward: 500}
+            ]
+        },
+        "smallgiftbox" => {
+            name: "Total Small Gift Boxes opened.",
+            rewards: [
+                "smallgift01" => {amount: 50, type: RewardType.FUNKBUCK, reward: 250},
+                "smallgift02" => {amount: 100, type: RewardType.PIN, reward: "smallgiftbox"},
+                "smallgift03" => {amount: 250, type: RewardType.FUNKBUCK, reward: 1000}
+            ]
+        }
+    ];
+
+    // UI
+
+    var bottomBar:FunkinSprite;
+
+    var coolBackButton:FunkinBackButton;
+
+    override function create():Void
+    {
+        bottomBar = new FunkinSprite(0, FlxG.height - 130).makeSolidColor(FlxG.width, 130, 0xBF000000);
+        add(bottomBar);
+
+        coolBackButton = new FunkinBackButton(FlxG.width - 220, FlxG.height / 2, 0xFFFFFFFF, goBack, 1.0, true);
+        coolBackButton.y -= coolBackButton.height / 2;
+        if (!FlxG.onMobile)
+        {
+            coolBackButton.visible = PointlessPins.isMouseActive;
+            FlxMouseEvent.add(coolBackButton, coolBackButton.playHoldAnim, coolBackButton.playConfirmAnim);
+        }
+        add(coolBackButton);
+
+        super.create();       
+    }
+
+    var prevMouseActive:Bool = PointlessPins.isMouseActive;
+    public function update(elapsed:Float):Void
+    {
+        if (controls.BACK_P)
+        {
+            goBack();
+        }
+
+        var isMouseTooFast:Bool = FlxG.onMobile ? false : Math.abs(FlxG.mouse.deltaViewX) > 2 || Math.abs(FlxG.mouse.deltaViewY) > 2;
+
+        // if (controls.UI_LEFT_P || (TouchUtil.pressAction(leftArrowHitbox, camera) && !isMouseTooFast))
+        // {
+            // changeSelection(-1);
+        // }
+
+        // if (controls.UI_RIGHT_P || (TouchUtil.pressAction(rightArrowHitbox, camera) && !isMouseTooFast))
+        // {
+            // changeSelection(1);
+        // }
+
+        // if (controls.ACCEPT_P || (TouchUtil.pressAction(boxHitbox, camera) && !isMouseTooFast))
+        // {
+            // pressedAccept();
+        // }
+
+        coolBackButton.visible = FlxG.onMobile ? true : PointlessPins.isMouseActive;
+
+        if (prevMouseActive != PointlessPins.isMouseActive)
+        {
+            // updatePurchaseLable();
+        }
+        prevMouseActive = PointlessPins.isMouseActive;
+
+        super.update(elapsed);
+    }
+
+    function goBack():Void
+    {
+        switch (STATE)
+        {
+            case "CHOOSING":
+                close();
+            default:
+        }
+    }
+}
+
+enum RewardType
+{
+    PIN;
+    BOX;
+    FUNKBUCK;
+    SONG;
+    // WEIGHT;
+}
