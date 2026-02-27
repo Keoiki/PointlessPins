@@ -21,17 +21,19 @@ class RewardsSubMenu extends MusicBeatSubState
     // Important
     var STATE:String = "CHOOSING";
     var POSITION:Int = 0;
+    var POSITION_ARRAY:Array<Int> = [0, 0];
+    var PAGE:Int = 0;
     var CATEGORY:String = "none";
     final categories = [
         "funkbucks" => {
             name: "Total FunkBucks obtained.",
             rewards: [
-                "funkbucks01" => {amount: 500, type: RewardType.BOX, reward: "cardboardbox"},
+                "funkbucks01" => {amount: 500, type: RewardType.BOX, reward: "cardboard"},
                 "funkbucks02" => {amount: 2500, type: RewardType.BOX, reward: "smallgiftbox"},
                 "funkbucks03" => {amount: 10000, type: RewardType.PIN, reward: "funkbuck"}
             ]
         },
-        "cardboardbox" => {
+        "cardboard" => {
             name: "Total Cardboard Boxes opened.",
             rewards: [
                 "cardboardbox01" => {amount: 50, type: RewardType.FUNKBUCK, reward: 100},
@@ -48,6 +50,8 @@ class RewardsSubMenu extends MusicBeatSubState
             ]
         }
     ];
+    var totalItems:Int = 14;
+    var currentShownItems:Array<FlxObject> = [];
 
     // UI
 
@@ -80,6 +84,8 @@ class RewardsSubMenu extends MusicBeatSubState
         }
         add(coolBackButton);
 
+        populateItems("none");
+
         super.create();       
     }
 
@@ -93,20 +99,26 @@ class RewardsSubMenu extends MusicBeatSubState
 
         var isMouseTooFast:Bool = FlxG.onMobile ? false : Math.abs(FlxG.mouse.deltaViewX) > 2 || Math.abs(FlxG.mouse.deltaViewY) > 2;
 
-        // if (controls.UI_LEFT_P || (TouchUtil.pressAction(leftArrowHitbox, camera) && !isMouseTooFast))
-        // {
-            // changeSelection(-1);
-        // }
-
-        // if (controls.UI_RIGHT_P || (TouchUtil.pressAction(rightArrowHitbox, camera) && !isMouseTooFast))
-        // {
-            // changeSelection(1);
-        // }
-
-        // if (controls.ACCEPT_P || (TouchUtil.pressAction(boxHitbox, camera) && !isMouseTooFast))
-        // {
+        if (controls.UI_LEFT_P)
+        {
+            updateCursorPosition(-1, 0);
+        }
+        if (controls.UI_RIGHT_P)
+        {
+            updateCursorPosition(1, 0);
+        }
+        if (controls.UI_UP_P)
+        {
+            updateCursorPosition(0, -1);
+        }
+        if (controls.UI_DOWN_P)
+        {
+            updateCursorPosition(0, 1);
+        }
+        if (controls.ACCEPT_P)
+        {
             // pressedAccept();
-        // }
+        }
 
         coolBackButton.visible = FlxG.onMobile ? true : PointlessPins.isMouseActive;
 
@@ -129,15 +141,186 @@ class RewardsSubMenu extends MusicBeatSubState
         }
     }
 
-    function updateCursorPosition(location:Int):Void
+    function populateItems(category:String, page:Int = 0):Void
     {
+        CATEGORY = category;
+        for (item in currentShownItems)
+        {
+            item.destroy();
+        }
+        currentShownItems = [];
+        totalItems = 0;
+        if (CATEGORY == "none")
+        {
+            for (key => value in categories)
+            {
+                totalItems++;
+                if (totalItems < page * 9 || totalItems >= (page + 1) * 9) continue;
+                var item:RewardItem = new RewardItem(totalItems - 1, null, -1, RewardType.CATEGORY, key, () -> {
+                    populateItems(key, 0);
+                });
+                item.x = 200 + 150 * item.position[0];
+                item.y = 200 + 100 * item.position[1];
+                add(item);
+                currentShownItems.push(item);
+            }
+        }
+        else
+        {
+            for (key => value in categories.get(CATEGORY).rewards)
+            {
+                totalItems++;
+                if (totalItems < page * 9 || totalItems >= (page + 1) * 9) continue;
+                var item:RewardItem = new RewardItem(totalItems - 1, key, value.amount, value.type, value.reward, () -> {
+                    switch (value.type)
+                    {
+                        case RewardType.PIN:
+                        {
+                            var unlockSubState:PinUnlockState = new PinUnlockState(PointlessPins.getPinByID(value.reward));
+                            openSubState(unlockSubState);
+                        }
+                        case RewardType.FUNKBUCK:
+                        {
+                            _parentState.addFunkBucks(value.reward);   
+                        }
+                        case RewardType.BOX:
+                        {
+                            // Handled elsewhere.
+                        }
+                    }
+                });
+                item.x = 200 + 150 * item.position[0];
+                item.y = 200 + 100 * item.position[1];
+                add(item);
+                currentShownItems.push(item);
+            }
+        }
+        trace(currentShownItems.length);
+    }
 
+    function updateCursorPosition(xC:Int = 0, yC:Int = 0):Void
+    {
+        /*
+        var previousPosition:Int = POSITION;
+        var previousPage:Int = PAGE;
+        var resultingPosition:Int = ((POSITION_ARRAY[0] + xC) + ((POSITION_ARRAY[1] + yC) * 3) + (PAGE * 9)) % 9;
+
+        POSITION_ARRAY[0] += xC;
+        if (POSITION_ARRAY[0] < 0)
+        {
+            if (PAGE = 0)
+            {
+                POSITION_ARRAY[0] = 0;
+            }
+            else
+            {
+                PAGE--;
+                POSITION_ARRAY[0] = 2;
+            }
+        }
+        else if (POSITION_ARRAY[0] > 2)
+        {
+            if (Math.ceil((resultingPosition + 1) / 9) <= Math.ceil(totalItems / 9))
+            {
+                POSITION_ARRAY[0] = 0;
+            }
+            POSITION_ARRAY[0] = 2;
+        }
+
+        POSITION_ARRAY[1] += yC;
+        if (POSITION_ARRAY[1] < 0)
+        {
+            POSITION_ARRAY[1] = 0;
+        }
+        else
+        {
+            
+        }
+
+        POSITION = POSITION_ARRAY[0] + (POSITION_ARRAY[1] * 3) + (PAGE * 9);
+        */
     }
 }
 
 class RewardItem extends ScriptedFlxSpriteGroup
 {
-    
+    var icon:FunkinSprite;
+    var number:BAlphabet;
+
+    var position:Array<Int>;
+    var rID:String;
+    var requirement:Int;
+    var type:RewardType;
+    var reward:String;
+
+    var obtained:Bool;
+
+    var onConfirm:Void->Void;
+
+    public function new(_position:Int, _rID:String, _requirement:Int, _type:RewardType, _reward:String, _onConfirm:Void->Void):Void
+    {
+        super(0, 0);
+        position = [_position % 3, Math.floor((_position % 9) / 3)];
+        rID = _rID;
+        requirement = _requirement;
+        type = _type;
+        reward = _reward;
+        onConfirm = _onConfirm;
+        setupItem();
+    }
+
+    function setupItem():Void
+    {
+        switch (type)
+        {
+            case RewardType.CATEGORY:
+            {
+                icon = new FunkinSprite(0, 0).loadGraphic('rewards/category-$reward');
+            }
+            case RewardType.PIN:
+            {
+                icon = new PinSprite(0, 0);
+                icon.isUnknown = !PointlessPins.hasObtainedPin(reward);
+                if (!icon.isUnknown) icon.isUnlocked = true;
+                icon.setupPin(reward, "", "", 0.5);
+            }
+            case RewardType.BOX:
+            {
+                icon = new BoxSprite(0, 0);
+                icon.updateBoxInfoByID(reward, true);
+            }
+            case RewardType.FUNKBUCK:
+            {
+                icon = new PinSprite(0, 0);
+                icon.isUnlocked = true;
+                icon.setupPin("funkbuck", "", "", 0.5);
+
+                number = new BAlphabet(0, -64, '<b>$reward</b> &#xE0000;');
+                number.alignment = "center";
+                number.setScale(0.5);
+            }
+            case RewardType.SONG:
+            {
+                throw "SONG reward type is not implemented";
+            }
+            case RewardType.WEIGHT:
+            {
+                throw "WEIGHT reward type is not implemented";
+            }
+            default: throw "Invalid reward type.";
+        }
+        obtained = (type == RewardType.CATEGORY) ? false : PointlessPins.hasObtainedMilestone(rID);
+        if (icon != null) 
+        {
+            icon.alpha = obtained ? 0.5 : 1;
+            this.add(icon);
+        }
+        if (number != null)
+        {
+            number.alpha = obtained ? 0.5 : 1;
+            this.add(number);
+        }
+    }
 }
 
 enum RewardType
@@ -146,5 +329,6 @@ enum RewardType
     BOX;
     FUNKBUCK;
     SONG;
-    // WEIGHT;
+    WEIGHT;
+    CATEGORY;
 }
