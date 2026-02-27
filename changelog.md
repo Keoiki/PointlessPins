@@ -4,6 +4,15 @@
 
 - Added the Rewards section to the Shop.
     - You can claim extra FunkBucks, Boxes, and Pins based on your lifetime FunkBucks collected or how many of each box you've opened.
+- Added X new pins:
+    - 1 Common
+    - 1 Uncommon
+    - 1 Rare
+
+### Changed
+
+- The box purchase confirmation is more clearly indicated.
+- The FunkBuck text in the Results now show up faster and follow the coloring scheme used for the Modifier lable.
 
 ### Removed
 

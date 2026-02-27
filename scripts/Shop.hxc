@@ -801,6 +801,19 @@ class Shop extends MusicBeatState
         PointlessPins.addFunkCoins(-amount, false);
     }
 
+    public function addFunkBucks(amount:Int):Void
+    {
+        var currentFunkBucks:Int = previousFunkBucks = PointlessPins.getFunkCoins();
+        var remainingFunkBucks:Int = currentFunkBucks + amount;
+
+        var easeToUse:FlxEase = amount >= 500 ? FlxEase.expoOut : FlxEase.quartOut;
+        FlxTween.num(currentFunkBucks, remainingFunkBucks, 2.5, { ease: easeToUse, onComplete: function(_) {
+            funkBucksText.text = '<b>${Math.floor(remainingFunkBucks)}</b> &#xE000;';
+        }}, updateFunkBucks);
+
+        PointlessPins.addFunkCoins(amount, false);
+    }
+
     function updateFunkBucks(value:Float):Void
     {
         if (previousFunkBucks != Math.floor(value))
