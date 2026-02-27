@@ -156,9 +156,7 @@ class RewardsSubMenu extends MusicBeatSubState
             {
                 totalItems++;
                 if (totalItems < page * 9 || totalItems >= (page + 1) * 9) continue;
-                var item:RewardItem = new RewardItem(totalItems - 1, null, -1, RewardType.CATEGORY, key, () -> {
-                    populateItems(key, 0);
-                });
+                var item:RewardItem = new RewardItem(totalItems - 1, null, -1, RewardType.CATEGORY, key);
                 item.x = 200 + 150 * item.position[0];
                 item.y = 200 + 100 * item.position[1];
                 add(item);
@@ -171,24 +169,7 @@ class RewardsSubMenu extends MusicBeatSubState
             {
                 totalItems++;
                 if (totalItems < page * 9 || totalItems >= (page + 1) * 9) continue;
-                var item:RewardItem = new RewardItem(totalItems - 1, key, value.amount, value.type, value.reward, () -> {
-                    switch (value.type)
-                    {
-                        case RewardType.PIN:
-                        {
-                            var unlockSubState:PinUnlockState = new PinUnlockState(PointlessPins.getPinByID(value.reward));
-                            openSubState(unlockSubState);
-                        }
-                        case RewardType.FUNKBUCK:
-                        {
-                            _parentState.addFunkBucks(value.reward);   
-                        }
-                        case RewardType.BOX:
-                        {
-                            // Handled elsewhere.
-                        }
-                    }
-                });
+                var item:RewardItem = new RewardItem(totalItems - 1, key, value.amount, value.type, value.reward);
                 item.x = 200 + 150 * item.position[0];
                 item.y = 200 + 100 * item.position[1];
                 add(item);
@@ -255,9 +236,7 @@ class RewardItem extends ScriptedFlxSpriteGroup
 
     var obtained:Bool;
 
-    var onConfirm:Void->Void;
-
-    public function new(_position:Int, _rID:String, _requirement:Int, _type:RewardType, _reward:String, _onConfirm:Void->Void):Void
+    public function new(_position:Int, _rID:String, _requirement:Int, _type:RewardType, _reward:String):Void
     {
         super(0, 0);
         position = [_position % 3, Math.floor((_position % 9) / 3)];
@@ -265,7 +244,6 @@ class RewardItem extends ScriptedFlxSpriteGroup
         requirement = _requirement;
         type = _type;
         reward = _reward;
-        onConfirm = _onConfirm;
         setupItem();
     }
 
