@@ -60,8 +60,9 @@
         [
             { "id": "nessie-funkinnews", "name": "Nessie", "description": "Mascot for \"Funkin News\"" },
             { "id": "ophelia", "name": "Ophelia", "description": "You'll stop annoying her now, right?" , "special": true },
-            { "id": "difficultystar", "name": "Blue Flamed Star", "description": "That looks really difficult!" },
             { "id": "funkbuck", "name": "FunkBuck", "description": "Your local currency!", "special": true },
+            { "id": "pushpin", "name": "Pin", "description": "No! Wrong type of pin!" },
+            { "id": "difficultystar", "name": "Blue Flamed Star", "description": "That looks really difficult!" },
             { "id": "rank-excellent", "name": "Excellent Rank", "description": "Obtained by completing a song with the Excellent rank.", "special": true }
 
         ]
@@ -79,6 +80,7 @@
         "color": "FFB51C",
         "pins":
         [
+            { "id": "hundrec", "name": "Hundrec", "description": "Production Manager for The Funkin Crew Inc." },
             { "id": "rank-goldperfect", "name": "Golden Perfect Rank", "description": "Obtained by completing a song with the Golden Perfect rank.", "special": true }
         ]
     },

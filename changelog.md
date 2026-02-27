@@ -4,18 +4,22 @@
 
 - Added the Rewards section to the Shop.
     - You can claim extra FunkBucks, Boxes, and Pins based on your lifetime FunkBucks collected or how many of each box you've opened.
-- Added X new pins:
+- Added 19 new pins:
     - 3 Common
     - 8 Uncommon
-    - 3 Rare
+    - 4 Rare
     - 1 Epic
-    - 1 Legendary
+    - 2 Legendary
     - 1 Special
 
 ### Changed
 
 - The box purchase confirmation is more clearly indicated.
 - The FunkBuck text in the Results now show up faster and follow the coloring scheme used for the Modifier lable.
+- Increased the Cardboard Box price from 10 to 15 FunkBucks.
+- Added a 1% to get a Rare from Cardboard Boxes.
+- Increased the Small Giftbox price from 25 to 40 FunkBucks.
+- Added a 0.5% to get a Legendary from Small Giftboxes.
 
 ### Removed
 

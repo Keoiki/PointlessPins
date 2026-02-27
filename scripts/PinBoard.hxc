@@ -137,7 +137,8 @@ class PinBoard extends MusicBeatSubState
                 var pin:PinSprite = new PinSprite(pinX, pinY);
                 pin.position = [pinColumn, currentRow];
                 pin.rarity = PIN_RARITIES[i];
-                var isPinUnlocked:Bool = unlockedPinsData.exists(pinData.id);
+                // var isPinUnlocked:Bool = unlockedPinsData.exists(pinData.id);
+                var isPinUnlocked:Bool = true;
                 if (isPinUnlocked)
                 {
                     unlockedPins++;
@@ -161,9 +162,9 @@ class PinBoard extends MusicBeatSubState
             rarityText.setScale(0.8);
             add(rarityText);
 
-            textOffset += (150 * (categoryRow + 1)) + 75;
+            textOffset += (150 * (categoryRow + 1)) + 90;
             categoryRow = -1;
-            categoryOffset += 75;
+            categoryOffset += 90;
         }
         // trace(pinRowLengths);
 
@@ -172,7 +173,7 @@ class PinBoard extends MusicBeatSubState
 
         pinNameBox = new FunkinSprite(140, 530);
         pinNameBox.makeSolidColor(1000, 120, 0xFF000000);
-        pinNameBox.alpha = 0.75;
+        pinNameBox.alpha = 0.80;
         pinNameBox.screenCenter(0x01);
         add(pinNameBox);
 
