@@ -5,10 +5,11 @@
         "description": "An inexpensive cardboard box.\nContents are equally inexpensive.",
         "revealTime": 26,
         "chances": [
-            [ "Common", 900 ],
-            [ "Uncommon", 100 ]
+            [ "Common", 890 ],
+            [ "Uncommon", 100 ],
+            [ "Rare", 10 ]
         ],
-        "cost": 10,
+        "cost": 15,
         "order": 0
     },
     {
@@ -17,12 +18,13 @@
         "description": "Oooh, I wonder what's inside!\nIt's a pin, yeah.",
         "revealTime": 26,
         "chances": [
-            [ "Common", 749 ],
+            [ "Common", 744 ],
             [ "Uncommon", 200 ],
             [ "Rare", 50 ],
+            [ "Legendary", 5 ],
             [ "Mythic", 1 ]
         ],
-        "cost": 25,
+        "cost": 40,
         "order": 1
     }
 ]

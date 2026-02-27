@@ -48,7 +48,7 @@ typedef BoxData = {
     name:String,
     description:String,
     revealTime:Int, // Frames until the pin is shown.
-    chances:Array<Array<String, Int>>, // The numerical chance for each rarity is its WEIGHT. Double-check chances in the Box Menu to make sure they're correct.
+    chances:Array<Array<String, Int>>, // The numerical chance for each rarity as its WEIGHT. Double-check chances in the Box Menu to make sure they're correct.
     cost:Int,
     order:Float,
     ?special:Bool // Is the box only obtainable by special means, and not purchasable? (optional, default: false)
@@ -58,6 +58,18 @@ class PointlessPins extends Module
 {
     var menuPin;
     var menuPin2;
+
+    // Mod ID => [Variation ID(s)]
+    // This will only support mods I like or think that are cool :)
+    // This will also only be functional once proper mod ID's are implemented, since right now they're whatever the folder name is, which might not always be consistent.
+    static final supportedModdedVariations:StringMap = [
+        "Funkin' Remnants" => ["remnants", "bfremnants"],
+        "Gooey Mix" => ["gooey"],
+        "Spooky Mix" => ["spookymod"],
+        "Funkin' Incident" => ["reimu"],
+        "QT Rewired" => ["qt"],
+        "Hundrec Mix" => ["hundrec"]
+    ];
 
     static final penalties:Array<Float> = [1.0, 0.66, 0.33, 0.0, -0.5, -1];
     static final penaltyColors:Array<String> = ["FFFFFF", "FFAAAA", "FF5555", "FF0000", "AA0000", "550000"];
@@ -308,6 +320,7 @@ class PointlessPins extends Module
         var dailyDateNum:Int = PointlessPins.save.dailyDate ?? -1;
         var date:Date = Date.now();
         var currentDate:Int = date.getDate();
+        // final allowedModdedVariations:Array<String> = PointlessPins.getAvailableModdedVariations();
         if (dailyDateNum != currentDate)
         {
             var baseGameSongIDs:Array<String> = SongRegistry.instance.listBaseGameEntryIds();
@@ -365,6 +378,20 @@ class PointlessPins extends Module
     public static function saveTheData():Void
     {
         Save.instance.setModOptions("keoiki.funkbucks", save);
+    }
+
+    static function getAvailableModdedVariations():Array<String>
+    {
+        var loadedMods:Array<String> = PolymodHandler.loadedModIds;
+        var availableModdedVariations:Array<String> = [];
+        for (id => variations in PointlessPins.supportedModdedVariations)
+        {
+            if (loadedMods.contains(id))
+            {
+                availableModdedVariations = availableModdedVariations.concat(variations);
+            }
+        }
+        return availableModdedVariations;
     }
 
     function onUpdate(event:UpdateScriptEvent):Void
