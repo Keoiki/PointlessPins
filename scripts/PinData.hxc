@@ -339,6 +339,28 @@ class PointlessPins extends Module
         }
     }
 
+    public static function addObtainedMilestone(milestone:String):Void
+    {
+        var obtainedMilestones:Array<String> = PointlessPins.getObtainedMilestones();
+        if (obtainedMilestones.contains(milestone))
+        {
+            trace("User already obtained milestone: " + milestone);
+            return;
+        }
+        PointlessPins.save.obtainedMilestones = obtainedMilestones.push(milestone);
+        PointlessPins.saveTheData();
+    }
+
+    public static function hasObtainedMilestone(milestone:String):Bool
+    {
+        return PointlessPins.getObtainedMilestones().contains(milestone);
+    }
+
+    public static function getObtainedMilestones():Array<String>
+    {
+        return PointlessPins.save.obtainedMilestones ?? [];
+    }
+
     public static function saveTheData():Void
     {
         Save.instance.setModOptions("keoiki.funkbucks", save);
