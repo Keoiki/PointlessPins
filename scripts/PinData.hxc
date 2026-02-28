@@ -38,9 +38,11 @@ import Date;
 typedef PinData = {
     id:String, // The ID of a pin.
     name:String, // The visible name of a pin.
-    description:String, // The description of a pin. (optional)
-    scale:Float, // The scale of a pin in the Pins Menu. (optional, default: 0.5)
-    ?special:Bool // Whether or not a pin can only be unlocked once. Excludes them from Mystery Boxes (optional, default: false)
+    ?description:String, // The description of a pin. (optional)
+    ?scale:Float, // The scale of a pin in the Pins Menu. This value is doubled for the Pin Unlock screen. (optional, default: 0.5)
+    ?artist:String, // The artist of a pin. (optional)
+    ?source:String, // The source of a pin, whether it's based on a mod, or something else. (optional)
+    ?special:Bool // Whether or not a pin can only be unlocked once. Excludes them from Mystery Boxes. (optional, default: false)
 }
 
 typedef BoxData = {
@@ -51,7 +53,7 @@ typedef BoxData = {
     chances:Array<Array<String, Int>>, // The numerical chance for each rarity as its WEIGHT. Double-check chances in the Box Menu to make sure they're correct.
     cost:Int,
     order:Float,
-    ?special:Bool // Is the box only obtainable by special means, and not purchasable? (optional, default: false)
+    ?special:Bool // Is the box only obtainable by special means? This makes it not purchasable. (optional, default: false)
 }
 
 class PointlessPins extends Module
@@ -306,7 +308,7 @@ class PointlessPins extends Module
      * The +50% modifier will override any negative modifiers, however the song will still be added to the list of previous songs.
      * The following are not eligible for daily bonuses:
      * - modded songs,
-     * - modded variations to base game songs, and
+     * - modded variations to base game songs, and (Subject to be supported in the future)
      * - any and all levels.
      */
     public static function setDailies(dailies:Array<String>):Void

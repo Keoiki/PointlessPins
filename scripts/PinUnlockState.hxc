@@ -50,7 +50,7 @@ class PinUnlockState extends MusicBeatSubState
         else
         {
             var duplicatePinCount:Int = PointlessPins.getObtainedPins().get(pinData.id);
-            unlockMsgText = "<b>You got a <c=434253>duplicate (" + duplicatePinCount + ")</c> pin!</b>";
+            unlockMsgText = '<b>You got a <c=434253>duplicate ("$duplicatePinCount")</c> pin!</b>';
         }
 
         var unlockMessage:BAlphabet = new BAlphabet(FlxG.width / 2, 420, unlockMsgText);
@@ -60,11 +60,11 @@ class PinUnlockState extends MusicBeatSubState
 
         if (pinData.rarity == null)
         {   
-            trace("Pin " + pinData.name + " has no rarity! Defaulting to Common.");
-            pinData.rarity = "Common";
+            trace("Pin " + pinData.name + " was given no rarity!");
+            pinData.rarity = "Unknown";
         }
-        var rarityColor:String = ReflectUtil.getAnonymousField(PointlessPins.pinData, pinData.rarity).color;
-        var unlockedPinName:BAlphabet = new BAlphabet(FlxG.width / 2, 480, "<b><s=0.75><c=" + rarityColor + ">" + pinData.rarity + "</c></s>\n" + pinData.name + "</b>");
+        var rarityColor:String = pinData.rarity == "Unknown" ? "7F7F7F" : ReflectUtil.getAnonymousField(PointlessPins.pinData, pinData.rarity).color;
+        var unlockedPinName:BAlphabet = new BAlphabet(FlxG.width / 2, 480, '<b><s=0.75><c=$rarityColor>${pinData.rarity}</c></s>\n${pinData.name}</b>');
         unlockedPinName.alignment = "center";
         unlockedPinName.setScale(0.75);
         add(unlockedPinName);
@@ -77,10 +77,11 @@ class PinUnlockState extends MusicBeatSubState
             add(unlockedPinDescription);
         }
 
+        var targetScale:Float = pinData.scale * 2 ?? 1.0;
         FunkinSound.playOnce(Paths.sound("tickleFight"));
         FlxTween.tween(darkOverlay, { alpha: 0.85 }, 0.5, { ease: FlxEase.cubeOut });
         FlxTween.tween(pin, { y: pin.y - 150 }, 0.8, { ease: FlxEase.quintOut });
-        FlxTween.tween(pin.scale, { x: 1, y: 1 }, 1.0, { ease: FlxEase.backOut });
+        FlxTween.tween(pin.scale, { x: targetScale, y: targetScale }, 1.0, { ease: FlxEase.backOut });
         new FlxTimer().start(closeTimer, function(_:FlxTimer) {
             canClose = true;
         });
