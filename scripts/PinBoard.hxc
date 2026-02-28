@@ -52,6 +52,7 @@ class PinBoard extends MusicBeatSubState
     var pinDescription:BAlphabet;
     var pinArtist:BAlphabet;
     var pinUnlockCount:BAlphabet;
+    var pinSource:BAlphabet;
 
     var unlockedPinsData;
     var unlockedPins:Int = 0;
@@ -147,6 +148,7 @@ class PinBoard extends MusicBeatSubState
                 }
                 pin.isUnlocked = isPinUnlocked;
                 pin.artist = pinData.artist;
+                pin.source = pinData.source;
                 pin.special = pinData.special ?? false;
                 pin.setupPin(pinData.id, pinData.name, pinData.description, pinData.scale);
                 add(pin);
@@ -196,6 +198,11 @@ class PinBoard extends MusicBeatSubState
         pinUnlockCount.setScale(0.3);
         add(pinUnlockCount);
 
+        pinSource = new BAlphabet(pinNameBox.x + pinNameBox.width - 10, pinNameBox.y + 10, "");
+        pinSource.setScale(0.3);
+        pinSource.alignment = "right";
+        add(pinSource);
+
         var menuUnlockedText = new BAlphabet(FlxG.width / 2, pinNameBox.y + pinNameBox.height + 20, "<b>Total Unlocked: " + unlockedPins + "/" + pinCount + "</b>");
         menuUnlockedText.setScale(0.5);
         menuUnlockedText.alignment = "center";
@@ -206,6 +213,7 @@ class PinBoard extends MusicBeatSubState
         pinDescription.cameras = [subCamHUD];
         pinArtist.cameras = [subCamHUD];
         pinUnlockCount.cameras = [subCamHUD];
+        pinSource.cameras = [subCamHUD];
         menuUnlockedText.cameras = [subCamHUD];
 
         var boardWidth:Float = pins[15].getGraphicMidpoint(pinMidpoint).x - pins[0].getGraphicMidpoint(pinMidpoint).x + 300;

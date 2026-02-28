@@ -26,5 +26,15 @@
         ],
         "cost": 40,
         "order": 1
+    },
+    {
+        "id": "bonusreward",
+        "name": "<c=FF4C50>Bonus Reward Box</c>",
+        "description": "This box contains a special reward!",
+        "revealTime": 26,
+        "chances": [ ],
+        "cost": 1000000000,
+        "order": -1,
+        "special": true
     }
 ]
