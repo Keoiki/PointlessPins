@@ -138,8 +138,8 @@ class PinBoard extends MusicBeatSubState
                 var pin:PinSprite = new PinSprite(pinX, pinY);
                 pin.position = [pinColumn, currentRow];
                 pin.rarity = PIN_RARITIES[i];
-                // var isPinUnlocked:Bool = unlockedPinsData.exists(pinData.id);
-                var isPinUnlocked:Bool = true;
+                var isPinUnlocked:Bool = unlockedPinsData.exists(pinData.id);
+                // var isPinUnlocked:Bool = true;
                 if (isPinUnlocked)
                 {
                     unlockedPins++;

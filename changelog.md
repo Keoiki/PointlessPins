@@ -11,6 +11,13 @@
     - 1 Epic
     - 2 Legendary
     - 1 Special
+- Added support for the following modded variations as Dailies:
+    - Remnants (Funkin' Remnants)
+    - Gooey (Gooey Mix)
+    - Reimu (Funkin' Incident)
+    - Spooky (Spooky Mix)
+    - QT (QT Rewired, mixes not out as of this update)
+    - Hundrec (Hundrec Mix, not out as of this update)
 
 ### Changed
 

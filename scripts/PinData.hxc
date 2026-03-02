@@ -61,18 +61,6 @@ class PointlessPins extends Module
     var menuPin;
     var menuPin2;
 
-    // Mod ID => [Variation ID(s)]
-    // This will only support mods I like or think that are cool :)
-    // This will also only be functional once proper mod ID's are implemented, since right now they're whatever the folder name is, which might not always be consistent.
-    static final supportedModdedVariations:StringMap = [
-        "Funkin' Remnants" => ["remnants", "bfremnants"],
-        "Gooey Mix" => ["gooey"],
-        "Spooky Mix" => ["spookymod"],
-        "Funkin' Incident" => ["reimu"],
-        "QT Rewired" => ["qt"],
-        "Hundrec Mix" => ["hundrec"]
-    ];
-
     static final penalties:Array<Float> = [1.0, 0.66, 0.33, 0.0, -0.5, -1];
     static final penaltyColors:Array<String> = ["FFFFFF", "FFAAAA", "FF5555", "FF0000", "AA0000", "550000"];
     static final opheliaAngerCooldown:Int = 1000 * 60 * 60 * 4;
@@ -322,7 +310,7 @@ class PointlessPins extends Module
         var dailyDateNum:Int = PointlessPins.save.dailyDate ?? -1;
         var date:Date = Date.now();
         var currentDate:Int = date.getDate();
-        // final allowedModdedVariations:Array<String> = PointlessPins.getAvailableModdedVariations();
+        final supportedModdedVariations:Array<String> = PointlessPins.getSupportedModdedVariations();
         if (dailyDateNum != currentDate)
         {
             var baseGameSongIDs:Array<String> = SongRegistry.instance.listBaseGameEntryIds();
@@ -330,15 +318,13 @@ class PointlessPins extends Module
             baseGameSongIDs.remove("tutorial"); // Boring.
             baseGameSongIDs.remove("spaghetti"); // I'm removing this out of spite for how many DAMN TIMES it has appeared. No game, I do NOT want SPAGHETTI (feat. j-hope of BTS) (Clean ver.) 4 days IN A ROW!
             var dailies:Array<String> = [];
-            for (i in 0...3)
+            for (i in 0...5)
             {
                 var songID:String = baseGameSongIDs[FlxG.random.int(0, baseGameSongIDs.length - 1)];
                 var songVariations:Array<String> = SongRegistry.instance.fetchEntry(songID).variations;
-                // Remove modded character remix variations, though modded songs for the default songs on default variations will still pass through.
-                // (Like a fanmade Blazin' Erect for example, in case the sentence above didn't make sense.)
                 songVariations = songVariations.filter(function(variationID:String):Bool
                 {
-                    return Constants.DEFAULT_VARIATION_LIST.contains(variationID);
+                    return Constants.DEFAULT_VARIATION_LIST.contains(variationID) || supportedModdedVariations.contains(variationID);
                 });
                 dailies.push(songID + "-" + songVariations[FlxG.random.int(0, songVariations.length - 1)]);
                 // Only one variation per song, thanks!
@@ -382,18 +368,19 @@ class PointlessPins extends Module
         Save.instance.setModOptions("keoiki.funkbucks", save);
     }
 
-    static function getAvailableModdedVariations():Array<String>
+    /**
+     * Supported modded variations:
+     * - Funkin' Remnants
+     * - Gooey Mix
+     * - Spooky Mix
+     * - Funkin' Incident (Reimu)
+     * - QT Rewired (Mixes not released yet.)
+     * - Hundrec Mix (Not released yet.)
+     * @return Array<String>
+     */
+    static function getSupportedModdedVariations():Array<String>
     {
-        var loadedMods:Array<String> = PolymodHandler.loadedModIds;
-        var availableModdedVariations:Array<String> = [];
-        for (id => variations in PointlessPins.supportedModdedVariations)
-        {
-            if (loadedMods.contains(id))
-            {
-                availableModdedVariations = availableModdedVariations.concat(variations);
-            }
-        }
-        return availableModdedVariations;
+        return ["remnants", "bfremnants", "gooey", "spookymod", "reimu", "qt", "hundrec"];
     }
 
     function onUpdate(event:UpdateScriptEvent):Void
