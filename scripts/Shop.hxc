@@ -117,7 +117,7 @@ class Shop extends MusicBeatState
 
         dailiesText = new BAlphabet(477 - spriteNudge, 66, formatDailySongs());
         dailiesText.alignment = "center";
-        dailiesText.setScale(0.5);
+        dailiesText.setScale(0.525);
         dailiesText.zIndex = -996;
         dailiesText.scrollFactor.set(0.85, 0.85);
         add(dailiesText);
@@ -845,33 +845,40 @@ class Shop extends MusicBeatState
         if (dailies.length > 0)
         {
             var dailiesList:String = "";
-            for (i in 0...3)
+            for (i in 0...5)
             {
                 if (i >= dailies.length)
                 {
                     dailiesList += "---";
-                    if (i < 2) dailiesList += "\n";
+                    if (i < 4) dailiesList += "\n";
                     continue;
                 }
-                var dailySongName:String = dailies[i].substring(0, dailies[i].lastIndexOf("-"));
+                var dailySongID:String = dailies[i].substring(0, dailies[i].lastIndexOf("-"));
                 var dailySongVariation:String = dailies[i].substring(dailies[i].lastIndexOf("-") + 1, dailies[i].length);
-                var dailySong:Array<SongMetadata> = SongRegistry.instance.fetchEntry(dailySongName);
-                var songNameToAdd:String = dailySong.songName.length > 10 ? dailySong.songName.substr(0, 10).trim() + "." : dailySong.songName;
-                var variationToAdd:String = "";
-                for (variation in dailySong.getRawMetadata())
+                var dailySong:Array<SongMetadata> = SongRegistry.instance.fetchEntry(dailySongID);
+                var songNameToAdd:String = dailySong.songName.length > 11 ? dailySong.songName.substr(0, 11).trim() + "." : dailySong.songName;
+                var variationToAdd:String = " ";
+                switch (dailySongVariation)
                 {
-                    if (variation.variation != dailySongVariation) continue;
-                    switch (variation.variation)
+                    case "default": // Nothing gets added to default variation names.
+                    case "erect": variationToAdd += "&#xE001;";
+                    case "bf": variationToAdd += "&#xE002;";
+                    case "pico": variationToAdd += "&#xE003;";
+                    case "hundrec": variationToAdd += "&#xE080;";
+                    case "gooey": variationToAdd += "&#xE081;";
+                    case "remnants": variationToAdd += '&#xE08${["darnell", "lit-up", "2hot", "blazin"].contains(dailySongID) ? "3" : "2"};';
+                    case "bfremnants": variationToAdd += "&#xE082;";
+                    case "reimu": variationToAdd += "&#xE084;";
+                    // case "qt": variationToAdd += "&#xE085;";
+                    // case "spookymod": variationToAdd += "&#xE086;";
+                    default:
                     {
-                        case "default": // Nothing gets added to default variation names.
-                        case "erect": variationToAdd = " &#xE001;";
-                        case "bf": variationToAdd = " &#xE002;";
-                        case "pico": variationToAdd = " &#xE003;";
-                        default: trace('Not a base variation, how\'d this get in here?? - ${variation.variation}');
+                        variationToAdd += '&#xFFFD;';
+                        trace('Not a base variation, how\'d this get in here?? - ${dailySongVariation}');
                     }
-                } 
+                }
                 dailiesList += songNameToAdd + variationToAdd;
-                if (i < 2) dailiesList += "\n";
+                if (i < 4) dailiesList += "\n";
             }
             return '<b><c=00FF00>Dailies</c>\n${dailiesList}</b>';
         }

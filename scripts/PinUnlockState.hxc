@@ -50,7 +50,7 @@ class PinUnlockState extends MusicBeatSubState
         else
         {
             var duplicatePinCount:Int = PointlessPins.getObtainedPins().get(pinData.id);
-            unlockMsgText = '<b>You got a <c=434253>duplicate ("$duplicatePinCount")</c> pin!</b>';
+            unlockMsgText = '<b>You got a <c=434253>duplicate ($duplicatePinCount)</c> pin!</b>';
         }
 
         var unlockMessage:BAlphabet = new BAlphabet(FlxG.width / 2, 420, unlockMsgText);
@@ -77,7 +77,7 @@ class PinUnlockState extends MusicBeatSubState
             add(unlockedPinDescription);
         }
 
-        var targetScale:Float = pinData.scale * 2 ?? 1.0;
+        var targetScale:Float = (pinData.scale ?? 0.5) * 2;
         FunkinSound.playOnce(Paths.sound("tickleFight"));
         FlxTween.tween(darkOverlay, { alpha: 0.85 }, 0.5, { ease: FlxEase.cubeOut });
         FlxTween.tween(pin, { y: pin.y - 150 }, 0.8, { ease: FlxEase.quintOut });

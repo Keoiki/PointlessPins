@@ -27,26 +27,29 @@ class RewardsSubMenu extends MusicBeatSubState
     final categories = [
         "funkbucks" => {
             name: "Total FunkBucks obtained.",
+            requirementIcon: "xE000",
             rewards: [
-                "funkbucks01" => {amount: 500, type: RewardType.BOX, reward: "cardboard"},
-                "funkbucks02" => {amount: 2500, type: RewardType.BOX, reward: "smallgiftbox"},
-                "funkbucks03" => {amount: 10000, type: RewardType.PIN, reward: "funkbuck"}
+                "funkbucks01" => {requirement: 500, type: RewardType.BOX, reward: "cardboard"},
+                "funkbucks02" => {requirement: 2500, type: RewardType.BOX, reward: "smallgiftbox"},
+                "funkbucks03" => {requirement: 10000, type: RewardType.PIN, reward: "funkbuck"}
             ]
         },
         "cardboard" => {
             name: "Total Cardboard Boxes opened.",
+            requirementIcon: "xE020",
             rewards: [
-                "cardboardbox01" => {amount: 50, type: RewardType.FUNKBUCK, reward: 100},
-                "cardboardbox02" => {amount: 100, type: RewardType.PIN, reward: "cardboardbox"},
-                "cardboardbox03" => {amount: 250, type: RewardType.FUNKBUCK, reward: 500}
+                "cardboardbox01" => {requirement: 50, type: RewardType.FUNKBUCK, reward: 100},
+                "cardboardbox02" => {requirement: 100, type: RewardType.PIN, reward: "cardboardbox"},
+                "cardboardbox03" => {requirement: 250, type: RewardType.FUNKBUCK, reward: 500}
             ]
         },
         "smallgiftbox" => {
             name: "Total Small Gift Boxes opened.",
+            requirementIcon: "xE021",
             rewards: [
-                "smallgiftbox01" => {amount: 50, type: RewardType.FUNKBUCK, reward: 250},
-                "smallgiftbox02" => {amount: 100, type: RewardType.PIN, reward: "smallgiftbox"},
-                "smallgiftbox03" => {amount: 250, type: RewardType.FUNKBUCK, reward: 1000}
+                "smallgiftbox01" => {requirement: 50, type: RewardType.FUNKBUCK, reward: 250},
+                "smallgiftbox02" => {requirement: 100, type: RewardType.PIN, reward: "smallgiftbox"},
+                "smallgiftbox03" => {requirement: 250, type: RewardType.FUNKBUCK, reward: 1000}
             ]
         }
     ];
@@ -169,7 +172,7 @@ class RewardsSubMenu extends MusicBeatSubState
             {
                 totalItems++;
                 if (totalItems < page * 9 || totalItems >= (page + 1) * 9) continue;
-                var item:RewardItem = new RewardItem(totalItems - 1, key, value.amount, value.type, value.reward);
+                var item:RewardItem = new RewardItem(totalItems - 1, key, value.requirement, value.type, value.reward);
                 item.x = 200 + 150 * item.position[0];
                 item.y = 200 + 100 * item.position[1];
                 add(item);
