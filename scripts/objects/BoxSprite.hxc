@@ -22,6 +22,7 @@ class BoxSprite extends FunkinSprite
     var price:Int;
     var revealTime:Int;
     var chances;
+    var rollsPins:Bool;
 
     var totalWeight:Int;
 
@@ -33,7 +34,8 @@ class BoxSprite extends FunkinSprite
         boxData = PointlessPins.boxData;
 
         super(x, y, "pointlesspins/boxes/" + boxData[0].id, {
-            applyStageMatrix: true
+            applyStageMatrix: true,
+            useRenderTexture: true
         });
         updateBoxInfo(0);
     }
@@ -52,6 +54,7 @@ class BoxSprite extends FunkinSprite
         price = boxData[boxDataIndex].cost;
         revealTime = boxData[boxDataIndex].revealTime;
         chances = boxData[boxDataIndex].chances;
+        rollsPins = boxData[boxDataIndex].rollsPins ?? false;
         totalWeight = 0;
 
         for (weight in chances)
@@ -73,7 +76,8 @@ class BoxSprite extends FunkinSprite
         if (change != 0)
         {
             loadTextureAtlas("pointlesspins/boxes/" + boxData[boxDataIndex].id, null, {
-                applyStageMatrix: true
+                applyStageMatrix: true,
+                useRenderTexture: true
             });
         }
     }
@@ -90,7 +94,9 @@ class BoxSprite extends FunkinSprite
         }
     }
 
-    public function rollRandomPin():PinData
+    public function rollRandomPin():PinData {}
+
+    public function rollRandomRarityPin():PinData
     {
         var rarities:Array<String> = getRarities();
         var odds:Array<Int> = getOdds();

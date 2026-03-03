@@ -265,7 +265,7 @@ class BoxSubMenu extends MusicBeatSubState
         _parentState.deductFunkBucks(box.price);
         PointlessPins.addOpenedBox(box.bID);
 
-        var randomPin:PinData = box.rollRandomPin();
+        var randomPin:PinData = box.rollRandomRarityPin();
         var unlockState:PinUnlockState = new PinUnlockState(randomPin);
         unlockState.closeCallback = closeBox;
         unlockState.cameras = [camera];

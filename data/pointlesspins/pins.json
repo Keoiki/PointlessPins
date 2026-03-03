@@ -58,7 +58,7 @@
         "color": "2A4DFF",
         "pins":
         [
-            { "id": "nessie-funkinnews", "name": "Nessie", "description": "Mascot for \"Funkin News\"" },
+            { "id": "nessie-funkinnews", "name": "Nessie", "source": "from \"Funkin News\" Twitter" },
             { "id": "ophelia", "name": "Ophelia", "description": "You'll stop annoying her now, right?" , "special": true },
             { "id": "funkbuck", "name": "FunkBuck", "description": "Your local currency!", "special": true },
             { "id": "pushpin", "name": "Pin", "description": "No! Wrong type of pin!" },
