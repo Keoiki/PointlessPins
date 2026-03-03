@@ -53,6 +53,7 @@ typedef BoxData = {
     chances:Array<Array<String, Int>>, // The numerical chance for each rarity as its WEIGHT. Double-check chances in the Box Menu to make sure they're correct.
     cost:Int,
     order:Float,
+    ?rollsPins:Bool, // Does the box directly roll pins? (optional, default: false)
     ?special:Bool // Is the box only obtainable by special means? This makes it not purchasable. (optional, default: false)
 }
 
@@ -341,24 +342,25 @@ class PointlessPins extends Module
         }
     }
 
-    public static function addObtainedMilestone(milestone:String):Void
+    public static function addClaimedMilestone(milestone:String):Void
     {
-        var obtainedMilestones:Array<String> = PointlessPins.getObtainedMilestones();
-        if (obtainedMilestones.contains(milestone))
+        var _obtainedMilestones:Array<String> = PointlessPins.getClaimedMilestones();
+        if (_obtainedMilestones.contains(milestone))
         {
             trace("User already obtained milestone: " + milestone);
             return;
         }
-        PointlessPins.save.obtainedMilestones = obtainedMilestones.push(milestone);
+        _obtainedMilestones.push(milestone);
+        PointlessPins.save.obtainedMilestones = _obtainedMilestones;
         PointlessPins.saveTheData();
     }
 
-    public static function hasObtainedMilestone(milestone:String):Bool
+    public static function hasClaimedMilestone(milestone:String):Bool
     {
-        return PointlessPins.getObtainedMilestones().contains(milestone);
+        return PointlessPins.getClaimedMilestones().contains(milestone);
     }
 
-    public static function getObtainedMilestones():Array<String>
+    public static function getClaimedMilestones():Array<String>
     {
         return PointlessPins.save.obtainedMilestones ?? [];
     }
@@ -408,6 +410,13 @@ class PointlessPins extends Module
             if (FlxG.keys.justPressed.P || TouchUtil.pressAction(menuPin))
             {
                 FlxG.switchState(new Shop());
+            }
+
+            if (FlxG.keys.justPressed.Q)
+            {
+                // PointlessPins.save.obtainedMilestones = [];
+                // PointlessPins.saveTheData();
+                trace(PointlessPins.getClaimedMilestones());
             }
 
             if (FlxG.keys.justPressed.J)

@@ -31,6 +31,8 @@ class Shop extends MusicBeatState
     var cameraFollowPoint:FlxObject;
     var justGainedFocus:Bool = false;
 
+    var buckSound:FunkinSound;
+
     // Dialogue
     var canContinue:Bool = false;
     var dialogueBar:FunkinSprite;
@@ -103,6 +105,13 @@ class Shop extends MusicBeatState
             persist: true
         });
 
+        buckSound = new FunkinSound();
+        buckSound.loadEmbedded(Paths.sound("fav"));
+        buckSound.volume = 0.35;
+
+        FlxG.sound.defaultSoundGroup.add(buckSound);
+        FlxG.sound.list.add(buckSound);
+
         // Shop
 
         wall = new FunkinSprite(-700 - spriteNudge, -220).loadTexture("shop/wall");
@@ -121,6 +130,11 @@ class Shop extends MusicBeatState
         dailiesText.zIndex = -996;
         dailiesText.setScrollFactor(0.85, 0.85);
         add(dailiesText);
+
+        var rewardsshelf:FunkinSprite = new FunkinSprite(1120 - spriteNudge, 35).loadTexture("shop/rewardsshelf");
+        rewardsshelf.zIndex = -995;
+        rewardsshelf.scrollFactor.set(0.85, 0.85);
+        add(rewardsshelf);
 
         lighting = new FunkinSprite(wall.x, wall.y).loadTexture("shop/lighting");
         lighting.zIndex = -900;
@@ -168,9 +182,14 @@ class Shop extends MusicBeatState
         randombox03.zIndex = 489;
         add(randombox03);
 
+        counterItems.push(fbStack01);
+        counterItems.push(fbStack02);
+        counterItems.push(fbStack03);
+        counterItems.push(randombox03);
+
         for (i in 0...3)
         {
-            var lamp:FunkinSprite = new FunkinSprite(40 + (i * 640) - spriteNudge, -270, "shop/lamp");
+            var lamp:FunkinSprite = new FunkinSprite(40 + (i * 640) - spriteNudge, -330, "shop/lamp");
             lamp.zIndex = 1000;
             lamp.scrollFactor.set(1.1, 1.1);
             add(lamp);
@@ -426,20 +445,24 @@ class Shop extends MusicBeatState
         if (FlxG.keys.justPressed.THREE || (TouchUtil.pressAction(lableRewards) && !isMouseTooFast && !TouchUtil.overlaps(coolBackButton, cameraHUD)))
         {
             disallowInputs = true;
-            cameraFollowPoint.setPosition(lableRewards.x - 10, 275);
+            cameraFollowPoint.setPosition(lableRewards.x - 10, 320);
             showMenuItems(false);
+            ophelia.playAnimation("IdleHandDown", true, true);
 
             var substate = new RewardsSubMenu();
             substate.closeCallback = function()
             {
+                ophelia.playAnimation("Idle", true, true);
                 FlxTween.tween(coolBackButton, { alpha: 0.5 }, 1, { ease: FlxEase.cubeOut });
+                FlxTween.tween(counter, { alpha: 1 }, 1, { ease: FlxEase.cubeIn });
                 FlxTween.tween(camera, { zoom: 1 }, 1, { ease: FlxEase.cubeOut });
                 showMenuItems();
             }
             substate.cameras = [cameraSubState];
 
             FlxTween.tween(coolBackButton, { alpha: 0 }, 1, { ease: FlxEase.cubeIn });
-            FlxTween.tween(camera, { zoom: 1.5 }, 1, { ease: FlxEase.cubeOut, onComplete: function()
+            FlxTween.tween(counter, { alpha: 0 }, 1, { ease: FlxEase.cubeIn });
+            FlxTween.tween(camera, { zoom: 1.2 }, 1, { ease: FlxEase.cubeOut, onComplete: function()
             {
                 openSubState(substate);
             }});
@@ -793,6 +816,7 @@ class Shop extends MusicBeatState
         var currentFunkBucks:Int = previousFunkBucks = PointlessPins.getFunkCoins();
         var remainingFunkBucks:Int = currentFunkBucks - amount;
 
+        buckSound.pitch = 1.0;
         var easeToUse:FlxEase = amount >= 500 ? FlxEase.expoOut : FlxEase.quartOut;
         FlxTween.num(currentFunkBucks, remainingFunkBucks, 2.5, { ease: easeToUse, onComplete: function(_) {
             funkBucksText.text = '<b>${Math.floor(remainingFunkBucks)}</b> &#xE000;';
@@ -806,10 +830,11 @@ class Shop extends MusicBeatState
         var currentFunkBucks:Int = previousFunkBucks = PointlessPins.getFunkCoins();
         var remainingFunkBucks:Int = currentFunkBucks + amount;
 
+        buckSound.pitch = 0.5;
         var easeToUse:FlxEase = amount >= 500 ? FlxEase.expoOut : FlxEase.quartOut;
         FlxTween.num(currentFunkBucks, remainingFunkBucks, 2.5, { ease: easeToUse, onComplete: function(_) {
             funkBucksText.text = '<b>${Math.floor(remainingFunkBucks)}</b> &#xE000;';
-        }}, updateFunkBucks);
+        }}, increaseFunkBucks);
 
         PointlessPins.addFunkCoins(amount, false);
     }
@@ -820,7 +845,18 @@ class Shop extends MusicBeatState
         {
             funkBucksText.text = '<b>${Math.floor(value)}</b> &#xE000;';
             funkBucksText.y += 7;
-            FunkinSound.playOnce(Paths.sound("fav"), 0.5);
+            FunkinSound.playOnce(Paths.sound("fav"), 0.35);
+        }
+        previousFunkBucks = Math.floor(value);
+    }
+
+    function increaseFunkBucks(value:Float):Void
+    {
+        if (previousFunkBucks != Math.floor(value))
+        {
+            funkBucksText.text = '<b>${Math.floor(value)}</b> &#xE000;';
+            funkBucksText.y -= 2;
+            buckSound.play(true);
         }
         previousFunkBucks = Math.floor(value);
     }

@@ -329,6 +329,7 @@ class PinBoard extends MusicBeatSubState
         {
             pinDescription.alpha = 0;
             pinArtist.alpha = 0;
+            pinSource.alpha = 0;
             pinUnlockCount.alpha = 0;
             pinName.y = pinNameBox.y + 40;
             if (!availablePin.isUnlocked)
@@ -350,6 +351,11 @@ class PinBoard extends MusicBeatSubState
                 {
                     pinArtist.text = 'Created by: ${availablePin.artist}';
                     pinArtist.alpha = 1;
+                }
+                if (availablePin.source != null)
+                {
+                    pinSource.text = availablePin.source;
+                    pinSource.alpha = 1;
                 }
                 pinName.text = availablePin.name;
 
