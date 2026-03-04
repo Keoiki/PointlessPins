@@ -9,6 +9,7 @@ import funkin.ui.MusicBeatSubState;
 import funkin.modding.base.ScriptedFlxSpriteGroup;
 import funkin.mobile.ui.FunkinBackButton;
 import funkin.graphics.FunkinSprite;
+import funkin.audio.FunkinSound;
 import flixel.util.FlxTimer;
 import flixel.util.FlxSort;
 import flixel.tweens.FlxTween;
@@ -139,7 +140,7 @@ class RewardsSubMenu extends MusicBeatSubState
 
         var isMouseTooFast:Bool = FlxG.onMobile ? false : Math.abs(FlxG.mouse.deltaViewX) > 2 || Math.abs(FlxG.mouse.deltaViewY) > 2;
 
-        coolBackButton.visible = FlxG.onMobile ? true : PointlessPins.isMouseActive;
+        coolBackButton.visible = !allowedMovement ? false : (FlxG.onMobile ? true : PointlessPins.isMouseActive);
 
         if (prevMouseActive != PointlessPins.isMouseActive)
         {
@@ -441,6 +442,10 @@ class RewardsSubMenu extends MusicBeatSubState
                         }
                     }
                 }
+                else
+                {
+                    FunkinSound.playOnce(Paths.sound("CS_locked"));
+                }
             }
         }
 
@@ -460,6 +465,12 @@ class RewardsSubMenu extends MusicBeatSubState
 
         POSITION = POSITION_ARRAY[0] + (POSITION_ARRAY[1] * 3) + (PAGE * 9);
         */
+    }
+
+    override function destroy():Void
+    {
+        if (!FlxG.onMobile) FlxMouseEvent.remove(coolBackButton);
+        super.destroy();
     }
 }
 
