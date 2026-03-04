@@ -80,7 +80,7 @@
         "color": "FFB51C",
         "pins":
         [
-            { "id": "hundrec", "name": "Hundrec", "description": "Production Manager for The Funkin Crew Inc." },
+            { "id": "hundrec", "name": "Hundrec", "description": "\"This is Hundrec, Production Manager for The Funkin' Crew.\"" },
             { "id": "rank-goldperfect", "name": "Golden Perfect Rank", "description": "Obtained by completing a song with the Golden Perfect rank.", "special": true }
         ]
     },

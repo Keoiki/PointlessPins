@@ -896,7 +896,7 @@ class Shop extends MusicBeatState
                 var variationToAdd:String = " ";
                 switch (dailySongVariation)
                 {
-                    case "default": // Nothing gets added to default variation names.
+                    case "default": variationToAdd = ""; // Nothing gets added to default variation names.
                     case "erect": variationToAdd += "&#xE001;";
                     case "bf": variationToAdd += "&#xE002;";
                     case "pico": variationToAdd += "&#xE003;";
