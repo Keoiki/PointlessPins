@@ -1,4 +1,4 @@
-# PointlessPins
+# Pointless Pins
 
 **Time to test your luck!**
 

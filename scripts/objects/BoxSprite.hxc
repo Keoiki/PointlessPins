@@ -26,7 +26,8 @@ class BoxSprite extends FunkinSprite
 
     var totalWeight:Int;
 
-    var priceModifier:Float = 1.0;
+    var angerModifier:Float = 1.0;
+    var discountModifier:Float = 1.0;
 
     override function new(x:Float, y:Float)
     {
@@ -72,6 +73,10 @@ class BoxSprite extends FunkinSprite
         {
             priceModifier = 1.0;
         }
+
+        var discount:Float = PointlessPins.getBoxDiscount();
+        price = FlxMath.roundDecimal(price * discount, 0);
+        discountModifier = (1 - discount) * 100;
 
         if (change != 0)
         {
