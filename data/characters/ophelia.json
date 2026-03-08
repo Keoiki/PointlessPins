@@ -1,0 +1,31 @@
+{
+    "version": "1.0.0",
+    "name": "Ophelia",
+    "renderType": "animateatlas",
+    "assetPath": "shared:characters/ophelia",
+    "offsets": [0, -10],
+    "cameraOffsets": [50, -20],
+    "animations":
+    [
+        {
+            "name": "idle",
+            "prefix": "Idle"
+        },
+        {
+            "name": "singLEFT",
+            "prefix": "Left"
+        },
+        {
+            "name": "singDOWN",
+            "prefix": "Down"
+        },
+        {
+            "name": "singUP",
+            "prefix": "Up"
+        },
+        {
+            "name": "singRIGHT",
+            "prefix": "Right"
+        }
+    ]
+}

@@ -72,6 +72,7 @@ class Shop extends MusicBeatState
 
     // UI
     var funkBucksText:BAlphabet;
+    var blueJewelsText:BAlphabet;
     var screenBlack:FunkinSprite;
     
     var updateText:BAlphabet;
@@ -228,9 +229,10 @@ class Shop extends MusicBeatState
         lableExchange.setScale(0.65);
         lableExchange.zIndex = 516;
         add(lableExchange);
+        lableExchange.color = 0xFF404040;
 
-        // keycapExchange = new LetterKeyCap(lableExchange.x - 45, 570, "3", false);
-        // keycapExchange.zIndex = 518;
+        keycapExchange = new LetterKeyCap(lableExchange.x - 45, 570, "3", false);
+        keycapExchange.zIndex = 518;
         // add(keycapExchange);
 
         lableRewards = new BAlphabet(1700 - spriteNudge, 520, "<b><c=404040>Rewards\n<s=0.5>(Coming Soon)</s></c></b>");
@@ -238,6 +240,10 @@ class Shop extends MusicBeatState
         lableRewards.setScale(0.65);
         lableRewards.zIndex = 514;
         add(lableRewards);
+
+        keycapRewards = new LetterKeyCap(lableRewards.x - 45, 570, "4", false);
+        keycapRewards.zIndex = 520;
+        add(keycapRewards);
 
         counterItems.push(iconPins);
         counterItems.push(iconBoxes);
@@ -249,8 +255,8 @@ class Shop extends MusicBeatState
         counterItems.push(lableExchange);
         counterItems.push(keycapPins);
         counterItems.push(keycapBoxes);
-        // counterItems.push(keycapRewards);
-        // counterItems.push(keycapExchange);
+        counterItems.push(keycapRewards);
+        counterItems.push(keycapExchange);
 
         // UI
 
@@ -260,10 +266,16 @@ class Shop extends MusicBeatState
         add(screenBlack);
 
         funkBucksText = new BAlphabet(FlxG.width - 20, 25, "<b>" + PointlessPins.getFunkCoins() + "</b> &#xE000;");
-        funkBucksText.setScale(0.75);
+        funkBucksText.setScale(0.65);
         funkBucksText.alignment = "right";
         funkBucksText.scrollFactor.set(0, 0);
         add(funkBucksText);
+
+        blueJewelsText = new BAlphabet(FlxG.width - 20, funkBucksText.y + 70, '<b><c=82E9FF>${PointlessPins.getBlueJewels()}<s=0.5>/${PointlessPins.maximumBlueJewels}</s></c></b> &#xE001;');
+        blueJewelsText.setScale(0.65);
+        blueJewelsText.alignment = "right";
+        blueJewelsText.scrollFactor.set(0, 0);
+        add(blueJewelsText);
 
         dialogueBar = new FunkinSprite(0, 32).makeSolidColor(FlxG.width, 96, 0xFF000000);
         dialogueBar.alpha = 0.0;
@@ -300,6 +312,7 @@ class Shop extends MusicBeatState
 
         screenBlack.cameras = [cameraHUD];
         funkBucksText.cameras = [cameraHUD];
+        blueJewelsText.cameras = [cameraHUD];
         dialogueBar.cameras = [cameraHUD];
         dialogueText.cameras = [cameraHUD];
         coolBackButton.cameras = [cameraHUD];
@@ -387,6 +400,7 @@ class Shop extends MusicBeatState
                 FlxTween.tween(coolBackButton, { alpha: 0.5 }, 1, { ease: FlxEase.cubeOut });
                 FlxTween.tween(camera, { zoom: 1 }, 1, { ease: FlxEase.cubeOut });
                 FlxTween.tween(funkBucksText, { alpha: 1 }, 1, { ease: FlxEase.cubeOut });
+                FlxTween.tween(blueJewelsText, { alpha: 1 }, 1, { ease: FlxEase.cubeOut });
                 FlxTween.tween(screenBlack, { alpha: 0 }, 1, { ease: FlxEase.cubeOut });
             };
             substate.cameras = [cameraSubState];
@@ -394,6 +408,7 @@ class Shop extends MusicBeatState
             FlxTween.tween(coolBackButton, { alpha: 0 }, 1, { ease: FlxEase.cubeIn });
             FlxTween.tween(camera, { zoom: 1.5 }, 1, { ease: FlxEase.cubeIn });
             FlxTween.tween(funkBucksText, { alpha: 0 }, 1, { ease: FlxEase.cubeIn });
+            FlxTween.tween(blueJewelsText, { alpha: 0 }, 1, { ease: FlxEase.cubeIn });
             FlxTween.tween(screenBlack, { alpha: 0.8 }, 1, { ease: FlxEase.cubeIn, onComplete: function()
             {
                 openSubState(substate);
@@ -413,6 +428,7 @@ class Shop extends MusicBeatState
             {
                 FlxTween.tween(coolBackButton, { alpha: 0.5 }, 1, { ease: FlxEase.cubeOut });
                 FlxTween.tween(camera, { zoom: 1 }, 1, { ease: FlxEase.cubeOut });
+                FlxTween.tween(blueJewelsText, { alpha: 1 }, 1, { ease: FlxEase.cubeOut });
                 FlxTween.tween(screenBlack, { alpha: 0 }, 1, { ease: FlxEase.cubeOut });
                 showMenuItems();
             }
@@ -420,6 +436,7 @@ class Shop extends MusicBeatState
 
             FlxTween.tween(coolBackButton, { alpha: 0 }, 1, { ease: FlxEase.cubeIn });
             FlxTween.tween(screenBlack, { alpha: 0.5 }, 1, { ease: FlxEase.cubeIn });
+            FlxTween.tween(blueJewelsText, { alpha: 0 }, 1, { ease: FlxEase.cubeIn });
             FlxTween.tween(camera, { zoom: 0.9 }, 1, { ease: FlxEase.cubeOut, onComplete: function()
             {
                 openSubState(substate);
@@ -442,7 +459,7 @@ class Shop extends MusicBeatState
 
         // Rewards
 
-        if (FlxG.keys.justPressed.THREE || (TouchUtil.pressAction(lableRewards) && !isMouseTooFast && !TouchUtil.overlaps(coolBackButton, cameraHUD)))
+        if (FlxG.keys.justPressed.FOUR || (TouchUtil.pressAction(lableRewards) && !isMouseTooFast && !TouchUtil.overlaps(coolBackButton, cameraHUD)))
         {
             disallowInputs = true;
             cameraFollowPoint.setPosition(lableRewards.x - 10, 320);
@@ -611,6 +628,7 @@ class Shop extends MusicBeatState
                 cameraFollowPoint.setPosition(opheliaHitbox.x + opheliaHitbox.width / 2, opheliaHitbox.y + 115);
                 FlxTween.tween(camera, { zoom: 1.5 }, 1, { ease: FlxEase.cubeOut });
                 FlxTween.tween(funkBucksText, { alpha: 0 }, 1, { ease: FlxEase.cubeOut });
+                FlxTween.tween(blueJewelsText, { alpha: 0 }, 1, { ease: FlxEase.cubeOut });
                 new FlxTimer().start(4, function(_:FlxTimer) {
                     canContinue = true;
                 });
@@ -677,6 +695,7 @@ class Shop extends MusicBeatState
             showMenuItems(true);
             FlxTween.tween(camera, { zoom: 1 }, 1, { ease: FlxEase.cubeOut });
             FlxTween.tween(funkBucksText, { alpha: 1 }, 1, { ease: FlxEase.cubeOut });
+            FlxTween.tween(blueJewelsText, { alpha: 1 }, 1, { ease: FlxEase.cubeOut });
         }
         new FlxTimer().start(70 / 24, (_:FlxTimer) -> {
             FlxTween.tween(cameraFollowPoint, { x: cameraFollowPoint.x - 100, y: cameraFollowPoint.y + 50 }, 14 / 24, { ease: FlxEase.cubeOut });
@@ -706,6 +725,7 @@ class Shop extends MusicBeatState
                 cameraFollowPoint.setPosition(opheliaHitbox.x + opheliaHitbox.width / 2, opheliaHitbox.y + 100);
                 FlxTween.tween(camera, { zoom: 1.5 }, 1, { ease: FlxEase.cubeOut });
                 FlxTween.tween(funkBucksText, { alpha: 0 }, 1, { ease: FlxEase.cubeOut });
+                FlxTween.tween(blueJewelsText, { alpha: 0 }, 1, { ease: FlxEase.cubeOut });
                 coolBackButton.visible = false;
                 new FlxTimer().start(3, function(_:FlxTimer) {
                     canContinue = true;
@@ -741,6 +761,7 @@ class Shop extends MusicBeatState
                 dialogueBar.alpha = 0;
                 FlxTween.tween(camera, { zoom: 1 }, 1, { ease: FlxEase.cubeOut });
                 FlxTween.tween(funkBucksText, { alpha: 1 }, 1, { ease: FlxEase.cubeOut });
+                FlxTween.tween(blueJewelsText, { alpha: 1 }, 1, { ease: FlxEase.cubeOut });
                 dialogueCount = -1;
             }
         }
@@ -764,6 +785,7 @@ class Shop extends MusicBeatState
                 cameraFollowPoint.setPosition(opheliaHitbox.x + opheliaHitbox.width / 2, opheliaHitbox.y + 100);
                 FlxTween.tween(camera, { zoom: 1.5 }, 1, { ease: FlxEase.cubeOut });
                 FlxTween.tween(funkBucksText, { alpha: 0 }, 1, { ease: FlxEase.cubeOut });
+                FlxTween.tween(blueJewelsText, { alpha: 0 }, 1, { ease: FlxEase.cubeOut });
                 coolBackButton.visible = false;
                 new FlxTimer().start(2.5, function(_:FlxTimer) {
                     canContinue = true;
@@ -805,6 +827,7 @@ class Shop extends MusicBeatState
                 dialogueBar.alpha = 0;
                 FlxTween.tween(camera, { zoom: 1 }, 1, { ease: FlxEase.cubeOut });
                 FlxTween.tween(funkBucksText, { alpha: 1 }, 1, { ease: FlxEase.cubeOut });
+                FlxTween.tween(blueJewelsText, { alpha: 1 }, 1, { ease: FlxEase.cubeOut });
                 dialogueCount = -1;
             }
         }
@@ -844,7 +867,7 @@ class Shop extends MusicBeatState
         if (previousFunkBucks != Math.floor(value))
         {
             funkBucksText.text = '<b>${Math.floor(value)}</b> &#xE000;';
-            funkBucksText.y += 7;
+            funkBucksText.y += 5;
             FunkinSound.playOnce(Paths.sound("fav"), 0.35);
         }
         previousFunkBucks = Math.floor(value);
@@ -877,12 +900,12 @@ class Shop extends MusicBeatState
         if (dailies.length > 0)
         {
             var dailiesList:String = "";
-            for (i in 0...5)
+            for (i in 0...PointlessPins.dailySongCount)
             {
                 if (i >= dailies.length)
                 {
                     dailiesList += "---";
-                    if (i < 4) dailiesList += "\n";
+                    if (i < PointlessPins.dailySongCount - 1) dailiesList += "\n";
                     continue;
                 }
                 var dailySongID:String = dailies[i].substring(0, dailies[i].lastIndexOf("-"));
@@ -893,9 +916,9 @@ class Shop extends MusicBeatState
                 switch (dailySongVariation)
                 {
                     case "default": variationToAdd = ""; // Nothing gets added to default variation names.
-                    case "erect": variationToAdd += "&#xE001;";
-                    case "bf": variationToAdd += "&#xE002;";
-                    case "pico": variationToAdd += "&#xE003;";
+                    case "erect": variationToAdd += "&#xE002;";
+                    case "bf": variationToAdd += "&#xE003;";
+                    case "pico": variationToAdd += "&#xE004;";
                     case "hundrec": variationToAdd += "&#xE080;";
                     case "gooey": variationToAdd += "&#xE081;";
                     case "remnants": variationToAdd += '&#xE08${["darnell", "lit-up", "2hot", "blazin"].contains(dailySongID) ? "3" : "2"};';
@@ -910,7 +933,7 @@ class Shop extends MusicBeatState
                     }
                 }
                 dailiesList += songNameToAdd + variationToAdd;
-                if (i < 4) dailiesList += "\n";
+                if (i < PointlessPins.dailySongCount - 1) dailiesList += "\n";
             }
             return '<b><c=00FF00>Dailies</c>\n${dailiesList}</b>';
         }
