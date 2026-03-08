@@ -198,7 +198,6 @@ class RewardsSubMenu extends MusicBeatSubState
             categoryItems.sort((a, b) -> {
                 return FlxSort.byValues(-1, a.requirement, b.requirement);
             });
-            trace(categoryItems[0]);
             for (ind => value in categoryItems)
             {
                 totalItems++;
@@ -613,4 +612,6 @@ enum RewardType
     BOX;
     FUNKBUCK;
     SONG;
+    BOX_DISCOUNT;
+    FUNKBUCK_BONUS;
 }

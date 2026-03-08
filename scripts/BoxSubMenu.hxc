@@ -170,7 +170,7 @@ class BoxSubMenu extends MusicBeatSubState
                 {
                     STATE = "CONFIRMING";
                     updatePurchaseLable();
-                    FunkinSound.playOnce(Paths.sound("chartingSounds/noteLay"));
+                    FunkinSound.playOnce(Paths.sound("unfav"));
                     FlxTween.tween(boxPurchaseLable, { y: boxPurchaseLable.y - 10 }, 0.6, { ease: FlxEase.backOut, type: 16 });
                 }
             case "CONFIRMING":
@@ -230,20 +230,23 @@ class BoxSubMenu extends MusicBeatSubState
         boxName.text = '<b>${box.name}</b>';
         boxDescription.text = box.description;
 
-        if (box.priceModifier == 1.0)
+        var boxPriceText:String = '<b>${box.price} &#xE000;</b>\n';
+        if (box.angerModifier > 1.0)
         {
-            boxPrice.text = '<b>${box.price} &#xE000;</b>';
+            boxPriceText += '<b><s=0.75>(&#xE010; <c=FF0000>x${box.angerModifier}</c>)</s></b>';
         }
-        else
+        if (box.discountModifier > 0.0)
         {
-            boxPrice.text = '<b>${box.price} &#xE000; <s=0.75>(&#xE010; <c=FF0000>x${box.priceModifier}</c>)</s></b>';
+            if (box.angerModifier > 1.0) boxPriceText += " ";
+            boxPriceText += '<b><s=0.75>(<c=00FF00>-${box.discountModifier}%</c>)</s></b>';
         }
+        boxPrice.text = boxPriceText;
 
         var boxOddsText = "";
         for (i in 0...box.chances.length)
         {
             var rarityColor:String = ReflectUtil.getAnonymousField(PointlessPins.pinData, box.chances[i][0]).color;
-            boxOddsText += "<c=" + rarityColor + ">" + box.chances[i][0] + "</c>: " + FlxMath.roundDecimal(box.chances[i][1] / box.totalWeight * 100, 2) + "%";
+            boxOddsText += '<c=$rarityColor>${box.chances[i][0]}</c>: ${FlxMath.roundDecimal(box.chances[i][1] / box.totalWeight * 100, 2)}%';
             if (i < box.chances.length - 1) boxOddsText += "\n";
         }
         boxOdds.text = boxOddsText;

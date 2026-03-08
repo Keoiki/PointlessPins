@@ -15,17 +15,17 @@
     - Remnants (Funkin' Remnants)
     - Gooey (Gooey Mix)
     - Reimu (Funkin' Incident)
-    - Spooky (Spooky Mix)
-    - QT (QT Rewired, mixes not out as of this update)
-    - Hundrec (Hundrec Mix, not out as of this update)
+    - Spooky Kids (Spooky Mix)
+    - QT (QT Rewired, futureproof)
+    - Hundrec (Hundrec Mix, futureproof)
 
 ### Changed
 
 - The box purchase confirmation is more clearly indicated.
-- The FunkBuck text in the Results now show up faster and follow the coloring scheme used for the Modifier lable.
-- Increased the Cardboard Box price from 10 to 15 FunkBucks.
+- The FunkBuck text in the Results now show up faster and follows the coloring scheme used for the Modifier lable.
+- Increased the Cardboard Box price from 10 to 20 FunkBucks.
 - Added a 1% to get a Rare from Cardboard Boxes.
-- Increased the Small Giftbox price from 25 to 40 FunkBucks.
+- Increased the Small Giftbox price from 25 to 50 FunkBucks.
 - Added a 0.5% to get a Legendary from Small Giftboxes.
 
 ### Removed

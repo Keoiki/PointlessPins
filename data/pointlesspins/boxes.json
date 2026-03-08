@@ -9,7 +9,7 @@
             [ "Uncommon", 100 ],
             [ "Rare", 10 ]
         ],
-        "cost": 15,
+        "cost": 20,
         "order": 0
     },
     {
@@ -18,13 +18,13 @@
         "description": "Oooh, I wonder what's inside!\nIt's a pin, yeah.",
         "revealTime": 26,
         "chances": [
-            [ "Common", 744 ],
-            [ "Uncommon", 200 ],
+            [ "Common", 594 ],
+            [ "Uncommon", 350 ],
             [ "Rare", 50 ],
             [ "Legendary", 5 ],
             [ "Mythic", 1 ]
         ],
-        "cost": 40,
+        "cost": 50,
         "order": 1
     },
     {
