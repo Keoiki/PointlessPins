@@ -96,11 +96,10 @@ class BoxSubMenu extends MusicBeatSubState
 
         coolBackButton = new FunkinBackButton(FlxG.width - 220, FlxG.height / 2, 0xFFFFFFFF, goBack, 1.0, true);
         coolBackButton.y -= coolBackButton.height / 2;
-        if (!FlxG.onMobile)
-        {
-            coolBackButton.visible = PointlessPins.isMouseActive;
-            FlxMouseEvent.add(coolBackButton, coolBackButton.playHoldAnim, coolBackButton.playConfirmAnim);
-        }
+        #if !mobile
+        coolBackButton.visible = PointlessPins.isMouseActive;
+        FlxMouseEvent.add(coolBackButton, coolBackButton.playHoldAnim, coolBackButton.playConfirmAnim);
+        #end
         add(coolBackButton);
 
         updateBoxInfoText();
@@ -120,24 +119,22 @@ class BoxSubMenu extends MusicBeatSubState
             goBack();
         }
 
-        var isMouseTooFast:Bool = FlxG.onMobile ? false : Math.abs(FlxG.mouse.deltaViewX) > 2 || Math.abs(FlxG.mouse.deltaViewY) > 2;
-
-        if (controls.UI_LEFT_P || (TouchUtil.pressAction(leftArrowHitbox, camera) && !isMouseTooFast))
+        if (controls.UI_LEFT_P || (TouchUtil.pressAction(leftArrowHitbox, camera) && !PointlessPins.isMouseTooFast))
         {
             changeSelection(-1);
         }
 
-        if (controls.UI_RIGHT_P || (TouchUtil.pressAction(rightArrowHitbox, camera) && !isMouseTooFast))
+        if (controls.UI_RIGHT_P || (TouchUtil.pressAction(rightArrowHitbox, camera) && !PointlessPins.isMouseTooFast))
         {
             changeSelection(1);
         }
 
-        if (controls.ACCEPT_P || (TouchUtil.pressAction(boxHitbox, camera) && !isMouseTooFast))
+        if (controls.ACCEPT_P || (TouchUtil.pressAction(boxHitbox, camera) && !PointlessPins.isMouseTooFast))
         {
             pressedAccept();
         }
 
-        coolBackButton.visible = FlxG.onMobile ? true : PointlessPins.isMouseActive;
+        coolBackButton.visible = #if mobile true; #else PointlessPins.isMouseActive; #end
 
         if (prevMouseActive != PointlessPins.isMouseActive)
         {

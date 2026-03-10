@@ -32,14 +32,11 @@ class FunkBucksModifierLable extends Module
 
     function get_isEndlessOn():Bool
     {
-        if (ModuleHandler.getModule("EndlessMode") != null)
-        {
-            return EndlessStatus.incompatibleSong ? false : EndlessStatus.isEndless;
-        }
-        else
-        {
-            return false;
-        }
+        #if keoiki_endlessmode
+        return EndlessStatus.incompatibleSong ? false : EndlessStatus.isEndless;
+        #else
+        return false;
+        #end
     }
 
     public function new():Void
@@ -110,7 +107,9 @@ class FunkBucksModifierLable extends Module
         modifierText.alignment = "right";
         FlxG.state.add(modifierText);
 
-        if (FlxG.onMobile) modifierText.x = FlxG.state.backButton.x - 20;
+        #if mobile 
+        modifierText.x = FlxG.state.backButton.x - 20;
+        #end
 
         addedToState = true;
     }
