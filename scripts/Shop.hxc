@@ -206,10 +206,6 @@ class Shop extends MusicBeatState
         lablePins.zIndex = 510;
         add(lablePins);
 
-        keycapPins = new LetterKeyCap(lablePins.x - 45, 570, "1", false);
-        keycapPins.zIndex = 512;
-        add(keycapPins);
-
         iconBoxes = new FunkinSprite(440 - spriteNudge, 356).loadTexture("shop/iconboxes");
         iconBoxes.zIndex = 491;
         add(iconBoxes);
@@ -220,30 +216,18 @@ class Shop extends MusicBeatState
         lableBoxes.zIndex = 512;
         add(lableBoxes);
 
-        keycapBoxes = new LetterKeyCap(lableBoxes.x - 45, 570, "2", false);
-        keycapBoxes.zIndex = 514;
-        add(keycapBoxes);
-
-        lableExchange = new BAlphabet(1200 - spriteNudge, 520, "<b><c=404040>Exchange\n<s=0.5>(Coming Soon)</s></c></b>");
+        lableExchange = new BAlphabet(1200 - spriteNudge, 520, "<b>Exchange\n<s=0.5>(Not yet, sorry!)</s></b>");
         lableExchange.alignment = "center";
         lableExchange.setScale(0.65);
         lableExchange.zIndex = 516;
         add(lableExchange);
         lableExchange.color = 0xFF404040;
 
-        keycapExchange = new LetterKeyCap(lableExchange.x - 45, 570, "3", false);
-        keycapExchange.zIndex = 518;
-        // add(keycapExchange);
-
-        lableRewards = new BAlphabet(1700 - spriteNudge, 520, "<b><c=404040>Rewards\n<s=0.5>(Coming Soon)</s></c></b>");
+        lableRewards = new BAlphabet(1560 - spriteNudge, 520, "<b>Rewards</b>");
         lableRewards.alignment = "center";
         lableRewards.setScale(0.65);
         lableRewards.zIndex = 514;
         add(lableRewards);
-
-        keycapRewards = new LetterKeyCap(lableRewards.x - 45, 570, "4", false);
-        keycapRewards.zIndex = 520;
-        add(keycapRewards);
 
         counterItems.push(iconPins);
         counterItems.push(iconBoxes);
@@ -253,11 +237,29 @@ class Shop extends MusicBeatState
         counterItems.push(lableBoxes);
         counterItems.push(lableRewards);
         counterItems.push(lableExchange);
+
+        #if !mobile
+        keycapPins = new LetterKeyCap(lablePins.x - 45, 570, "1", false);
+        keycapPins.zIndex = 512;
+        add(keycapPins);
+
+        keycapBoxes = new LetterKeyCap(lableBoxes.x - 45, 570, "2", false);
+        keycapBoxes.zIndex = 514;
+        add(keycapBoxes);
+
+        keycapExchange = new LetterKeyCap(lableExchange.x - 45, 570, "3", false);
+        keycapExchange.zIndex = 518;
+        // add(keycapExchange);
+
+        keycapRewards = new LetterKeyCap(lableRewards.x - 45, 570, "4", false);
+        keycapRewards.zIndex = 520;
+        add(keycapRewards);
+
         counterItems.push(keycapPins);
         counterItems.push(keycapBoxes);
         counterItems.push(keycapRewards);
         counterItems.push(keycapExchange);
-
+        #end
         // UI
 
         screenBlack = new FunkinSprite(-2, -2).makeSolidColor(FlxG.width + 4, FlxG.height + 4, 0xFF000000);
@@ -525,7 +527,7 @@ class Shop extends MusicBeatState
                     var moveLength = (deltaX * moveSpeed * 1.5) / 60 / dpiScale;
                     cameraFollowPoint.x -= moveLength;
                 }
-                
+
                 final deltaY = touch.deltaViewY;
                 if (Math.abs(deltaY) > 2)
                 {
