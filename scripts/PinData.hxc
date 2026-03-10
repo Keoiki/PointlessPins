@@ -73,6 +73,7 @@ class PointlessPins extends Module
 	public static var pinData;
     public static var boxData;
     public static var isMouseActive:Bool = false;
+    public static var isMouseTooFast:Bool = false;
 
     function new():Void
     {
@@ -433,21 +434,20 @@ class PointlessPins extends Module
     {
         super.onUpdate(event);
 
-        if (!FlxG.onMobile)
+        #if !mobile
+        if (FlxG.keys.pressed.ANY)
         {
-            if (FlxG.keys.pressed.ANY)
-            {
-                PointlessPins.isMouseActive = false;
-            }
-            else if (Math.abs(FlxG.mouse.deltaViewX) > 24 || Math.abs(FlxG.mouse.deltaViewY) > 24)
-            {
-                PointlessPins.isMouseActive = true;
-            }
+            PointlessPins.isMouseActive = false;
         }
-        else
+        else if (Math.abs(FlxG.mouse.deltaViewX) > 24 || Math.abs(FlxG.mouse.deltaViewY) > 24)
         {
             PointlessPins.isMouseActive = true;
         }
+        PointlessPins.isMouseTooFast = Math.abs(FlxG.mouse.deltaViewX) > 2 || Math.abs(FlxG.mouse.deltaViewY) > 2;
+        #else  
+        PointlessPins.isMouseActive = true;
+        PointlessPins.isMouseTooFast = false;
+        #end
 
         if (FlxG.state is MainMenuState && FlxG.state.subState == null)
         {
@@ -493,11 +493,10 @@ class PointlessPins extends Module
             menuPin.scrollFactor.set(0, 0);
             event.targetState.add(menuPin);
 
-            if (!FlxG.onMobile)
-            {
-                var keycap01 = new LetterKeyCap(115, 115, "P");
-                event.targetState.add(keycap01);
-            }
+            #if !mobile
+            var keycap01 = new LetterKeyCap(115, 115, "P");
+            event.targetState.add(keycap01);
+            #end
         }
 
         super.onStateChangeEnd(event);
@@ -533,13 +532,14 @@ class PointlessPins extends Module
 
             // Sorry Endless Mode...
             // NVM Endless Mode players stay winning!
-            if (ModuleHandler.getModule("EndlessMode") != null && EndlessStatus.isEndless)
+            #if keoiki_endlessmode
+            if (EndlessStatus.isEndless)
             {
                 bucksToAward *= 0.25;
                 resultTextColor = "00BBFF";
                 trace("Endless Mode! Cut your earnings in 4, ha!");
             }
-            else if (currentDailies.contains(currentSongOrWeek))
+            else #end if (currentDailies.contains(currentSongOrWeek))
             {
                 if (FlxG.random.bool(0.2))
                 {
@@ -622,7 +622,9 @@ class PointlessPins extends Module
 
     function checkForSpecials(completionID:String):Void
     {
-        if (ModuleHandler.getModule("EndlessMode") != null && EndlessStatus.isEndless) return;
+        #if keoiki_endlessmode
+        if (EndlessStatus.isEndless) return;
+        #end
 
         var wantedPinID:Null<String> = null;
         switch (completionID)

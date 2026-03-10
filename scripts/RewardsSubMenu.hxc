@@ -109,11 +109,10 @@ class RewardsSubMenu extends MusicBeatSubState
         add(arrowRight);
 
         coolBackButton = new FunkinBackButton(FlxG.width - 220, FlxG.height - 200, 0xFFFFFFFF, goBack, 1.0, true);
-        if (!FlxG.onMobile)
-        {
-            coolBackButton.visible = PointlessPins.isMouseActive;
-            FlxMouseEvent.add(coolBackButton, coolBackButton.playHoldAnim, coolBackButton.playConfirmAnim);
-        }
+        #if !mobile
+        coolBackButton.visible = PointlessPins.isMouseActive;
+        FlxMouseEvent.add(coolBackButton, coolBackButton.playHoldAnim, coolBackButton.playConfirmAnim);
+        #end
         add(coolBackButton);
 
         darkOverlay = new FunkinSprite(-64, -64).makeSolidColor(FlxG.width + 128, FlxG.height + 128, 0xFF000000);
@@ -138,9 +137,7 @@ class RewardsSubMenu extends MusicBeatSubState
             goBack();
         }
 
-        var isMouseTooFast:Bool = FlxG.onMobile ? false : Math.abs(FlxG.mouse.deltaViewX) > 2 || Math.abs(FlxG.mouse.deltaViewY) > 2;
-
-        coolBackButton.visible = !allowedMovement ? false : (FlxG.onMobile ? true : PointlessPins.isMouseActive);
+        coolBackButton.visible = !allowedMovement ? false : #if mobile true; #else PointlessPins.isMouseActive; #end
 
         if (prevMouseActive != PointlessPins.isMouseActive)
         {
@@ -468,7 +465,9 @@ class RewardsSubMenu extends MusicBeatSubState
 
     override function destroy():Void
     {
-        if (!FlxG.onMobile) FlxMouseEvent.remove(coolBackButton);
+        #if !mobile
+        FlxMouseEvent.remove(coolBackButton);
+        #end
         super.destroy();
     }
 }

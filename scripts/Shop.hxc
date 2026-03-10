@@ -302,12 +302,10 @@ class Shop extends MusicBeatState
         };
 
         coolBackButton = new FunkinBackButton(FlxG.width - 220, FlxG.height - 200, 0xFFFFFFFF, goBack, 0.5);
-        if (!FlxG.onMobile)
-        {
-            FlxG.mouse.visible = true;
-            coolBackButton.visible = PointlessPins.isMouseActive;
-            FlxMouseEvent.add(coolBackButton, coolBackButton.playHoldAnim, coolBackButton.playConfirmAnim);
-        }
+        #if !mobile
+        coolBackButton.visible = PointlessPins.isMouseActive;
+        FlxMouseEvent.add(coolBackButton, coolBackButton.playHoldAnim, coolBackButton.playConfirmAnim);
+        #end
         add(coolBackButton);
 
         screenBlack.cameras = [cameraHUD];
@@ -379,17 +377,15 @@ class Shop extends MusicBeatState
             coolBackButton.enabled = false;
             return;
         }
-        coolBackButton.visible = FlxG.onMobile ? true : PointlessPins.isMouseActive;
+        coolBackButton.visible = #if mobile true; #else PointlessPins.isMouseActive; #end
         coolBackButton.enabled = true;
 
-        var isMouseTooFast:Bool = FlxG.onMobile ? false : Math.abs(FlxG.mouse.deltaViewX) > 2 || Math.abs(FlxG.mouse.deltaViewY) > 2;
-
         handleCameraMovement();
-        checkIfAnnoyedOphelia(isMouseTooFast);
+        checkIfAnnoyedOphelia();
 
         // Pins
 
-        if (FlxG.keys.justPressed.ONE || (TouchUtil.pressAction(iconPins) && !isMouseTooFast && !TouchUtil.overlaps(coolBackButton, cameraHUD)))
+        if (FlxG.keys.justPressed.ONE || (TouchUtil.pressAction(iconPins) && !PointlessPins.isMouseTooFast && !TouchUtil.overlaps(coolBackButton, cameraHUD)))
         {
             disallowInputs = true;
             cameraFollowPoint.setPosition(iconPins.x + iconPins.width / 2, iconPins.y + 50);
@@ -417,7 +413,7 @@ class Shop extends MusicBeatState
 
         // Boxes
 
-        if (FlxG.keys.justPressed.TWO || (TouchUtil.pressAction(iconBoxes) && !isMouseTooFast && !TouchUtil.overlaps(coolBackButton, cameraHUD)))
+        if (FlxG.keys.justPressed.TWO || (TouchUtil.pressAction(iconBoxes) && !PointlessPins.isMouseTooFast && !TouchUtil.overlaps(coolBackButton, cameraHUD)))
         {
             disallowInputs = true;
             cameraFollowPoint.setPosition(iconBoxes.x + iconBoxes.width / 2, iconBoxes.y - 4);
@@ -459,7 +455,7 @@ class Shop extends MusicBeatState
 
         // Rewards
 
-        if (FlxG.keys.justPressed.FOUR || (TouchUtil.pressAction(lableRewards) && !isMouseTooFast && !TouchUtil.overlaps(coolBackButton, cameraHUD)))
+        if (FlxG.keys.justPressed.FOUR || (TouchUtil.pressAction(lableRewards) && !PointlessPins.isMouseTooFast && !TouchUtil.overlaps(coolBackButton, cameraHUD)))
         {
             disallowInputs = true;
             cameraFollowPoint.setPosition(lableRewards.x - 10, 320);
@@ -516,35 +512,33 @@ class Shop extends MusicBeatState
         // No using FlxG.updateFramerate, as it seems to shorten down the dragging distance drastically when at higher framerates.
 
         // Touch Dragging
-        if (FlxG.onMobile)
+        #if mobile
+        for (touch in FlxG.touches.list)
         {
-            for (touch in FlxG.touches.list)
+            if (touch.pressed)
             {
-                if (touch.pressed)
+                final deltaX = touch.deltaViewX;
+                if (Math.abs(deltaX) > 2)
                 {
-                    final deltaX = touch.deltaViewX;
-                    if (Math.abs(deltaX) > 2)
-                    {
-                        var dpiScale = FlxG.stage.window.display.dpi / 160;
-                        dpiScale = FlxMath.bound(dpiScale, 0.5, 1);
-                        var moveLength = (deltaX * moveSpeed * 1.5) / 60 / dpiScale;
-                        cameraFollowPoint.x -= moveLength;
-                    }
-
-                    final deltaY = touch.deltaViewY;
-                    if (Math.abs(deltaY) > 2)
-                    {
-                        var dpiScale = FlxG.stage.window.display.dpi / 160;
-                        dpiScale = FlxMath.bound(dpiScale, 0.5, 1);
-                        var moveLength = (deltaY * moveSpeed * 1.5) / 60 / dpiScale;
-                        cameraFollowPoint.y -= moveLength;
-                    }
+                    var dpiScale = FlxG.stage.window.display.dpi / 160;
+                    dpiScale = FlxMath.bound(dpiScale, 0.5, 1);
+                    var moveLength = (deltaX * moveSpeed * 1.5) / 60 / dpiScale;
+                    cameraFollowPoint.x -= moveLength;
+                }
+                
+                final deltaY = touch.deltaViewY;
+                if (Math.abs(deltaY) > 2)
+                {
+                    var dpiScale = FlxG.stage.window.display.dpi / 160;
+                    dpiScale = FlxMath.bound(dpiScale, 0.5, 1);
+                    var moveLength = (deltaY * moveSpeed * 1.5) / 60 / dpiScale;
+                    cameraFollowPoint.y -= moveLength;
                 }
             }
         }
-
+        #else
         // Mouse Dragging
-        if (FlxG.mouse.pressed && !FlxG.onMobile)
+        if (FlxG.mouse.pressed)
         {
             final deltaX = FlxG.mouse.deltaViewX;
             if (Math.abs(deltaX) > 2)
@@ -578,6 +572,7 @@ class Shop extends MusicBeatState
         if (controls.UI_RIGHT) cameraFollowPoint.x += moveSpeed * 30;
         if (controls.UI_UP) cameraFollowPoint.y -= moveSpeed * 30;
         if (controls.UI_DOWN) cameraFollowPoint.y += moveSpeed * 30;
+        #end
 
         cameraFollowPoint.x = FlxMath.bound(cameraFollowPoint.x, camera.minScrollX, camera.maxScrollX);
         cameraFollowPoint.y = FlxMath.bound(cameraFollowPoint.y, camera.minScrollY, camera.maxScrollY);
@@ -606,10 +601,10 @@ class Shop extends MusicBeatState
      * 75 taps: Warning.
      * 100 taps: +1 to her anger count.
      */
-    function checkIfAnnoyedOphelia(isMouseTooFast:Bool):Void
+    function checkIfAnnoyedOphelia():Void
     {
         // Ophelia's sprite extends behind the counter, we don't wanna count pressing in that area as well.
-        if (TouchUtil.pressAction(opheliaHitbox, camera) && !TouchUtil.overlaps(coolBackButton, cameraHUD) && !isMouseTooFast)
+        if (TouchUtil.pressAction(opheliaHitbox, camera) && !TouchUtil.overlaps(coolBackButton, cameraHUD) && !PointlessPins.isMouseTooFast)
         {
             ophelia.annoyance++;
             trace("Boop! " + ophelia.annoyance);
@@ -969,7 +964,9 @@ class Shop extends MusicBeatState
 
     override function destroy():Void
     {
-        if (!FlxG.onMobile) FlxMouseEvent.remove(coolBackButton);
+        #if !mobile
+        FlxMouseEvent.remove(coolBackButton);
+        #end
         super.destroy();
     }
 }
