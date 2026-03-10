@@ -235,11 +235,10 @@ class PinBoard extends MusicBeatSubState
 
         FlxG.touches.swipeThreshold.set(100, 100);
         coolBackButton = new FunkinBackButton(FlxG.width - 220, FlxG.height - 200, 0xFFFFFFFF, goBack, 1.0, true);
-        if (!FlxG.onMobile)
-        {
-            coolBackButton.visible = PointlessPins.isMouseActive;
-            FlxMouseEvent.add(coolBackButton, coolBackButton.playHoldAnim, coolBackButton.playConfirmAnim);
-        }
+        #if !mobile
+        coolBackButton.visible = PointlessPins.isMouseActive;
+        FlxMouseEvent.add(coolBackButton, coolBackButton.playHoldAnim, coolBackButton.playConfirmAnim);
+        #end
         coolBackButton.zIndex = 100000;
         add(coolBackButton);
 
@@ -260,7 +259,7 @@ class PinBoard extends MusicBeatSubState
         handleControls(elapsed);
         handleTouchControls();
 
-        coolBackButton.visible = FlxG.onMobile ? true : PointlessPins.isMouseActive;
+        coolBackButton.visible = #if mobile true; #else PointlessPins.isMouseActive; #end
 
         // trace(FlxG.mouse.wheel);
 
@@ -279,29 +278,19 @@ class PinBoard extends MusicBeatSubState
         var prevCurX:Int = cursorX;
         var prevCurY:Int = cursorY;
 
-        if (controls.UI_LEFT_P ||
-            (FlxG.onMobile && SwipeUtil.swipeLeft) ||
-            (!FlxG.onMobile && FlxG.mouse.justMovedRight && FlxG.mouse.pressed))
+        if (#if mobile SwipeUtil.swipeLeft #else controls.UI_LEFT_P || (FlxG.mouse.justMovedRight && FlxG.mouse.pressed) #end)
         {
             cursorX--;
         }
-        if (controls.UI_RIGHT_P ||
-            (FlxG.onMobile && SwipeUtil.swipeRight) ||
-            (!FlxG.onMobile && FlxG.mouse.justMovedLeft && FlxG.mouse.pressed))
+        if (#if mobile SwipeUtil.swipeRight #else controls.UI_RIGHT_P || (FlxG.mouse.justMovedLeft && FlxG.mouse.pressed) #end)
         {
             cursorX++;
         }
-        if (controls.UI_UP_P ||
-            (FlxG.onMobile && SwipeUtil.swipeUp) ||
-            (!FlxG.onMobile && FlxG.mouse.justMovedDown && FlxG.mouse.pressed) ||
-            (!FlxG.onMobile && FlxG.mouse.wheel >= 1))
+        if (#if mobile SwipeUtil.swipeUp #else controls.UI_UP_P || (FlxG.mouse.justMovedDown && FlxG.mouse.pressed) || (FlxG.mouse.wheel >= 1) #end)
         {
             cursorY--;
         }
-        if (controls.UI_DOWN_P ||
-            (FlxG.onMobile && SwipeUtil.swipeDown) ||
-            (!FlxG.onMobile && FlxG.mouse.justMovedUp && FlxG.mouse.pressed) ||
-            (!FlxG.onMobile && FlxG.mouse.wheel <= -1))
+        if (#if mobile SwipeUtil.swipeDown #else controls.UI_DOWN_P || (FlxG.mouse.justMovedUp && FlxG.mouse.pressed) || (FlxG.mouse.wheel <= -1) #end)
         {
             cursorY++;
         }
@@ -418,7 +407,9 @@ class PinBoard extends MusicBeatSubState
 
     override function destroy():Void
     {
-        if (!FlxG.onMobile) FlxMouseEvent.remove(coolBackButton);
+        #if !mobile
+        FlxMouseEvent.remove(coolBackButton);
+        #end
         super.destroy();
     }
 }
