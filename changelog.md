@@ -17,12 +17,12 @@
             - A permanent discount when buying boxes.
         - Bonus FunkBucks
             - A permanent multiplier to how many FunkBucks you earn when completing songs and weeks.
-- Added 23 new pins:
+- Added 35 new pins:
     - 4 Common
-    - 9 Uncommon
-    - 5 Rare
-    - 2 Epic
-    - 2 Legendary
+    - 11 Uncommon
+    - 9 Rare
+    - 4 Epic
+    - 4 Legendary
     - 1 Special
 - Added support for the following modded variations as Dailies:
     - Remnants (Funkin' Remnants)
