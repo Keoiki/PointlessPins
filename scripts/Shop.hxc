@@ -260,6 +260,7 @@ class Shop extends MusicBeatState
         counterItems.push(keycapRewards);
         counterItems.push(keycapExchange);
         #end
+        
         // UI
 
         screenBlack = new FunkinSprite(-2, -2).makeSolidColor(FlxG.width + 4, FlxG.height + 4, 0xFF000000);

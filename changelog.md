@@ -2,13 +2,26 @@
 
 ### Added
 
+- Added Blue Jewels. They have a rare chance to be obtained after completing a song.
+    - They have a higher chance on Daily Songs.
+    - You can only have 20 Blue Jewels at a time, so make sure you spend them once you're at full capacity.
+- Added the Exchange section to the Shop.
+    - You can exchange one Blue Jewel for 500 FunkBucks, or more to buy a Legendary or higher rarity pin you DON'T already own.
 - Added the Rewards section to the Shop.
-    - You can claim extra FunkBucks, Boxes, and Pins based on your lifetime FunkBucks collected or how many of each box you've opened.
-- Added 19 new pins:
-    - 3 Common
-    - 8 Uncommon
-    - 4 Rare
-    - 1 Epic
+    - You can claim extra some of the following based on your lifetime FunkBucks or Blue Jewels collected, or how many of each box you've opened:
+        - FunkBucks
+        - Blue Jewels
+        - Pins
+        - Boxes
+        - Box Discounts
+            - A permanent discount when buying boxes.
+        - Bonus FunkBucks
+            - A permanent multiplier to how many FunkBucks you earn when completing songs and weeks.
+- Added 23 new pins:
+    - 4 Common
+    - 9 Uncommon
+    - 5 Rare
+    - 2 Epic
     - 2 Legendary
     - 1 Special
 - Added support for the following modded variations as Dailies:
@@ -23,10 +36,10 @@
 
 - The box purchase confirmation is more clearly indicated.
 - The FunkBuck text in the Results now show up faster and follows the coloring scheme used for the Modifier lable.
-- Increased the Cardboard Box price from 10 to 20 FunkBucks.
-- Added a 1% to get a Rare from Cardboard Boxes.
-- Increased the Small Giftbox price from 25 to 50 FunkBucks.
-- Added a 0.5% to get a Legendary from Small Giftboxes.
+- Increased the cost of Cardboard Boxes from 10 to 20 FunkBucks.
+- Added a 1% chance to get a Rare pin from Cardboard Boxes.
+- Increased the cost of Small Giftboxes from 25 to 50 FunkBucks.
+- Added a 0.5% chance to get a Legendary pin from Small Giftboxes.
 
 ### Removed
 
