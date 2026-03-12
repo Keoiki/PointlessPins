@@ -28,7 +28,8 @@
             { "id": "bundleofcash", "name": "Bundle of Cash" },
             { "id": "musicdisk", "name": "Music Disk" },
             { "id": "rank-good", "name": "Good Rank", "description": "Obtained by completing a song with the Good rank.", "special": true },
-            { "id": "cardboardbox", "name": "Cardboard Box", "description": "The cheapest of them all.", "special": true }
+            { "id": "cardboardbox", "name": "Cardboard Box", "description": "The cheapest of them all.", "special": true },
+            { "id": "haxe", "name": "Haxe", "description": "The backbone of this game." }
         ]
     },
     "Uncommon": {
@@ -50,7 +51,8 @@
             { "id": "arrow-up", "name": "Up Arrow" },
             { "id": "arrow-right", "name": "Right Arrow" },
             { "id": "rank-great", "name": "Great Rank", "description": "Obtained by completing a song with the Great rank.", "special": true },
-            { "id": "smallgiftbox", "name": "Small Giftbox", "description": "Did you notice the FunkBuck badge?", "special": true }
+            { "id": "smallgiftbox", "name": "Small Giftbox", "description": "Did you notice the FunkBuck badge?", "special": true },
+            { "id": "haxeflixel", "name": "HaxeFlixel", "description": "Not to be confused with \"Flixel\"." }
         ]
     },
     "Rare": {
@@ -63,7 +65,8 @@
             { "id": "funkbuck", "name": "FunkBuck", "description": "Your local currency!", "special": true },
             { "id": "pushpin", "name": "Pin", "description": "No! Wrong type of pin!" },
             { "id": "difficultystar", "name": "Blue Flamed Star", "description": "That looks really difficult!" },
-            { "id": "rank-excellent", "name": "Excellent Rank", "description": "Obtained by completing a song with the Excellent rank.", "special": true }
+            { "id": "rank-excellent", "name": "Excellent Rank", "description": "Obtained by completing a song with the Excellent rank.", "special": true },
+            { "id": "haxeui", "name": "HaxeUI", "description": "A piece of shit that doesn't work." }
 
         ]
     },
@@ -72,7 +75,8 @@
         "color": "A426FF",
         "pins":
         [
-            { "id": "rank-perfect", "name": "Perfect Rank", "description": "Obtained by completing a song with the Perfect rank.", "special": true }
+            { "id": "rank-perfect", "name": "Perfect Rank", "description": "Obtained by completing a song with the Perfect rank.", "special": true },
+            { "id": "polymod", "name": "Polymod", "description": "Polymore!" }
         ]
     },
     "Legendary": {
