@@ -32,7 +32,7 @@ class FunkBucksModifierLable extends Module
 
     function get_isEndlessOn():Bool
     {
-        #if keoiki_endlessmode
+        #if keoiki.endlessmode
         return EndlessStatus.incompatibleSong ? false : EndlessStatus.isEndless;
         #else
         return false;
