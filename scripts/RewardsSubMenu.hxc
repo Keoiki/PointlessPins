@@ -447,20 +447,10 @@ class RewardsSubMenu extends MusicBeatSubState
 
         if (FlxG.keys.justPressed.SHIFT)
         {
-            // trace(currentItem?.reached, currentItem?.claimed);
             trace("Page: " + PAGE + ", Position: " + POSITION, resultingPosition);
             trace("Items on page: " + itemsOnPage);
             trace("Total Items: " + totalItems);
         }
-
-        /*
-
-        POSITION_ARRAY[0] += xC;
-
-        POSITION_ARRAY[1] += yC;
-
-        POSITION = POSITION_ARRAY[0] + (POSITION_ARRAY[1] * 3) + (PAGE * 9);
-        */
     }
 
     override function destroy():Void
@@ -553,6 +543,14 @@ class RewardItem extends ScriptedFlxSpriteGroup
             case RewardType.SONG:
             {
                 throw "SONG reward type is not implemented";
+            }
+            case RewardType.BOX_DISCOUNT:
+            {
+                throw "BOX_DISCOUNT reward type is not implemented";
+            }
+            case RewardType.FUNKBUCK_BONUS:
+            {
+                throw "FUNKBUCK_BONUS reward type is not implemented";
             }
             default: throw "Invalid reward type.";
         }

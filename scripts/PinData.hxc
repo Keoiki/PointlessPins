@@ -561,7 +561,7 @@ class PointlessPins extends Module
                 trace("Repeat penalty: " + repeatPenalty * 100 + "%");
             }
 
-            if (ModuleHandler.getModule("EndlessMode") != null && EndlessStatus.isEndless && EndlessStatus.currentLoop < 2)
+            if (#if keoiki_endlessmode EndlessStatus.isEndless && EndlessStatus.currentLoop < 2 #else false #end)
             {
                 trace("Thought you could easily clear your penalties by giving up immediately in Endless Mode? Think again!");
             }
@@ -578,7 +578,7 @@ class PointlessPins extends Module
             
             bucksToAward = Math.ceil(bucksToAward);
             PointlessPins.addFunkCoins(bucksToAward);
-            // PointlessPins.addBlueJewels(awardedJewels);
+            PointlessPins.addBlueJewels(awardedJewels);
 
             trace(currentSongOrWeek, bucksToAward, previousSongs);
 
