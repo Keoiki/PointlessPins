@@ -443,7 +443,7 @@ class PointlessPins extends Module
         {
             PointlessPins.isMouseActive = true;
         }
-        PointlessPins.isMouseTooFast = Math.abs(FlxG.mouse.deltaViewX) > 2 || Math.abs(FlxG.mouse.deltaViewY) > 2;
+        PointlessPins.isMouseTooFast = Math.abs(FlxG.mouse.deltaViewX) > 1 || Math.abs(FlxG.mouse.deltaViewY) > 1;
         #else  
         PointlessPins.isMouseActive = true;
         PointlessPins.isMouseTooFast = false;
