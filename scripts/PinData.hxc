@@ -31,10 +31,6 @@ using StringTools;
 import DateTools;
 import Date;
 
-/**
- * Use trace for debugging/minor errors, only use throw for important errors.
- */
-
 typedef PinData = {
     id:String, // The ID of a pin.
     name:String, // The visible name of a pin.
@@ -229,7 +225,7 @@ class PointlessPins extends Module
     {
         if (getPinByID(pinID) == null)
         {
-            throw 'Could not find pin $pinID! Was the name misspelled?';
+            trace('Could not find pin $pinID! Was the name misspelled?');
             return false;
         }
         var isNewPin:Bool = !hasObtainedPin(pinID);

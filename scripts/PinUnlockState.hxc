@@ -28,8 +28,7 @@ class PinUnlockState extends MusicBeatSubState
     {
         if (pinData == null)
         {
-            // trace("You forgot your Pin Data!");
-            throw "PinUnlockState was given no PinData!";
+            trace("PinUnlockState was given no PinData!");
             close();
         }
 
