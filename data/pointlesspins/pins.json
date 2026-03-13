@@ -72,7 +72,7 @@
             { "id": "sky-reborn", "name": "Sky (Reborn)", "source": "MOD: Sky: REBORN" },
             { "id": "sky", "name": "Sky", "description": "No no, wrong type of sky!" },
             { "id": "rank-excellent", "name": "Excellent Rank", "description": "Obtained by completing a song with the Excellent rank.", "special": true },
-            { "id": "haxeui", "name": "HaxeUI", "description": "A piece of shit that doesn't work." }
+            { "id": "haxeui", "name": "HaxeUI", "description": "It either doesn't work or doesn't work." }
         ]
     },
     "Epic": {
@@ -80,10 +80,10 @@
         "color": "A426FF",
         "pins":
         [
-            { "id": "rank-perfect", "name": "Perfect Rank", "description": "Obtained by completing a song with the Perfect rank.", "special": true },
             { "id": "pessy", "name": "Pessy", "source": "OTHER: Psych Engine" },
             { "id": "kb", "name": "KB", "source": "MOD: QT: Rewired" },
-            { "id": "polymod", "name": "Polymod", "description": "Polymore!" }
+            { "id": "polymod", "name": "Polymod", "description": "Polymore!" },
+            { "id": "rank-perfect", "name": "Perfect Rank", "description": "Obtained by completing a song with the Perfect rank.", "special": true }
         ]
     },
     "Legendary": {
