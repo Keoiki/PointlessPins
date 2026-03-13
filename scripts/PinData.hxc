@@ -31,10 +31,6 @@ using StringTools;
 import DateTools;
 import Date;
 
-/**
- * Use trace for debugging/minor errors, only use throw for important errors.
- */
-
 typedef PinData = {
     id:String, // The ID of a pin.
     name:String, // The visible name of a pin.
