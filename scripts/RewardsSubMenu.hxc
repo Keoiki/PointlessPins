@@ -97,7 +97,7 @@ class RewardsSubMenu extends MusicBeatSubState
 
         rewardText = new BAlphabet(FlxG.width / 2, FlxG.height - 100, "Reward Text Here");
         rewardText.alignment = "center";
-        rewardText.setScale(0.5);
+        rewardText.scale.set(0.5, 0.5);
         add(rewardText);
         
         arrowLeft = new FunkinSprite(220, 260).loadTexture("shop/boxarrow");
@@ -538,7 +538,7 @@ class RewardItem extends ScriptedFlxSpriteGroup
 
                 number = new BAlphabet(0, 0, '<b>$reward</b> &#xE000;');
                 number.alignment = "center";
-                number.setScale(0.4);
+                number.scale.set(0.4, 0.4);
             }
             case RewardType.SONG:
             {

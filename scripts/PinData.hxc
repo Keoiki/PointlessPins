@@ -597,7 +597,7 @@ class PointlessPins extends Module
             trace(currentSongOrWeek, bucksToAward, previousSongs);
 
             var funkBucksText = new BAlphabet(40, 50, '<b><c=$resultTextColor>${bucksToAward > 0 ? "+" : ""}$bucksToAward &#xE000;</c></b>');
-            funkBucksText.setScale(0.65);
+            funkBucksText.scale.set(0.65, 0.65);
             funkBucksText.alpha = 0;
             funkBucksText.zIndex = 5000;
             event.targetState.add(funkBucksText);
@@ -612,7 +612,7 @@ class PointlessPins extends Module
             if (awardedJewels > 0)
             {
                 var jewelsText = new BAlphabet(FlxG.width - 40, 20, '<b><c=82E9FF>+${awardedJewels}</c></b> &#xE001;');
-                jewelsText.setScale(0.65);
+                jewelsText.scale.set(0.65, 0.65);
                 jewelsText.alignment = "right";
                 jewelsText.alpha = 0;
                 jewelsText.zIndex = 5001;
@@ -665,7 +665,7 @@ class LetterKeyCap extends ScriptedFlxSpriteGroup
 
         letter = new BAlphabet(keycap.width / 2, 21, character);
         letter.alignment = "center";
-        letter.setScale(0.6);
+        letter.scale.set(0.6, 0.6);
         letter.zIndex = this.zIndex + 1;
         this.add(letter);
 
