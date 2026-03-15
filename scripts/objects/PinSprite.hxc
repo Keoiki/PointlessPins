@@ -12,6 +12,7 @@ class PinSprite extends FunkinSprite
     var rarity:String = "Unknown";
     var artist:String = "Keoiki";
     var source:String = "Unknown";
+    var lockedText:String = "Unknown";
     var special:Bool = false;
     var isUnlocked:Bool = false;
     var isUnknown:Bool = false;
