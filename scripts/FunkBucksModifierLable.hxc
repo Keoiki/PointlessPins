@@ -103,7 +103,7 @@ class FunkBucksModifierLable extends Module
         if (addedToState) return;
 
         modifierText = new BAlphabet(FlxG.width - 20, 670, "");
-        modifierText.setScale(0.5);
+        modifierText.scale.set(0.5, 0.5);
         modifierText.alignment = "right";
         FlxG.state.add(modifierText);
 
@@ -129,7 +129,7 @@ class FunkBucksModifierLable extends Module
     override public function onFreeplayIntroDone(event:FreeplayScriptEvent)
     {
         modifierText = new BAlphabet(20, FlxG.height + 10, "");
-        modifierText.setScale(0.5);
+        modifierText.scale.set(0.5, 0.5);
 
         FlxG.state.subState.add(modifierText);
         modifierText.camera = FlxG.state.subState.funnyCam;

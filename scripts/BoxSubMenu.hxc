@@ -47,30 +47,30 @@ class BoxSubMenu extends MusicBeatSubState
 
         boxName = new BAlphabet(FlxG.width / 2, 510, "");
         boxName.alignment = "center";
-        boxName.setScale(0.7);
+        boxName.scale.set(0.7, 0.7);
         add(boxName);
 
         boxPrice = new BAlphabet(FlxG.width / 2, boxName.y + 60, "");
         boxPrice.alignment = "center";
-        boxPrice.setScale(0.5);
+        boxPrice.scale.set(0.5, 0.5);
         add(boxPrice);
 
         boxDescription = new BAlphabet(30, boxPrice.y, "");
-        boxDescription.setScale(0.4);
+        boxDescription.scale.set(0.4, 0.4);
         add(boxDescription);
 
         boxOdds = new BAlphabet(FlxG.width - 30, boxPrice.y, "");
         boxOdds.alignment = "right";
-        boxOdds.setScale(0.3);
+        boxOdds.scale.set(0.3, 0.3);
         add(boxOdds);
 
         boxPurchaseLable = new BAlphabet(30, 450, "");
-        boxPurchaseLable.setScale(0.4);
+        boxPurchaseLable.scale.set(0.4, 0.4);
         add(boxPurchaseLable);
 
         boxPurchaseCount = new BAlphabet(FlxG.width / 2, FlxG.height - 45, "");
         boxPurchaseCount.alignment = "center";
-        boxPurchaseCount.setScale(0.3);
+        boxPurchaseCount.scale.set(0.3, 0.3);
         boxPurchaseCount.alpha = 0.5;
         add(boxPurchaseCount);
 

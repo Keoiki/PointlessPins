@@ -38,7 +38,8 @@ typedef PinData = {
     ?scale:Float, // The scale of a pin in the Pins Menu. This value is doubled for the Pin Unlock screen. (optional, default: 0.5)
     ?artist:String, // The artist of a pin. (optional)
     ?source:String, // The source of a pin, whether it's based on a mod, or something else. (optional)
-    ?special:Bool // Whether or not a pin can only be unlocked once. Excludes them from Mystery Boxes. (optional, default: false)
+    ?special:Bool, // Whether or not a pin can only be unlocked once. Excludes them from Mystery Boxes. (optional, default: false)
+    ?lockedText:String // The text to display when a pin is locked. (optional, default: "Locked")
 }
 
 typedef BoxData = {
@@ -579,7 +580,7 @@ class PointlessPins extends Module
             trace(currentSongOrWeek, bucksToAward, previousSongs);
 
             var funkBucksText = new BAlphabet(FlxG.width - 100, 20, '<b><c=$resultTextColor>${bucksToAward > 0 ? "+" : ""}$bucksToAward</c></b> &#xE000;');
-            funkBucksText.setScale(0.65);
+            funkBucksText.scale.set(0.65, 0.65);
             funkBucksText.alignment = "right";
             funkBucksText.alpha = 0;
             funkBucksText.zIndex = 5000;
@@ -595,7 +596,7 @@ class PointlessPins extends Module
             if (awardedJewels > 0)
             {
                 var jewelsText = new BAlphabet(FlxG.width - 40, 20, '<b><c=82E9FF>+${awardedJewels}</c></b> &#xE001;');
-                jewelsText.setScale(0.65);
+                jewelsText.scale.set(0.65, 0.65);
                 jewelsText.alignment = "right";
                 jewelsText.alpha = 0;
                 jewelsText.zIndex = 5001;
@@ -648,7 +649,7 @@ class LetterKeyCap extends ScriptedFlxSpriteGroup
 
         letter = new BAlphabet(keycap.width / 2, 21, character);
         letter.alignment = "center";
-        letter.setScale(0.6);
+        letter.scale.set(0.6, 0.6);
         letter.zIndex = this.zIndex + 1;
         this.add(letter);
 

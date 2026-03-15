@@ -139,7 +139,7 @@ class PinBoard extends MusicBeatSubState
                 pin.position = [pinColumn, currentRow];
                 pin.rarity = PIN_RARITIES[i];
                 var isPinUnlocked:Bool = unlockedPinsData.exists(pinData.id);
-                // var isPinUnlocked:Bool = true;
+                // var isPinUnlocked:Bool = false;
                 if (isPinUnlocked)
                 {
                     unlockedPins++;
@@ -150,6 +150,7 @@ class PinBoard extends MusicBeatSubState
                 pin.artist = pinData.artist;
                 pin.source = pinData.source;
                 pin.special = pinData.special ?? false;
+                pin.lockedText = pinData.lockedText ?? "This pin can be unlocked from a box.";
                 pin.setupPin(pinData.id, pinData.name, pinData.description, pinData.scale);
                 add(pin);
                 pins.push(pin);
@@ -161,7 +162,7 @@ class PinBoard extends MusicBeatSubState
             var tc:String = ReflectUtil.getAnonymousField(pinJSON, PIN_RARITIES[i]).color;
             var star:String = unlockedPinsPerRarity[i] == PINS_BY_RARITY[i].length ? "&#xE011; " : "";
             var rarityText = new BAlphabet(PIN_X_START - 24, textOffset, "<b>" + star + "<c=" + tc + ">" + PIN_RARITIES[i] + "</c>  <s=0.5>(" + (unlockedPinsPerRarity[i] ?? 0) + "/" + PINS_BY_RARITY[i].length + ")</s></b>");
-            rarityText.setScale(0.8);
+            rarityText.scale.set(0.8, 0.8);
             add(rarityText);
 
             textOffset += (150 * (categoryRow + 1)) + 90;
@@ -180,31 +181,31 @@ class PinBoard extends MusicBeatSubState
         add(pinNameBox);
 
         pinName = new BAlphabet(FlxG.width / 2, pinNameBox.y + 40, "");
-        pinName.setScale(0.55);
+        pinName.scale.set(0.55, 0.55);
         pinName.alignment = "center";
         add(pinName);
 
         pinDescription = new BAlphabet(FlxG.width / 2, pinNameBox.y + 65, "");
-        pinDescription.setScale(0.4);
+        pinDescription.scale.set(0.4, 0.4);
         pinDescription.alignment = "center";
         add(pinDescription);
 
         pinArtist = new BAlphabet(pinNameBox.x + pinNameBox.width - 10, pinNameBox.y + 95, "");
-        pinArtist.setScale(0.3);
+        pinArtist.scale.set(0.3, 0.3);
         pinArtist.alignment = "right";
         add(pinArtist);
 
         pinUnlockCount = new BAlphabet(pinNameBox.x + 10, pinNameBox.y + 95, "");
-        pinUnlockCount.setScale(0.3);
+        pinUnlockCount.scale.set(0.3, 0.3);
         add(pinUnlockCount);
 
         pinSource = new BAlphabet(pinNameBox.x + pinNameBox.width - 10, pinNameBox.y + 10, "");
-        pinSource.setScale(0.3);
+        pinSource.scale.set(0.3, 0.3);
         pinSource.alignment = "right";
         add(pinSource);
 
         var menuUnlockedText = new BAlphabet(FlxG.width / 2, pinNameBox.y + pinNameBox.height + 20, "<b>Total Unlocked: " + unlockedPins + "/" + pinCount + "</b>");
-        menuUnlockedText.setScale(0.5);
+        menuUnlockedText.scale.set(0.5, 0.5);
         menuUnlockedText.alignment = "center";
         add(menuUnlockedText);
 
@@ -323,9 +324,16 @@ class PinBoard extends MusicBeatSubState
             pinName.y = pinNameBox.y + 40;
             if (!availablePin.isUnlocked)
             {
+                pinName.y = pinNameBox.y + 25;
+                pinDescription.alpha = 1;
+
                 if (pinName.text != 'Not unlocked yet!')
                 {
                     pinName.text = 'Not unlocked yet!';
+                }
+                if (availablePin.lockedText != pinDescription.text)
+                {
+                    pinDescription.text = availablePin.lockedText;
                 }
             }
             else
