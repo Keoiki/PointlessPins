@@ -911,7 +911,9 @@ class Shop extends MusicBeatState
     function insufficientFunkBucks():Void
     {
         funkBucksText.y += 20;
-        FlxTween.color(funkBucksText, 0.5, 0xFFFF0000, 0xFFFFFFFF);
+        funkBucksText.forEach((letter) -> {
+            FlxTween.color(letter, 0.5, 0xFFFF0000, 0xFFFFFFFF);
+        });
         FunkinSound.playOnce(Paths.sound("CS_locked"));
     }
 
