@@ -32,7 +32,7 @@ class RewardsSubMenu extends MusicBeatSubState
         "funkbucks" => {
             name: "funkbucks",
             description: "Total FunkBucks obtained.",
-            requirementIcon: "xE000",
+            requirementIcon: PTIcon.Buck,
             order: 0,
             rewards: [
                 "1" => {id: "funkbucks01", requirement: 500, type: RewardType.BOX, reward: "cardboard"},
@@ -46,7 +46,7 @@ class RewardsSubMenu extends MusicBeatSubState
         "cardboard" => {
             name: "cardboard",
             description: "Total Cardboard Boxes opened.",
-            requirementIcon: "xE020",
+            requirementIcon: PTIcon.CardboardBox,
             order: 1,
             rewards: [
                 "1" => {id: "cardboardbox01", requirement: 10, type: RewardType.BOX, reward: "cardboard"},
@@ -57,8 +57,8 @@ class RewardsSubMenu extends MusicBeatSubState
         },
         "smallgiftbox" => {
             name: "smallgiftbox",
-            description: "Total Small Gift Boxes opened.",
-            requirementIcon: "xE021",
+            description: "Total Small Giftboxes opened.",
+            requirementIcon: PTIcon.SmallGiftbox,
             order: 2,
             rewards: [
                 "1" => {id: "smallgiftbox01", requirement: 10, type: RewardType.BOX, reward: "smallgiftbox"},
@@ -329,41 +329,27 @@ class RewardsSubMenu extends MusicBeatSubState
             else
             {
                 var currentCategory = categories.get(CATEGORY);
-                if (CATEGORY == "funkbucks")
+                var beforeReq:String = "open";
+                var afterReq:String = "boxes";
+                if (CATEGORY == "funkbucks" || CATEGORY == "bluejewels")
                 {
-                    if (!currentItem.claimed)
+                    beforeReq = "obtain";
+                    afterReq = "total";
+                }
+                if (!currentItem.claimed)
+                {
+                    if (!currentItem.reached)
                     {
-                        if (!currentItem.reached)
-                        {
-                            rewardText.text = 'You must obtain ${currentItem.requirement} &#xE000; total to unlock this reward.';
-                        }
-                        else
-                        {
-                            rewardText.text = 'You have obtained ${currentItem.requirement} &#xE000; total to unlock this reward.\n<c=FF0000>Not claimed!</c>';
-                        }
+                        rewardText.text = 'You must $beforeReq ${currentItem.requirement} ${currentCategory.requirementIcon} $afterReq to unlock this reward.';
                     }
                     else
                     {
-                        rewardText.text = 'You have obtained ${currentItem.requirement} &#xE000; total to unlock this reward.\n<c=00FF00>Claimed!</c>';
+                        rewardText.text = 'You have ${beforeReq}ed ${currentItem.requirement} ${currentCategory.requirementIcon} $afterReq to unlock this reward.\n<c=FF0000>Not claimed!</c>';
                     }
                 }
                 else
                 {
-                    if (!currentItem.claimed)
-                    {
-                        if (!currentItem.reached)
-                        {
-                            rewardText.text = 'You must open ${currentItem.requirement} &#${currentCategory.requirementIcon}; boxes to unlock this reward.';
-                        }
-                        else
-                        {
-                            rewardText.text = 'You have opened ${currentItem.requirement} &#${currentCategory.requirementIcon}; boxes to unlock this reward.\n<c=FF0000>Not claimed!</c>';
-                        }
-                    }
-                    else
-                    {
-                        rewardText.text = 'You have opened ${currentItem.requirement} &#${currentCategory.requirementIcon}; boxes to unlock this reward.\n<c=00FF00>Claimed!</c>';
-                    }
+                    rewardText.text = 'You have ${beforeReq}ed ${currentItem.requirement} ${currentCategory.requirementIcon} $afterReq to unlock this reward.\n<c=00FF00>Claimed!</c>';
                 }
             }
             hasUpdatedRewardText = true;
@@ -536,7 +522,7 @@ class RewardItem extends ScriptedFlxSpriteGroup
                 icon.x -= icon.width / 2;
                 icon.y -= icon.height - 8;
 
-                number = new BAlphabet(0, 0, '<b>$reward</b> &#xE000;');
+                number = new BAlphabet(0, 0, '<b>$reward</b> ${PTIcon.Buck}');
                 number.alignment = "center";
                 number.scale.set(0.4, 0.4);
             }

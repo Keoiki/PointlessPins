@@ -15,6 +15,7 @@ import funkin.modding.module.Module;
 import funkin.modding.base.ScriptedFlxSpriteGroup;
 import funkin.modding.ModStore;
 import funkin.modding.PolymodHandler;
+import funkin.group.FunkinGroup;
 import funkin.graphics.FunkinSprite;
 import funkin.data.song.SongRegistry;
 import funkin.audio.FunkinSound;
@@ -39,7 +40,7 @@ typedef PinData = {
     ?artist:String, // The artist of a pin. (optional)
     ?source:String, // The source of a pin, whether it's based on a mod, or something else. (optional)
     ?special:Bool, // Whether or not a pin can only be unlocked once. Excludes them from Mystery Boxes. (optional, default: false)
-    ?lockedText:String // The text to display when a pin is locked. (optional, default: "Locked")
+    ?lockedText:String // The text to display when a pin is locked. (optional, use when `special` is true)
 }
 
 typedef BoxData = {
@@ -579,7 +580,7 @@ class PointlessPins extends Module
 
             trace(currentSongOrWeek, bucksToAward, previousSongs);
 
-            var funkBucksText = new BAlphabet(FlxG.width - 100, 20, '<b><c=$resultTextColor>${bucksToAward > 0 ? "+" : ""}$bucksToAward</c></b> &#xE000;');
+            var funkBucksText = new BAlphabet(FlxG.width - 100, 20, '<b><c=$resultTextColor>${bucksToAward > 0 ? "+" : ""}$bucksToAward</c></b> ${PTIcon.Buck}');
             funkBucksText.scale.set(0.65, 0.65);
             funkBucksText.alignment = "right";
             funkBucksText.alpha = 0;
@@ -595,7 +596,7 @@ class PointlessPins extends Module
 
             if (awardedJewels > 0)
             {
-                var jewelsText = new BAlphabet(FlxG.width - 40, 20, '<b><c=82E9FF>+${awardedJewels}</c></b> &#xE001;');
+                var jewelsText = new BAlphabet(FlxG.width - 40, 20, '<b><c=82E9FF>+${awardedJewels}</c></b> ${PTIcon.Jewel}');
                 jewelsText.scale.set(0.65, 0.65);
                 jewelsText.alignment = "right";
                 jewelsText.alpha = 0;
@@ -633,7 +634,11 @@ class PointlessPins extends Module
     }
 }
 
-class LetterKeyCap extends ScriptedFlxSpriteGroup
+/**
+ * This class displays a cool keycap sprite with a letter.
+ * Only really has space for 1 letter though, so "ESC" isn't going to work too well..
+ */
+class LetterKeyCap extends FunkinGroup
 {
     public var keycap:FunkinSprite;
     public var letter:BAlphabet;
@@ -643,17 +648,23 @@ class LetterKeyCap extends ScriptedFlxSpriteGroup
         super(x, y);
 
         keycap = new FunkinSprite(0, 0).loadTexture("keycap");
-        keycap.scale.set(0.75, 0.75);
+        keycap.localScale.set(0.75, 0.75);
         keycap.zIndex = this.zIndex;
         this.add(keycap);
 
-        letter = new BAlphabet(keycap.width / 2, 21, character);
+        letter = new BAlphabet(0, 0, character);
         letter.alignment = "center";
-        letter.scale.set(0.6, 0.6);
+        letter.localX = keycap.width / 2;
+        letter.localY = 21;
+        letter.localScale.set(0.6, 0.6);
         letter.zIndex = this.zIndex + 1;
         this.add(letter);
 
-        if (isUI) this.scrollFactor.set(0, 0);
+        if (isUI)
+        {
+            this.keycap.scrollFactor.set(0, 0);
+            this.letter.scrollFactor.set(0, 0);
+        }
     }
 
     override function update(elapsed:Float):Void
@@ -662,4 +673,30 @@ class LetterKeyCap extends ScriptedFlxSpriteGroup
 
         super.update(elapsed);
     }
+}
+
+/**
+ * This class contains a constant for each text icon the mod adds.
+ */
+class PTIcon
+{
+    static final Buck:String = "&#xE000;";
+    static final Jewel:String = "&#xE001;";
+    static final Erect:String = "&#xE002;";
+    static final Boyfriend:String = "&#xE003;";
+    static final Pico:String = "&#xE004;";
+
+    static final OpheliaMad:String = "&#xE010;";
+    static final Star:String = "&#xE011;";
+    
+    static final CardboardBox:String = "&#xE020;";
+    static final SmallGiftbox:String = "&#xE021;";
+
+    static final Hundrec:String = "&#xE080;";
+    static final Gooey:String = "&#xE081;";
+    static final RemnantBF:String = "&#xE082;";
+    static final RemnantPico:String = "&#xE083;";
+    static final Reimu:String = "&#xE084;";
+    static final QT:String = "&#xE085;";
+    static final SpookyKids:String = "&#xE086;";
 }

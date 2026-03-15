@@ -227,10 +227,10 @@ class BoxSubMenu extends MusicBeatSubState
         boxName.text = '<b>${box.name}</b>';
         boxDescription.text = box.description;
 
-        var boxPriceText:String = '<b>${box.price} &#xE000;</b>\n';
+        var boxPriceText:String = '<b>${box.price} ${PTIcon.Buck}</b>\n';
         if (box.angerModifier > 1.0)
         {
-            boxPriceText += '<b><s=0.75>(&#xE010; <c=FF0000>x${box.angerModifier}</c>)</s></b>';
+            boxPriceText += '<b><s=0.75>(${PTIcon.OpheliaMad} <c=FF0000>x${box.angerModifier}</c>)</s></b>';
         }
         if (box.discountModifier > 0.0)
         {
