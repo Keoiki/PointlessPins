@@ -280,13 +280,13 @@ class Shop extends MusicBeatState
         screenBlack.scrollFactor.set(0, 0);
         add(screenBlack);
 
-        funkBucksText = new BAlphabet(FlxG.width - 20, 25, "<b>" + PointlessPins.getFunkCoins() + "</b> &#xE000;");
+        funkBucksText = new BAlphabet(FlxG.width - 20, 25, '<b>${PointlessPins.getFunkCoins()}</b> ${PTIcon.Buck}');
         funkBucksText.scale.set(0.65, 0.65);
         funkBucksText.alignment = "right";
         funkBucksText.scrollFactor.set(0, 0);
         add(funkBucksText);
 
-        blueJewelsText = new BAlphabet(FlxG.width - 20, funkBucksText.y + 70, '<b><c=82E9FF>${PointlessPins.getBlueJewels()}<s=0.5>/${PointlessPins.maximumBlueJewels}</s></c></b> &#xE001;');
+        blueJewelsText = new BAlphabet(FlxG.width - 20, funkBucksText.y + 70, '<b><c=82E9FF>${PointlessPins.getBlueJewels()}<s=0.5>/${PointlessPins.maximumBlueJewels}</s></c></b> ${PTIcon.Jewel}');
         blueJewelsText.alignment = "right";
         blueJewelsText.scale.set(0.65, 0.65);
         blueJewelsText.scrollFactor.set(0, 0);
@@ -866,7 +866,7 @@ class Shop extends MusicBeatState
         buckSound.pitch = 1.0;
         var easeToUse:FlxEase = amount >= 500 ? FlxEase.expoOut : FlxEase.quartOut;
         FlxTween.num(currentFunkBucks, remainingFunkBucks, 2.5, { ease: easeToUse, onComplete: function(_) {
-            funkBucksText.text = '<b>${Math.floor(remainingFunkBucks)}</b> &#xE000;';
+            funkBucksText.text = '<b>${Math.floor(remainingFunkBucks)}</b> ${PTIcon.Buck}';
         }}, updateFunkBucks);
 
         PointlessPins.addFunkCoins(-amount, false);
@@ -880,7 +880,7 @@ class Shop extends MusicBeatState
         buckSound.pitch = 0.5;
         var easeToUse:FlxEase = amount >= 500 ? FlxEase.expoOut : FlxEase.quartOut;
         FlxTween.num(currentFunkBucks, remainingFunkBucks, 2.5, { ease: easeToUse, onComplete: function(_) {
-            funkBucksText.text = '<b>${Math.floor(remainingFunkBucks)}</b> &#xE000;';
+            funkBucksText.text = '<b>${Math.floor(remainingFunkBucks)}</b> ${PTIcon.Buck}';
         }}, increaseFunkBucks);
 
         PointlessPins.addFunkCoins(amount, false);
@@ -890,7 +890,7 @@ class Shop extends MusicBeatState
     {
         if (previousFunkBucks != Math.floor(value))
         {
-            funkBucksText.text = '<b>${Math.floor(value)}</b> &#xE000;';
+            funkBucksText.text = '<b>${Math.floor(value)}</b> ${PTIcon.Buck}';
             funkBucksText.y += 5;
             FunkinSound.playOnce(Paths.sound("fav"), 0.35);
         }
@@ -901,7 +901,7 @@ class Shop extends MusicBeatState
     {
         if (previousFunkBucks != Math.floor(value))
         {
-            funkBucksText.text = '<b>${Math.floor(value)}</b> &#xE000;';
+            funkBucksText.text = '<b>${Math.floor(value)}</b> ${PTIcon.Buck}';
             funkBucksText.y -= 2;
             buckSound.play(true);
         }
@@ -940,16 +940,16 @@ class Shop extends MusicBeatState
                 switch (dailySongVariation)
                 {
                     case "default": variationToAdd = ""; // Nothing gets added to default variation names.
-                    case "erect": variationToAdd += "&#xE002;";
-                    case "bf": variationToAdd += "&#xE003;";
-                    case "pico": variationToAdd += "&#xE004;";
-                    case "hundrec": variationToAdd += "&#xE080;";
-                    case "gooey": variationToAdd += "&#xE081;";
-                    case "remnants": variationToAdd += '&#xE08${["darnell", "lit-up", "2hot", "blazin"].contains(dailySongID) ? "3" : "2"};';
-                    case "bfremnants": variationToAdd += "&#xE082;";
-                    case "reimu": variationToAdd += "&#xE084;";
-                    // case "qt": variationToAdd += "&#xE085;";
-                    // case "spookymod": variationToAdd += "&#xE086;";
+                    case "erect": variationToAdd += PTIcon.Erect;
+                    case "bf": variationToAdd += PTIcon.Boyfriend;
+                    case "pico": variationToAdd += PTIcon.Pico;
+                    case "hundrec": variationToAdd += PTIcon.Hundrec;
+                    case "gooey": variationToAdd += PTIcon.Gooey;
+                    case "remnants": variationToAdd += ["darnell", "lit-up", "2hot", "blazin"].contains(dailySongID) ? PTIcon.RemnantPico : PTIcon.RemnantBF;
+                    case "bfremnants": variationToAdd += PTIcon.RemnantBF;
+                    case "reimu": variationToAdd += PTIcon.Reimu;
+                    case "qt": variationToAdd += PTIcon.QT;
+                    case "spookymod": variationToAdd += PTIcon.SpookyKids;
                     default:
                     {
                         variationToAdd += '&#xFFFD;';
