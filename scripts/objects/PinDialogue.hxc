@@ -1,0 +1,31 @@
+package pointlesspins.objects;
+
+import balphabet.BAlphabet;
+import balphabet.BAlphabetTyped;
+import funkin.graphics.FunkinSprite;
+import funkin.group.FunkinGroup;
+
+typedef PinDialogueLine =
+{
+    text:String, // The text to be displayed.
+    ?speakerName:String, // The name of the speaker. The text and box extension will be hidden if omitted. (optional)
+    ?speed:Float, // The speed of the text typing. (optional, default: 0.05)
+    ?letterStep:Int, // The amount of letters to display each writing step. (optional, default: 1)
+    ?instantComplete:Bool, // Whether to instantly complete the line. (optional, default: false)
+    ?delayNextLine:Bool, // Whether to delay the next line. The next line will not start until it's manually triggered. (optional, default: false)
+    ?boxY:Float // The Y level of the dialogue. (optional, default: ???)
+}
+
+class PinDialogue extends FunkinGroup
+{
+    var currentDialogue:Array<PinDialogueLine>;
+
+    var dialogueID:String = "";
+    var dialogueIndex:Int = -1;
+
+    var dialogueBox:FunkinSprite;
+    var dialogueText:BAlphabetTyped;
+    var speakerBox:FunkinSprite;
+    var speakerName:BAlphabet;
+    var advanceIcon:FunkinSprite;
+}
