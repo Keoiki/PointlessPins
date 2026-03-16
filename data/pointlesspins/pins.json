@@ -69,7 +69,6 @@
             { "id": "difficultystar", "name": "Blue Flamed Star", "description": "That looks really difficult!" },
             { "id": "qt", "name": "QT", "source": "MOD: QT: Rewired" },
             { "id": "sky-redux", "name": "Sky (Redux)", "source": "MOD: Heartbreak Havoc" },
-            { "id": "sky-reborn", "name": "Sky (Reborn)", "source": "MOD: Sky: REBORN" },
             { "id": "sky", "name": "Sky", "description": "No no, wrong type of sky!" },
             { "id": "rank-excellent", "name": "Excellent Rank", "description": "It pains to get a single Bad and get this rank.", "special": true, "lockedText": "Complete any song with a certain rank." },
             { "id": "haxeui", "name": "HaxeUI", "description": "It either doesn't work or doesn't work." }
