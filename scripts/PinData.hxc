@@ -101,7 +101,11 @@ class PointlessPins extends Module
         {
             trace(err);
             ModStore.register("pinsIsOutdated", false);
-            throw "Local mod version could not be found!\nWhy did you change the mod ID in the meta file?";
+            #if mobile
+            throw "Local mod version could not be found!\nThe message I put here for desktop users might be too long for mobile users.\nI can't be bothered to test that, maybe the text box is scrollable?\nJust change the mod ID back, man, so you can get notified of updates again."
+            #else
+            throw "Local mod version could not be found!\nWhy did you change the mod ID?\nI mean, it couldn't have been an accident, 0.8.4 changed how mod IDs work.\nThey aren't based off of the folder names anymore unless you don't provide an id the the metadata.\nYou had to manually go into the metadata file, and change the \"id\" field to something else.\nDo you NOT want to be notified when a new update drops?\nOkay.\nAre you still reading this?\nYou want me to keep going? Probably not.\nNow go change the mod ID back and continue opening those boxes!\n\n\nAlso, if the reason why you are getting this message is because someone told you that changing the mod ID does something cool,\nyou and that person better watch your backs.";
+            #end
             return;
         }
         var request:URLRequest = new URLRequest("https://raw.githubusercontent.com/Keoiki/PointlessPins/main/version.txt");
