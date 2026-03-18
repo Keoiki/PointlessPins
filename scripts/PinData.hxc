@@ -666,8 +666,8 @@ class LetterKeyCap extends FunkinGroup
 
         if (isUI)
         {
-            this.keycap.scrollFactor.set(0, 0);
-            this.letter.scrollFactor.set(0, 0);
+            keycap.scrollFactor.set(0, 0);
+            letter.setScrollFactor(0);
         }
     }
 

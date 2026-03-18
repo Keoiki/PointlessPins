@@ -129,7 +129,7 @@ class Shop extends MusicBeatState
         dailiesText.alignment = "center";
         dailiesText.scale.set(0.525, 0.525);
         dailiesText.zIndex = -996;
-        dailiesText.scrollFactor.set(0.85, 0.85);
+        dailiesText.setScrollFactor(0.85, 0.85);
         add(dailiesText);
 
         var rewardsshelf:FunkinSprite = new FunkinSprite(1120 - spriteNudge, 35).loadTexture("shop/rewardsshelf");
@@ -216,22 +216,22 @@ class Shop extends MusicBeatState
         lableBoxes.zIndex = 512;
         add(lableBoxes);
 
-        // lableExchange = new BAlphabet(1200 - spriteNudge, 520, "<b>Exchange\n<s=0.5>ABCDEFGHIJKLMNOPQRSTUVWXYZ\nabcdefghijklmnopqrstuvwxyz.,-=?!*^+</s></b>");
+        // lableExchange = new BAlphabet(1200 - spriteNudge, 520, "<b>Exchange\n<s=-0.45>ABCDEFGHIJKLMNOPQRSTUVWXYZ\nabcdefghijklmnopqrstuvwxyz.,-=?!*^+</s></b>");
         lableExchange = new BAlphabet(1200 - spriteNudge, 520, "<b>Exchange</b>");
         lableExchange.scale.set(0.65, 0.65);
         lableExchange.alignment = "center";
         lableExchange.zIndex = 516;
         add(lableExchange);
 
-        // var box:FunkinSprite = new FunkinSprite(lableExchange.x - 200, lableExchange.y).makeSolidColor(400, 54 * lableExchange.scale.y, 0x7B00FF00);
+        // var box:FunkinSprite = new FunkinSprite(lableExchange.x - 200, lableExchange.y).makeSolidColor(400, 60 * lableExchange.scale.y, 0x7B00FF00);
         // box.zIndex = 520;
         // add(box);
 
-        // var box:FunkinSprite = new FunkinSprite(lableExchange.x - 200, lableExchange.y + 85 * lableExchange.scale.y).makeSolidColor(400, 54 * lableExchange.scale.y, 0x7B00FF00);
+        // var box:FunkinSprite = new FunkinSprite(lableExchange.x - 200, lableExchange.y + 85 * lableExchange.scale.y).makeSolidColor(400, 60 * lableExchange.scale.y, 0x7B00FF00);
         // box.zIndex = 520;
         // add(box);
 
-        // var box:FunkinSprite = new FunkinSprite(lableExchange.x - 200, lableExchange.y + 85 * 2 * lableExchange.scale.y).makeSolidColor(400, 54 * lableExchange.scale.y, 0x7B00FF00);
+        // var box:FunkinSprite = new FunkinSprite(lableExchange.x - 200, lableExchange.y + 85 * 2 * lableExchange.scale.y).makeSolidColor(400, 60 * lableExchange.scale.y, 0x7B00FF00);
         // box.zIndex = 520;
         // add(box);
 
@@ -323,13 +323,17 @@ class Shop extends MusicBeatState
         #end
         add(coolBackButton);
 
+        // var box:FunkinSprite = new FunkinSprite(0, 0).makeSolidColor(1600, 60, 0xFFFFFFFF);
+        // box.cameras = [cameraHUD];
+        // add(box);
+
         // var test = new BAlphabet(FlxG.width / 2, 0, "<b>Aa<s=0.9>Bb</s><s=0.8>Cc</s><s=0.7>Dd</s><s=0.6>Ee</s><s=0.5>Ff</s><s=0.4>Gg</s><s=0.3>Hh</s><s=0.2>Ii</s><s=0.1>Jj</s></b>");
-        // // test.scale.set(0.75, 0.75);
+        // test.scale.set(0.75, 0.75);
         // test.alignment = "center";
         // add(test);
         // test.cameras = [cameraHUD];
 
-        // var box:FunkinSprite = new FunkinSprite(FlxG.width / 2, 0).makeSolidColor(200, 60 * test.scale.y, 0x7B00FF00);
+        // var box:FunkinSprite = new FunkinSprite(FlxG.width / 2, 0).makeSolidColor(800, 60 * test.scale.y, 0x7B00FF00);
         // box.cameras = [cameraHUD];
         // add(box);
 
