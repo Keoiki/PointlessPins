@@ -11,6 +11,7 @@ typedef PinDialogueLine =
     ?speakerName:String, // The name of the speaker. The text and box extension will be hidden if omitted. (optional)
     ?speed:Float, // The speed of the text typing. (optional, default: 0.05)
     ?letterStep:Int, // The amount of letters to display each writing step. (optional, default: 1)
+    ?canSkip:Bool, // Whether the line can be skipped. (optional, default: true)
     ?instantComplete:Bool, // Whether to instantly complete the line. (optional, default: false)
     ?delayNextLine:Bool, // Whether to delay the next line. The next line will not start until it's manually triggered. (optional, default: false)
     ?boxY:Float // The Y level of the dialogue. (optional, default: ???)
