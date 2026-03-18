@@ -1,0 +1,19 @@
+[
+    {
+        "text": "Didn't you learn from last time!?",
+        "speaker": "Ophelia",
+        "canSkip": false
+    },
+    {
+        "text": "<c=FF0000><S><s=1.5>S T O P !</s></S></c>",
+        "speaker": "Ophelia",
+        "canSkip": false,
+        "instantComplete": true
+    },
+    {
+        "text": "Or do you like <c=FF7F7F>paying more for the boxes</c>,<d=1.0/> <S>huh?!</S>",
+        "speaker": "Ophelia",
+        "canSkip": false,
+        "speed": 0.035
+    }
+]

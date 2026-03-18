@@ -1,0 +1,17 @@
+[
+    {
+        "text": "You're not very smart,<d=0.5/> are you?",
+        "speaker": "Ophelia",
+        "canSkip": false
+    },
+    {
+        "text": "I warned you,<d=0.25/> but you didn't take the hint.",
+        "speaker": "Ophelia",
+        "canSkip": false
+    },
+    {
+        "text": "Have fun with the <c=FF7F7F>marked up prices</c>,<d=0.25/> idiot.",
+        "speaker": "Ophelia",
+        "canSkip": false
+    }
+]

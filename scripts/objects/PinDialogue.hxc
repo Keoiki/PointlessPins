@@ -2,13 +2,17 @@ package pointlesspins.objects;
 
 import balphabet.BAlphabet;
 import balphabet.BAlphabetTyped;
+import flixel.util.FlxSignal;
+import funkin.PlayerSettings;
 import funkin.graphics.FunkinSprite;
 import funkin.group.FunkinGroup;
+import funkin.util.SerializerUtil;
+import funkin.util.TouchUtil;
 
 typedef PinDialogueLine =
 {
     text:String, // The text to be displayed.
-    ?speakerName:String, // The name of the speaker. The text and box extension will be hidden if omitted. (optional)
+    ?speaker:String, // The name of the speaker. The text and box extension will be hidden if omitted. (optional)
     ?speed:Float, // The speed of the text typing. (optional, default: 0.05)
     ?letterStep:Int, // The amount of letters to display each writing step. (optional, default: 1)
     ?canSkip:Bool, // Whether the line can be skipped. (optional, default: true)
@@ -29,4 +33,135 @@ class PinDialogue extends FunkinGroup
     var speakerBox:FunkinSprite;
     var speakerName:BAlphabet;
     var advanceIcon:FunkinSprite;
+
+    public var onNextLine:FlxSignal<Int->Void> = new FlxSignal();
+    public var onSkipLine:FlxSignal<Int->Void> = new FlxSignal();
+    public var onCompleteLine:FlxSignal<Int->Void> = new FlxSignal();
+    public var onCompleteDialogue:FlxSignal = new FlxSignal();
+
+    public function new(dialogueID:String):Void
+    {
+        super();
+        this.dialogueID = dialogueID;
+        this.currentDialogue = SerializerUtil.fromJSON(Assets.getText('data/pointlesspins/dialogue/$dialogueID.json'));
+
+        dialogueBox = new FunkinSprite(0, 0);
+        dialogueBox.frames = FlxG.bitmap.create(FlxG.width, 128, 0xBF000000, false, 'pinDialogueMainBox').imageFrame;
+        this.add(dialogueBox);
+
+        dialogueText = new BAlphabetTyped(0, 0, "");
+        dialogueText.localX = FlxG.width / 2;
+        dialogueText.localY = 48;
+        dialogueText.localScale.set(0.5, 0.5);
+        dialogueText.alignment = "center";
+        this.add(dialogueText);
+
+        dialogueText.finishCallback = () ->
+        {
+            onCompleteLine.dispatch(dialogueIndex);
+        }
+
+        speakerBox = new FunkinSprite(0, 0);
+        speakerBox.localX = 24;
+        speakerBox.localY = -16;
+        speakerBox.frames = FlxG.bitmap.create(2, 16, 0xBF000000, false, 'pinDialogueSpeakerBox').imageFrame;
+        speakerBox.origin.x = 0;
+        this.add(speakerBox);
+
+        speakerName = new BAlphabet(0, 0, "John Doe");
+        speakerName.localX = 40;
+        speakerName.localY = -8;
+        speakerName.localScale.set(0.4, 0.4);
+        this.add(speakerName);
+
+        doNextLine();
+    }
+
+    var hasEnded:Bool = false;
+    var canSkip:Bool = true;
+
+    override function update(elapsed:Float):Void
+    {
+        super.update(elapsed);
+
+        if (!hasEnded)
+        {
+            if ((PlayerSettings.player1.controls.CUTSCENE_ADVANCE || TouchUtil.pressAction()) && canSkip)
+            {
+                if (!dialogueText.finishedText && canSkip)
+                {
+                    dialogueText.finish();
+                    onSkipLine.dispatch(dialogueIndex);
+                }
+                else if (dialogueIndex >= currentDialogue.length - 1)
+                {
+                    hasEnded = true;
+                    onCompleteDialogue.dispatch();
+                }
+                else
+                {
+                    doNextLine();
+                }
+            }
+
+            if (dialogueText.finishedText)
+            {
+                canSkip = true;
+            }
+        }
+        else
+        {
+            this.kill();
+            this.destroy();
+        }
+    }
+
+    function doNextLine():Void
+    {
+        var dialogueLine:PinDialogueLine = null;
+        do
+        {
+            dialogueLine = currentDialogue[++dialogueIndex];
+        }
+        while (dialogueLine == null);
+
+        dialogueLine.text ??= "I forgor.";
+        dialogueLine.speaker ??= null;
+        dialogueLine.speed ??= 0.05;
+        dialogueLine.letterStep ??= 1;
+        dialogueLine.canSkip ??= true;
+        dialogueLine.instantComplete ??= false;
+        dialogueLine.delayNextLine ??= false;
+        dialogueLine.boxY ??= 32;
+
+        dialogueText.text = dialogueLine.text;
+        dialogueText.speed = dialogueLine.speed;
+        dialogueText.letterStep = dialogueLine.letterStep;
+        canSkip = dialogueLine.canSkip;
+
+        this.y = dialogueLine.boxY;
+
+        dialogueText.localY -= dialogueText.rows * 16;
+
+        dialogueText.start();
+
+        if (dialogueLine.instantComplete)
+        {
+            dialogueText.finish();
+        }
+
+        if (dialogueLine.speaker != null)
+        {
+            speakerName.text = dialogueLine.speaker;
+            speakerBox.localVisible = true;
+            speakerBox.localScale.x = speakerName.width * speakerName.localScale.x / 2 + 16;
+        }
+        else
+        {
+            speakerBox.localVisible = false;
+            speakerName.localVisible = false;
+        }
+
+        onNextLine.dispatch(dialogueIndex);
+    }
 }
