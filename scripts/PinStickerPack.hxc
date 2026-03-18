@@ -1,0 +1,23 @@
+package pointlesspins;
+
+import funkin.ui.transition.stickers.StickerPack;
+using Lambda;
+
+class PinStickerPack extends StickerPack
+{
+    public function new()
+    {
+        super("pointlesspins");
+    }
+
+    override public function getStickers():Array<String>
+    {
+        var unlockedPins:Array<String> = [for (key in PointlessPins.getObtainedPins().keys()) key];
+        for (ind => pin in unlockedPins)
+        {
+            unlockedPins[ind] = "pointlesspins/pins/" + pin;
+        }
+        unlockedPins.push("unknownpin");
+        return unlockedPins;
+    }
+}
