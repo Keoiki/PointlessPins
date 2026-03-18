@@ -519,8 +519,8 @@ class Shop extends MusicBeatState
         {
             var dialog:PinDialogue = new PinDialogue("angerRepeat");
             dialog.cameras = [cameraHUD];
-            // dialog.onNextLine.add((line) -> trace(line));
-            // dialog.onCompleteDialogue.add(() -> trace("dialog complete"));
+            dialog.onNextLine.add((line) -> trace(line));
+            dialog.onCompleteDialogue.add(() -> trace("dialog complete"));
             add(dialog);
         }
 

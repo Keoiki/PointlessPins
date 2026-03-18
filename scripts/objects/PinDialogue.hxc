@@ -3,6 +3,7 @@ package pointlesspins.objects;
 import balphabet.BAlphabet;
 import balphabet.BAlphabetTyped;
 import flixel.util.FlxSignal;
+import flixel.util._FlxSignal.FlxSignal1;
 import funkin.PlayerSettings;
 import funkin.graphics.FunkinSprite;
 import funkin.group.FunkinGroup;
@@ -34,9 +35,9 @@ class PinDialogue extends FunkinGroup
     var speakerName:BAlphabet;
     var advanceIcon:FunkinSprite;
 
-    public var onNextLine:FlxSignal<Int->Void> = new FlxSignal();
-    public var onSkipLine:FlxSignal<Int->Void> = new FlxSignal();
-    public var onCompleteLine:FlxSignal<Int->Void> = new FlxSignal();
+    public var onNextLine:FlxSignal1<Int->Void> = new FlxSignal1();
+    public var onSkipLine:FlxSignal1<Int->Void> = new FlxSignal1();
+    public var onCompleteLine:FlxSignal1<Int->Void> = new FlxSignal1();
     public var onCompleteDialogue:FlxSignal = new FlxSignal();
 
     public function new(dialogueID:String):Void
