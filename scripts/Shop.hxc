@@ -1,5 +1,6 @@
 package pointlesspins;
 
+import pointlesspins.objects.PinDialogue;
 import funkin.util.TouchUtil;
 import funkin.ui.mainmenu.MainMenuState;
 import funkin.ui.MusicBeatState;
@@ -512,6 +513,15 @@ class Shop extends MusicBeatState
             {
                 openSubState(substate);
             }});
+        }
+
+        if (FlxG.keys.justPressed.FIVE)
+        {
+            var dialog:PinDialogue = new PinDialogue("angerRepeat");
+            dialog.cameras = [cameraHUD];
+            // dialog.onNextLine.add((line) -> trace(line));
+            // dialog.onCompleteDialogue.add(() -> trace("dialog complete"));
+            add(dialog);
         }
 
         justGainedFocus = false;
