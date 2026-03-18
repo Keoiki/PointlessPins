@@ -584,9 +584,8 @@ class PointlessPins extends Module
 
             trace(currentSongOrWeek, bucksToAward, previousSongs);
 
-            var funkBucksText = new BAlphabet(FlxG.width - 100, 20, '<b><c=$resultTextColor>${bucksToAward > 0 ? "+" : ""}$bucksToAward</c></b> ${PTIcon.Buck}');
+            var funkBucksText = new BAlphabet(40, 50, '<b><c=$resultTextColor>${bucksToAward > 0 ? "+" : ""}$bucksToAward</c></b> ${PTIcon.Buck}');
             funkBucksText.scale.set(0.65, 0.65);
-            funkBucksText.alignment = "right";
             funkBucksText.alpha = 0;
             funkBucksText.zIndex = 5000;
             event.targetState.add(funkBucksText);
@@ -594,15 +593,15 @@ class PointlessPins extends Module
 
             new FlxTimer().start(37 / 24, _ -> {
                 funkBucksText.alpha = 1;
-                FlxTween.tween(funkBucksText, { x: funkBucksText.x + 15 }, 0.5, { ease: FlxEase.backOut, type: 16 });
+                FlxTween.tween(funkBucksText, { x: funkBucksText.x - 15 }, 0.5, { ease: FlxEase.backOut, type: 16 });
                 FunkinSound.playOnce(Paths.sound(bucksToAward >= 0 ? "fav" : "unfav"), 1.5);
             });
 
             if (awardedJewels > 0)
             {
-                var jewelsText = new BAlphabet(FlxG.width - 40, 20, '<b><c=82E9FF>+${awardedJewels}</c></b> ${PTIcon.Jewel}');
+                var jewelsText = new BAlphabet(30, 70, '<b><c=82E9FF>+${awardedJewels}</c></b> ${PTIcon.Jewel}');
+                jewelsText.resetOrigin();
                 jewelsText.scale.set(0.65, 0.65);
-                jewelsText.alignment = "right";
                 jewelsText.alpha = 0;
                 jewelsText.zIndex = 5001;
                 event.targetState.add(jewelsText);
@@ -610,9 +609,10 @@ class PointlessPins extends Module
 
                 new FlxTimer().start(49 / 24, _ -> {
                     jewelsText.alpha = 1;
-                    FlxTween.tween(funkBucksText, { x: funkBucksText.x - 90 }, 0.5, { ease: FlxEase.backOut });
-                    FlxTween.tween(jewelsText, { x: jewelsText.x + 15 }, 0.75, { ease: FlxEase.backOut, type: 16 });
-                    FunkinSound.playOnce(Paths.sound("fav"), 1.5).pitch = 1.25;
+                    FlxTween.tween(funkBucksText, { y: 20 }, 0.5, { ease: FlxEase.backOut });
+                    FlxTween.tween(jewelsText, { x: jewelsText.x - 15 }, 0.75, { ease: FlxEase.backOut, type: 16 });
+                    FlxTween.tween(jewelsText.scale, { x: 1.0, y: 1.0 }, 0.75, { ease: FlxEase.bounceOut, type: 16 });
+                    FunkinSound.playOnce(Paths.sound("bluejewel"), 1.5).pitch = 1.5;
                 });
             }
 

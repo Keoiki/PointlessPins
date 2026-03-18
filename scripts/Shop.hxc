@@ -977,7 +977,7 @@ class Shop extends MusicBeatState
         }
         else
         {
-            return "<b><c=00FF00>Dailies</c>\nNone!\nCome back\ntomorrow!</b>";
+            return "<b><c=00FF00>Dailies</c>\n\nNone!\nCome back\ntomorrow!</b>";
         }
     }
 
