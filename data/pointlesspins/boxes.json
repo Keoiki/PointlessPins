@@ -18,10 +18,10 @@
         "description": "Oooh, I wonder what's inside!\nIt's a pin, yeah.",
         "revealTime": 26,
         "chances": [
-            [ "Common", 594 ],
+            [ "Common", 596.5 ],
             [ "Uncommon", 350 ],
             [ "Rare", 50 ],
-            [ "Legendary", 5 ],
+            [ "Legendary", 2.5 ],
             [ "Mythic", 1 ]
         ],
         "cost": 50,

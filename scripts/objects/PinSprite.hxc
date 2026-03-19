@@ -11,16 +11,34 @@ class PinSprite extends FunkinSprite
     var scaleOverride:Float;
     var rarity:String = "Unknown";
     var artist:String = "Keoiki";
-    var source:String = "Unknown";
+    var source(default, set):String = "Unknown";
     var lockedText:String = "Unknown";
     var special:Bool = false;
     var isUnlocked:Bool = false;
     var isUnknown:Bool = false;
     var unlockCount:Int = 0;
     var hasGlint:Bool = false;
-    var blendShader:PinGlint;
+    // var blendShader:PinGlint;
 
     var rotationTween:FlxTween = null;
+
+    function set_source(value:String):String
+    {
+        var regex:EReg = new EReg('#([a-zA-Z]+)#', "g");
+        value = regex.map(value, (e) ->
+        {
+            switch (e.matched(1).toLowerCase())
+            {
+                case "mod": return PTIcon.Modded;
+                case "internet": return PTIcon.Internet;
+                case "game": return PTIcon.Game;
+                default: return "";
+            }
+        });
+
+        source = value;
+        return source;
+    }
 
     public function new(x:Float, y:Float)
     {

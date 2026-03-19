@@ -41,7 +41,7 @@
 - Increased the cost of Cardboard Boxes from 10 to 20 FunkBucks.
 - Added a 1% chance to get a Rare pin from Cardboard Boxes.
 - Increased the cost of Small Giftboxes from 25 to 50 FunkBucks.
-- Added a 0.5% chance to get a Legendary pin from Small Giftboxes.
+- Added a 0.25% chance to get a Legendary pin from Small Giftboxes.
 - Rewrote how dialogue is handled, it isn't garbage code anymore.
 
 ### Removed

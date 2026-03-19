@@ -190,6 +190,7 @@ class PinBoard extends MusicBeatSubState
         pinDescription.scale.set(0.4, 0.4);
         pinDescription.alignment = "center";
         add(pinDescription);
+        pinDescription.lineHeight = 60;
 
         pinArtist = new BAlphabet(pinNameBox.x + pinNameBox.width - 10, pinNameBox.y + 95, "");
         pinArtist.scale.set(0.3, 0.3);

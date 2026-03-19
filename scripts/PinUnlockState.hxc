@@ -63,24 +63,18 @@ class PinUnlockState extends MusicBeatSubState
             pinData.rarity = "Unknown";
         }
         var rarityColor:String = pinData.rarity == "Unknown" ? "7F7F7F" : ReflectUtil.getAnonymousField(PointlessPins.pinData, pinData.rarity).color;
-        var unlockedPinName:BAlphabet = new BAlphabet(FlxG.width / 2, 460, '<b><s=0.75><c=$rarityColor>${pinData.rarity}</c></s>\n${pinData.name}</b>');
+        var unlockedPinName:BAlphabet = new BAlphabet(FlxG.width / 2, 475, '<b><s=0.75><c=$rarityColor>${pinData.rarity}</c></s>\n${pinData.name}</b>');
         unlockedPinName.alignment = "center";
         unlockedPinName.scale.set(0.75, 0.75);
         add(unlockedPinName);
 
-        if (pinData.source != null && pinData.source != "")
-        {
-            var unlockedPinSource:BAlphabet = new BAlphabet(FlxG.width / 2, unlockedPinName.y + 120, '<b>${pinData.source}</b>');
-            unlockedPinSource.alignment = "center";
-            unlockedPinSource.scale.set(0.3, 0.3);
-            add(unlockedPinSource);
-        }
-
         if (pinData.description != null && pinData.description != "")
         {
-            var unlockedPinDescription:BAlphabet = new BAlphabet(FlxG.width / 2, unlockedPinName.y + 160, pinData.description);
+            var unlockedPinDescription:BAlphabet = new BAlphabet(FlxG.width / 2, unlockedPinName.y + 140, "");
+            unlockedPinDescription.lineHeight = 60;
             unlockedPinDescription.alignment = "center";
-            unlockedPinDescription.scale.set(0.5, 0.5);
+            unlockedPinDescription.scale.set(0.45, 0.45);
+            unlockedPinDescription.text = pinData.description;
             add(unlockedPinDescription);
         }
 
