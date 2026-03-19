@@ -583,10 +583,6 @@ class RewardItem extends ScriptedFlxSpriteGroup
                 icon.setupPin(reward, "", "", 0.5);
                 icon.y -= 70;
             }
-            case RewardType.JEWEL:
-            {
-                trace("JEWEL reward type is not implemented");
-            }
             case RewardType.BOX:
             {
                 icon = new BoxSprite(0, 0);
@@ -615,6 +611,10 @@ class RewardItem extends ScriptedFlxSpriteGroup
                 number = new BAlphabet(0, 0, '<b>$reward</b> ${PTIcon.Buck}');
                 number.alignment = "center";
                 number.scale.set(0.4, 0.4);
+            }
+            case RewardType.JEWEL:
+            {
+                trace("JEWEL reward type is not implemented");
             }
             case RewardType.SONG:
             {
@@ -680,9 +680,9 @@ enum RewardType
 {
     CATEGORY;
     PIN;
-    JEWEL;
     BOX;
     FUNKBUCK;
+    JEWEL;
     SONG;
     BOX_DISCOUNT;
     FUNKBUCK_BONUS;
