@@ -35,36 +35,65 @@ class RewardsSubMenu extends MusicBeatSubState
             requirementIcon: PTIcon.Buck,
             order: 0,
             rewards: [
-                "1" => {id: "funkbucks01", requirement: 500, type: RewardType.BOX, reward: "cardboard"},
-                "2" => {id: "funkbucks02", requirement: 1000, type: RewardType.FUNKBUCK, reward: 50},
-                "3" => {id: "funkbucks03", requirement: 2500, type: RewardType.BOX, reward: "smallgiftbox"},
-                "4" => {id: "funkbucks04", requirement: 10000, type: RewardType.FUNKBUCK, reward: 200},
-                "5" => {id: "funkbucks05", requirement: 25000, type: RewardType.PIN, reward: "funkbuck"},
-                "6" => {id: "funkbucks06", requirement: 50000, type: RewardType.FUNKBUCK, reward: 1000}
+                "1" => {id: "funkbucks01", requirement: 100, type: RewardType.FUNKBUCK, reward: 20},
+                "2" => {id: "funkbucks02", requirement: 500, type: RewardType.BOX, reward: "cardboard"},
+                "3" => {id: "funkbucks03", requirement: 1000, type: RewardType.FUNKBUCK, reward: 50},
+                "4" => {id: "funkbucks04", requirement: 2000, type: RewardType.BOX, reward: "smallgiftbox"},
+                "5" => {id: "funkbucks05", requirement: 3000, type: RewardType.FUNKBUCK, reward: 150},
+                // "6" => {id: "funkbucks06", requirement: 5000, type: RewardType.FUNKBUCK, reward: 250},
+                // "7" => {id: "funkbucks07", requirement: 7500, type: RewardType.FUNKBUCK, reward: 500},
+                // "8" => {id: "funkbucks08", requirement: 10000, type: RewardType.FUNKBUCK, reward: 600},
+                // "9" => {id: "funkbucks09", requirement: 12500, type: RewardType.FUNKBUCK, reward: 700},
+                // "10" => {id: "funkbucks10", requirement: 15000, type: RewardType.FUNKBUCK, reward: 200},
+                // "11" => {id: "funkbucks11", requirement: 20000, type: RewardType.FUNKBUCK, reward: 200},
+                "12" => {id: "funkbucks12", requirement: 25000, type: RewardType.PIN, reward: "funkbuck"},
+                // "13" => {id: "funkbucks13", requirement: 30000, type: RewardType.FUNKBUCK, reward: 200},
+                // "14" => {id: "funkbucks14", requirement: 40000, type: RewardType.FUNKBUCK, reward: 200},
+                "15" => {id: "funkbucks15", requirement: 50000, type: RewardType.FUNKBUCK, reward: 1000}
+            ]
+        },
+        "bluejewels" => {
+            name: "bluejewels",
+            description: "Total Blue Jewels obtained.",
+            requirementIcon: PTIcon.Jewel,
+            order: 1,
+            rewards: [
+                "1" => {id: "bluejewel01", requirement: 1, type: RewardType.FUNKBUCK, reward: 250},
+                "2" => {id: "bluejewel02", requirement: 2, type: RewardType.PIN, reward: "bluejewel"},
+                // "3" => {id: "bluejewel03", requirement: 5, type: RewardType.BOX, reward: "smallgiftbox"},
+                "4" => {id: "bluejewel04", requirement: 10, type: RewardType.FUNKBUCK, reward: 2500},
+                // "5" => {id: "bluejewel05", requirement: 15, type: RewardType.PIN, reward: "funkbuck"},
+                "6" => {id: "bluejewel06", requirement: 20, type: RewardType.FUNKBUCK, reward: 10000}
             ]
         },
         "cardboard" => {
             name: "cardboard",
             description: "Total Cardboard Boxes opened.",
             requirementIcon: PTIcon.CardboardBox,
-            order: 1,
+            order: 2,
             rewards: [
                 "1" => {id: "cardboardbox01", requirement: 10, type: RewardType.BOX, reward: "cardboard"},
                 "2" => {id: "cardboardbox02", requirement: 50, type: RewardType.FUNKBUCK, reward: 100},
                 "3" => {id: "cardboardbox03", requirement: 100, type: RewardType.PIN, reward: "cardboardbox"},
-                "4" => {id: "cardboardbox04", requirement: 250, type: RewardType.FUNKBUCK, reward: 500}
+                "4" => {id: "cardboardbox04", requirement: 250, type: RewardType.FUNKBUCK, reward: 500},
+                "5" => {id: "cardboardbox05", requirement: 500, type: RewardType.JEWEL, reward: 2},
+                "6" => {id: "cardboardbox06", requirement: 750, type: RewardType.FUNKBUCK, reward: 1500},
+                "7" => {id: "cardboardbox07", requirement: 1000, type: RewardType.JEWEL, reward: 5}
             ]
         },
         "smallgiftbox" => {
             name: "smallgiftbox",
             description: "Total Small Giftboxes opened.",
             requirementIcon: PTIcon.SmallGiftbox,
-            order: 2,
+            order: 3,
             rewards: [
                 "1" => {id: "smallgiftbox01", requirement: 10, type: RewardType.BOX, reward: "smallgiftbox"},
                 "2" => {id: "smallgiftbox02", requirement: 50, type: RewardType.FUNKBUCK, reward: 250},
                 "3" => {id: "smallgiftbox03", requirement: 100, type: RewardType.PIN, reward: "smallgiftbox"},
-                "4" => {id: "smallgiftbox04", requirement: 250, type: RewardType.FUNKBUCK, reward: 1000}
+                "4" => {id: "smallgiftbox04", requirement: 250, type: RewardType.FUNKBUCK, reward: 1000},
+                "5" => {id: "smallgiftbox05", requirement: 500, type: RewardType.JEWEL, reward: 2},
+                "6" => {id: "smallgiftbox06", requirement: 750, type: RewardType.FUNKBUCK, reward: 3000},
+                "7" => {id: "smallgiftbox07", requirement: 1000, type: RewardType.JEWEL, reward: 5}
             ]
         }
     ];
@@ -592,6 +621,7 @@ enum RewardType
 {
     CATEGORY;
     PIN;
+    JEWEL;
     BOX;
     FUNKBUCK;
     SONG;
