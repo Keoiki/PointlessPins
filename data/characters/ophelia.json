@@ -5,6 +5,7 @@
     "assetPath": "shared:characters/ophelia",
     "offsets": [0, -10],
     "cameraOffsets": [50, -20],
+    "scale": 0.95,
     "animations":
     [
         {
