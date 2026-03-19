@@ -24,6 +24,7 @@ import flixel.util.FlxTimer;
 import flixel.util.FlxSort;
 import flixel.tweens.FlxTween;
 import flixel.tweens.FlxEase;
+import flixel.math.FlxMath;
 import openfl.net.URLRequest;
 import openfl.net.URLLoader;
 import haxe.ds.StringMap;
@@ -207,6 +208,17 @@ class PointlessPins extends Module
     public static function getBlueJewelsLifeTime():Int
     {
         return PointlessPins.save.blueJewelsLifetime ?? 0;
+    }
+
+    public static function addBlueJewelPity(amount:Int = 1):Void
+    {
+        PointlessPins.save.blueJewelPity = FlxMath.bound(PointlessPins.getBlueJewelPity() + amount, 0, 100);
+        PointlessPins.saveTheData();
+    }
+
+    public static function getBlueJewelPity():Int
+    {
+        return PointlessPins.save.blueJewelPity ?? 0;
     }
 
     public static function addOpenedBox(boxID:String):Void
@@ -467,6 +479,10 @@ class PointlessPins extends Module
 
             if (FlxG.keys.justPressed.J)
             {
+                // for (i in 0...101)
+                // {
+                    // trace(i, Math.pow(i, 2) / 1000);
+                // }
                 trace(getDailies());
             }
 
@@ -531,6 +547,9 @@ class PointlessPins extends Module
             var repeatPenalty:Float = PointlessPins.penalties[penaltyCount];
             var resultTextColor:String = PointlessPins.penaltyColors[penaltyCount];
             var awardedJewels:Int = 0;
+            var awardNormalCompletionJewel:Bool = false;
+
+            PointlessPins.addBlueJewelPity(#if keoiki.endlessmode EndlessStatus.isEndless ? Math.floor(EndlessStatus.currentLoopFloat) : #end 1);
 
             // Sorry Endless Mode...
             // NVM Endless Mode players stay winning!
@@ -543,11 +562,11 @@ class PointlessPins extends Module
             }
             else #end if (currentDailies.contains(currentSongOrWeek))
             {
-                if (FlxG.random.bool(0.2))
+                if (FlxG.random.bool(0.5))
                 {
                     awardedJewels = 2;
                 }
-                else if (FlxG.random.bool(1))
+                else if (FlxG.random.bool(2))
                 {
                     awardedJewels = 1;
                 }
@@ -559,6 +578,7 @@ class PointlessPins extends Module
             }
             else
             {
+                awardNormalCompletionJewel = FlxG.random.bool(Math.pow(PointlessPins.getBlueJewelPity(), 2) / 1000);
                 bucksToAward *= repeatPenalty;
                 trace("Repeat penalty: " + repeatPenalty * 100 + "%");
             }
@@ -577,12 +597,21 @@ class PointlessPins extends Module
                 }
                 PointlessPins.setPrevSongs(previousSongs);
             }
+
+            // Normal completion jewel stacks with the Daily Song one(s).
+            if (awardNormalCompletionJewel)
+            {
+                awardedJewels++;
+                PointlessPins.save.blueJewelPity = 0;
+                PoinltessPins.saveTheData();
+            }
             
             bucksToAward = Math.ceil(bucksToAward);
             PointlessPins.addFunkCoins(bucksToAward);
             PointlessPins.addBlueJewels(awardedJewels);
 
-            trace(currentSongOrWeek, bucksToAward, previousSongs);
+            trace(currentSongOrWeek, bucksToAward, awardedJewels, previousSongs);
+            trace(awardNormalCompletionJewel, PointlessPins.getBlueJewelPity(), Math.pow(PointlessPins.getBlueJewelPity(), 2) / 1000);
 
             var funkBucksText = new BAlphabet(40, 50, '<b><c=$resultTextColor>${bucksToAward > 0 ? "+" : ""}$bucksToAward</c></b> ${PTIcon.Buck}');
             funkBucksText.scale.set(0.65, 0.65);
