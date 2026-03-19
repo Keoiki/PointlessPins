@@ -380,6 +380,7 @@ class Shop extends MusicBeatState
         
         var lerpval:Float = FlxMath.bound(elapsed * 9.6, 0, 1);
         funkBucksText.y = FlxMath.lerp(funkBucksText.y, 25, lerpval);
+        blueJewelsText.y = FlxMath.lerp(blueJewelsText.y, 95, lerpval);
 
         if (controls.BACK_P)
         {
@@ -888,16 +889,32 @@ class Shop extends MusicBeatState
 
     public function addFunkBucks(amount:Int):Void
     {
-        var currentFunkBucks:Int = previousFunkBucks = PointlessPins.getFunkCoins();
-        var remainingFunkBucks:Int = currentFunkBucks + amount;
+        var currentFunkBucks:Int = PointlessPins.getFunkCoins() + amount;
 
-        buckSound.pitch = 0.5;
-        var easeToUse:FlxEase = amount >= 500 ? FlxEase.expoOut : FlxEase.quartOut;
-        FlxTween.num(currentFunkBucks, remainingFunkBucks, 2.5, { ease: easeToUse, onComplete: function(_) {
-            funkBucksText.text = '<b>${Math.floor(remainingFunkBucks)}</b> ${PTIcon.Buck}';
-        }}, increaseFunkBucks);
+        funkBucksText.text = '<b>$currentFunkBucks</b> ${PTIcon.Buck}';
+        funkBucksText.y -= 20;
+        FunkinSound.playOnce(Paths.sound("fav"), 0.35);
+
+        funkBucksText.forEach((letter) -> {
+            FlxTween.color(letter, 0.5, 0xFF00FF00, 0xFFFFFFFF);
+        });
 
         PointlessPins.addFunkCoins(amount, false);
+    }
+
+    public function addBlueJewel(amount:Int):Void
+    {
+        var currentJewels:Int = PointlessPins.getBlueJewels() + amount;
+
+        blueJewelsText.text = '<b><c=82E9FF>$currentJewels<s=0.5>/${PointlessPins.maximumBlueJewels}</s></c></b> ${PTIcon.Jewel}';
+        blueJewelsText.y -= 20;
+        FunkinSound.playOnce(Paths.sound("bluejewel"));
+
+        blueJewelsText.forEach((letter) -> {
+            FlxTween.color(letter, 0.5, 0xFF00FF00, letter.curLetter.colored ? 0xFFFFFFFF : 0xFF82E9FF);
+        });
+
+        PointlessPins.addBlueJewels(amount, false);
     }
 
     function updateFunkBucks(value:Float):Void
@@ -907,17 +924,6 @@ class Shop extends MusicBeatState
             funkBucksText.text = '<b>${Math.floor(value)}</b> ${PTIcon.Buck}';
             funkBucksText.y += 5;
             FunkinSound.playOnce(Paths.sound("fav"), 0.35);
-        }
-        previousFunkBucks = Math.floor(value);
-    }
-
-    function increaseFunkBucks(value:Float):Void
-    {
-        if (previousFunkBucks != Math.floor(value))
-        {
-            funkBucksText.text = '<b>${Math.floor(value)}</b> ${PTIcon.Buck}';
-            funkBucksText.y -= 2;
-            buckSound.play(true);
         }
         previousFunkBucks = Math.floor(value);
     }
