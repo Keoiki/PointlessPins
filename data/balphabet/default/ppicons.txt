@@ -5,6 +5,9 @@ char=57347 offsetY=-4 colored=true
 char=57348 offsetY=-4 colored=true
 char=57360 offsetY=-12 colored=true
 char=57361 offsetY=2 colored=true
+char=57456 offsetY=-4 colored=true
+char=57457 offsetY=-8 colored=true
+char=57458 offsetY=-2 colored=true
 char=57472 offsetY=-4 colored=true
 char=57473 offsetY=-4 colored=true
 char=57474 offsetY=-4 colored=true

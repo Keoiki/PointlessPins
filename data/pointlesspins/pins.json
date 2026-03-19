@@ -29,7 +29,10 @@
             { "id": "musicdisk", "name": "Music Disk" },
             { "id": "rank-good", "name": "Good Rank", "description": "...", "special": true, "lockedText": "Complete any song with a certain rank." },
             { "id": "cardboardbox", "name": "Cardboard Box", "description": "The cheapest of them all.", "special": true, "lockedText": "This pin is unlockable from the Rewards section." },
-            { "id": "haxe", "name": "Haxe", "description": "The backbone of this game." }
+            { "id": "haxe", "name": "Haxe", "description": "The backbone of this game." },
+            { "id": "salty-ssn", "name": "Salty", "description": "\"You're bad.\"", "source": "#MOD# Salty's Sunday Night" },
+            { "id": "itsumi-ssn", "name": "Itsumi", "description": "Best Girl.\n<s=0.5><a=0.5>Argue with the song name, not me.</a></s>", "source": "#MOD# Salty's Sunday Night" },
+            { "id": "connor-ssn", "name": "Connor", "description": "Indictment.", "source": "#MOD# Salty's Sunday Night" }
         ]
     },
     "Uncommon": {
@@ -52,9 +55,11 @@
             { "id": "arrow-right", "name": "Right Arrow" },
             { "id": "rank-great", "name": "Great Rank", "description": "...", "special": true, "lockedText": "Complete any song with a certain rank." },
             { "id": "smallgiftbox", "name": "Small Giftbox", "description": "Did you notice the FunkBuck badge inside it?", "special": true, "lockedText": "This pin is unlockable from the Rewards section." },
-            { "id": "gooey", "name": "Gooey", "source": "MOD: Gooey Mix" },
-            { "id": "flora", "name": "Flora", "source": "MOD: Gooey Mix" },
-            { "id": "haxeflixel", "name": "HaxeFlixel", "description": "Not to be confused with \"Flixel\"." }
+            { "id": "haxeflixel", "name": "HaxeFlixel", "description": "Not to be confused with \"Flixel\"." },
+            { "id": "gooey", "name": "Gooey", "source": "#MOD# Gooey Mix" },
+            { "id": "flora", "name": "Flora", "source": "#MOD# Gooey Mix" },
+            { "id": "opheebop-blob-ssn", "name": "Opheebop", "description": "The caretaker.", "source": "#MOD# Salty's Sunday Night" },
+            { "id": "glitch-ssn", "name": "Glitch", "description": "Buckets.", "source": "#MOD# Salty's Sunday Night" }
         ]
     },
     "Rare": {
@@ -62,16 +67,17 @@
         "color": "2A4DFF",
         "pins":
         [
-            { "id": "nessie-funkinnews", "name": "Nessie", "source": "OTHER: \"Funkin News\" Twitter" },
+            { "id": "nessie-funkinnews", "name": "Nessie", "source": "#INTERNET# \"Funkin News\" Twitter" },
             { "id": "ophelia", "name": "Ophelia", "description": "You'll stop annoying her now, right?" , "special": true, "lockedText": "It wouldn't be smart to annoy <c=67B1D8>her.</c>" },
             { "id": "funkbuck", "name": "FunkBuck", "description": "Your local currency!", "special": true, "lockedText": "This pin is unlockable from the Rewards section." },
+            { "id": "rank-excellent", "name": "Excellent Rank", "description": "It pains to get a single Bad and get this rank.", "special": true, "lockedText": "Complete any song with a certain rank." },
+            { "id": "haxeui", "name": "HaxeUI", "description": "It either doesn't work or doesn't work." },
             { "id": "pushpin", "name": "Pin", "description": "No! Wrong type of pin!" },
             { "id": "difficultystar", "name": "Blue Flamed Star", "description": "That looks really difficult!" },
-            { "id": "qt", "name": "QT", "source": "MOD: QT: Rewired" },
-            { "id": "sky-redux", "name": "Sky (Redux)", "source": "MOD: Heartbreak Havoc" },
+            { "id": "qt", "name": "QT", "source": "#MOD# QT: Rewired" },
+            { "id": "sky-redux", "name": "Sky (Redux)", "source": "#MOD# Heartbreak Havoc" },
             { "id": "sky", "name": "Sky", "description": "No no, wrong type of sky!" },
-            { "id": "rank-excellent", "name": "Excellent Rank", "description": "It pains to get a single Bad and get this rank.", "special": true, "lockedText": "Complete any song with a certain rank." },
-            { "id": "haxeui", "name": "HaxeUI", "description": "It either doesn't work or doesn't work." }
+            { "id": "opheebop-ssn", "name": "Opheebop", "description": "Freedom!", "source": "#MOD# Salty's Sunday Night" }
         ]
     },
     "Epic": {
@@ -79,8 +85,8 @@
         "color": "A426FF",
         "pins":
         [
-            { "id": "pessy", "name": "Pessy", "source": "OTHER: Psych Engine" },
-            { "id": "kb", "name": "KB", "source": "MOD: QT: Rewired" },
+            { "id": "pessy", "name": "Pessy", "source": "#MOD# Psych Engine" },
+            { "id": "kb", "name": "KB", "source": "#MOD# QT: Rewired" },
             { "id": "polymod", "name": "Polymod", "description": "Polymore!" },
             { "id": "rank-perfect", "name": "Perfect Rank", "description": "Now go for the golden one!", "special": true, "lockedText": "Complete any song with a certain rank." }
         ]
@@ -91,8 +97,8 @@
         "pins":
         [
             { "id": "hundrec", "name": "Hundrec", "description": "\"This is Hundrec, Production Manager for The Funkin' Crew.\"" },
-            { "id": "whitty", "name": "Whitty", "source": "MOD: VS. Whitty" },
-            { "id": "garcello", "name": "Garcello", "source": "MOD: Smoke 'Em Out Struggle" },
+            { "id": "whitty", "name": "Whitty", "source": "#MOD# VS. Whitty" },
+            { "id": "garcello", "name": "Garcello", "source": "#MOD# Smoke 'Em Out Struggle" },
             { "id": "rank-goldperfect", "name": "Golden Perfect Rank", "description": "Did you know this rank grants an extra 50% FunkBucks?", "special": true, "lockedText": "Complete any song with a certain rank." }
         ]
     },

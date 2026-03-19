@@ -5,7 +5,7 @@
         "canSkip": false
     },
     {
-        "text": "<c=FF0000><S><s=1.5>S T O P !</s></S></c>",
+        "text": "<c=FF0000><S><s=1.5>STOP!</s></S></c>",
         "speaker": "Ophelia",
         "canSkip": false,
         "instantComplete": true

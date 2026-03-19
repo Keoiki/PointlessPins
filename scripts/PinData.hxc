@@ -165,7 +165,7 @@ class PointlessPins extends Module
         PointlessPins.save.funkBucks = PointlessPins.getFunkCoins() + Std.int(amount);
         if (addToLifetime)
         {
-            // Do not decrease the lifetime amount.
+            /** Do not decrease the lifetime amount. **/
             PointlessPins.save.funkBucksLifetime = PointlessPins.getFunkCoinsLifeTime() + Math.max(0, Std.int(amount));
         }
         PointlessPins.saveTheData();
@@ -695,6 +695,10 @@ class PTIcon
     
     static final CardboardBox:String = "&#xE020;";
     static final SmallGiftbox:String = "&#xE021;";
+
+    static final Modded:String = "&#xE070;";
+    static final Internet:String = "&#xE071;";
+    static final Game:String = "&#xE072;";
 
     static final Hundrec:String = "&#xE080;";
     static final Gooey:String = "&#xE081;";
