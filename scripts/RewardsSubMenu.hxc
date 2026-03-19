@@ -583,6 +583,10 @@ class RewardItem extends ScriptedFlxSpriteGroup
                 icon.setupPin(reward, "", "", 0.5);
                 icon.y -= 70;
             }
+            case RewardType.JEWEL:
+            {
+                trace("JEWEL reward type is not implemented");
+            }
             case RewardType.BOX:
             {
                 icon = new BoxSprite(0, 0);
@@ -635,13 +639,11 @@ class RewardItem extends ScriptedFlxSpriteGroup
         }
         else if (type != RewardType.CATEGORY)
         {
-            if (category == "funkbucks")
+            switch (category)
             {
-                reached = PointlessPins.getFunkCoinsLifeTime() >= requirement;
-            }
-            else
-            {
-                reached = PointlessPins.getOpenedBoxCount(category) >= requirement;
+                case "funkbucks": reached = PointlessPins.getFunkCoinsLifeTime() >= requirement;
+                case "bluejewels": reached = PointlessPins.getBlueJewelsLifeTime() >= requirement;
+                default: reached = PointlessPins.getOpenedBoxCount(category) >= requirement;
             }
         }
         else
