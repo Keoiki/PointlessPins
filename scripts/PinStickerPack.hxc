@@ -1,10 +1,12 @@
 package pointlesspins;
 
 import funkin.ui.transition.stickers.StickerPack;
-using Lambda;
 
 class PinStickerPack extends StickerPack
 {
+    var remainingPins:Array<String> = ["unknownpin"];
+    var shouldReload:Bool = true;
+
     public function new()
     {
         super("pointlesspins");
@@ -12,21 +14,45 @@ class PinStickerPack extends StickerPack
 
     override public function getStickers():Array<String>
     {
-        var unlockedPins:Array<String> = [for (key in PointlessPins.getObtainedPins().keys()) key];
-        for (ind => pin in unlockedPins)
+        if (shouldReload)
         {
-            unlockedPins[ind] = "pointlesspins/pins/" + pin;
+            shouldReload = false;
+            var pins:Array<String> = [for (key in PointlessPins.getObtainedPins().keys()) key];
+            if (pins.contains("funkbuck")) pins.remove("funkbuck");
+            for (ind => pin in pins)
+            {
+                pins[ind] = "pointlesspins/pins/" + pin;
+            }
+            // Cut out pins that don't have a sprite. (Me when I make pins and unlock them but remove them before I make a sprite for them.)
+            pins = pins.filter(pin -> Assets.exists("images/" + pin + ".png"));
+            return pins;
         }
-        unlockedPins.push("unknownpin");
-        return unlockedPins;
+        else
+        {
+            return remainingPins;
+        }
     }
 
     override public function getRandomStickerPath(last:Bool):String
     {
         if (last)
         {
+            shouldReload = true;
+            remainingPins = getStickers();
             return "pointlesspins/pins/funkbuck";
         }
-        return super.getRandomStickerPath(last);
+
+        if (remainingPins.length == 0)
+        {
+            shouldReload = true;
+            remainingPins = getStickers();
+            return "unknownpin";
+        }
+        else
+        {
+            var randomPin:String = remainingPins[FlxG.random.int(0, remainingPins.length - 1)];
+            remainingPins.remove(randomPin);
+            return randomPin;
+        }
     }
 }
