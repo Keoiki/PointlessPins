@@ -78,7 +78,7 @@ class RewardsSubMenu extends MusicBeatSubState
                 "4" => {id: "cardboardbox04", requirement: 250, type: RewardType.FUNKBUCK, reward: 500},
                 "5" => {id: "cardboardbox05", requirement: 500, type: RewardType.JEWEL, reward: 2},
                 "6" => {id: "cardboardbox06", requirement: 750, type: RewardType.FUNKBUCK, reward: 1500},
-                "7" => {id: "cardboardbox07", requirement: 1000, type: RewardType.JEWEL, reward: 5}
+                "7" => {id: "cardboardbox07", requirement: 1000, type: RewardType.JEWEL, reward: 4}
             ]
         },
         "smallgiftbox" => {
@@ -88,12 +88,12 @@ class RewardsSubMenu extends MusicBeatSubState
             order: 3,
             rewards: [
                 "1" => {id: "smallgiftbox01", requirement: 10, type: RewardType.BOX, reward: "smallgiftbox"},
-                "2" => {id: "smallgiftbox02", requirement: 50, type: RewardType.FUNKBUCK, reward: 250},
-                "3" => {id: "smallgiftbox03", requirement: 100, type: RewardType.PIN, reward: "smallgiftbox"},
-                "4" => {id: "smallgiftbox04", requirement: 250, type: RewardType.FUNKBUCK, reward: 1000},
-                "5" => {id: "smallgiftbox05", requirement: 500, type: RewardType.JEWEL, reward: 2},
-                "6" => {id: "smallgiftbox06", requirement: 750, type: RewardType.FUNKBUCK, reward: 3000},
-                "7" => {id: "smallgiftbox07", requirement: 1000, type: RewardType.JEWEL, reward: 5}
+                "2" => {id: "smallgiftbox02", requirement: 40, type: RewardType.FUNKBUCK, reward: 250},
+                "3" => {id: "smallgiftbox03", requirement: 80, type: RewardType.PIN, reward: "smallgiftbox"},
+                "4" => {id: "smallgiftbox04", requirement: 150, type: RewardType.FUNKBUCK, reward: 1000},
+                "5" => {id: "smallgiftbox05", requirement: 300, type: RewardType.JEWEL, reward: 3},
+                "6" => {id: "smallgiftbox06", requirement: 550, type: RewardType.FUNKBUCK, reward: 3000},
+                "7" => {id: "smallgiftbox07", requirement: 800, type: RewardType.JEWEL, reward: 6}
             ]
         }
     ];
@@ -458,6 +458,12 @@ class RewardsSubMenu extends MusicBeatSubState
                         case RewardType.FUNKBUCK:
                         {
                             _parentState.addFunkBucks(currentItem.reward);
+                            populateItems(CATEGORY, PAGE);
+                            hasUpdatedRewardText = false;
+                        }
+                        case RewardType.JEWEL:
+                        {
+                            _parentState.addBlueJewel(currentItem.reward);
                             populateItems(CATEGORY, PAGE);
                             hasUpdatedRewardText = false;
                         }
