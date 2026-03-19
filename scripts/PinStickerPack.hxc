@@ -20,4 +20,13 @@ class PinStickerPack extends StickerPack
         unlockedPins.push("unknownpin");
         return unlockedPins;
     }
+
+    override public function getRandomStickerPath(last:Bool):String
+    {
+        if (last)
+        {
+            return "pointlesspins/pins/funkbuck";
+        }
+        return super.getRandomStickerPath(last);
+    }
 }
