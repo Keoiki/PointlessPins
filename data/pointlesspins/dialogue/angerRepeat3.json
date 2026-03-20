@@ -1,0 +1,18 @@
+[
+    {
+        "text": "<S>Are you sick in the head!?</S>",
+        "speaker": "Ophelia",
+        "canSkip": false,
+        "speed": 0.03
+    },
+    {
+        "text": "Do you ENJOY paying over double the price?!",
+        "speaker": "Ophelia",
+        "canSkip": false
+    },
+    {
+        "text": "<S>Or would you rather have me make these prices <c=FF0000>permanent</c>?</S>",
+        "speaker": "Ophelia",
+        "canSkip": false
+    }
+]

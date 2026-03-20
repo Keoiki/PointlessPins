@@ -35,12 +35,7 @@ class Shop extends MusicBeatState
     var buckSound:FunkinSound;
 
     // Dialogue
-    var canContinue:Bool = false;
-    var dialogueBar:FunkinSprite;
-    var dialogueText:BAlphabetTyped;
-    var dialogueCount:Int = -1;
-    var dialogueDisappearTimer:FlxTimer;
-    var dialogueTalkName:String = null;
+    var dialog:PinDialogue;
 
     // Shop
     var opheliaHitbox:FlxObject;
@@ -293,30 +288,6 @@ class Shop extends MusicBeatState
         blueJewelsText.scrollFactor.set(0, 0);
         add(blueJewelsText);
 
-        dialogueBar = new FunkinSprite(0, 32).makeSolidColor(FlxG.width, 96, 0xFF000000);
-        dialogueBar.alpha = 0.0;
-        add(dialogueBar);
-
-        dialogueText = new BAlphabetTyped(FlxG.width / 2, 64, "");
-        dialogueText.scale.set(0.5, 0.5);
-        dialogueText.alignment = "center";
-        add(dialogueText);
-
-        dialogueText.letterCallback = () ->
-        {
-            FunkinSound.playOnce(Paths.sound("chartingSounds/keyboard" + FlxG.random.int(1, 3)), 1.0);
-            if (dialogueTalkName != null)
-            {
-                // Specify an animation name.
-                ophelia.playAnimation('Talk$dialogueTalkName', false, false);
-            }
-            else
-            {
-                // Default behavior.
-                ophelia.playAnimation('Talk', false, false);
-            }
-        };
-
         coolBackButton = new FunkinBackButton(FlxG.width - 220, FlxG.height - 200, 0xFFFFFFFF, goBack, 0.5);
         #if !mobile
         coolBackButton.visible = PointlessPins.isMouseActive;
@@ -345,8 +316,6 @@ class Shop extends MusicBeatState
         screenBlack.cameras = [cameraHUD];
         funkBucksText.cameras = [cameraHUD];
         blueJewelsText.cameras = [cameraHUD];
-        dialogueBar.cameras = [cameraHUD];
-        dialogueText.cameras = [cameraHUD];
         coolBackButton.cameras = [cameraHUD];
 
         if (ModStore.get("pinsIsOutdated") && ModStore.get("pinsHasShownOutdate") == null)
@@ -385,26 +354,6 @@ class Shop extends MusicBeatState
         if (controls.BACK_P)
         {
             goBack();
-        }
-
-        if ((controls.ACCEPT_P || TouchUtil.pressAction()) && canContinue)
-        {
-            switch (STATE)
-            {
-                case "OPHELIAPIN":
-                {
-                    unlockOpheliaPin();
-                }
-                case "OPHELIAANGERINITIAL":
-                {
-                    opheliaAngerDialogue();
-                }
-                case "OPHELIAANGERREPEAT":
-                {
-                    opheliaAngerRepeatDialogue();
-                }
-                default: {}
-            }
         }
 
         if (disallowInputs)
@@ -653,12 +602,11 @@ class Shop extends MusicBeatState
             ophelia.annoyance++;
             trace("Boop! " + ophelia.annoyance);
 
-            if (ophelia.annoyance == 50 && !PointlessPins.hasObtainedPin("ophelia"))
+            if (ophelia.annoyance == 50 &&!PointlessPins.hasObtainedPin("ophelia"))
             {
-                dialogueText.text = "Hey,<d=0.25/> if I give you this,<d=0.25/> you'll leave me be,<d=0.5/> 'kay?";
-                new FlxTimer().start(0.5, function(_:FlxTimer) {
-                    dialogueBar.alpha = 0.75;
-                    dialogueText.startTyping();
+                new FlxTimer().start(0.5, function(_:FlxTimer)
+                {
+                    opheliaPinDialogue();
                 });
 
                 STATE = "OPHELIAPIN";
@@ -668,9 +616,6 @@ class Shop extends MusicBeatState
                 FlxTween.tween(camera, { zoom: 1.5 }, 1, { ease: FlxEase.cubeOut });
                 FlxTween.tween(funkBucksText, { alpha: 0 }, 1, { ease: FlxEase.cubeOut });
                 FlxTween.tween(blueJewelsText, { alpha: 0 }, 1, { ease: FlxEase.cubeOut });
-                new FlxTimer().start(4, function(_:FlxTimer) {
-                    canContinue = true;
-                });
                 coolBackButton.visible = false;
                 trace("Enough booping!");
                 return;
@@ -678,34 +623,44 @@ class Shop extends MusicBeatState
 
             if (ophelia.annoyance == 75 && PointlessPins.getOpheliaAnger() == 0)
             {
-                dialogueBar.alpha = 0.75;
-                dialogueText.text = "I told you to leave me be,<d=0.5/> didn't I?";
-                dialogueText.visible = true;
-                dialogueText.reset();
-                dialogueText.startTyping();
-                dialogueDisappearTimer = new FlxTimer().start(4, function(_:FlxTimer) {
-                    dialogueText.visible = false;
-                    dialogueBar.alpha = 0;
-                });
+                if (dialog != null) remove(dialog);
+                dialog = new PinDialogue("angerWarning");
+                add(dialog);
+                dialog.cameras = [cameraHUD];
+
+                dialog.dialogueText.letterCallback = () ->
+                {
+                    FunkinSound.playOnce(Paths.sound("chartingSounds/keyboard" + FlxG.random.int(1, 3)), 1.0);
+                    ophelia.playAnimation('Talk', false, false);
+                }
             }
 
-            if (ophelia.annoyance % 100 == 0)
+            if (ophelia.annoyance % 80 == 0)
             {
                 if (PointlessPins.getOpheliaAnger() == 0)
                 {
-                    dialogueCount = 0;
-                    disallowInputs = true;
-                    if (PointlessPins.getOpheliaAngerTotal() > 0)
+                    PointlessPins.save.opheliaAngerTime = Date.now().getTime();
+                }
+                disallowInputs = true;
+                trace(PointlessPins.getOpheliaAngerTotal());
+                if (PointlessPins.getOpheliaAngerTotal() > 0)
+                {
+                    if (PointlessPins.getOpheliaAnger() > 5)
                     {
-                        STATE = "OPHELIAANGERREPEAT";
-                        opheliaAngerRepeatDialogue();
+                        opheliaAngerDialogue("Repeat3");
+                    }
+                    else if (PointlessPins.getOpheliaAnger() > 0)
+                    {
+                        opheliaAngerDialogue("Repeat2");
                     }
                     else
                     {
-                        STATE = "OPHELIAANGERINITIAL";
-                        opheliaAngerDialogue();
+                        opheliaAngerDialogue("Repeat");
                     }
-                    PointlessPins.save.opheliaAngerTime = Date.now().getTime();
+                }
+                else
+                {
+                    opheliaAngerDialogue("Initial");
                 }
                 PointlessPins.addOpheliaAnger(1);
                 trace("FUCK YOU!!!!");
@@ -716,15 +671,28 @@ class Shop extends MusicBeatState
         }
     }
 
+    function opheliaPinDialogue():Void
+    {
+        if (dialog != null) remove(dialog);
+        dialog = new PinDialogue("opheliaPin");
+        add(dialog);
+        dialog.cameras = [cameraHUD];
+
+        dialog.dialogueText.letterCallback = () ->
+        {
+            FunkinSound.playOnce(Paths.sound("chartingSounds/keyboard" + FlxG.random.int(1, 3)), 1.0);
+            ophelia.playAnimation('Talk', false, false);
+        }
+
+        dialog.onCompleteDialogue.add(() ->
+        {
+            unlockOpheliaPin();
+        });
+    }
+
     function unlockOpheliaPin():Void
     {
-        canContinue = false;
         ophelia.playAnimation("PickingPin", false, true);
-        FlxTween.tween(dialogueBar, { alpha: 0 }, 1, { ease: FlxEase.cubeOut });
-        FlxTween.tween(dialogueText, { alpha: 0 }, 1, { ease: FlxEase.cubeOut, onComplete: () -> {
-            dialogueText.visible = false;
-            dialogueText.alpha = 1;
-        }});
         FlxTween.tween(cameraFollowPoint, { x: cameraFollowPoint.x - 50, y: cameraFollowPoint.y + 25 }, 2, { ease: FlxEase.cubeOut });
         var substate = new PinUnlockState(PointlessPins.getPinByID("ophelia"));
         substate.cameras = [cameraSubState];
@@ -746,130 +714,34 @@ class Shop extends MusicBeatState
         });
     }
 
-    function opheliaAngerDialogue():Void
+    function opheliaAngerDialogue(variant:String):Void
     {
-        switch (dialogueCount)
-        {
-            case 0:
-            {
-                canContinue = false;
-                showMenuItems(false);
-                dialogueDisappearTimer?.cancel();
-                dialogueBar.alpha = 0.75;
-                dialogueText.finish();
-                dialogueText.text = "You're not very smart,<d=0.5/> <i>are you?</i>";
-                dialogueText.visible = true;
-                dialogueText.reset();
-                dialogueText.startTyping();
-                cameraFollowPoint.setPosition(opheliaHitbox.x + opheliaHitbox.width / 2, opheliaHitbox.y + 100);
-                FlxTween.tween(camera, { zoom: 1.5 }, 1, { ease: FlxEase.cubeOut });
-                FlxTween.tween(funkBucksText, { alpha: 0 }, 1, { ease: FlxEase.cubeOut });
-                FlxTween.tween(blueJewelsText, { alpha: 0 }, 1, { ease: FlxEase.cubeOut });
-                coolBackButton.visible = false;
-                new FlxTimer().start(3, function(_:FlxTimer) {
-                    canContinue = true;
-                });
-                dialogueCount = 1;
-            }
-            case 1:
-            {
-                canContinue = false;
-                dialogueText.text = "I warned you,<d=0.25/> but you didn't take the hint,<d=0.25/> eh?";
-                dialogueText.startTyping();
-                new FlxTimer().start(4, function(_:FlxTimer) {
-                    canContinue = true;
-                });
-                dialogueCount = 2;
-            }
-            case 2:
-            {
-                canContinue = false;
-                dialogueText.text = "Have fun with the <c=FF7F7F>marked up prices</c>,<d=0.25/> idiot.";
-                dialogueText.startTyping();
-                new FlxTimer().start(4, function(_:FlxTimer) {
-                    canContinue = true;
-                });
-                dialogueCount = 3;
-            }
-            case 3:
-            {
-                STATE = "MAIN";
-                disallowInputs = false;
-                showMenuItems(true);
-                dialogueText.visible = false;
-                dialogueBar.alpha = 0;
-                FlxTween.tween(camera, { zoom: 1 }, 1, { ease: FlxEase.cubeOut });
-                FlxTween.tween(funkBucksText, { alpha: 1 }, 1, { ease: FlxEase.cubeOut });
-                FlxTween.tween(blueJewelsText, { alpha: 1 }, 1, { ease: FlxEase.cubeOut });
-                dialogueCount = -1;
-            }
-        }
-    }
+        if (dialog != null) remove(dialog);
+        dialog = new PinDialogue("anger" + variant);
+        add(dialog);
+        dialog.cameras = [cameraHUD];
 
-    function opheliaAngerRepeatDialogue():Void
-    {
-        switch (dialogueCount)
+        dialog.dialogueText.letterCallback = () ->
         {
-            case 0:
-            {
-                canContinue = false;
-                showMenuItems(false);
-                dialogueDisappearTimer?.cancel();
-                dialogueBar.alpha = 0.75;
-                dialogueText.finish();
-                dialogueText.text = "Didn't you learn from last time!?";
-                dialogueText.visible = true;
-                dialogueText.reset();
-                dialogueText.startTyping();
-                cameraFollowPoint.setPosition(opheliaHitbox.x + opheliaHitbox.width / 2, opheliaHitbox.y + 100);
-                FlxTween.tween(camera, { zoom: 1.5 }, 1, { ease: FlxEase.cubeOut });
-                FlxTween.tween(funkBucksText, { alpha: 0 }, 1, { ease: FlxEase.cubeOut });
-                FlxTween.tween(blueJewelsText, { alpha: 0 }, 1, { ease: FlxEase.cubeOut });
-                coolBackButton.visible = false;
-                new FlxTimer().start(2.5, function(_:FlxTimer) {
-                    canContinue = true;
-                });
-                dialogueCount = 1;
-            }
-            case 1:
-            {
-                canContinue = false;
-                dialogueText.letterStep = 10;
-                dialogueText.y += 10;
-                dialogueText.text = "<c=FF0000><S><s=1.5>STOP!</s></S></c>";
-                dialogueText.startTyping();
-                new FlxTimer().start(1, function(_:FlxTimer) {
-                    canContinue = true;
-                });
-                dialogueCount = 2;
-            }
-            case 2:
-            {
-                canContinue = false;
-                dialogueText.letterStep = 1;
-                dialogueText.speed = 0.035;
-                dialogueText.y -= 10;
-                dialogueText.text = "Or do you like <c=FF7F7F>paying more for the boxes</c>,<d=1.0/> <S>huh?!</S>";
-                dialogueText.startTyping();
-                new FlxTimer().start(4, function(_:FlxTimer) {
-                    canContinue = true;
-                });
-                dialogueCount = 3;
-            }
-            case 3:
-            {
-                STATE = "MAIN";
-                disallowInputs = false;
-                showMenuItems(true);
-                dialogueText.speed = 0.05;
-                dialogueText.visible = false;
-                dialogueBar.alpha = 0;
-                FlxTween.tween(camera, { zoom: 1 }, 1, { ease: FlxEase.cubeOut });
-                FlxTween.tween(funkBucksText, { alpha: 1 }, 1, { ease: FlxEase.cubeOut });
-                FlxTween.tween(blueJewelsText, { alpha: 1 }, 1, { ease: FlxEase.cubeOut });
-                dialogueCount = -1;
-            }
+            FunkinSound.playOnce(Paths.sound("chartingSounds/keyboard" + FlxG.random.int(1, 3)), 1.0);
+            ophelia.playAnimation('Talk', false, false);
         }
+
+        dialog.onCompleteDialogue.add(() ->
+        {
+            disallowInputs = false;
+            showMenuItems(true);
+            FlxTween.tween(camera, { zoom: 1 }, 1, { ease: FlxEase.cubeOut });
+            FlxTween.tween(funkBucksText, { alpha: 1 }, 1, { ease: FlxEase.cubeOut });
+            FlxTween.tween(blueJewelsText, { alpha: 1 }, 1, { ease: FlxEase.cubeOut });
+        });
+        
+        showMenuItems(false);
+        cameraFollowPoint.setPosition(opheliaHitbox.x + opheliaHitbox.width / 2, opheliaHitbox.y + 100);
+        FlxTween.tween(camera, { zoom: 1.35 }, 1, { ease: FlxEase.cubeOut });
+        FlxTween.tween(funkBucksText, { alpha: 0 }, 1, { ease: FlxEase.cubeOut });
+        FlxTween.tween(blueJewelsText, { alpha: 0 }, 1, { ease: FlxEase.cubeOut });
+        coolBackButton.visible = false;
     }
 
     var previousFunkBucks:Int;
