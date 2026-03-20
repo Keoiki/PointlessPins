@@ -635,7 +635,7 @@ class Shop extends MusicBeatState
                 }
             }
 
-            if (ophelia.annoyance % 80 == 0)
+            if (ophelia.annoyance % 100 == 0)
             {
                 if (PointlessPins.getOpheliaAnger() == 0)
                 {
