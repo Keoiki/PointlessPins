@@ -3,6 +3,7 @@
 ### Added
 
 - Added Blue Jewels. They have a rare chance to be obtained after completing a song.
+    - Your chance to obtain one increases with each song completed, up to 10% at 100 songs.
     - They have a higher chance on Daily Songs.
     - You can only have 20 Blue Jewels at a time, so make sure you spend them once you're at full capacity.
 - Added the Exchange section to the Shop.
