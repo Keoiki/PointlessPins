@@ -413,15 +413,29 @@ class PointlessPins extends Module
     {
         var discount:Float = 1.0;
         var claimedRewards:Array<String> = PointlessPins.getClaimedMilestones();
-        var discountRewards:Array<Dynamic> = []; // None yet!
-        // for (i in 0...discountRewards.length)
-        // {
-            // if (claimedRewards.contains(discountRewards[i][0]))
-            // {
-                // discount -= discountRewards[i][1];
-            // }
-        // }
+        for (i in 0...claimedRewards.length)
+        {
+            switch (claimedRewards[i])
+            {
+                case "cardboardbox03", "smallgiftbox03": discount -= 0.025;
+            }
+        }
         return discount;
+    }
+
+    public static function getFunkCoinBonus():Float
+    {
+        var bonusMultiplier:Float = 1.0;
+        var claimedRewards:Array<String> = PointlessPins.getClaimedMilestones();
+        for (i in 0...claimedRewards.length)
+        {
+            switch (claimedRewards[i])
+            {
+                case "funkbucks08": bonusMultiplier += 0.025;
+                case "funkbucks11", "funkbucks14": bonusMultiplier += 0.05;
+            }
+        }
+        return bonusMultiplier;
     }
 
     public static function saveTheData():Void
@@ -537,6 +551,7 @@ class PointlessPins extends Module
             var bucksToAward:Float = (PlayStatePlaylist.isStoryMode ? PlayStatePlaylist.campaignScore : PlayState.instance.songScore) / 2500;
             // +50% for All Sicks, the great get richer, yikes.
             if (Highscore.tallies.totalNotes == Highscore.tallies.sick) bucksToAward *= 1.5;
+            bucksToAward *= PointlessPins.getFunkCoinBonus();
 
             // No playing the same songs or weeks multiple times in a row!
             var previousSongs:Array<String> = PointlessPins.getPrevSongs();

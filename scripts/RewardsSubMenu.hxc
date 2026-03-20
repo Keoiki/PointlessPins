@@ -35,21 +35,21 @@ class RewardsSubMenu extends MusicBeatSubState
             requirementIcon: PTIcon.Buck,
             order: 0,
             rewards: [
-                "1" => {id: "funkbucks01", requirement: 100, type: RewardType.FUNKBUCK, reward: 20},
-                "2" => {id: "funkbucks02", requirement: 500, type: RewardType.BOX, reward: "cardboard"},
-                "3" => {id: "funkbucks03", requirement: 1000, type: RewardType.FUNKBUCK, reward: 50},
-                "4" => {id: "funkbucks04", requirement: 2000, type: RewardType.BOX, reward: "smallgiftbox"},
-                "5" => {id: "funkbucks05", requirement: 3000, type: RewardType.FUNKBUCK, reward: 150},
-                // "6" => {id: "funkbucks06", requirement: 5000, type: RewardType.FUNKBUCK, reward: 0},
-                // "7" => {id: "funkbucks07", requirement: 7500, type: RewardType.FUNKBUCK, reward: 0},
-                // "8" => {id: "funkbucks08", requirement: 10000, type: RewardType.FUNKBUCK, reward: 0},
-                // "9" => {id: "funkbucks09", requirement: 12500, type: RewardType.FUNKBUCK, reward: 0},
-                // "10" => {id: "funkbucks10", requirement: 15000, type: RewardType.FUNKBUCK, reward: 0},
-                // "11" => {id: "funkbucks11", requirement: 20000, type: RewardType.FUNKBUCK, reward: 0},
-                "12" => {id: "funkbucks12", requirement: 25000, type: RewardType.PIN, reward: "funkbuck"},
-                // "13" => {id: "funkbucks13", requirement: 30000, type: RewardType.FUNKBUCK, reward: 0},
-                // "14" => {id: "funkbucks14", requirement: 40000, type: RewardType.FUNKBUCK, reward: 0},
-                "15" => {id: "funkbucks15", requirement: 50000, type: RewardType.FUNKBUCK, reward: 1000}
+                "1" => {id: "funkbucks01", requirement: 100, type: RewardType.FunkBuck, reward: 20},
+                "2" => {id: "funkbucks02", requirement: 500, type: RewardType.Box, reward: "cardboard"},
+                "3" => {id: "funkbucks03", requirement: 1000, type: RewardType.FunkBuck, reward: 50},
+                "4" => {id: "funkbucks04", requirement: 2000, type: RewardType.Box, reward: "smallgiftbox"},
+                "5" => {id: "funkbucks05", requirement: 3000, type: RewardType.FunkBuck, reward: 150},
+                // "6" => {id: "funkbucks06", requirement: 5000, type: RewardType.FunkBuck, reward: 0},
+                // "7" => {id: "funkbucks07", requirement: 7500, type: RewardType.FunkBuck, reward: 0},
+                "8" => {id: "funkbucks08", requirement: 10000, type: RewardType.BonusFunkBuck, reward: 2.5},
+                // "9" => {id: "funkbucks09", requirement: 12500, type: RewardType.FunkBuck, reward: 0},
+                // "10" => {id: "funkbucks10", requirement: 15000, type: RewardType.FunkBuck, reward: 0},
+                "11" => {id: "funkbucks11", requirement: 20000, type: RewardType.BonusFunkBuck, reward: 5.0},
+                "12" => {id: "funkbucks12", requirement: 25000, type: RewardType.Pin, reward: "funkbuck"},
+                // "13" => {id: "funkbucks13", requirement: 30000, type: RewardType.FunkBuck, reward: 0},
+                "14" => {id: "funkbucks14", requirement: 40000, type: RewardType.BonusFunkBuck, reward: 5.0},
+                "15" => {id: "funkbucks15", requirement: 50000, type: RewardType.FunkBuck, reward: 1000}
             ]
         },
         "bluejewels" => {
@@ -58,12 +58,12 @@ class RewardsSubMenu extends MusicBeatSubState
             requirementIcon: PTIcon.Jewel,
             order: 1,
             rewards: [
-                "1" => {id: "bluejewel01", requirement: 1, type: RewardType.FUNKBUCK, reward: 250},
-                "2" => {id: "bluejewel02", requirement: 2, type: RewardType.PIN, reward: "bluejewel"},
-                // "3" => {id: "bluejewel03", requirement: 5, type: RewardType.BOX, reward: "smallgiftbox"},
-                "4" => {id: "bluejewel04", requirement: 10, type: RewardType.FUNKBUCK, reward: 2500},
-                // "5" => {id: "bluejewel05", requirement: 15, type: RewardType.PIN, reward: "funkbuck"},
-                "6" => {id: "bluejewel06", requirement: 20, type: RewardType.FUNKBUCK, reward: 10000}
+                "1" => {id: "bluejewel01", requirement: 1, type: RewardType.FunkBuck, reward: 250},
+                "2" => {id: "bluejewel02", requirement: 2, type: RewardType.Pin, reward: "bluejewel"},
+                // "3" => {id: "bluejewel03", requirement: 5, type: RewardType.Box, reward: "smallgiftbox"},
+                "4" => {id: "bluejewel04", requirement: 10, type: RewardType.FunkBuck, reward: 2500},
+                // "5" => {id: "bluejewel05", requirement: 15, type: RewardType.Pin, reward: "funkbuck"},
+                "6" => {id: "bluejewel06", requirement: 20, type: RewardType.FunkBuck, reward: 10000}
             ]
         },
         "cardboard" => {
@@ -72,13 +72,13 @@ class RewardsSubMenu extends MusicBeatSubState
             requirementIcon: PTIcon.CardboardBox,
             order: 2,
             rewards: [
-                "1" => {id: "cardboardbox01", requirement: 10, type: RewardType.BOX, reward: "cardboard"},
-                "2" => {id: "cardboardbox02", requirement: 50, type: RewardType.FUNKBUCK, reward: 100},
-                "3" => {id: "cardboardbox03", requirement: 100, type: RewardType.PIN, reward: "cardboardbox"},
-                "4" => {id: "cardboardbox04", requirement: 250, type: RewardType.FUNKBUCK, reward: 500},
-                "5" => {id: "cardboardbox05", requirement: 500, type: RewardType.JEWEL, reward: 2},
-                "6" => {id: "cardboardbox06", requirement: 750, type: RewardType.FUNKBUCK, reward: 1500},
-                "7" => {id: "cardboardbox07", requirement: 1000, type: RewardType.JEWEL, reward: 4}
+                "1" => {id: "cardboardbox01", requirement: 10, type: RewardType.FunkBuck, reward: 100},
+                "2" => {id: "cardboardbox02", requirement: 50, type: RewardType.Pin, reward: "cardboardbox"},
+                "3" => {id: "cardboardbox03", requirement: 100, type: RewardType.DiscountBox, reward: 2.5},
+                "4" => {id: "cardboardbox04", requirement: 250, type: RewardType.FunkBuck, reward: 500},
+                "5" => {id: "cardboardbox05", requirement: 500, type: RewardType.Jewel, reward: 2},
+                "6" => {id: "cardboardbox06", requirement: 750, type: RewardType.FunkBuck, reward: 1500},
+                "7" => {id: "cardboardbox07", requirement: 1000, type: RewardType.Jewel, reward: 4}
             ]
         },
         "smallgiftbox" => {
@@ -87,13 +87,13 @@ class RewardsSubMenu extends MusicBeatSubState
             requirementIcon: PTIcon.SmallGiftbox,
             order: 3,
             rewards: [
-                "1" => {id: "smallgiftbox01", requirement: 10, type: RewardType.BOX, reward: "smallgiftbox"},
-                "2" => {id: "smallgiftbox02", requirement: 40, type: RewardType.FUNKBUCK, reward: 250},
-                "3" => {id: "smallgiftbox03", requirement: 80, type: RewardType.PIN, reward: "smallgiftbox"},
-                "4" => {id: "smallgiftbox04", requirement: 150, type: RewardType.FUNKBUCK, reward: 1000},
-                "5" => {id: "smallgiftbox05", requirement: 300, type: RewardType.JEWEL, reward: 3},
-                "6" => {id: "smallgiftbox06", requirement: 550, type: RewardType.FUNKBUCK, reward: 3000},
-                "7" => {id: "smallgiftbox07", requirement: 800, type: RewardType.JEWEL, reward: 6}
+                "1" => {id: "smallgiftbox01", requirement: 10, type: RewardType.FunkBuck, reward: 200},
+                "2" => {id: "smallgiftbox02", requirement: 40, type: RewardType.Pin, reward: "smallgiftbox"},
+                "3" => {id: "smallgiftbox03", requirement: 80, type: RewardType.DiscountBox, reward: 2.5},
+                "4" => {id: "smallgiftbox04", requirement: 150, type: RewardType.FunkBuck, reward: 1000},
+                "5" => {id: "smallgiftbox05", requirement: 300, type: RewardType.Jewel, reward: 3},
+                "6" => {id: "smallgiftbox06", requirement: 550, type: RewardType.FunkBuck, reward: 3000},
+                "7" => {id: "smallgiftbox07", requirement: 800, type: RewardType.Jewel, reward: 6}
             ]
         }
     ];
@@ -229,7 +229,7 @@ class RewardsSubMenu extends MusicBeatSubState
             for (ind => value in categoryItems)
             {
                 if (totalItems < page * 9 || totalItems >= (page + 1) * 9) continue;
-                var item:RewardItem = new RewardItem(totalItems, null, -1, RewardType.CATEGORY, value.name, CATEGORY);
+                var item:RewardItem = new RewardItem(totalItems, null, -1, RewardType.Category, value.name, CATEGORY);
                 item.x = FlxG.width / 2 - X_BETWEEN_ITEMS + (X_BETWEEN_ITEMS * item.position[0]);
                 item.y = 200 + Y_BETWEEN_ITEMS * item.position[1];
                 add(item);
@@ -455,19 +455,19 @@ class RewardsSubMenu extends MusicBeatSubState
                     PointlessPins.addClaimedMilestone(currentItem.rID);
                     switch (currentItem.type)
                     {
-                        case RewardType.FUNKBUCK:
+                        case RewardType.FunkBuck:
                         {
                             _parentState.addFunkBucks(currentItem.reward);
                             populateItems(CATEGORY, PAGE);
                             hasUpdatedRewardText = false;
                         }
-                        case RewardType.JEWEL:
+                        case RewardType.Jewel:
                         {
                             _parentState.addBlueJewel(currentItem.reward);
                             populateItems(CATEGORY, PAGE);
                             hasUpdatedRewardText = false;
                         }
-                        case RewardType.BOX:
+                        case RewardType.Box:
                         {
                             allowedMovement = false;
                             var randomPin:PinData = currentItem.icon.rollRandomRarityPin();
@@ -501,7 +501,7 @@ class RewardsSubMenu extends MusicBeatSubState
                             currentItem.zIndex = 1100;
                             refresh();
                         }
-                        case RewardType.PIN:
+                        case RewardType.Pin:
                         {
                             var unlockState:PinUnlockState = new PinUnlockState(PointlessPins.getPinByID(currentItem.reward));
                             unlockState.cameras = [camera];
@@ -510,6 +510,11 @@ class RewardsSubMenu extends MusicBeatSubState
                                 hasUpdatedRewardText = false;
                             };
                             openSubState(unlockState);
+                        }
+                        default: 
+                        {
+                            populateItems(CATEGORY, PAGE);
+                            hasUpdatedRewardText = false;
                         }
                     }
                 }
@@ -573,15 +578,18 @@ class RewardItem extends ScriptedFlxSpriteGroup
 
     function setupItem():Void
     {
+        var isCategory:Bool = false;
         switch (type)
         {
-            case RewardType.CATEGORY:
+            case RewardType.Category:
             {
+                isCategory = true;
+
                 icon = new FunkinSprite(0, 0).loadTexture('shop/rewards/category-$reward');
                 icon.x -= icon.width / 2;
                 icon.y -= icon.height;
             }
-            case RewardType.PIN:
+            case RewardType.Pin:
             {
                 icon = new PinSprite(0, 0);
                 icon.isUnknown = !PointlessPins.hasObtainedPin(reward);
@@ -589,7 +597,7 @@ class RewardItem extends ScriptedFlxSpriteGroup
                 icon.setupPin(reward, "", "", 0.5);
                 icon.y -= 70;
             }
-            case RewardType.BOX:
+            case RewardType.Box:
             {
                 icon = new BoxSprite(0, 0);
                 icon.updateBoxInfoByID(reward, true);
@@ -597,7 +605,7 @@ class RewardItem extends ScriptedFlxSpriteGroup
                 icon.x -= 30;
                 icon.y -= 20;
             }
-            case RewardType.FUNKBUCK:
+            case RewardType.FunkBuck:
             {
                 final funkbuckThresholds:Array<Int> = [100, 250, 500];
 
@@ -618,32 +626,50 @@ class RewardItem extends ScriptedFlxSpriteGroup
                 number.alignment = "center";
                 number.scale.set(0.4, 0.4);
             }
-            case RewardType.JEWEL:
+            case RewardType.Jewel:
             {
-                trace("JEWEL reward type is not implemented");
+                number = new BAlphabet(0, 0, '<b>$reward</b> ${PTIcon.Jewel}');
+                number.alignment = "center";
+                number.scale.set(0.4, 0.4);
             }
-            case RewardType.SONG:
+            case RewardType.Song:
             {
                 trace("SONG reward type is not implemented");
             }
-            case RewardType.BOX_DISCOUNT:
+            case RewardType.DiscountBox:
             {
-                trace("BOX_DISCOUNT reward type is not implemented");
+                icon = new BAlphabet(0, -100, '<b>Box\nDiscount</b>');
+                icon.alignment = "center";
+                icon.scale.set(0.5, 0.5);
+
+                number = new BAlphabet(0, 0, '<b><c=00FF00>-$reward%</c></b>');
+                number.alignment = "center";
+                number.scale.set(0.4, 0.4);
             }
-            case RewardType.FUNKBUCK_BONUS:
+            case RewardType.BonusFunkBuck:
             {
-                trace("FUNKBUCK_BONUS reward type is not implemented");
+                icon = new BAlphabet(0, -100, '<b>FunkBuck\nBonus</b>');
+                icon.alignment = "center";
+                icon.scale.set(0.5, 0.5);
+
+                number = new BAlphabet(0, 0, '<b><c=00FF00>+$reward%</c></b>');
+                number.alignment = "center";
+                number.scale.set(0.4, 0.4);
             }
             default: trace("Invalid reward type.");
         }
 
-        claimed = (type == RewardType.CATEGORY) ? false : PointlessPins.hasClaimedMilestone(rID);
+        claimed = switch (type)
+        {
+            case RewardType.Category: false;
+            default: PointlessPins.hasClaimedMilestone(rID);
+        }
 
         if (claimed)
         {
             reached = true;
         }
-        else if (type != RewardType.CATEGORY)
+        else if (!isCategory)
         {
             switch (category)
             {
@@ -661,12 +687,25 @@ class RewardItem extends ScriptedFlxSpriteGroup
         {
             icon.alpha = claimed ? 0.5 : 1;
             icon.color = reached ? 0xFFFFFFFF : 0xFF3F3F3F;
+            if (!reached)
+            {
+                switch (type)
+                {
+                    case RewardType.DiscountBox, RewardType.BonusFunkBuck:
+                    {
+                        icon.forEach((letter) ->
+                        {
+                            letter.setColor(0);
+                        });
+                    }
+                    default:
+                }
+            }
             this.add(icon);
         }
         if (number != null)
         {
             number.alpha = claimed ? 0.5 : 1;
-            number.color = reached ? 0xFFFFFFFF : 0xFF3F3F3F;
             number.visible = reached;
             this.add(number);
         }
@@ -677,19 +716,23 @@ class RewardItem extends ScriptedFlxSpriteGroup
         }
         if (claimed)
         {
-            if (type == RewardType.BOX) icon.animation.play("Opened");
+            switch (type)
+            {
+                case RewardType.Box: icon.animation.play("Opened");
+                default:
+            }
         }
     }
 }
 
 enum RewardType
 {
-    CATEGORY;
-    PIN;
-    BOX;
-    FUNKBUCK;
-    JEWEL;
-    SONG;
-    BOX_DISCOUNT;
-    FUNKBUCK_BONUS;
+    Category;
+    Pin;
+    Box;
+    FunkBuck;
+    Jewel;
+    Song;
+    DiscountBox;
+    BonusFunkBuck;
 }
