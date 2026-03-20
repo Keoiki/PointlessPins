@@ -27,6 +27,8 @@ class FunkBucksModifierLable extends Module
     var prevText:String = "";
     var onRandom:Bool = false;
 
+    var bonusPercentage:Float = 0.0;
+
     // @:isVar
     var isEndlessOn(get, default):Bool = false;
 
@@ -102,9 +104,12 @@ class FunkBucksModifierLable extends Module
     {
         if (addedToState) return;
 
-        modifierText = new BAlphabet(FlxG.width - 20, 670, "");
+        bonusPercentage = PointlessPins.getFunkCoinBonus();
+
+        modifierText = new BAlphabet(FlxG.width - 20, 630, "");
         modifierText.scale.set(0.5, 0.5);
         modifierText.alignment = "right";
+        modifierText.lineHeight = 70;
         FlxG.state.add(modifierText);
 
         #if mobile 
@@ -118,23 +123,28 @@ class FunkBucksModifierLable extends Module
     {
         if (modifierText == null) return;
 
+        var bonusDisplay:String = bonusPercentage > 1.0 ? '<s=0.75><b><c=00FFFF>(${formatBonusModifier(bonusPercentage)})</c></b></s>\n' : '\n';
+
         modifierText.alpha = 1;
 
         var currentWeek:String = FlxG.state.currentLevelId;
         var repeatPenalty:Float = PointlessPins.getPrevSongs().filter(week -> week == currentWeek).length;
 
-        modifierText.text = '<b><c=${PointlessPins.penaltyColors[repeatPenalty]}>${formatModifier(PointlessPins.penalties[repeatPenalty])}</c></b> ${PTIcon.Buck}';
+        modifierText.text = '$bonusDisplay<b><c=${PointlessPins.penaltyColors[repeatPenalty]}>${formatModifier(PointlessPins.penalties[repeatPenalty])}</c></b> ${PTIcon.Buck}';
     }
 
     override public function onFreeplayIntroDone(event:FreeplayScriptEvent)
     {
+        bonusPercentage = PointlessPins.getFunkCoinBonus();
+
         modifierText = new BAlphabet(20, FlxG.height + 10, "");
         modifierText.scale.set(0.5, 0.5);
+        modifierText.lineHeight = 70;
 
         FlxG.state.subState.add(modifierText);
         modifierText.camera = FlxG.state.subState.funnyCam;
 
-        FlxTween.tween(modifierText, { y: FlxG.height - 50 }, 0.5, { ease: FlxEase.backOut });
+        FlxTween.tween(modifierText, { y: FlxG.height - 90 }, 0.5, { ease: FlxEase.backOut });
 
         addedToState = true;
         canBeUpdated = true;
@@ -160,6 +170,8 @@ class FunkBucksModifierLable extends Module
         if (modifierText == null) return;
         if (!canBeUpdated || isEndlessOn) return;
 
+        var bonusDisplay:String = bonusPercentage > 1.0 ? '<s=0.75><b><c=00FFFF>(${formatBonusModifier(bonusPercentage)})</c></b></s>\n' : '\n';
+
         modifierText.alpha = 1;
         if (event.capsule.freeplayData == null)
         {
@@ -173,12 +185,12 @@ class FunkBucksModifierLable extends Module
             var currentSong:String = event.capsule.freeplayData.data.id + "-" + event.variationId;
             if (PointlessPins.getDailies().contains(currentSong))
             {
-                modifierText.text = '<b><c=00FF00>${formatModifier(1.5)}</c> ${PTIcon.Buck} (Daily)</b>';
+                modifierText.text = '$bonusDisplay<b><c=00FF00>${formatModifier(1.5)}</c> ${PTIcon.Buck} (Daily)</b>';
             }
             else
             {
                 var repeatPenalty:Float = PointlessPins.getPrevSongs().filter(song -> song == currentSong).length;
-                modifierText.text = '<b><c=${PointlessPins.penaltyColors[repeatPenalty]}>${formatModifier(PointlessPins.penalties[repeatPenalty])}</c></b> ${PTIcon.Buck}';
+                modifierText.text = '$bonusDisplay<b><c=${PointlessPins.penaltyColors[repeatPenalty]}>${formatModifier(PointlessPins.penalties[repeatPenalty])}</c></b> ${PTIcon.Buck}';
             }
         }
     }
@@ -194,6 +206,15 @@ class FunkBucksModifierLable extends Module
         {
             case "multiplier": return '${modifier}x';
             default: return '${modifier * 100}%';
+        }
+    }
+
+    function formatBonusModifier(modifier:Float):String
+    {
+        switch (PointlessPins.save.modifierText)
+        {
+            case "multiplier": return '+${modifier}x';
+            default: return '+${modifier * 100 - 100}%';
         }
     }
 }

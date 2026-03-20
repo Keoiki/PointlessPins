@@ -33,6 +33,7 @@
     - Hundrec (Hundrec Mix, futureproof)
 - Added descriptions for locked pins explaining how to get them, without being too specific.
 - Added "source" text to pins, to show where or what they're from, without clogging the pin description.
+- Added more dialogue for Ophelia.
 
 ### Changed
 
