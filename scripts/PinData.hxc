@@ -292,7 +292,7 @@ class PointlessPins extends Module
         PointlessPins.save.opheliaAnger += anger;
         if (addToTotal)
         {
-            PointlessPins.save.opheliaAngerTotal += anger;
+            PointlessPins.save.opheliaAngerTotal = PointlessPins.getOpheliaAngerTotal() + anger;
         }
         PointlessPins.saveTheData();
     }
