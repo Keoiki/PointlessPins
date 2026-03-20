@@ -90,7 +90,7 @@ class PinDialogue extends FunkinGroup
         {
             if ((PlayerSettings.player1.controls.CUTSCENE_ADVANCE || TouchUtil.pressAction()) && canSkip)
             {
-                if (!dialogueText.finishedText && canSkip)
+                if (!dialogueText.finishedText)
                 {
                     dialogueText.finish();
                     onSkipLine.dispatch(dialogueIndex);
