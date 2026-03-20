@@ -66,12 +66,12 @@ class BoxSprite extends FunkinSprite
         var opheliaAnger:Int = PointlessPins.getOpheliaAnger();
         if (opheliaAnger > 0)
         {
-            priceModifier = 1.0 + (0.2 * opheliaAnger);
-            price += price * (priceModifier - 1.0);
+            angerModifier = 1.0 + (0.2 * opheliaAnger);
+            price += price * (angerModifier - 1.0);
         }
         else
         {
-            priceModifier = 1.0;
+            angerModifier = 1.0;
         }
 
         var discount:Float = PointlessPins.getBoxDiscount();
