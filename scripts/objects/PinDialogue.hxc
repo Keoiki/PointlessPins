@@ -59,6 +59,7 @@ class PinDialogue extends FunkinGroup
 
         dialogueText.finishCallback = () ->
         {
+            canSkip = true;
             onCompleteLine.dispatch(dialogueIndex);
         }
 
@@ -94,20 +95,10 @@ class PinDialogue extends FunkinGroup
                     dialogueText.finish();
                     onSkipLine.dispatch(dialogueIndex);
                 }
-                else if (dialogueIndex >= currentDialogue.length - 1)
-                {
-                    hasEnded = true;
-                    onCompleteDialogue.dispatch();
-                }
                 else
                 {
                     doNextLine();
                 }
-            }
-
-            if (dialogueText.finishedText)
-            {
-                canSkip = true;
             }
         }
         else
@@ -120,11 +111,17 @@ class PinDialogue extends FunkinGroup
     function doNextLine():Void
     {
         var dialogueLine:PinDialogueLine = null;
-        do
+        dialogueIndex++;
+        if (dialogueIndex >= currentDialogue.length)
         {
-            dialogueLine = currentDialogue[++dialogueIndex];
+            hasEnded = true;
+            onCompleteDialogue.dispatch();
+            return;
         }
-        while (dialogueLine == null);
+        else
+        {
+            dialogueLine = currentDialogue[dialogueIndex];
+        }
 
         dialogueLine.text ??= "I forgor.";
         dialogueLine.speaker ??= null;
