@@ -10,9 +10,7 @@ import funkin.save.Save;
 import funkin.play.ResultState;
 import funkin.play.PlayStatePlaylist;
 import funkin.play.PlayState;
-import funkin.modding.module.ModuleHandler;
 import funkin.modding.module.Module;
-import funkin.modding.base.ScriptedFlxSpriteGroup;
 import funkin.modding.ModStore;
 import funkin.modding.PolymodHandler;
 import funkin.group.FunkinGroup;
@@ -30,7 +28,6 @@ import openfl.net.URLLoader;
 import haxe.ds.StringMap;
 import balphabet.BAlphabet;
 using StringTools;
-import DateTools;
 import Date;
 
 typedef PinData = {

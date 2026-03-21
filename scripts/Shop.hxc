@@ -28,7 +28,6 @@ class Shop extends MusicBeatState
     var cameraSubState:FunkinCamera;
     var spriteNudge:Float = (1600 - FlxG.width) / 2;
     var disallowInputs:Bool = false;
-    var STATE:String = "MAIN";
     var cameraFollowPoint:FlxObject;
     var justGainedFocus:Bool = false;
 
@@ -444,7 +443,7 @@ class Shop extends MusicBeatState
             disallowInputs = true;
             cameraFollowPoint.setPosition(lableRewards.x - 10, 320);
             showMenuItems(false);
-            ophelia.playAnimation("IdleHandDown", true, true);
+            // ophelia.playAnimation("IdleHandDown", true, true);
 
             var substate = new RewardsSubMenu();
             substate.closeCallback = function()
@@ -465,32 +464,11 @@ class Shop extends MusicBeatState
             }});
         }
 
-        if (FlxG.keys.justPressed.FIVE)
-        {
-            var dialog:PinDialogue = new PinDialogue("angerRepeat");
-            dialog.cameras = [cameraHUD];
-            dialog.onNextLine.add((line) -> trace(line));
-            dialog.onCompleteDialogue.add(() -> trace("dialog complete"));
-            add(dialog);
-        }
-
         justGainedFocus = false;
     }
 
     function goBack():Void
     {
-        if (STATE == "HELP")
-        {
-            cameraFollowPoint.setPosition(ophelia.x, 300);
-            ophelia.playAnimation("Idle", true, true);
-            showMenuItems();
-            FlxTween.tween(camera, { zoom: 1 }, 1, { ease: FlxEase.cubeOut });
-            FlxTween.tween(counter, { alpha: 1 }, 1, { ease: FlxEase.cubeOut });
-            FlxTween.tween(cameraHUD, { alpha: 1 }, 1, { ease: FlxEase.cubeIn });
-            disallowInputs = false;
-            STATE = "MAIN";
-            return;
-        }
         if (disallowInputs) return;
         FlxG.switchState(() -> new MainMenuState());
     }
@@ -609,7 +587,6 @@ class Shop extends MusicBeatState
                     opheliaPinDialogue();
                 });
 
-                STATE = "OPHELIAPIN";
                 disallowInputs = true;
                 showMenuItems(false);
                 cameraFollowPoint.setPosition(opheliaHitbox.x + opheliaHitbox.width / 2, opheliaHitbox.y + 115);
@@ -642,7 +619,6 @@ class Shop extends MusicBeatState
                     PointlessPins.save.opheliaAngerTime = Date.now().getTime();
                 }
                 disallowInputs = true;
-                trace(PointlessPins.getOpheliaAngerTotal());
                 if (PointlessPins.getOpheliaAngerTotal() > 0)
                 {
                     if (PointlessPins.getOpheliaAnger() > 5)
@@ -697,7 +673,6 @@ class Shop extends MusicBeatState
         var substate = new PinUnlockState(PointlessPins.getPinByID("ophelia"));
         substate.cameras = [cameraSubState];
         substate.closeCallback = () -> {
-            STATE = "MAIN";
             disallowInputs = false;
             showMenuItems(true);
             FlxTween.tween(camera, { zoom: 1 }, 1, { ease: FlxEase.cubeOut });
@@ -879,7 +854,6 @@ class Shop extends MusicBeatState
         new FlxTimer().start(0.1, function(_:FlxTimer) {
             disallowInputs = false;
         });
-        STATE = "MAIN";
         super.closeSubState();
     }
 
