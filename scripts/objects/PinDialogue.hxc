@@ -115,8 +115,8 @@ class PinDialogue extends FunkinGroup
         dialogueIndex++;
         if (dialogueIndex >= currentDialogue.length)
         {
-            hasEnded = true;
             onCompleteDialogue.dispatch();
+            hasEnded = true;
             return;
         }
         else

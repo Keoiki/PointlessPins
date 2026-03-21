@@ -10,10 +10,6 @@ import flixel.tweens.FlxTween;
 import flixel.tweens.FlxEase;
 import balphabet.BAlphabet;
 
-import funkin.Highscore;
-import funkin.Conductor;
-import funkin.data.event.SongEventRegistry;
-
 class FunkBucksModifierLable extends Module
 {
     var pinModule:Module;
