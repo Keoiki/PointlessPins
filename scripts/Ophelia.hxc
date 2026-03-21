@@ -1,6 +1,5 @@
 package pointlesspins;
 
-import funkin.util.ReflectUtil;
 import funkin.graphics.FunkinSprite;
 using StringTools;
 
