@@ -31,6 +31,9 @@ class Shop extends MusicBeatState
     var cameraFollowPoint:FlxObject;
     var justGainedFocus:Bool = false;
 
+    var isOpheliaGone:Bool = false;
+    var cannotDoText:BAlphabet;
+
     var buckSound:FunkinSound;
 
     // Dialogue
@@ -93,13 +96,26 @@ class Shop extends MusicBeatState
         add(cameraFollowPoint);
         camera.follow(cameraFollowPoint, null, 0.05);
 
-        FunkinSound.playMusic('chartEditorLoop',
+        if (FlxG.random.bool(1))
         {
-            statingVolume: 0.0,
-            overrideExisting: true,
-            restartTrack: false,
-            persist: true
-        });
+            // she forgor to show up
+            isOpheliaGone = true;
+        }
+
+        if (isOpheliaGone)
+        {
+            FlxG.sound.music.stop();
+        }
+        else
+        {
+            FunkinSound.playMusic('chartEditorLoop',
+            {
+                startingVolume: 0.75,
+                overrideExisting: true,
+                restartTrack: false,
+                persist: true
+            });
+        }
 
         buckSound = new FunkinSound();
         buckSound.loadEmbedded(Paths.sound("fav"));
@@ -195,7 +211,7 @@ class Shop extends MusicBeatState
         iconPins.zIndex = 490;
         add(iconPins);
 
-        lablePins = new BAlphabet(iconPins.x + 120, 520, "<b>Pins</b>");
+        lablePins = new BAlphabet(iconPins.x + iconPins.width / 2, 520, "<b>Pins</b>");
         lablePins.alignment = "center";
         lablePins.scale.set(0.65, 0.65);
         lablePins.zIndex = 510;
@@ -205,7 +221,7 @@ class Shop extends MusicBeatState
         iconBoxes.zIndex = 491;
         add(iconBoxes);
 
-        lableBoxes = new BAlphabet(iconBoxes.x + 120, 520, "<b>Boxes</b>");
+        lableBoxes = new BAlphabet(iconBoxes.x + iconBoxes.width / 2, 520, "<b>Boxes</b>");
         lableBoxes.alignment = "center";
         lableBoxes.scale.set(0.65, 0.65);
         lableBoxes.zIndex = 512;
@@ -256,7 +272,7 @@ class Shop extends MusicBeatState
 
         keycapExchange = new LetterKeyCap(lableExchange.x - 45, 570, "3", false);
         keycapExchange.zIndex = 518;
-        // add(keycapExchange);
+        add(keycapExchange);
 
         keycapRewards = new LetterKeyCap(lableRewards.x - 45, 570, "4", false);
         keycapRewards.zIndex = 520;
@@ -278,14 +294,21 @@ class Shop extends MusicBeatState
         funkBucksText = new BAlphabet(FlxG.width - 20, 25, '<b>${PointlessPins.getFunkCoins()}</b> ${PTIcon.Buck}');
         funkBucksText.scale.set(0.65, 0.65);
         funkBucksText.alignment = "right";
-        funkBucksText.scrollFactor.set(0, 0);
+        // funkBucksText.setScrollFactor(0, 0);
         add(funkBucksText);
 
         blueJewelsText = new BAlphabet(FlxG.width - 20, funkBucksText.y + 70, '<b><c=82E9FF>${PointlessPins.getBlueJewels()}<s=0.5>/${PointlessPins.maximumBlueJewels}</s></c></b> ${PTIcon.Jewel}');
         blueJewelsText.alignment = "right";
         blueJewelsText.scale.set(0.65, 0.65);
-        blueJewelsText.scrollFactor.set(0, 0);
+        // blueJewelsText.setScrollFactor(0, 0);
         add(blueJewelsText);
+
+        cannotDoText = new BAlphabet(FlxG.width / 2, FlxG.height - 100, "<b><c=FF0000>You cannot do that right now.</c></b>");
+        cannotDoText.alignment = "center";
+        cannotDoText.scale.set(0.5, 0.5);
+        cannotDoText.alpha = 0.0001;
+        // cannotDoText.setScrollFactor(0, 0);
+        add(cannotDoText);
 
         coolBackButton = new FunkinBackButton(FlxG.width - 220, FlxG.height - 200, 0xFFFFFFFF, goBack, 0.5);
         #if !mobile
@@ -315,6 +338,7 @@ class Shop extends MusicBeatState
         screenBlack.cameras = [cameraHUD];
         funkBucksText.cameras = [cameraHUD];
         blueJewelsText.cameras = [cameraHUD];
+        cannotDoText.cameras = [cameraHUD];
         coolBackButton.cameras = [cameraHUD];
 
         if (ModStore.get("pinsIsOutdated") && ModStore.get("pinsHasShownOutdate") == null)
@@ -350,6 +374,11 @@ class Shop extends MusicBeatState
         funkBucksText.y = FlxMath.lerp(funkBucksText.y, 25, lerpval);
         blueJewelsText.y = FlxMath.lerp(blueJewelsText.y, 95, lerpval);
 
+        if (isOpheliaGone)
+        {
+            ophelia.visible = false;
+        }
+
         if (controls.BACK_P)
         {
             goBack();
@@ -365,6 +394,8 @@ class Shop extends MusicBeatState
 
         handleCameraMovement();
         checkIfAnnoyedOphelia();
+
+        justGainedFocus = false;
 
         // Pins
 
@@ -398,6 +429,13 @@ class Shop extends MusicBeatState
 
         if (FlxG.keys.justPressed.TWO || (TouchUtil.pressAction(iconBoxes) && !PointlessPins.isMouseTooFast && !TouchUtil.overlaps(coolBackButton, cameraHUD)))
         {
+            if (isOpheliaGone)
+            {
+                FlxTween.completeTweensOf(cannotDoText);
+                FlxTween.tween(cannotDoText, { alpha: 1 }, 2, { ease: FlxEase.cubeOut, type: 16 });
+                return;
+            }
+
             disallowInputs = true;
             cameraFollowPoint.setPosition(iconBoxes.x + iconBoxes.width / 2, iconBoxes.y - 4);
             showMenuItems(false);
@@ -424,26 +462,48 @@ class Shop extends MusicBeatState
 
         // Exchange
 
-        // if (FlxG.keys.justPressed.THREE || (TouchUtil.pressAction(lableExchange) && !isMouseTooFast && !TouchUtil.overlaps(coolBackButton, cameraHUD)))
-        // {
-            // disallowInputs = true;
-            // STATE = "HELP";
-            // cameraFollowPoint.setPosition(ophelia.x - 50, 360);
-            // showMenuItems(false);
-            // ophelia.playAnimation("IdleHandDown", true, true);
-            // FlxTween.tween(camera, { zoom: 1.5 }, 1, { ease: FlxEase.cubeOut });
-            // FlxTween.tween(counter, { alpha: 0 }, 1, { ease: FlxEase.cubeOut });
-            // FlxTween.tween(cameraHUD, { alpha: 0 }, 1, { ease: FlxEase.cubeOut });
-        // }
+        if (FlxG.keys.justPressed.THREE || (TouchUtil.pressAction(lableExchange) && !PointlessPins.isMouseTooFast && !TouchUtil.overlaps(coolBackButton, cameraHUD)))
+        {
+            if (isOpheliaGone)
+            {
+                FlxTween.completeTweensOf(cannotDoText);
+                FlxTween.tween(cannotDoText, { alpha: 1 }, 2, { ease: FlxEase.cubeOut, type: 16 });
+                return;
+            }
+
+            disallowInputs = true;
+            cameraFollowPoint.setPosition(ophelia.x - 50, 305);
+            showMenuItems(false);
+
+            var substate = new ExchangeMenu();
+            substate.closeCallback = function()
+            {
+                FlxTween.tween(coolBackButton, { alpha: 0.5 }, 1, { ease: FlxEase.cubeOut });
+                FlxTween.tween(camera, { zoom: 1 }, 1, { ease: FlxEase.cubeOut });
+                showMenuItems();
+            }
+            substate.cameras = [cameraSubState];
+
+            FlxTween.tween(camera, { zoom: 1.4 }, 1, { ease: FlxEase.cubeOut, onComplete: function()
+            {
+                openSubState(substate);
+            }});
+        }
 
         // Rewards
 
         if (FlxG.keys.justPressed.FOUR || (TouchUtil.pressAction(lableRewards) && !PointlessPins.isMouseTooFast && !TouchUtil.overlaps(coolBackButton, cameraHUD)))
         {
+            if (isOpheliaGone)
+            {
+                FlxTween.completeTweensOf(cannotDoText);
+                FlxTween.tween(cannotDoText, { alpha: 1 }, 2, { ease: FlxEase.cubeOut, type: 16 });
+                return;
+            }
+
             disallowInputs = true;
             cameraFollowPoint.setPosition(lableRewards.x - 10, 320);
             showMenuItems(false);
-            // ophelia.playAnimation("IdleHandDown", true, true);
 
             var substate = new RewardsSubMenu();
             substate.closeCallback = function()
@@ -463,8 +523,6 @@ class Shop extends MusicBeatState
                 openSubState(substate);
             }});
         }
-
-        justGainedFocus = false;
     }
 
     function goBack():Void
@@ -574,6 +632,11 @@ class Shop extends MusicBeatState
      */
     function checkIfAnnoyedOphelia():Void
     {
+        if (isOpheliaGone)
+        {
+            return;
+        }
+
         // Ophelia's sprite extends behind the counter, we don't wanna count pressing in that area as well.
         if (TouchUtil.pressAction(opheliaHitbox, camera) && !TouchUtil.overlaps(coolBackButton, cameraHUD) && !PointlessPins.isMouseTooFast)
         {
@@ -679,7 +742,7 @@ class Shop extends MusicBeatState
             FlxTween.tween(funkBucksText, { alpha: 1 }, 1, { ease: FlxEase.cubeOut });
             FlxTween.tween(blueJewelsText, { alpha: 1 }, 1, { ease: FlxEase.cubeOut });
         }
-        new FlxTimer().start(70 / 24, (_:FlxTimer) -> {
+        new FlxTimer().start(68 / 24, (_:FlxTimer) -> {
             FlxTween.tween(cameraFollowPoint, { x: cameraFollowPoint.x - 100, y: cameraFollowPoint.y + 50 }, 14 / 24, { ease: FlxEase.cubeOut });
         });
         new FlxTimer().start(84 / 24, (_:FlxTimer) -> {
