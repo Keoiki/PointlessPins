@@ -736,8 +736,17 @@ class PTIcon
     static final OpheliaMad:String = "&#xE010;";
     static final Star:String = "&#xE011;";
     
-    static final CardboardBox:String = "&#xE020;";
-    static final SmallGiftbox:String = "&#xE021;";
+    static final Common:String = "&#xE020;";
+    static final Uncommon:String = "&#xE021;";
+    static final Rare:String = "&#xE022;";
+    static final Epic:String = "&#xE023;";
+    static final Legendary:String = "&#xE024;";
+    static final Mythic:String = "&#xE025;";
+    static final Divine:String = "&#xE026;";
+    static final Special:String = "&#xE027;";
+    
+    static final CardboardBox:String = "&#xE030;";
+    static final SmallGiftbox:String = "&#xE031;";
 
     static final Modded:String = "&#xE070;";
     static final Internet:String = "&#xE071;";
