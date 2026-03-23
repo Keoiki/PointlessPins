@@ -98,7 +98,7 @@ class PinBoard extends MusicBeatSubState
 
         pinMoveSound = new FunkinSound();
         pinMoveSound.loadEmbedded(Paths.sound("unfav"));
-        pinMoveSound.volume = 0.5;
+        pinMoveSound.volume = 0.25;
 
         FlxG.sound.defaultSoundGroup.add(pinMoveSound);
         FlxG.sound.list.add(pinMoveSound);

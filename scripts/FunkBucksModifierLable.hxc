@@ -102,7 +102,7 @@ class FunkBucksModifierLable extends Module
 
         bonusPercentage = PointlessPins.getFunkCoinBonus();
 
-        modifierText = new BAlphabet(FlxG.width - 20, 630, "");
+        modifierText = new BAlphabet(FlxG.width - 20, 640, "");
         modifierText.scale.set(0.5, 0.5);
         modifierText.alignment = "right";
         modifierText.lineHeight = 70;
@@ -140,7 +140,7 @@ class FunkBucksModifierLable extends Module
         FlxG.state.subState.add(modifierText);
         modifierText.camera = FlxG.state.subState.funnyCam;
 
-        FlxTween.tween(modifierText, { y: FlxG.height - 90 }, 0.5, { ease: FlxEase.backOut });
+        FlxTween.tween(modifierText, { y: FlxG.height - 80 }, 0.5, { ease: FlxEase.backOut });
 
         addedToState = true;
         canBeUpdated = true;
@@ -173,7 +173,7 @@ class FunkBucksModifierLable extends Module
         {
             onRandom = true;
             modifierText.alpha = 0.5;
-            modifierText.text = '<b>N/A</b>';
+            modifierText.text = '<b>\nN/A</b>';
         }
         else
         {
