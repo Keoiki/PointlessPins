@@ -1,5 +1,6 @@
 package pointlesspins.objects;
 
+import flixel.tweens.FlxTween;
 import funkin.graphics.FunkinSprite;
 
 class PinSprite extends FunkinSprite
@@ -52,34 +53,64 @@ class PinSprite extends FunkinSprite
      * @param _description The Pin's description (optional)
      * @param _scale The Pin's scale in the menu (optional, default: 0.5)
      */
-    public function setupPin(_id:String, _name:String, _description:String, _scale:Float = 0.5)
+    public function setupPin(_id:String, _name:String, _description:String, _scale:Float = 0.5, loadImmediately:Bool = false)
     {
         pID = _id;
         name = _name;
         description = _description;
         scaleOverride = _scale;
+
+        var fileToLoad:String = "images/pointlesspins/pins/" + pID + ".png";
         
         if (isUnknown)
         {
-            loadTexture("unknownpin");
+            // loadTexture("unknownpin");
+            fileToLoad = "images/unknownpin.png";
             scaleOverride = 0.45;
         }
         else if (!Assets.exists("images/pointlesspins/pins/" + pID + ".png") || !isUnlocked)
         {
-            loadTexture("pinknob");
+            // loadTexture("pinknob");
+            fileToLoad = "images/pinknob.png";
             scaleOverride = 1;
         }
         else
         {
-            loadTexture("pointlesspins/pins/" + pID);
+            // This function literally doesn't work.
+            // loadTextureAsync("images/pointlesspins/pins/" + pID + ".png", true);
+            // loadTexture("pointlesspins/pins/" + pID);
         }
 
-        // This function literally doesn't work.
-        // loadTextureAsync("images/pointlesspins/pins/" + pID, true);
-        scale.set(scaleOverride, scaleOverride);
-        updateHitbox();
-        x -= width / 2;
-        y -= height / 2;
+        if (loadImmediately)
+        {
+            loadTexture(fileToLoad.substring(fileToLoad.indexOf("/") + 1, fileToLoad.lastIndexOf(".")));
+            scale.set(scaleOverride, scaleOverride);
+            updateHitbox();
+            x -= width / 2;
+            y -= height / 2;
+        }
+        else
+        {
+            var fadeTween:Null<FlxTween> = null;
+            fadeTween = FlxTween.tween(super, { alpha: 0 }, 0.25);
+
+            Assets.loadBitmapData(fileToLoad).onComplete(function(bitmapData)
+            {
+                if (!exists) return;
+
+                loadBitmapData(bitmapData, true);
+                scale.set(scaleOverride, scaleOverride);
+                updateHitbox();
+                x -= width / 2;
+                y -= height / 2;
+
+                if (fadeTween != null)
+                {
+                    fadeTween.cancel();
+                    FlxTween.tween(super, { alpha: 1 }, 0.25);
+                }
+            });
+        }
 
         if (unlockCount >= 15)
         {
