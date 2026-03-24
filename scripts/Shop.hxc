@@ -1,25 +1,26 @@
 package pointlesspins;
 
-import pointlesspins.objects.PinDialogue;
-import funkin.util.TouchUtil;
-import funkin.ui.mainmenu.MainMenuState;
-import funkin.ui.MusicBeatState;
-import funkin.modding.ModStore;
-import funkin.mobile.ui.FunkinBackButton;
-import funkin.graphics.FunkinSprite;
-import funkin.graphics.FunkinCamera;
-import funkin.data.song.SongRegistry;
-import funkin.audio.FunkinSound;
-import flixel.util.FlxTimer;
-import flixel.tweens.FlxTween;
-import flixel.tweens.FlxEase;
-import flixel.math.FlxMath;
-import flixel.input.mouse.FlxMouseEvent;
-import flixel.FlxObject;
-import balphabet.BAlphabetTyped;
-import balphabet.BAlphabet;
-using StringTools;
 import Date;
+import balphabet.BAlphabet;
+import balphabet.BAlphabetTyped;
+import flixel.FlxObject;
+import flixel.input.mouse.FlxMouseEvent;
+import flixel.math.FlxMath;
+import flixel.tweens.FlxEase;
+import flixel.tweens.FlxTween;
+import flixel.util.FlxTimer;
+import funkin.audio.FunkinSound;
+import funkin.data.song.SongRegistry;
+import funkin.graphics.FunkinCamera;
+import funkin.graphics.FunkinSprite;
+import funkin.mobile.ui.FunkinBackButton;
+import funkin.modding.ModStore;
+import funkin.ui.MusicBeatState;
+import funkin.ui.mainmenu.MainMenuState;
+import funkin.util.TouchUtil;
+import pointlesspins.objects.KeyCap;
+import pointlesspins.objects.PinDialogue;
+using StringTools;
 
 class Shop extends MusicBeatState
 {
@@ -54,19 +55,19 @@ class Shop extends MusicBeatState
 
     var iconPins:FunkinSprite;
     var lablePins:BAlphabet;
-    var keycapPins:LetterKeyCap;
+    var keycapPins:KeyCap;
 
     var iconBoxes:FunkinSprite;
     var lableBoxes:BAlphabet;
-    var keycapBoxes:LetterKeyCap;
+    var keycapBoxes:KeyCap;
 
     var iconRewards:FunkinSprite;
     var lableRewards:BAlphabet;
-    var keycapRewards:LetterKeyCap;
+    var keycapRewards:KeyCap;
 
     var iconExchange:FunkinSprite;
     var lableExchange:BAlphabet;
-    var keycapExchange:LetterKeyCap;
+    var keycapExchange:KeyCap;
 
     // UI
     var funkBucksText:BAlphabet;
@@ -262,19 +263,19 @@ class Shop extends MusicBeatState
         counterItems.push(lableExchange);
 
         #if !mobile
-        keycapPins = new LetterKeyCap(lablePins.x - 45, 570, "1", false);
+        keycapPins = new KeyCap(lablePins.x - 45, 570, "1", false);
         keycapPins.zIndex = 512;
         add(keycapPins);
 
-        keycapBoxes = new LetterKeyCap(lableBoxes.x - 45, 570, "2", false);
+        keycapBoxes = new KeyCap(lableBoxes.x - 45, 570, "2", false);
         keycapBoxes.zIndex = 514;
         add(keycapBoxes);
 
-        keycapExchange = new LetterKeyCap(lableExchange.x - 45, 570, "3", false);
+        keycapExchange = new KeyCap(lableExchange.x - 45, 570, "3", false);
         keycapExchange.zIndex = 518;
         add(keycapExchange);
 
-        keycapRewards = new LetterKeyCap(lableRewards.x - 45, 570, "4", false);
+        keycapRewards = new KeyCap(lableRewards.x - 45, 570, "4", false);
         keycapRewards.zIndex = 520;
         add(keycapRewards);
 

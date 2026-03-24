@@ -1,14 +1,14 @@
 package pointlesspins;
 
-import funkin.ui.story.StoryMenuState;
-import funkin.ui.freeplay.FreeplayState;
-import funkin.ui.charSelect.CharSelectSubState;
-import funkin.play.PlayState;
-import funkin.modding.module.ModuleHandler;
-import funkin.modding.module.Module;
-import flixel.tweens.FlxTween;
-import flixel.tweens.FlxEase;
 import balphabet.BAlphabet;
+import flixel.tweens.FlxEase;
+import flixel.tweens.FlxTween;
+import funkin.modding.module.Module;
+import funkin.modding.module.ModuleHandler;
+import funkin.play.PlayState;
+import funkin.ui.charSelect.CharSelectSubState;
+import funkin.ui.freeplay.FreeplayState;
+import funkin.ui.story.StoryMenuState;
 
 class FunkBucksModifierLable extends Module
 {

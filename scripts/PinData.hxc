@@ -1,34 +1,33 @@
 package pointlesspins;
 
-import pointlesspins.objects.PinSprite;
-import funkin.util.VersionUtil;
-import funkin.util.TouchUtil;
-import funkin.util.SerializerUtil;
-import funkin.util.ReflectUtil;
-import funkin.ui.mainmenu.MainMenuState;
-import funkin.save.Save;
-import funkin.play.ResultState;
-import funkin.play.PlayStatePlaylist;
-import funkin.play.PlayState;
-import funkin.modding.module.Module;
-import funkin.modding.ModStore;
-import funkin.modding.PolymodHandler;
-import funkin.group.FunkinGroup;
-import funkin.graphics.FunkinSprite;
-import funkin.data.song.SongRegistry;
-import funkin.audio.FunkinSound;
-import funkin.Highscore;
-import flixel.util.FlxTimer;
-import flixel.util.FlxSort;
-import flixel.tweens.FlxTween;
-import flixel.tweens.FlxEase;
-import flixel.math.FlxMath;
-import openfl.net.URLRequest;
-import openfl.net.URLLoader;
-import haxe.ds.StringMap;
-import balphabet.BAlphabet;
-using StringTools;
 import Date;
+import balphabet.BAlphabet;
+import haxe.ds.StringMap;
+import openfl.net.URLLoader;
+import openfl.net.URLRequest;
+import flixel.math.FlxMath;
+import flixel.tweens.FlxEase;
+import flixel.tweens.FlxTween;
+import flixel.util.FlxSort;
+import flixel.util.FlxTimer;
+import funkin.Highscore;
+import funkin.audio.FunkinSound;
+import funkin.data.song.SongRegistry;
+import funkin.modding.PolymodHandler;
+import funkin.modding.ModStore;
+import funkin.modding.module.Module;
+import funkin.play.PlayState;
+import funkin.play.PlayStatePlaylist;
+import funkin.play.ResultState;
+import funkin.save.Save;
+import funkin.ui.mainmenu.MainMenuState;
+import funkin.util.ReflectUtil;
+import funkin.util.SerializerUtil;
+import funkin.util.TouchUtil;
+import funkin.util.VersionUtil;
+import pointlesspins.objects.KeyCap;
+import pointlesspins.objects.PinSprite;
+using StringTools;
 
 typedef PinData = {
     id:String, // The ID of a pin.
@@ -523,7 +522,7 @@ class PointlessPins extends Module
             event.targetState.add(menuPin);
 
             #if !mobile
-            var keycap01 = new LetterKeyCap(115, 115, "P");
+            var keycap01 = new KeyCap(115, 115, "P");
             event.targetState.add(keycap01);
             #end
         }
