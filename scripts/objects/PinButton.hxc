@@ -1,8 +1,8 @@
 package pointlesspins.objects;
 
-import funkin.group.FunkinGroup;
-import flixel.addons.display.FlxSliceSprite;
 import balphabet.BAlphabet;
+import flixel.addons.display.FlxSliceSprite;
+import funkin.group.FunkinGroup;
 
 class PinButton extends FunkinGroup
 {

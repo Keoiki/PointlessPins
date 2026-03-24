@@ -1,14 +1,14 @@
 package pointlesspins.objects;
 
-import funkin.group.FunkinGroup;
-import funkin.graphics.FunkinSprite;
 import balphabet.BAlphabet;
+import funkin.graphics.FunkinSprite;
+import funkin.group.FunkinGroup;
 
 /**
  * This class displays a cool keycap sprite with a letter.
  * Only really has space for 1 letter though, so "ESC" isn't going to work too well..
  */
-class LetterKeyCap extends FunkinGroup
+class KeyCap extends FunkinGroup
 {
     public var keycap:FunkinSprite;
     public var letter:BAlphabet;
