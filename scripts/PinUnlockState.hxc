@@ -38,7 +38,7 @@ class PinUnlockState extends MusicBeatSubState
 
         var pin:PinSprite = new PinSprite(FlxG.width / 2, 400);
         pin.isUnlocked = true;
-        pin.setupPin(pinData.id, pinData.name, pinData.description, 0.2);
+        pin.setupPin(pinData.id, pinData.name, pinData.description, 0.2, true);
         add(pin);
 
         var unlockMsgText:String = "";

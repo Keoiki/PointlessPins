@@ -7,4 +7,12 @@ import funkin.group.FunkinGroup;
 class PinButton extends FunkinGroup
 {
     public var button:FlxSliceSprite;
+    public var text:BAlphabet;
+
+    public var isActive:Bool = true;
+
+    public function new(x:Float, y:Float, w:Float, h:Float, text:String):Void
+    {
+        super(x, y);
+    }
 }
