@@ -1,0 +1,10 @@
+package pointlesspins.objects;
+
+import funkin.group.FunkinGroup;
+import flixel.addons.display.FlxSliceSprite;
+import balphabet.BAlphabet;
+
+class PinButton extends FunkinGroup
+{
+    public var button:FlxSliceSprite;
+}
