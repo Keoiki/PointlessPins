@@ -2,9 +2,12 @@ package pointlesspins;
 
 import balphabet.BAlphabet;
 import funkin.ui.MusicBeatSubState;
+import pointlesspins.objects.PinButton;
 
 class ExchangeMenu extends MusicBeatSubState
 {
+    var buttons:Array<PinButton> = [];
+
     override public function update(elapsed:Float):Void
     {
         super.update(elapsed);

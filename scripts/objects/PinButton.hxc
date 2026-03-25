@@ -10,9 +10,23 @@ class PinButton extends FunkinGroup
     public var text:BAlphabet;
 
     public var isActive:Bool = true;
+    public var isSelected:Bool = false;
 
     public function new(x:Float, y:Float, w:Float, h:Float, text:String):Void
     {
         super(x, y);
+
+        button = new FlxSliceSprite(Assets.getBitmapData("images/pinbutton.png"), FlxRect.get(25, 25, 95, 95), w, h);
+        button.zIndex = this.zIndex;
+        button.scrollFactor.set();
+        add(button);
+
+        text = new BAlphabet(0, 0, text);
+        text.alignment = "center";
+        text.localX = button.width / 2;
+        text.localY = button.height / 2 - text.height / 2;
+        text.zIndex = this.zIndex + 1;
+        text.setScrollFactor();
+        add(text);
     }
 }
