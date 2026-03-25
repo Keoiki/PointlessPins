@@ -1,16 +1,84 @@
 package funkbucks;
 
 import balphabet.BAlphabet;
+import flixel.input.mouse.FlxMouseEvent;
 import funkbucks.objects.PinButton;
+import funkin.graphics.FunkinSprite;
+import funkin.mobile.ui.FunkinBackButton;
 import funkin.ui.MusicBeatSubState;
+import funkin.util.TouchUtil;
 
 class ExchangeMenu extends MusicBeatSubState
 {
     var buttons:Array<PinButton> = [];
+    var selected:Int = 0;
+    var allowedMovement:Bool = true;
 
+    var coolBackButton:FunkinBackButton;
+
+    override function create():Void
+    {
+        var bg:FunkinSprite = new FunkinSprite(125, 0).makeSolidColor(450, FlxG.height, 0xFF000000);
+        bg.alpha = 0.8;
+        add(bg);
+
+        var button01:PinButton = new PinButton(150, 100, 400, 110, '<b>1 ${PTIcon.Jewel} &#x21E8; ${PointlessPins.blueJewelsToBucks} ${PTIcon.Buck}</b>');
+        add(button01);
+        var button02:PinButton = new PinButton(150, 220, 400, 110, '<b>5 ${PTIcon.Jewel} &#x21E8; 1 ${PTIcon.Legendary}</b>');
+        add(button02);
+        var button03:PinButton = new PinButton(150, 340, 400, 110, '<b>10 ${PTIcon.Jewel} &#x21E8; 1 ${PTIcon.Mythic}</b>');
+        add(button03);
+        var button04:PinButton = new PinButton(150, 460, 400, 110, '<b>15 ${PTIcon.Jewel} &#x21E8; 1 ${PTIcon.Divine}</b>');
+        add(button04);
+
+        buttons.push(button01);
+        buttons.push(button02);
+        buttons.push(button03);
+        buttons.push(button04);
+
+        coolBackButton = new FunkinBackButton(FlxG.width - 220, FlxG.height - 200, 0xFFFFFFFF, goBack, 1.0, true);
+        #if !mobile
+        coolBackButton.visible = PointlessPins.isMouseActive;
+        FlxMouseEvent.add(coolBackButton, coolBackButton.playHoldAnim, coolBackButton.playConfirmAnim);
+        #end
+        add(coolBackButton);
+
+        refresh();
+        changeSelection();
+        checkForOptionAvailability();
+
+        super.create();
+    }
+
+    var handleAccept:Bool = false;
     override public function update(elapsed:Float):Void
     {
         super.update(elapsed);
+
+        coolBackButton.visible = !allowedMovement ? false : #if mobile true; #else PointlessPins.isMouseActive; #end
+
+        if (allowedMovement)
+        {
+            if (controls.UI_UP_P)
+            {
+                changeSelection(-1);
+            }
+            if (controls.UI_DOWN_P)
+            {
+                changeSelection(1);
+            }
+
+            for (i in 0...buttons.length)
+            {
+                if (TouchUtil.pressAction(buttons[i].button, camera))
+                {
+                    if (selected == i) trace("Hi!");
+                    changeSelection(i - selected);
+
+                    trace(buttons[i].text.scale.y);
+                }
+            }
+        }
 
         if (controls.BACK_P)
         {
@@ -21,5 +89,54 @@ class ExchangeMenu extends MusicBeatSubState
     function goBack():Void
     {
         close();
+    }
+
+    function changeSelection(change:Int = 0)
+    {
+        buttons[selected].isSelected = false;
+        selected = PinUtil.wrapAround(selected + change, 0, buttons.length - 1);
+        buttons[selected].isSelected = true;
+    }
+
+    function checkForOptionAvailability():Void
+    {
+        buttons[1].isActive = false;
+        buttons[2].isActive = false;
+        buttons[3].isActive = false;
+
+        var legendaries:Array<String> = PointlessPins.getAllPinIDsOfRarity("Legendary");
+        for (pin in legendaries)
+        {
+            if (!PointlessPins.hasObtainedPin(pin))
+            {
+                buttons[1].isActive = true;
+            }
+        }
+
+        var mythics:Array<String> = PointlessPins.getAllPinIDsOfRarity("Mythic");
+        for (pin in mythics)
+        {
+            if (!PointlessPins.hasObtainedPin(pin))
+            {
+                buttons[2].isActive = true;
+            }
+        }
+
+        var divines:Array<String> = PointlessPins.getAllPinIDsOfRarity("Divine");
+        for (pin in divines)
+        {
+            if (!PointlessPins.hasObtainedPin(pin))
+            {
+                buttons[3].isActive = true;
+            }
+        }
+    }
+
+    override function destroy():Void
+    {
+        #if !mobile
+        FlxMouseEvent.remove(coolBackButton);
+        #end
+        super.destroy();
     }
 }

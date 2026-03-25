@@ -138,7 +138,7 @@ class PointlessPins extends Module
         PointlessPins.boxData.sort(orderByOrder);
     }
 
-    public static function getPinByID(pinID:String):Void
+    public static function getPinByID(pinID:String):PinData
     {
         for (rarity in ReflectUtil.getAnonymousFieldsOf(PointlessPins.pinData))
         {
@@ -152,6 +152,17 @@ class PointlessPins extends Module
             }
         }
         return null;
+    }
+
+    public static function getAllPinIDsOfRarity(rarity:String, includeSpecials:Bool = false):Array<String>
+    {
+        var pinIDs:Array<String> = [];
+        for (pin in ReflectUtil.getAnonymousField(PointlessPins.pinData, rarity).pins)
+        {
+            if (pin.special && !includeSpecials) continue;
+            pinIDs.push(pin.id);
+        }
+        return pinIDs;
     }
 
     public static function addFunkCoins(amount:Int, addToLifetime:Bool = true):Void
