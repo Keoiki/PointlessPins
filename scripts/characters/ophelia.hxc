@@ -1,4 +1,4 @@
-package pointlesspins.characters;
+package funkbucks.characters;
 
 import funkin.play.character.AnimateAtlasCharacter;
 

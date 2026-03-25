@@ -1,10 +1,10 @@
-package pointlesspins.objects;
+package funkbucks.objects;
 
 import flixel.math.FlxMath;
+import funkbucks.PointlessPins;
+import funkbucks.PinUtil;
 import funkin.graphics.FunkinSprite;
 import funkin.util.ReflectUtil;
-import pointlesspins.PointlessPins;
-import pointlesspins.PinUtil;
 
 /**
  * Changed from the previous iteration, boxes now roll their rewards themselves, instead of the Box Menu doing it.

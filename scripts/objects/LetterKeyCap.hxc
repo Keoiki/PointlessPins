@@ -1,4 +1,4 @@
-package pointlesspins.objects;
+package funkbucks.objects;
 
 import balphabet.BAlphabet;
 import funkin.graphics.FunkinSprite;

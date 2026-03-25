@@ -1,4 +1,4 @@
-package pointlesspins;
+package funkbucks;
 
 import Date;
 import balphabet.BAlphabet;
@@ -10,6 +10,8 @@ import flixel.tweens.FlxEase;
 import flixel.tweens.FlxTween;
 import flixel.util.FlxSort;
 import flixel.util.FlxTimer;
+import funkbucks.objects.KeyCap;
+import funkbucks.objects.PinSprite;
 import funkin.Highscore;
 import funkin.audio.FunkinSound;
 import funkin.data.song.SongRegistry;
@@ -25,8 +27,6 @@ import funkin.util.ReflectUtil;
 import funkin.util.SerializerUtil;
 import funkin.util.TouchUtil;
 import funkin.util.VersionUtil;
-import pointlesspins.objects.KeyCap;
-import pointlesspins.objects.PinSprite;
 using StringTools;
 
 typedef PinData = {

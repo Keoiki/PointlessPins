@@ -1,4 +1,4 @@
-package pointlesspins;
+package funkbucks;
 
 import Date;
 import balphabet.BAlphabet;
@@ -9,6 +9,8 @@ import flixel.math.FlxMath;
 import flixel.tweens.FlxEase;
 import flixel.tweens.FlxTween;
 import flixel.util.FlxTimer;
+import funkbucks.objects.KeyCap;
+import funkbucks.objects.PinDialogue;
 import funkin.audio.FunkinSound;
 import funkin.data.song.SongRegistry;
 import funkin.graphics.FunkinCamera;
@@ -18,8 +20,6 @@ import funkin.modding.ModStore;
 import funkin.ui.MusicBeatState;
 import funkin.ui.mainmenu.MainMenuState;
 import funkin.util.TouchUtil;
-import pointlesspins.objects.KeyCap;
-import pointlesspins.objects.PinDialogue;
 using StringTools;
 
 class Shop extends MusicBeatState

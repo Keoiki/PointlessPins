@@ -1,4 +1,4 @@
-package pointlesspins;
+package funkbucks;
 
 import balphabet.BAlphabet;
 import flixel.FlxObject;
@@ -9,6 +9,7 @@ import flixel.math.FlxRect;
 import flixel.tweens.FlxEase;
 import flixel.tweens.FlxTween;
 import flixel.util.FlxSort;
+import funkbucks.objects.PinSprite;
 import funkin.audio.FunkinSound;
 import funkin.graphics.FunkinCamera;
 import funkin.graphics.FunkinSprite;
@@ -18,7 +19,6 @@ import funkin.util.MathUtil;
 import funkin.util.ReflectUtil;
 import funkin.util.SwipeUtil;
 import funkin.util.TouchUtil;
-import pointlesspins.objects.PinSprite;
 
 class PinBoard extends MusicBeatSubState
 {   

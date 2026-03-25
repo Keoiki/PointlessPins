@@ -1,4 +1,4 @@
-package pointlesspins;
+package funkbucks;
 
 import funkin.modding.module.Module;
 import funkin.ui.options.OptionsState;

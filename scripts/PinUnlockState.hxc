@@ -1,15 +1,15 @@
-package pointlesspins;
+package funkbucks;
 
 import balphabet.BAlphabet;
 import flixel.tweens.FlxEase;
 import flixel.tweens.FlxTween;
 import flixel.util.FlxTimer;
+import funkbucks.objects.PinSprite;
 import funkin.audio.FunkinSound;
 import funkin.graphics.FunkinSprite;
 import funkin.ui.MusicBeatSubState;
 import funkin.util.ReflectUtil;
 import funkin.util.TouchUtil;
-import pointlesspins.objects.PinSprite;
 
 class PinUnlockState extends MusicBeatSubState
 {
