@@ -1,8 +1,8 @@
-package pointlesspins;
+package funkbucks;
 
 import balphabet.BAlphabet;
+import funkbucks.objects.PinButton;
 import funkin.ui.MusicBeatSubState;
-import pointlesspins.objects.PinButton;
 
 class ExchangeMenu extends MusicBeatSubState
 {

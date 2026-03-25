@@ -1,4 +1,4 @@
-package pointlesspins.objects;
+package funkbucks.objects;
 
 import flixel.tweens.FlxTween;
 import funkin.graphics.FunkinSprite;

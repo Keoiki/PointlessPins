@@ -1,4 +1,4 @@
-package pointlesspins;
+package funkbucks;
 
 import balphabet.BAlphabet;
 import flixel.FlxObject;
@@ -7,6 +7,8 @@ import flixel.tweens.FlxEase;
 import flixel.tweens.FlxTween;
 import flixel.util.FlxSort;
 import flixel.util.FlxTimer;
+import funkbucks.objects.BoxSprite;
+import funkbucks.objects.PinSprite;
 import funkin.audio.FunkinSound;
 import funkin.graphics.FunkinSprite;
 import funkin.mobile.ui.FunkinBackButton;
@@ -14,8 +16,6 @@ import funkin.modding.base.ScriptedFlxSpriteGroup;
 import funkin.ui.MusicBeatSubState;
 import funkin.util.MathUtil;
 import funkin.util.TouchUtil;
-import pointlesspins.objects.BoxSprite;
-import pointlesspins.objects.PinSprite;
 using Lambda;
 
 class RewardsSubMenu extends MusicBeatSubState

@@ -1,4 +1,4 @@
-package pointlesspins;
+package funkbucks;
 
 import balphabet.BAlphabet;
 import flixel.FlxObject;
@@ -7,13 +7,13 @@ import flixel.math.FlxMath;
 import flixel.tweens.FlxEase;
 import flixel.tweens.FlxTween;
 import flixel.util.FlxTimer;
+import funkbucks.objects.BoxSprite;
 import funkin.audio.FunkinSound;
 import funkin.graphics.FunkinSprite;
 import funkin.mobile.ui.FunkinBackButton;
 import funkin.ui.MusicBeatSubState;
 import funkin.util.ReflectUtil;
 import funkin.util.TouchUtil;
-import pointlesspins.objects.BoxSprite;
 
 class BoxSubMenu extends MusicBeatSubState
 {

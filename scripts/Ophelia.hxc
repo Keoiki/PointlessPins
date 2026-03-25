@@ -1,4 +1,4 @@
-package pointlesspins;
+package funkbucks;
 
 import funkin.graphics.FunkinSprite;
 using StringTools;
