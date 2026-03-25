@@ -61,6 +61,8 @@ class PointlessPins extends Module
     static final penaltyColors:Array<String> = ["FFFFFF", "FFAAAA", "FF5555", "FF0000", "AA0000", "550000"];
     static final opheliaAngerCooldown:Int = 1000 * 60 * 60 * 4;
     static final maximumBlueJewels:Int = 20;
+    static final maxBlueJewelPity:Int = 100;
+    static final blueJewelsToBucks:Int = 500;
     static final dailySongCount:Int = 5;
 
     static var save;
@@ -180,20 +182,20 @@ class PointlessPins extends Module
         return PointlessPins.save.funkBucksLifetime ?? 0;
     }
 
-    public static function addBlueJewels(amount:Int = 1, addToLifetime:Bool = true):Bool
+    public static function addBlueJewels(amount:Int = 1, addToLifetime:Bool = true):Int
     {
-        if (PointlessPins.getBlueJewels() >= PointlessPins.maximumBlueJewels)
-        {
-            trace("You have reached the maximum amount of blue jewels!");
-            return false;
-        }
-        PointlessPins.save.blueJewels = PointlessPins.getBlueJewels() + amount;
+        var conversionToBucks:Int = 0;
         if (addToLifetime)
         {
             PointlessPins.save.blueJewelsLifetime = PointlessPins.getBlueJewelsLifeTime() + amount;
         }
+        if (PointlessPins.getBlueJewels() + amount > PointlessPins.maximumBlueJewels)
+        {
+            conversionToBucks = (PointlessPins.getBlueJewels() + amount - PointlessPins.maximumBlueJewels) * PointlessPins.blueJewelsToBucks;
+        }
+        PointlessPins.save.blueJewels = FlxMath.bound(PointlessPins.getBlueJewels() + amount, 0, PointlessPins.maximumBlueJewels);
         PointlessPins.saveTheData();
-        return true;
+        return conversionToBucks;
     }
 
     public static function getBlueJewels():Int
@@ -208,7 +210,7 @@ class PointlessPins extends Module
 
     public static function addBlueJewelPity(amount:Int = 1):Void
     {
-        PointlessPins.save.blueJewelPity = FlxMath.bound(PointlessPins.getBlueJewelPity() + amount, 0, 100);
+        PointlessPins.save.blueJewelPity = FlxMath.bound(PointlessPins.getBlueJewelPity() + amount, 0, PointlessPins.maxBlueJewelPity);
         PointlessPins.saveTheData();
     }
 
@@ -500,6 +502,11 @@ class PointlessPins extends Module
             {
                 trace(getPrevSongs());
             }
+
+            // if (FlxG.keys.pressed.CONTROL && FlxG.keys.pressed.SHIFT && FlxG.keys.justPressed.K)
+            // {
+                // ZIPUtil.zipModFiles(FlxG.keys.pressed.M);
+            // }
         }
     }
 
@@ -618,10 +625,12 @@ class PointlessPins extends Module
             }
             
             bucksToAward = Math.ceil(bucksToAward);
+            var excessFunkBucks:Int = PointlessPins.addBlueJewels(awardedJewels);
+            bucksToAward += excessFunkBucks;
+            awardedJewels -= excessFunkBucks / PointlessPins.blueJewelsToBucks;
             PointlessPins.addFunkCoins(bucksToAward);
-            PointlessPins.addBlueJewels(awardedJewels);
 
-            trace(currentSongOrWeek, bucksToAward, awardedJewels, previousSongs);
+            trace(currentSongOrWeek, bucksToAward, awardedJewels, excessFunkBucks, previousSongs);
             trace(awardNormalCompletionJewel, PointlessPins.getBlueJewelPity(), Math.pow(PointlessPins.getBlueJewelPity(), 2) / 1000);
 
             var funkBucksText = new BAlphabet(40, 50, '<b><c=$resultTextColor>${bucksToAward > 0 ? "+" : ""}$bucksToAward</c></b> ${PTIcon.Buck}');
