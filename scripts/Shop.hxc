@@ -813,6 +813,18 @@ class Shop extends MusicBeatState
         PointlessPins.addFunkCoins(amount, false);
     }
 
+    public function deductBlueJewel(amount:Int):Void
+    {
+        var currentJewels:Int = PointlessPins.getBlueJewels();
+        var remainingJewels:Int = currentJewels - amount;
+
+        blueJewelsText.text = '<b><c=82E9FF>$remainingJewels<s=0.5>/${PointlessPins.maximumBlueJewels}</s></c></b> ${PTIcon.Jewel}';
+        blueJewelsText.y += 20;
+        FunkinSound.playOnce(Paths.sound("bluejewel"));
+
+        PointlessPins.addBlueJewels(-amount, false);
+    }
+
     public function addBlueJewel(amount:Int):Void
     {
         var currentJewels:Int = PointlessPins.getBlueJewels() + amount;
@@ -845,7 +857,16 @@ class Shop extends MusicBeatState
         funkBucksText.forEach((letter) -> {
             FlxTween.color(letter, 0.5, 0xFFFF0000, 0xFFFFFFFF);
         });
-        FunkinSound.playOnce(Paths.sound("CS_locked"));
+        FunkinSound.playOnce(Paths.sound("CS_locked"), 0.5);
+    }
+
+    function insufficientBlueJewels():Void
+    {
+        blueJewelsText.y += 20;
+        blueJewelsText.forEach((letter) -> {
+            FlxTween.color(letter, 0.5, 0xFFFF0000, letter.curLetter.colored ? 0xFFFFFFFF : 0xFF82E9FF);
+        });
+        FunkinSound.playOnce(Paths.sound("CS_locked"), 0.5);
     }
 
     function formatDailySongs():String

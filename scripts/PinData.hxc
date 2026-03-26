@@ -62,7 +62,7 @@ class PointlessPins extends Module
     static final opheliaAngerCooldown:Int = 1000 * 60 * 60 * 4;
     static final maximumBlueJewels:Int = 20;
     static final maxBlueJewelPity:Int = 100;
-    static final blueJewelsToBucks:Int = 500;
+    static final bucksForBlueJewel:Int = 500;
     static final dailySongCount:Int = 5;
 
     static var save;
@@ -202,7 +202,7 @@ class PointlessPins extends Module
         }
         if (PointlessPins.getBlueJewels() + amount > PointlessPins.maximumBlueJewels)
         {
-            conversionToBucks = (PointlessPins.getBlueJewels() + amount - PointlessPins.maximumBlueJewels) * PointlessPins.blueJewelsToBucks;
+            conversionToBucks = (PointlessPins.getBlueJewels() + amount - PointlessPins.maximumBlueJewels) * PointlessPins.bucksForBlueJewel;
         }
         PointlessPins.save.blueJewels = FlxMath.bound(PointlessPins.getBlueJewels() + amount, 0, PointlessPins.maximumBlueJewels);
         PointlessPins.saveTheData();
@@ -638,7 +638,7 @@ class PointlessPins extends Module
             bucksToAward = Math.ceil(bucksToAward);
             var excessFunkBucks:Int = PointlessPins.addBlueJewels(awardedJewels);
             bucksToAward += excessFunkBucks;
-            awardedJewels -= excessFunkBucks / PointlessPins.blueJewelsToBucks;
+            awardedJewels -= excessFunkBucks / PointlessPins.bucksForBlueJewel;
             PointlessPins.addFunkCoins(bucksToAward);
 
             trace(currentSongOrWeek, bucksToAward, awardedJewels, excessFunkBucks, previousSongs);
