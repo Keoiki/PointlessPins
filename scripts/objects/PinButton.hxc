@@ -2,8 +2,8 @@ package funkbucks.objects;
 
 import balphabet.BAlphabet;
 import flixel.addons.display.FlxSliceSprite;
-import funkin.group.FunkinGroup;
 import flixel.math.FlxRect;
+import funkin.group.FunkinGroup;
 
 class PinButton extends FunkinGroup
 {
