@@ -3,3 +3,5 @@ fla/
 fla-public/RECOVER_*
 scripts/old/
 shaders/
+shared/images/
+ZIPUtil.hxc

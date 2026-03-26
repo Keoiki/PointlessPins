@@ -89,13 +89,13 @@ class PointlessPins extends Module
         var onlineVersion:String = "0.0.0";
         try
         {
-            modVersion = PolymodHandler.modFileSystem.getMetadata("PointlessPins").modVersion.version.join(".");
+            modVersion = PolymodHandler.modFileSystem.getMetadataById("keoiki.funkbucks", "script_runtime").modVersion.version.join(".");
         }
         catch (err:Dynamic)
         {
             trace(err);
             ModStore.register("pinsIsOutdated", false);
-            throw "Local mod version could not be found!\nDid you change the folder name to something other than \"PointlessPins\"?";
+            throw "Local mod version could not be found!\nWhy did you change the mod ID in the meta file?";
             return;
         }
         var request:URLRequest = new URLRequest("https://raw.githubusercontent.com/Keoiki/PointlessPins/main/version.txt");
@@ -240,6 +240,7 @@ class PointlessPins extends Module
 
     public static function addOpheliaAnger(anger:Int, addToTotal:Bool = true):Void
     {
+        if (PointlessPins.save.opheliaAnger == null) PointlessPins.save.opheliaAnger = 0;
         PointlessPins.save.opheliaAnger += anger;
         if (addToTotal)
         {
@@ -532,7 +533,11 @@ class LetterKeyCap extends ScriptedFlxSpriteGroup
         letter.zIndex = this.zIndex + 1;
         this.add(letter);
 
-        if (isUI) this.scrollFactor.set(0, 0);
+        if (isUI)
+        {
+            keycap.scrollFactor.set();
+            letter.setScrollFactor();
+        }
 
         if (FlxG.onMobile) this.visible = false;
     }

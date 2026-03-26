@@ -64,9 +64,9 @@ class Shop extends MusicBeatState
     var lableRewards:BAlphabet;
     var keycapRewards:LetterKeyCap;
 
-    var iconHelp:FunkinSprite;
-    var lableHelp:BAlphabet;
-    var keycapHelp:LetterKeyCap;
+    var iconExchange:FunkinSprite;
+    var lableExchange:BAlphabet;
+    var keycapExchange:LetterKeyCap;
 
     // UI
     var funkBucksText:BAlphabet;
@@ -119,7 +119,7 @@ class Shop extends MusicBeatState
         dailiesText.alignment = "center";
         dailiesText.setScale(0.5);
         dailiesText.zIndex = -996;
-        dailiesText.scrollFactor.set(0.85, 0.85);
+        dailiesText.setScrollFactor(0.85, 0.85);
         add(dailiesText);
 
         lighting = new FunkinSprite(wall.x, wall.y).loadTexture("shop/lighting");
@@ -204,36 +204,34 @@ class Shop extends MusicBeatState
         keycapBoxes.zIndex = 514;
         add(keycapBoxes);
 
-        lableHelp = new BAlphabet(1200 - spriteNudge, 520, "<b>Help\n<s=0.5>(Not yet, sorry!)</s></b>");
-        lableHelp.alignment = "center";
-        lableHelp.setScale(0.65);
-        lableHelp.zIndex = 516;
-        add(lableHelp);
-        lableHelp.color = 0xFF404040;
+        lableExchange = new BAlphabet(1200 - spriteNudge, 520, "<b><c=404040>Exchange\n<s=0.5>(Coming Soon)</s></c></b>");
+        lableExchange.alignment = "center";
+        lableExchange.setScale(0.65);
+        lableExchange.zIndex = 516;
+        add(lableExchange);
 
-        // keycapHelp = new LetterKeyCap(lableHelp.x - 45, 570, "3", false);
-        // keycapHelp.zIndex = 518;
-        // add(keycapHelp);
+        // keycapExchange = new LetterKeyCap(lableExchange.x - 45, 570, "3", false);
+        // keycapExchange.zIndex = 518;
+        // add(keycapExchange);
 
-        lableRewards = new BAlphabet(1700 - spriteNudge, 520, "<b>Rewards\n<s=0.5>(Not yet.)</s></b>");
+        lableRewards = new BAlphabet(1700 - spriteNudge, 520, "<b><c=404040>Rewards\n<s=0.5>(Coming Soon)</s></c></b>");
         lableRewards.alignment = "center";
         lableRewards.setScale(0.65);
         lableRewards.zIndex = 514;
         add(lableRewards);
-        lableRewards.color = 0xFF404040;
 
         counterItems.push(iconPins);
         counterItems.push(iconBoxes);
         // counterItems.push(iconRewards);
-        // counterItems.push(iconHelp);
+        // counterItems.push(iconExchange);
         counterItems.push(lablePins);
         counterItems.push(lableBoxes);
         counterItems.push(lableRewards);
-        counterItems.push(lableHelp);
+        counterItems.push(lableExchange);
         counterItems.push(keycapPins);
         counterItems.push(keycapBoxes);
         // counterItems.push(keycapRewards);
-        // counterItems.push(keycapHelp);
+        // counterItems.push(keycapExchange);
 
         // UI
 
@@ -409,9 +407,9 @@ class Shop extends MusicBeatState
             }});
         }
 
-        // Help
+        // Exchange
 
-        // if (FlxG.keys.justPressed.THREE || (TouchUtil.pressAction(lableHelp) && !isMouseTooFast && !TouchUtil.overlaps(coolBackButton, cameraHUD)))
+        // if (FlxG.keys.justPressed.THREE || (TouchUtil.pressAction(lableExchange) && !isMouseTooFast && !TouchUtil.overlaps(coolBackButton, cameraHUD)))
         // {
             // disallowInputs = true;
             // STATE = "HELP";
@@ -805,7 +803,9 @@ class Shop extends MusicBeatState
     function insufficientFunkBucks():Void
     {
         funkBucksText.y += 20;
-        FlxTween.color(funkBucksText, 0.5, 0xFFFF0000, 0xFFFFFFFF);
+        funkBucksText.forEach((letter) -> {
+            FlxTween.color(letter, 0.5, 0xFFFF0000, 0xFFFFFFFF);
+        });
         FunkinSound.playOnce(Paths.sound("CS_locked"));
     }
 
