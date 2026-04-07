@@ -53,7 +53,7 @@ class PinSprite extends FunkinSprite
      * @param _description The Pin's description (optional)
      * @param _scale The Pin's scale in the menu (optional, default: 0.5)
      */
-    public function setupPin(_id:String, _name:String, _description:String, _scale:Float = 0.5, loadImmediately:Bool = false)
+    public function setupPin(_id:String, _name:String, _description:String, _scale:Float = 0.5, alphaDest:Float = 1, loadImmediately:Bool = false)
     {
         pID = _id;
         name = _name;
@@ -88,6 +88,7 @@ class PinSprite extends FunkinSprite
             updateHitbox();
             x -= width / 2;
             y -= height / 2;
+            alpha = alphaDest;
         }
         else
         {
@@ -107,7 +108,7 @@ class PinSprite extends FunkinSprite
                 if (fadeTween != null)
                 {
                     fadeTween.cancel();
-                    FlxTween.tween(super, { alpha: 1 }, 0.25);
+                    FlxTween.tween(super, { alpha: alphaDest }, 0.25);
                 }
             });
         }

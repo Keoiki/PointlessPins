@@ -123,8 +123,8 @@ class ExchangeMenu extends MusicBeatSubState
 
             if (confirmedItem != -1)
             {
-                // var tooPoor:Bool = PointlessPins.getBlueJewels() < jewelCosts[confirmedItem];
-                var tooPoor:Bool = false;
+                var tooPoor:Bool = PointlessPins.getBlueJewels() < jewelCosts[confirmedItem];
+                // var tooPoor:Bool = false;
                 if (!buttons[confirmedItem].isActive)
                 {
                     FunkinSound.playOnce(Paths.sound("CS_locked"), 0.5);

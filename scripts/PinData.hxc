@@ -2,6 +2,7 @@ package funkbucks;
 
 import Date;
 import balphabet.BAlphabet;
+import balphabet.BAlphabetTyped;
 import haxe.ds.StringMap;
 import openfl.net.URLLoader;
 import openfl.net.URLRequest;
@@ -534,8 +535,7 @@ class PointlessPins extends Module
         {
             menuPin = new PinSprite(100, 100);
             menuPin.isUnlocked = true;
-            menuPin.setupPin("funkbuck", "", "", 0.5);
-            menuPin.alpha = 1;
+            menuPin.setupPin("funkbuck", "", "", 0.5, 1, true);
             menuPin.scrollFactor.set(0, 0);
             event.targetState.add(menuPin);
 
@@ -543,6 +543,12 @@ class PointlessPins extends Module
             var keycap01 = new KeyCap(115, 115, "P");
             event.targetState.add(keycap01);
             #end
+
+            // var test:BAlphabetTyped = new BAlphabetTyped(0, 400, "Test <b>of</b> some<d=1.0/> events.");
+            // test.scale.set(0.75, 0.75);
+            // test.setScrollFactor(0, 0);
+            // event.targetState.add(test);
+            // test.start();
         }
 
         super.onStateChangeEnd(event);

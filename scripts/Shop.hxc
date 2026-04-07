@@ -633,7 +633,7 @@ class Shop extends MusicBeatState
      */
     function checkIfAnnoyedOphelia():Void
     {
-        if (isOpheliaGone)
+        if (isOpheliaGone || !ophelia.canAnnoy)
         {
             return;
         }
@@ -668,19 +668,25 @@ class Shop extends MusicBeatState
                 dialog = new PinDialogue("angerWarning");
                 add(dialog);
                 dialog.cameras = [cameraHUD];
+                ophelia.canAnnoy = false;
 
                 dialog.dialogueText.letterCallback = () ->
                 {
                     FunkinSound.playOnce(Paths.sound("chartingSounds/keyboard" + FlxG.random.int(1, 3)), 1.0);
                     ophelia.playAnimation('Talk', false, false);
                 }
+
+                dialog.onCompleteDialogue.add(() ->
+                {
+                    ophelia.canAnnoy = true;
+                });
             }
 
             if (ophelia.annoyance % 100 == 0)
             {
                 if (PointlessPins.getOpheliaAnger() == 0)
                 {
-                    PointlessPins.save.opheliaAngerTime = Date.now().getTime();
+                    // PointlessPins.save.opheliaAngerTime = Date.now().getTime();
                 }
                 disallowInputs = true;
                 if (PointlessPins.getOpheliaAngerTotal() > 0)
@@ -702,7 +708,7 @@ class Shop extends MusicBeatState
                 {
                     opheliaAngerDialogue("Initial");
                 }
-                PointlessPins.addOpheliaAnger(1);
+                // PointlessPins.addOpheliaAnger(1);
                 trace("FUCK YOU!!!!");
                 return;
             }

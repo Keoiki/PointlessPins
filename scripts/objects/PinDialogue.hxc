@@ -38,6 +38,7 @@ class PinDialogue extends FunkinGroup
     
     public var onNextLine:FlxSignal2 = new FlxSignal2();
     public var onSkipLine:FlxSignal1 = new FlxSignal1();
+    public var onTextEvent:FlxSignal1 = new FlxSignal1();
     public var onCompleteLine:FlxSignal1 = new FlxSignal1();
     public var onCompleteDialogue:FlxSignal = new FlxSignal();
 
@@ -64,6 +65,12 @@ class PinDialogue extends FunkinGroup
             onCompleteLine.dispatch(dialogueIndex);
         }
 
+        dialogueText.eventCallback = (event) ->
+        {
+            // trace('Dispatching event $event');
+            onTextEvent.dispatch(event);
+        }
+
         speakerBox = new FunkinSprite(0, 0);
         speakerBox.localX = 24;
         speakerBox.localY = -16;
@@ -71,7 +78,7 @@ class PinDialogue extends FunkinGroup
         speakerBox.origin.x = 0;
         this.add(speakerBox);
 
-        speakerName = new BAlphabet(0, 0, "John Doe");
+        speakerName = new BAlphabet(0, 0, "");
         speakerName.localX = 40;
         speakerName.localY = -8;
         speakerName.localScale.set(0.4, 0.4);
@@ -133,6 +140,18 @@ class PinDialogue extends FunkinGroup
         dialogueLine.delayNextLine ??= false;
         dialogueLine.boxY ??= 32;
 
+        if (dialogueLine.speaker != null)
+        {
+            speakerName.text = dialogueLine.speaker;
+            speakerBox.localVisible = true;
+            speakerBox.localScale.x = speakerName.width * speakerName.localScale.x / 2 + 16;
+        }
+        else
+        {
+            speakerBox.localVisible = false;
+            speakerName.localVisible = false;
+        }
+
         dialogueText.text = dialogueLine.text;
         dialogueText.speed = dialogueLine.speed;
         dialogueText.letterStep = dialogueLine.letterStep;
@@ -147,18 +166,6 @@ class PinDialogue extends FunkinGroup
         if (dialogueLine.instantComplete)
         {
             dialogueText.finish();
-        }
-
-        if (dialogueLine.speaker != null)
-        {
-            speakerName.text = dialogueLine.speaker;
-            speakerBox.localVisible = true;
-            speakerBox.localScale.x = speakerName.width * speakerName.localScale.x / 2 + 16;
-        }
-        else
-        {
-            speakerBox.localVisible = false;
-            speakerName.localVisible = false;
         }
 
         onNextLine.dispatch(dialogueIndex, dialogueText);
