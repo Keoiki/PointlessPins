@@ -6,6 +6,7 @@ using StringTools;
 class Ophelia extends FunkinSprite
 {
     var annoyance:Int = 0;
+    var canAnnoy:Bool = true;
     var animationsWithVariations:Array<String> = ["Idle", "Talk"];
     var suffix:String = "";
     static var caught:Bool = false;

@@ -32,7 +32,12 @@
             { "id": "haxe", "name": "Haxe", "description": "The backbone of this game." },
             { "id": "salty-ssn", "name": "Salty", "description": "\"You're bad.\"", "source": "#MOD# Salty's Sunday Night" },
             { "id": "itsumi-ssn", "name": "Itsumi", "description": "Best Girl.\n<s=0.5><a=0.5>Argue with the song name, not me.</a></s>", "source": "#MOD# Salty's Sunday Night" },
-            { "id": "connor-ssn", "name": "Connor", "description": "Indictment.", "source": "#MOD# Salty's Sunday Night" }
+            { "id": "connor-ssn", "name": "Connor", "description": "Indictment.", "source": "#MOD# Salty's Sunday Night" },
+            { "id": "boyfriend-amongus-week1", "name": "Boyfriend (Polus)", "source": "#MOD# VS. Impostor" },
+            { "id": "girlfriend-amongus-week1", "name": "Girlfriend (Polus)", "source": "#MOD# VS. Impostor" },
+            { "id": "red-amongus-week1", "name": "Red", "description": "Way to draw attention to yourself, huh?", "source": "#MOD# VS. Impostor" },
+            { "id": "henry-stickmin", "name": "Henry Stickmin", "description": "Just trying to get some cash.", "source": "#GAME# The Henry Stickmin Collection" },
+            { "id": "ellie-rose", "name": "Ellie Rose", "description": "Just trying to get some cash.", "source": "#GAME# The Henry Stickmin Collection" }
         ]
     },
     "Uncommon": {
@@ -59,7 +64,10 @@
             { "id": "gooey", "name": "Gooey", "source": "#MOD# Gooey Mix" },
             { "id": "flora", "name": "Flora", "source": "#MOD# Gooey Mix" },
             { "id": "opheebop-blob-ssn", "name": "Opheebop", "description": "The caretaker.", "source": "#MOD# Salty's Sunday Night" },
-            { "id": "glitch-ssn", "name": "Glitch", "description": "Buckets.", "source": "#MOD# Salty's Sunday Night" }
+            { "id": "glitch-ssn", "name": "Glitch", "description": "Buckets.", "source": "#MOD# Salty's Sunday Night" },
+            { "id": "boyfriend-amongus-week2", "name": "Boyfriend (Mira HQ)", "source": "#MOD# VS. Impostor" },
+            { "id": "girlfriend-amongus-week2", "name": "Girlfriend (Mira HQ)", "source": "#MOD# VS. Impostor" },
+            { "id": "green-amongus-week2", "name": "Green", "source": "#MOD# VS. Impostor" }
         ]
     },
     "Rare": {
@@ -77,7 +85,8 @@
             { "id": "qt", "name": "QT", "source": "#MOD# QT: Rewired" },
             { "id": "sky-redux", "name": "Sky (Redux)", "source": "#MOD# Heartbreak Havoc" },
             { "id": "sky", "name": "Sky", "description": "No no, wrong type of sky!" },
-            { "id": "opheebop-ssn", "name": "Opheebop", "description": "Freedom!", "source": "#MOD# Salty's Sunday Night" }
+            { "id": "opheebop-ssn", "name": "Opheebop", "description": "Freedom!", "source": "#MOD# Salty's Sunday Night" },
+            { "id": "powers-amongus", "name": "Powers", "description": "Cue the sax solo!", "source": "#MOD# VS. Impostor" }
         ]
     },
     "Epic": {
@@ -88,7 +97,9 @@
             { "id": "pessy", "name": "Pessy", "source": "#MOD# Psych Engine" },
             { "id": "kb", "name": "KB", "source": "#MOD# QT: Rewired" },
             { "id": "polymod", "name": "Polymod", "description": "Polymore!" },
-            { "id": "rank-perfect", "name": "Perfect Rank", "description": "Now go for the golden one!", "special": true, "lockedText": "Complete any song with a certain rank." }
+            { "id": "rank-perfect", "name": "Perfect Rank", "description": "Now go for the golden one!", "special": true, "lockedText": "Complete any song with a certain rank." },
+            { "id": "detective-amongus", "name": "Detective", "description": "Trying to figure out who the Impostor is...", "source": "#MOD# VS. Impostor" },
+            { "id": "blake-amongus", "name": "Blake Imposter", "description": "The Imposter is just his surname.", "source": "#MOD# VS. Impostor" }
         ]
     },
     "Legendary": {
