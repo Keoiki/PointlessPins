@@ -12,8 +12,10 @@ import flixel.tweens.FlxTween;
 import flixel.util.FlxTimer;
 import funkbucks.objects.KeyCap;
 import funkbucks.objects.PinDialogue;
+import funkbucks.objects.shop.Clock;
+import funkbucks.objects.shop.DailyBoard;
+import funkbucks.objects.shop.RewardShelf;
 import funkin.audio.FunkinSound;
-import funkin.data.song.SongRegistry;
 import funkin.graphics.FunkinCamera;
 import funkin.graphics.FunkinSprite;
 import funkin.mobile.ui.FunkinBackButton;
@@ -44,11 +46,13 @@ class Shop extends MusicBeatState
     // Shop
     var opheliaHitbox:FlxObject;
     var ophelia:Ophelia;
+
     var wall:FunkinSprite;
     var lighting:FunkinSprite;
-    var dailyBoard:FunkinSprite;
-    var counter:FunkinSprite;
-    var rewardShelf:FunkinSprite;
+
+    var clock:Clock;
+    var dailyBoard:DailyBoard;
+    var rewardShelf:RewardShelf;
 
     var television:FunkinSprite;
     var dailiesText:BAlphabet;
@@ -136,21 +140,12 @@ class Shop extends MusicBeatState
         wall.scrollFactor.set(0.85, 0.85);
         add(wall);
 
-        dailyBoard = new FunkinSprite(615 - spriteNudge, 0).loadTexture("shop/dailyboard");
+        dailyBoard = new DailyBoard(615 - spriteNudge, 0);
         dailyBoard.zIndex = -998;
-        dailyBoard.scrollFactor.set(0.85, 0.85);
         add(dailyBoard);
 
-        dailiesText = new BAlphabet(dailyBoard.x + dailyBoard.width / 2, dailyBoard.y + 115, formatDailySongs());
-        dailiesText.alignment = "center";
-        dailiesText.scale.set(0.525, 0.525);
-        dailiesText.zIndex = -996;
-        dailiesText.setScrollFactor(0.85, 0.85);
-        add(dailiesText);
-
-        rewardShelf = new FunkinSprite(1350 - spriteNudge, -35).loadTexture("shop/rewardsshelf");
+        rewardShelf = new RewardShelf(1350 - spriteNudge, -35);
         rewardShelf.zIndex = -995;
-        rewardShelf.scrollFactor.set(0.85, 0.85);
         add(rewardShelf);
 
         lighting = new FunkinSprite(-800, -440).makeSolidColor(3000, 1600, 0xFF3C1B41);
@@ -507,6 +502,7 @@ class Shop extends MusicBeatState
             disallowInputs = true;
             cameraFollowPoint.setPosition(1705, 240);
             showMenuItems(false);
+            rewardShelf.toggleItems();
 
             var substate = new RewardsSubMenu();
             substate.closeCallback = function()
@@ -516,6 +512,7 @@ class Shop extends MusicBeatState
                 // FlxTween.tween(counter, { alpha: 1 }, 1, { ease: FlxEase.cubeIn });
                 FlxTween.tween(camera, { zoom: 1 }, 1, { ease: FlxEase.cubeOut });
                 showMenuItems();
+                rewardShelf.toggleItems(true);
             }
             substate.cameras = [cameraSubState];
 
@@ -918,56 +915,6 @@ class Shop extends MusicBeatState
             FlxTween.color(letter, 0.5, 0xFFFF0000, letter.curLetter.colored ? 0xFFFFFFFF : 0xFF82E9FF);
         });
         FunkinSound.playOnce(Paths.sound("CS_locked"), 0.5);
-    }
-
-    function formatDailySongs():String
-    {
-        var dailies:Array<String> = PointlessPins.getDailies();
-        // return "<b><c=00FF00>Dailies</c>\nPhilly Nic. &#xE003;\nSatin Pant. &#xE001;\nWinter Hor.</b>";
-        if (dailies.length > 0)
-        {
-            var dailiesList:String = "";
-            for (i in 0...PointlessPins.dailySongCount)
-            {
-                if (i >= dailies.length)
-                {
-                    dailiesList += "---";
-                    if (i < PointlessPins.dailySongCount - 1) dailiesList += "\n";
-                    continue;
-                }
-                var dailySongID:String = dailies[i].substring(0, dailies[i].lastIndexOf("-"));
-                var dailySongVariation:String = dailies[i].substring(dailies[i].lastIndexOf("-") + 1, dailies[i].length);
-                var dailySong:Array<SongMetadata> = SongRegistry.instance.fetchEntry(dailySongID);
-                var songNameToAdd:String = dailySong.songName.length > 11 ? dailySong.songName.substr(0, 11).trim() + "." : dailySong.songName;
-                var variationToAdd:String = " ";
-                switch (dailySongVariation)
-                {
-                    case "default": variationToAdd = ""; // Nothing gets added to default variation names.
-                    case "erect": variationToAdd += PTIcon.Erect;
-                    case "bf": variationToAdd += PTIcon.Boyfriend;
-                    case "pico": variationToAdd += PTIcon.Pico;
-                    case "hundrec": variationToAdd += PTIcon.Hundrec;
-                    case "gooey": variationToAdd += PTIcon.Gooey;
-                    case "remnants": variationToAdd += ["darnell", "lit-up", "2hot", "blazin"].contains(dailySongID) ? PTIcon.RemnantPico : PTIcon.RemnantBF;
-                    case "bfremnants": variationToAdd += PTIcon.RemnantBF;
-                    case "reimu": variationToAdd += PTIcon.Reimu;
-                    case "qt": variationToAdd += PTIcon.QT;
-                    case "spookymod": variationToAdd += PTIcon.SpookyKids;
-                    default:
-                    {
-                        variationToAdd += '&#xFFFD;';
-                        trace('Not a base variation, how\'d this get in here?? - ${dailySongVariation}');
-                    }
-                }
-                dailiesList += songNameToAdd + variationToAdd;
-                if (i < PointlessPins.dailySongCount - 1) dailiesList += "\n";
-            }
-            return '<b><c=00FF00>Dailies</c>\n${dailiesList}</b>';
-        }
-        else
-        {
-            return "<b><c=00FF00>Dailies</c>\n\nNone!\nCome back\ntomorrow!</b>";
-        }
     }
 
     override function onFocus():Void
