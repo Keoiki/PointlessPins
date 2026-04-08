@@ -18,11 +18,11 @@
             - A permanent discount when buying boxes.
         - Bonus FunkBucks
             - A permanent multiplier to how many FunkBucks you earn when completing songs and weeks.
-- Added 35 new pins:
-    - 4 Common
-    - 11 Uncommon
-    - 9 Rare
-    - 4 Epic
+- Added 49 new pins:
+    - 12 Common
+    - 16 Uncommon
+    - 10 Rare
+    - 6 Epic
     - 4 Legendary
     - 1 Special
 - Added support for the following modded variations as Dailies:
@@ -38,6 +38,7 @@
 
 ### Changed
 
+- The shop itself has gone under a major visual upgrade.
 - The box purchase confirmation is more clearly indicated.
 - The FunkBuck text in the Results now show up faster and follows the coloring scheme used for the Modifier lable.
 - Increased the cost of Cardboard Boxes from 10 to 20 FunkBucks.
@@ -45,10 +46,6 @@
 - Increased the cost of Small Giftboxes from 25 to 50 FunkBucks.
 - Added a 0.25% chance to get a Legendary pin from Small Giftboxes.
 - Rewrote how dialogue is handled, it isn't garbage code anymore.
-
-### Removed
-
-- Removed the Help option.
 
 ## [1.1.2] - 26/03/2026
 

@@ -6,6 +6,7 @@ import balphabet.BAlphabetTyped;
 import flixel.FlxObject;
 import flixel.input.mouse.FlxMouseEvent;
 import flixel.math.FlxMath;
+import flixel.math.FlxPoint;
 import flixel.tweens.FlxEase;
 import flixel.tweens.FlxTween;
 import flixel.util.FlxTimer;
@@ -47,6 +48,7 @@ class Shop extends MusicBeatState
     var lighting:FunkinSprite;
     var dailyBoard:FunkinSprite;
     var counter:FunkinSprite;
+    var rewardShelf:FunkinSprite;
 
     var television:FunkinSprite;
     var dailiesText:BAlphabet;
@@ -85,6 +87,8 @@ class Shop extends MusicBeatState
 
     override public function create():Void
     {
+        camera.bgColor = 0xFF616182;
+
         cameraHUD = new FunkinCamera("shopCamHUD");
 		FlxG.cameras.add(cameraHUD, false);
         cameraHUD.bgColor = 0x007F7F7F;
@@ -127,88 +131,86 @@ class Shop extends MusicBeatState
 
         // Shop
 
-        wall = new FunkinSprite(-700 - spriteNudge, -220).loadTexture("shop/wall");
+        wall = new FunkinSprite(-950 - spriteNudge, -400).loadTexture("shop/wall");
         wall.zIndex = -1000;
         wall.scrollFactor.set(0.85, 0.85);
         add(wall);
 
-        dailyBoard = new FunkinSprite(296 - spriteNudge, -164).loadTexture("shop/dailyboard");
+        dailyBoard = new FunkinSprite(615 - spriteNudge, 0).loadTexture("shop/dailyboard");
         dailyBoard.zIndex = -998;
         dailyBoard.scrollFactor.set(0.85, 0.85);
         add(dailyBoard);
 
-        dailiesText = new BAlphabet(477 - spriteNudge, 66, formatDailySongs());
+        dailiesText = new BAlphabet(dailyBoard.x + dailyBoard.width / 2, dailyBoard.y + 115, formatDailySongs());
         dailiesText.alignment = "center";
         dailiesText.scale.set(0.525, 0.525);
         dailiesText.zIndex = -996;
         dailiesText.setScrollFactor(0.85, 0.85);
         add(dailiesText);
 
-        var rewardsshelf:FunkinSprite = new FunkinSprite(1120 - spriteNudge, 35).loadTexture("shop/rewardsshelf");
-        rewardsshelf.zIndex = -995;
-        rewardsshelf.scrollFactor.set(0.85, 0.85);
-        add(rewardsshelf);
+        rewardShelf = new FunkinSprite(1350 - spriteNudge, -35).loadTexture("shop/rewardsshelf");
+        rewardShelf.zIndex = -995;
+        rewardShelf.scrollFactor.set(0.85, 0.85);
+        add(rewardShelf);
 
-        lighting = new FunkinSprite(wall.x, wall.y).loadTexture("shop/lighting");
-        lighting.zIndex = -900;
-        lighting.scrollFactor.set(0.85, 0.85);
+        lighting = new FunkinSprite(-800, -440).makeSolidColor(3000, 1600, 0xFF3C1B41);
+        lighting.zIndex = 5000;
+        lighting.scrollFactor.set(0, 0);
         lighting.blend = 9;
+        lighting.alpha = isOpheliaGone ? 0.85 : 0;
         add(lighting);
 
-        ophelia = new Ophelia(840 - spriteNudge, 150);
+        ophelia = new Ophelia(1170 - spriteNudge, 150);
         ophelia.zIndex = 400;
+        ophelia.scrollFactor.set(0.98, 1);
         add(ophelia);
 
         opheliaHitbox = new FlxObject(ophelia.x + 20, ophelia.y + 20, 280, 320);
+        ophelia.scrollFactor.set(0.98, 1);
         add(opheliaHitbox);
 
-        counter = new FunkinSprite(-450 - spriteNudge, 490).loadTexture("shop/counter");
+        counter = new FunkinSprite(-950 - spriteNudge, 490).loadTexture("shop/counter");
         counter.zIndex = 500;
-        counter.scrollFactor.set(0, 1);
+        counter.scrollFactor.set(1, 1);
         add(counter);
 
-        var fbStack01:FunkinSprite = new FunkinSprite(1100 - spriteNudge, 426).loadTexture("shop/funkbuckstack");
-        fbStack01.zIndex = 490;
-        add(fbStack01);
+        var fbStack10:FunkinSprite = new FunkinSprite(1120 - spriteNudge, 444).loadTexture("shop/rewards/funkbuck01");
+        fbStack10.zIndex = 490;
+        add(fbStack10);
 
-        var fbStack02:FunkinSprite = new FunkinSprite(2050 - spriteNudge, 426).loadTexture("shop/funkbuckstack");
-        fbStack02.zIndex = 491;
-        fbStack02.flipX = true;
-        add(fbStack02);
+        var fbStack11:FunkinSprite = new FunkinSprite(-100 - spriteNudge, 444).loadTexture("shop/rewards/funkbuck01");
+        fbStack11.zIndex = 490;
+        add(fbStack11);
 
-        var fbStack03:FunkinSprite = new FunkinSprite(-500 - spriteNudge, 426).loadTexture("shop/funkbuckstack");
-        fbStack03.zIndex = 492;
-        add(fbStack03);
+        var fbStack20:FunkinSprite = new FunkinSprite(2050 - spriteNudge, 424).loadTexture("shop/rewards/funkbuck02");
+        fbStack20.zIndex = 491;
+        add(fbStack20);
 
-        var randombox01:FunkinSprite = new FunkinSprite(1600 - spriteNudge, 680).loadTexture("shop/randombox01");
-        randombox01.zIndex = 1100;
-        randombox01.scrollFactor.set(1.1, 1.0);
-        add(randombox01);
+        var fbStack21:FunkinSprite = new FunkinSprite(1420 - spriteNudge, 424).loadTexture("shop/rewards/funkbuck02");
+        fbStack21.zIndex = 491;
+        add(fbStack21);
 
-        var randombox02:FunkinSprite = new FunkinSprite(-300 - spriteNudge, 720).loadTexture("shop/randombox01");
-        randombox02.zIndex = 1101;
-        randombox02.scrollFactor.set(1.1, 1.0);
-        randombox02.flipX = true;
-        add(randombox02);
+        var fbStack30:FunkinSprite = new FunkinSprite(-700 - spriteNudge, 384).loadTexture("shop/rewards/funkbuck03");
+        fbStack30.zIndex = 492;
+        add(fbStack30);
 
-        var randombox03:FunkinSprite = new FunkinSprite(2070 - spriteNudge, 330).loadTexture("shop/randombox01");
-        randombox03.zIndex = 489;
-        add(randombox03);
-
-        counterItems.push(fbStack01);
-        counterItems.push(fbStack02);
-        counterItems.push(fbStack03);
-        counterItems.push(randombox03);
+        counterItems.push(fbStack10);
+        counterItems.push(fbStack11);
+        counterItems.push(fbStack20);
+        counterItems.push(fbStack21);
+        counterItems.push(fbStack30);
 
         for (i in 0...3)
         {
-            var lamp:FunkinSprite = new FunkinSprite(40 + (i * 640) - spriteNudge, -330, "shop/lamp");
+            var lamp:FunkinSprite = new FunkinSprite(-400 + (i * 1020) - spriteNudge, -460, "shop/lamp");
             lamp.zIndex = 1000;
-            lamp.scrollFactor.set(1.1, 1.1);
+            lamp.scrollFactor.set(1.1, 1.0);
             add(lamp);
+            lamp.scale.set(0.8, 0.8);
+            lamp.anim.play(isOpheliaGone ? "off" : "on");
         }
 
-        iconPins = new FunkinSprite(-100 - spriteNudge, 330).loadTexture("shop/iconpins");
+        iconPins = new FunkinSprite(-400 - spriteNudge, 330).loadTexture("shop/iconpins");
         iconPins.zIndex = 490;
         add(iconPins);
 
@@ -218,7 +220,7 @@ class Shop extends MusicBeatState
         lablePins.zIndex = 510;
         add(lablePins);
 
-        iconBoxes = new FunkinSprite(440 - spriteNudge, 356).loadTexture("shop/iconboxes");
+        iconBoxes = new FunkinSprite(160 - spriteNudge, 356).loadTexture("shop/iconboxes");
         iconBoxes.zIndex = 491;
         add(iconBoxes);
 
@@ -229,7 +231,7 @@ class Shop extends MusicBeatState
         add(lableBoxes);
 
         // lableExchange = new BAlphabet(1200 - spriteNudge, 520, "<b>Exchange\n<s=-0.45>ABCDEFGHIJKLMNOPQRSTUVWXYZ\nabcdefghijklmnopqrstuvwxyz.,-=?!*^+</s></b>");
-        lableExchange = new BAlphabet(1200 - spriteNudge, 520, "<b>Exchange</b>");
+        lableExchange = new BAlphabet(1100 - spriteNudge, 520, "<b>Exchange</b>");
         lableExchange.scale.set(0.65, 0.65);
         lableExchange.alignment = "center";
         lableExchange.zIndex = 516;
@@ -247,7 +249,7 @@ class Shop extends MusicBeatState
         // box.zIndex = 520;
         // add(box);
 
-        lableRewards = new BAlphabet(1560 - spriteNudge, 520, "<b>Rewards</b>");
+        lableRewards = new BAlphabet(1850 - spriteNudge, 520, "<b>Rewards</b>");
         lableRewards.alignment = "center";
         lableRewards.scale.set(0.65, 0.65);
         lableRewards.zIndex = 514;
@@ -357,8 +359,8 @@ class Shop extends MusicBeatState
 
         persistentUpdate = true;
 
-        camera.minScrollX = wall.x;
-        camera.maxScrollX = wall.x + wall.width;
+        camera.minScrollX = wall.x - 100;
+        camera.maxScrollX = wall.x + wall.width + 100;
         camera.minScrollY = wall.y;
         camera.maxScrollY = counter.y + counter.height - 25;
 
@@ -503,7 +505,7 @@ class Shop extends MusicBeatState
             }
 
             disallowInputs = true;
-            cameraFollowPoint.setPosition(lableRewards.x - 10, 320);
+            cameraFollowPoint.setPosition(1705, 240);
             showMenuItems(false);
 
             var substate = new RewardsSubMenu();
@@ -511,14 +513,14 @@ class Shop extends MusicBeatState
             {
                 ophelia.playAnimation("Idle", true, true);
                 FlxTween.tween(coolBackButton, { alpha: 0.5 }, 1, { ease: FlxEase.cubeOut });
-                FlxTween.tween(counter, { alpha: 1 }, 1, { ease: FlxEase.cubeIn });
+                // FlxTween.tween(counter, { alpha: 1 }, 1, { ease: FlxEase.cubeIn });
                 FlxTween.tween(camera, { zoom: 1 }, 1, { ease: FlxEase.cubeOut });
                 showMenuItems();
             }
             substate.cameras = [cameraSubState];
 
             FlxTween.tween(coolBackButton, { alpha: 0 }, 1, { ease: FlxEase.cubeIn });
-            FlxTween.tween(counter, { alpha: 0 }, 1, { ease: FlxEase.cubeIn });
+            // FlxTween.tween(counter, { alpha: 0 }, 1, { ease: FlxEase.cubeIn });
             FlxTween.tween(camera, { zoom: 1.2 }, 1, { ease: FlxEase.cubeOut, onComplete: function()
             {
                 openSubState(substate);
@@ -532,6 +534,10 @@ class Shop extends MusicBeatState
         FlxG.switchState(() -> new MainMenuState());
     }
 
+    var touchPoint:Null<FlxPoint>;
+    var touchPoint2:Null<FlxPoint>;
+    var pinchDistance:Float = 0;
+    var previousZoom:Float = 1;
     function handleCameraMovement():Void
     {
         var moveSpeed:Float = 50;
@@ -541,28 +547,61 @@ class Shop extends MusicBeatState
 
         // No using FlxG.updateFramerate, as it seems to shorten down the dragging distance drastically when at higher framerates.
 
-        // Touch Dragging
         #if mobile
-        for (touch in FlxG.touches.list)
+        // Pinch Zooming
+        if (FlxG.touches.list.length >= 2)
         {
-            if (touch.pressed)
-            {
-                final deltaX = touch.deltaViewX;
-                if (Math.abs(deltaX) > 2)
-                {
-                    var dpiScale = FlxG.stage.window.display.dpi / 160;
-                    dpiScale = FlxMath.bound(dpiScale, 0.5, 1);
-                    var moveLength = (deltaX * moveSpeed * 1.5) / 60 / dpiScale;
-                    cameraFollowPoint.x -= moveLength;
-                }
+            var firstTouch = FlxG.touches.list[0];
+            var secondTouch = FlxG.touches.list[1];
 
-                final deltaY = touch.deltaViewY;
-                if (Math.abs(deltaY) > 2)
+            if (firstTouch == null || secondTouch == null) return;
+
+            if (firstTouch.pressed && secondTouch.pressed)
+            {
+                if (touchPoint == null || touchPoint2 == null) 
                 {
-                    var dpiScale = FlxG.stage.window.display.dpi / 160;
-                    dpiScale = FlxMath.bound(dpiScale, 0.5, 1);
-                    var moveLength = (deltaY * moveSpeed * 1.5) / 60 / dpiScale;
-                    cameraFollowPoint.y -= moveLength;
+                    touchPoint = new FlxPoint(firstTouch.gameX, firstTouch.gameY);
+                    touchPoint2 = new FlxPoint(secondTouch.gameX, secondTouch.gameY);
+                    pinchDistance = distance(touchPoint, touchPoint2);
+                    previousZoom = camera.zoom;
+                }
+                var currentPinchDistance = distance(FlxPoint.weak(firstTouch.gameX, firstTouch.gameY), FlxPoint.weak(secondTouch.gameX, secondTouch.gameY));
+                var pinchRatio:Float = pinchDistance / currentPinchDistance;
+                camera.zoom = previousZoom * pinchRatio;
+                camera.zoom = FlxMath.bound(camera.zoom, 0.7, 2);
+                // trace(pinchDistance, currentPinchDistance, pinchRatio);
+                return;
+            }
+            else
+            {
+                touchPoint = null;
+                touchPoint2 = null;
+                pinchDistance = 0;
+            }
+        }
+        else // Touch Dragging
+        {
+            for (touch in FlxG.touches.list)
+            {
+                if (touch.pressed)
+                {
+                    final deltaX = touch.deltaViewX;
+                    if (Math.abs(deltaX) > 2)
+                    {
+                        var dpiScale = FlxG.stage.window.display.dpi / 160;
+                        dpiScale = FlxMath.bound(dpiScale, 0.5, 1);
+                        var moveLength = (deltaX * moveSpeed * 1.5) / 60 / dpiScale;
+                        cameraFollowPoint.x -= moveLength;
+                    }
+
+                    final deltaY = touch.deltaViewY;
+                    if (Math.abs(deltaY) > 2)
+                    {
+                        var dpiScale = FlxG.stage.window.display.dpi / 160;
+                        dpiScale = FlxMath.bound(dpiScale, 0.5, 1);
+                        var moveLength = (deltaY * moveSpeed * 1.5) / 60 / dpiScale;
+                        cameraFollowPoint.y -= moveLength;
+                    }
                 }
             }
         }
@@ -589,10 +628,10 @@ class Shop extends MusicBeatState
             }
         }
 
-        // Mouse Scrolling (Only Horizontal)
+        // Mouse Scrolling - Zoom
         if (FlxG.mouse.wheel != 0)
         {
-            cameraFollowPoint.x -= FlxG.mouse.wheel * moveSpeed;
+            camera.zoom = FlxMath.bound(camera.zoom + 0.1 * FlxG.mouse.wheel, 0.7, 2);
         }
 
         // Let's not go Mach 3 while at 500 FPS, ok?
@@ -606,6 +645,12 @@ class Shop extends MusicBeatState
 
         cameraFollowPoint.x = FlxMath.bound(cameraFollowPoint.x, camera.minScrollX, camera.maxScrollX);
         cameraFollowPoint.y = FlxMath.bound(cameraFollowPoint.y, camera.minScrollY, camera.maxScrollY);
+    }
+
+    // FlxPoint.distanceTo is not a known function, thanks Polymod!
+    function distance(point1:FlxPoint, point2:FlxPoint):Float
+    {
+        return Math.sqrt((point1.x - point2.x) * (point1.x - point2.x) + (point1.y - point2.y) * (point1.y - point2.y));
     }
 
     function showMenuItems(show:Bool = true):Void

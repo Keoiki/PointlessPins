@@ -22,6 +22,8 @@ import funkin.modding.module.Module;
 import funkin.play.PlayState;
 import funkin.play.PlayStatePlaylist;
 import funkin.play.ResultState;
+import funkin.play.scoring.Scoring;
+import funkin.play.scoring.ScoringRank;
 import funkin.save.Save;
 import funkin.ui.mainmenu.MainMenuState;
 import funkin.util.ReflectUtil;
@@ -481,7 +483,7 @@ class PointlessPins extends Module
         {
             PointlessPins.isMouseActive = true;
         }
-        PointlessPins.isMouseTooFast = Math.abs(FlxG.mouse.deltaViewX) > 1 || Math.abs(FlxG.mouse.deltaViewY) > 1;
+        PointlessPins.isMouseTooFast = Math.abs(FlxG.mouse.deltaViewX) > 0 || Math.abs(FlxG.mouse.deltaViewY) > 0;
         #else  
         PointlessPins.isMouseActive = true;
         PointlessPins.isMouseTooFast = false;
@@ -566,9 +568,32 @@ class PointlessPins extends Module
 
             // :whattheshit:
             if (PlayState.instance.isPlaytestResults) return;
+
+            var talliesToUse = PlayStatePlaylist.isStoryMode ? Highscore.talliesLevel : Highscore.tallies;
+            var scoreToUse:Float = PlayStatePlaylist.isStoryMode ? PlayStatePlaylist.campaignScore : PlayState.instance.songScore;
+
+            var scoreData =
+            {
+                score: scoreToUse,
+                tallies:
+                {
+                    sick: talliesToUse.sick,
+                    good: talliesToUse.good,
+                    bad: talliesToUse.bad,
+                    shit: talliesToUse.shit,
+                    missed: talliesToUse.missed,
+                    combo: talliesToUse.combo,
+                    maxCombo: talliesToUse.maxCombo,
+                    totalNotesHit: talliesToUse.totalNotesHit,
+                    totalNotes: talliesToUse.totalNotes
+                }
+            }
+
+            var rank:ScoringRank = Scoring.calculateRank(scoreData) ?? ScoringRank.SHIT;
+            trace('Player rank is: ' + rank);
             
             // Effectively 40 coins per 100k score. (10 per 25k)
-            var bucksToAward:Float = (PlayStatePlaylist.isStoryMode ? PlayStatePlaylist.campaignScore : PlayState.instance.songScore) / 2500;
+            var bucksToAward:Float = scoreToUse / 2500;
             // +50% for All Sicks, the great get richer, yikes.
             if (Highscore.tallies.totalNotes == Highscore.tallies.sick) bucksToAward *= 1.5;
             bucksToAward *= PointlessPins.getFunkCoinBonus();
@@ -682,25 +707,42 @@ class PointlessPins extends Module
                 });
             }
 
-            checkForSpecials(currentSongOrWeek);
+            checkForSpecials(currentSongOrWeek, rank);
         }
 
         super.onSubStateOpenEnd(event);
     }
 
-    function checkForSpecials(completionID:String):Void
+    function checkForSpecials(completionID:String, rank:ScoringRank):Void
     {
         #if keoiki.endlessmode
         if (EndlessStatus.isEndless) return;
         #end
 
-        var wantedPinID:Null<String> = null;
+        var wantedPinIDs:Array<String> = [];
         switch (completionID)
         {
-            case "sserafim", "spaghetti-default": wantedPinID = "spaghetti";
+            case "sserafim", "spaghetti-default": wantedPinIDs.push("spaghetti");
             default:
         }
-        if (wantedPinID != null) setObtainedPin(wantedPinID);
+        switch (rank)
+        {
+            case ScoringRank.PERFECT_GOLD: wantedPinIDs.push("rank-goldperfect");
+            case ScoringRank.PERFECT: wantedPinIDs.push("rank-perfect");
+            case ScoringRank.EXCELLENT: wantedPinIDs.push("rank-excellent");
+            case ScoringRank.GREAT: wantedPinIDs.push("rank-great");
+            case ScoringRank.GOOD: wantedPinIDs.push("rank-good");
+            case ScoringRank.SHIT: wantedPinIDs.push("rank-shit");
+            default: trace("Rank should've default to SHIT?");
+        }
+        if (wantedPinIDs.length > 0)
+        {
+            trace(wantedPinIDs);
+            for (pinID in wantedPinIDs)
+            {
+                PointlessPins.setObtainedPin(pinID);
+            }
+        }
     }
 }
 
