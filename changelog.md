@@ -1,4 +1,4 @@
-## [2.0.0] - ??/03/2026
+## [2.0.0] - ??/??/2026
 
 ### Added
 
@@ -23,7 +23,7 @@
     - 16 Uncommon
     - 10 Rare
     - 6 Epic
-    - 4 Legendary
+    - 3 Legendary
     - 1 Special
 - Added support for the following modded variations as Dailies:
     - Remnants (Funkin' Remnants)

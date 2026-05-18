@@ -5,6 +5,7 @@ import funkbucks.PointlessPins;
 import funkin.data.song.SongRegistry;
 import funkin.graphics.FunkinSprite;
 import funkin.group.FunkinGroup;
+using StringTools;
 
 class DailyBoard extends FunkinGroup
 {

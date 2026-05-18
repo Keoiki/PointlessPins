@@ -1,8 +1,8 @@
 package funkbucks.objects;
 
 import flixel.math.FlxMath;
-import funkbucks.PointlessPins;
 import funkbucks.PinUtil;
+import funkbucks.PointlessPins;
 import funkin.graphics.FunkinSprite;
 import funkin.util.ReflectUtil;
 

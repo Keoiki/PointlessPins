@@ -652,26 +652,17 @@ class Shop extends MusicBeatState
 
     function showMenuItems(show:Bool = true):Void
     {
-        if (show)
+        var targetAlpha:Float = show ? 1.0 : 0.0;
+        for (item in counterItems)
         {
-            for (item in counterItems)
-            {
-                FlxTween.tween(item, { alpha: 1 }, 1, { ease: FlxEase.cubeIn });
-            }
-        }
-        else
-        {
-            for (item in counterItems)
-            {
-                FlxTween.tween(item, { alpha: 0 }, 1, { ease: FlxEase.cubeOut });
-            }
+            FlxTween.tween(item, { alpha: targetAlpha }, 1, { ease: FlxEase.cubeIn });
         }
     }
 
     /**
      * 50 taps: Ophelia gives a Pin of herself.
      * 75 taps: Warning.
-     * 100 taps: +1 to her anger count.
+     * Every 100 taps: +1 to her anger count.
      */
     function checkIfAnnoyedOphelia():Void
     {
@@ -926,7 +917,7 @@ class Shop extends MusicBeatState
     {
         cameraSubState.scroll.set(0, 0);
         cameraSubState.follow(null);
-         // Necessary, otherwise you can move the camera during transitions, which sets this to false?????
+        // Necessary, otherwise you can move the camera during transitions, which sets this to false?????
         disallowInputs = true;
 
         super.openSubState(state);

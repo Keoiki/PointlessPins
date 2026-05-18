@@ -590,7 +590,6 @@ class PointlessPins extends Module
             }
 
             var rank:ScoringRank = Scoring.calculateRank(scoreData) ?? ScoringRank.SHIT;
-            trace('Player rank is: ' + rank);
             
             // Effectively 40 coins per 100k score. (10 per 25k)
             var bucksToAward:Float = scoreToUse / 2500;
@@ -672,7 +671,7 @@ class PointlessPins extends Module
             awardedJewels -= excessFunkBucks / PointlessPins.bucksForBlueJewel;
             PointlessPins.addFunkCoins(bucksToAward);
 
-            trace(currentSongOrWeek, bucksToAward, awardedJewels, excessFunkBucks, previousSongs);
+            trace(currentSongOrWeek, rank, bucksToAward, awardedJewels, excessFunkBucks, previousSongs);
             trace(awardNormalCompletionJewel, PointlessPins.getBlueJewelPity(), Math.pow(PointlessPins.getBlueJewelPity(), 2) / 1000);
 
             var funkBucksText = new BAlphabet(40, 50, '<b><c=$resultTextColor>${bucksToAward > 0 ? "+" : ""}$bucksToAward</c></b> ${PTIcon.Buck}');

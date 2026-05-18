@@ -37,7 +37,7 @@
             { "id": "girlfriend-amongus-week1", "name": "Girlfriend (Polus)", "source": "#MOD# VS. Impostor" },
             { "id": "red-amongus-week1", "name": "Red", "description": "Way to draw attention to yourself, huh?", "source": "#MOD# VS. Impostor" },
             { "id": "henry-stickmin", "name": "Henry Stickmin", "description": "Just trying to get some cash.", "source": "#GAME# The Henry Stickmin Collection" },
-            { "id": "ellie-rose", "name": "Ellie Rose", "description": "Just trying to get some cash.", "source": "#GAME# The Henry Stickmin Collection" }
+            { "id": "ellie-rose", "name": "Ellie Rose", "description": "Also trying to get some cash.", "source": "#GAME# The Henry Stickmin Collection" }
         ]
     },
     "Uncommon": {
@@ -94,6 +94,7 @@
         "color": "A426FF",
         "pins":
         [
+            { "id": "bluejewel", "name": "Blue Jewel", "description": "Rare, Blue, and Sparkly! Ophelia loves these.", "special": true, "lockedText": "This pin is unlockable from the Rewards section." },
             { "id": "pessy", "name": "Pessy", "source": "#MOD# Psych Engine" },
             { "id": "kb", "name": "KB", "source": "#MOD# QT: Rewired" },
             { "id": "polymod", "name": "Polymod", "description": "Polymore!" },
@@ -109,8 +110,7 @@
         [
             { "id": "hundrec", "name": "Hundrec", "description": "\"This is Hundrec, Production Manager for The Funkin' Crew.\"" },
             { "id": "whitty", "name": "Whitty", "source": "#MOD# VS. Whitty" },
-            { "id": "garcello", "name": "Garcello", "source": "#MOD# Smoke 'Em Out Struggle" },
-            { "id": "rank-goldperfect", "name": "Golden Perfect Rank", "description": "Did you know this rank grants an extra 50% FunkBucks?", "special": true, "lockedText": "Complete any song with a certain rank." }
+            { "id": "rank-goldperfect", "name": "Golden Perfect Rank", "description": "Did you know this rank grants an extra 50% FunkBucks? Well now you do.", "special": true, "lockedText": "Complete any song with a certain rank." }
         ]
     },
     "Mythic": {

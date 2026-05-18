@@ -5,6 +5,7 @@ import balphabet.BAlphabetTyped;
 import flixel.util.FlxSignal;
 import flixel.util._FlxSignal.FlxSignal1;
 import flixel.util._FlxSignal.FlxSignal2;
+import funkbucks.PointlessPins;
 import funkin.PlayerSettings;
 import funkin.graphics.FunkinSprite;
 import funkin.group.FunkinGroup;
@@ -20,6 +21,7 @@ typedef PinDialogueLine =
     ?canSkip:Bool, // Whether the line can be skipped. (optional, default: true)
     ?instantComplete:Bool, // Whether to instantly complete the line. (optional, default: false)
     ?delayNextLine:Bool, // Whether to delay the next line. The next line will not start until it's manually triggered. (optional, default: false)
+    ?hideDuringDelay:Bool, // If delayed, should the dialogue UI be hidden? (optional, default: false)
     ?boxY:Float // The Y level of the dialogue. (optional, default: ???)
 }
 
@@ -89,6 +91,8 @@ class PinDialogue extends FunkinGroup
 
     var hasEnded:Bool = false;
     var canSkip:Bool = true;
+    var nextDelayed:Bool = false;
+    var delayHidden:Bool = false;
 
     override function update(elapsed:Float):Void
     {
@@ -105,7 +109,15 @@ class PinDialogue extends FunkinGroup
                 }
                 else
                 {
-                    doNextLine();
+                    if (nextDelayed)
+                    {
+                        if (delayHidden) this.visible = false;
+                        canSkip = false;
+                    }
+                    else
+                    {
+                        doNextLine();
+                    }
                 }
             }
         }
@@ -138,7 +150,16 @@ class PinDialogue extends FunkinGroup
         dialogueLine.canSkip ??= true;
         dialogueLine.instantComplete ??= false;
         dialogueLine.delayNextLine ??= false;
+        dialogueLine.hideDuringDelay ??= false;
         dialogueLine.boxY ??= 32;
+
+        nextDelayed = dialogueLine.delayNextLine;
+        delayHidden = nextDelayed && dialogueLine.hideDuringDelay;
+
+        if (dialogueLine.speaker?.toLowerCase() == "ophelia" && !PointlessPins.hasObtainedPin("ophelia"))
+        {
+            dialogueLine.speaker = null;
+        }
 
         if (dialogueLine.speaker != null)
         {
@@ -158,6 +179,7 @@ class PinDialogue extends FunkinGroup
         canSkip = dialogueLine.canSkip;
 
         this.y = dialogueLine.boxY;
+        this.visible = true;
 
         dialogueText.localY -= dialogueText.rows * 16;
 
