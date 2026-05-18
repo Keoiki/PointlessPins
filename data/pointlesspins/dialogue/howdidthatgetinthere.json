@@ -1,0 +1,29 @@
+[
+    {
+        "text": "Huh-?",
+        "speaker": "Ophelia",
+        "canSkip": false
+    },
+    {
+        "text": "How did.<d=0.5/>.<d=0.5/>.",
+        "speaker": "Ophelia",
+        "canSkip": false
+    },
+    {
+        "text": ".<d=1/>.<d=1/>.",
+        "speaker": "Ophelia",
+        "delayNextLine": true,
+        "hideDuringDelay": true,
+        "canSkip": false
+    },
+    {
+        "text": "Excuse me for a minute.",
+        "speaker": "Ophelia",
+        "canSkip": false
+    },
+    {
+        "text": "I've got a few <i>choise words</i> to say to the box managers.",
+        "speaker": "Ophelia",
+        "canSkip": false
+    }
+]

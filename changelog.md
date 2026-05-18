@@ -1,16 +1,4 @@
-## [1.2.0] - 04/06/2026
-
-### Added
-
-- Added descriptions for locked pins explaining how to get them.
-- Added "source" text to pins, to show where or what they're from, without clogging the pin description.
-
-### Changed
-
-- The box purchase confirmation is more clearly indicated.
-- The FunkBuck text in the Results now shows up faster and follows the coloring scheme used for the Modifier lable.
-
-## [2.0.0] - ??/03/2026
+## [2.0.0] - ??/??/2026
 
 ### Added
 
@@ -35,7 +23,7 @@
     - 16 Uncommon
     - 10 Rare
     - 6 Epic
-    - 4 Legendary
+    - 3 Legendary
     - 1 Special
 - Added support for the following modded variations as Dailies:
     - Remnants (Funkin' Remnants)
@@ -44,20 +32,28 @@
     - Spooky Kids (Spooky Mix)
     - QT (QT Rewired, futureproof)
     - Hundrec (Hundrec Mix, futureproof)
-- Added descriptions for locked pins explaining how to get them, without being too specific.
-- Added "source" text to pins, to show where or what they're from, without clogging the pin description.
 - Added more dialogue for Ophelia.
 
 ### Changed
 
 - The shop itself has gone under a major visual upgrade.
-- The box purchase confirmation is more clearly indicated.
-- The FunkBuck text in the Results now show up faster and follows the coloring scheme used for the Modifier lable.
 - Increased the cost of Cardboard Boxes from 10 to 20 FunkBucks.
 - Added a 1% chance to get a Rare pin from Cardboard Boxes.
 - Increased the cost of Small Giftboxes from 25 to 50 FunkBucks.
 - Added a 0.25% chance to get a Legendary pin from Small Giftboxes.
 - Rewrote how dialogue is handled, it isn't garbage code anymore.
+
+## [1.2.0] - 04/06/2026
+
+### Added
+
+- Added descriptions for locked pins explaining how to get them.
+- Added "source" text to pins, to show where or what they're from, without clogging the pin description.
+
+### Changed
+
+- The box purchase confirmation is more clearly indicated.
+- The FunkBuck text in the Results now shows up faster and follows the coloring scheme used for the Modifier lable.
 
 ## [1.1.2] - 26/03/2026
 

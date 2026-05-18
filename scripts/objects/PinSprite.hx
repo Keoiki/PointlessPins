@@ -20,7 +20,6 @@ class PinSprite extends FunkinSprite
     var unlockCount:Int = 0;
     var hasGlint:Bool = false;
     // var blendShader:PinGlint;
-
     var rotationTween:FlxTween = null;
 
     function set_source(value:String):String
