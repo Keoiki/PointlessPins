@@ -647,9 +647,9 @@ class FunkBucks extends Module
                 }
                 bucksToAward *= 1.5;
                 resultTextColor = "00FF00";
+                awardNormalCompletionJewel = FlxG.random.bool(Math.pow(FunkBucks.getBlueJewelPity(), 2) / 1000);
                 currentDailies.remove(currentSongOrWeek);
                 FunkBucks.setDailies(currentDailies);
-                resultTextColor = "00FF00";
                 trace("Daily Bonus +50%! Remaining dailies: " + currentDailies);
             }
             else
