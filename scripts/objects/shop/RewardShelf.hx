@@ -27,6 +27,16 @@ class RewardShelf extends FunkinGroup
 
     function createShelf():Void
     {
+        for (i in 0...3)
+        {
+            var item:FunkinSprite = new FunkinSprite(0, 0).loadTexture('shop/rewards/${items[FlxG.random.int(0, items.length - 2)]}');
+            item.localX = shelf.width / 2 - 175 + (175 * (i % 3)) - item.width / 2 - FlxG.random.float(-100, 100);
+            item.localY = -item.height + 1;
+            item.scrollFactor.set(0.85, 0.85);
+            this.add(item);
+            randomItemsTop.push(item);
+        }
+
         shelf = new FunkinSprite(0, 0).loadTexture("shop/rewardsshelf");
         shelf.scrollFactor.set(0.85, 0.85);
         this.add(shelf);
@@ -34,7 +44,7 @@ class RewardShelf extends FunkinGroup
         for (i in 0...9)
         {
             // 15% chance to not add an item.
-            if (FlxG.random.bool(15)) 
+            if (FlxG.random.bool(15))
             {
                 randomItems.push(null);
                 continue;
@@ -46,16 +56,6 @@ class RewardShelf extends FunkinGroup
             item.scrollFactor.set(0.85, 0.85);
             this.add(item);
             randomItems.push(item);
-        }
-
-        for (i in 0...3)
-        {
-            var item:FunkinSprite = new FunkinSprite(0, 0).loadTexture('shop/rewards/${items[FlxG.random.int(0, items.length - 2)]}');
-            item.localX = shelf.width / 2 - 175 + (175 * (i % 3)) - item.width / 2 - FlxG.random.float(-100, 100);
-            item.localY = -item.height;
-            item.scrollFactor.set(0.85, 0.85);
-            this.add(item);
-            randomItemsTop.push(item);
         }
     }
 

@@ -39,7 +39,7 @@ class FunkBucksModifierLable extends Module
 
     public function new():Void
     {
-        super("PointlessPins-FBML", 2);
+        super("FunkBucks-ModifierLabel", 2);
     }
 
     public function onUpdate(event:UpdateScriptEvent):Void

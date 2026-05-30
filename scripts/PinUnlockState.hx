@@ -42,13 +42,13 @@ class PinUnlockState extends MusicBeatSubState
         add(pin);
 
         var unlockMsgText:String = "";
-        if (PointlessPins.setObtainedPin(pinData.id))
+        if (FunkBucks.setObtainedPin(pinData.id))
         {
             unlockMsgText = "<b>You got a <c=00FF00>NEW</c> pin!</b>";
         }
         else
         {
-            var duplicatePinCount:Int = PointlessPins.getObtainedPins().get(pinData.id);
+            var duplicatePinCount:Int = FunkBucks.getObtainedPins().get(pinData.id);
             unlockMsgText = '<b>You got a <c=434253>duplicate ($duplicatePinCount)</c> pin!</b>';
         }
 
@@ -62,7 +62,7 @@ class PinUnlockState extends MusicBeatSubState
             trace("Pin " + pinData.name + " was given no rarity!");
             pinData.rarity = "Unknown";
         }
-        var rarityColor:String = pinData.rarity == "Unknown" ? "7F7F7F" : ReflectUtil.getAnonymousField(PointlessPins.pinData, pinData.rarity).color;
+        var rarityColor:String = pinData.rarity == "Unknown" ? "7F7F7F" : ReflectUtil.getAnonymousField(FunkBucks.pinData, pinData.rarity).color;
         var unlockedPinName:BAlphabet = new BAlphabet(FlxG.width / 2, 475, '<b><s=0.75><c=$rarityColor>${pinData.rarity}</c></s>\n${pinData.name}</b>');
         unlockedPinName.alignment = "center";
         unlockedPinName.scale.set(0.75, 0.75);

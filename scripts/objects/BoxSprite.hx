@@ -1,8 +1,8 @@
 package funkbucks.objects;
 
 import flixel.math.FlxMath;
+import funkbucks.FunkBucks;
 import funkbucks.PinUtil;
-import funkbucks.PointlessPins;
 import funkin.graphics.FunkinSprite;
 import funkin.util.ReflectUtil;
 
@@ -31,8 +31,8 @@ class BoxSprite extends FunkinSprite
 
     override function new(x:Float, y:Float)
     {
-        pinData = PointlessPins.pinData;
-        boxData = PointlessPins.boxData;
+        pinData = FunkBucks.pinData;
+        boxData = FunkBucks.boxData;
 
         super(x, y, "pointlesspins/boxes/" + boxData[0].id, {
             applyStageMatrix: true,
@@ -63,7 +63,7 @@ class BoxSprite extends FunkinSprite
             totalWeight += weight[1];
         }
 
-        var opheliaAnger:Int = PointlessPins.getOpheliaAnger();
+        var opheliaAnger:Int = FunkBucks.getOpheliaAnger();
         if (opheliaAnger > 0)
         {
             angerModifier = 1.0 + (0.2 * opheliaAnger);
@@ -74,7 +74,7 @@ class BoxSprite extends FunkinSprite
             angerModifier = 1.0;
         }
 
-        var discount:Float = PointlessPins.getBoxDiscount();
+        var discount:Float = FunkBucks.getBoxDiscount();
         price = FlxMath.roundDecimal(price * discount, 0);
         discountModifier = (1 - discount) * 100;
 

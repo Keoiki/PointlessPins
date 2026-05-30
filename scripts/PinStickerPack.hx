@@ -17,7 +17,7 @@ class PinStickerPack extends StickerPack
         if (shouldReload)
         {
             shouldReload = false;
-            var pins:Array<String> = [for (key in PointlessPins.getObtainedPins().keys()) key];
+            var pins:Array<String> = [for (key in FunkBucks.getObtainedPins().keys()) key];
             if (pins.contains("funkbuck")) pins.remove("funkbuck");
             for (ind => pin in pins)
             {

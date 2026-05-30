@@ -1,7 +1,7 @@
 package funkbucks.objects.shop;
 
 import balphabet.BAlphabet;
-import funkbucks.PointlessPins;
+import funkbucks.FunkBucks;
 import funkin.data.song.SongRegistry;
 import funkin.graphics.FunkinSprite;
 import funkin.group.FunkinGroup;
@@ -37,17 +37,17 @@ class DailyBoard extends FunkinGroup
 
     function formatDailySongs():String
     {
-        var dailies:Array<String> = PointlessPins.getDailies();
+        var dailies:Array<String> = FunkBucks.getDailies();
         // return "<b><c=00FF00>Dailies</c>\nPhilly Nic. &#xE003;\nSatin Pant. &#xE001;\nWinter Hor.</b>";
         if (dailies.length > 0)
         {
             var dailiesList:String = "";
-            for (i in 0...PointlessPins.dailySongCount)
+            for (i in 0...FunkBucks.dailySongCount)
             {
                 if (i >= dailies.length)
                 {
                     dailiesList += "---";
-                    if (i < PointlessPins.dailySongCount - 1) dailiesList += "\n";
+                    if (i < FunkBucks.dailySongCount - 1) dailiesList += "\n";
                     continue;
                 }
                 var dailySongID:String = dailies[i].substring(0, dailies[i].lastIndexOf("-"));
@@ -75,7 +75,7 @@ class DailyBoard extends FunkinGroup
                     }
                 }
                 dailiesList += songNameToAdd + variationToAdd;
-                if (i < PointlessPins.dailySongCount - 1) dailiesList += "\n";
+                if (i < FunkBucks.dailySongCount - 1) dailiesList += "\n";
             }
             return '<b><c=00FF00>Dailies</c>\n${dailiesList}</b>';
         }

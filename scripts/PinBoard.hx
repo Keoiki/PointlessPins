@@ -69,7 +69,7 @@ class PinBoard extends MusicBeatSubState
 
     override function create():Void
     {
-        var pinJSON = PointlessPins.pinData;
+        var pinJSON = FunkBucks.pinData;
         PIN_RARITIES = ReflectUtil.getAnonymousFieldsOf(pinJSON);
 
         var rarityByOrder = function(a, b) {
@@ -106,7 +106,7 @@ class PinBoard extends MusicBeatSubState
         cursor = new FunkinSprite(60, 140).loadTexture("cursor");
         add(cursor);
 
-        unlockedPinsData = PointlessPins.getObtainedPins();
+        unlockedPinsData = FunkBucks.getObtainedPins();
         // trace(unlockedPinsData);
 
         var currentRow:Int = -1;
@@ -243,7 +243,7 @@ class PinBoard extends MusicBeatSubState
         FlxG.touches.swipeThreshold.set(100, 100);
         coolBackButton = new FunkinBackButton(FlxG.width - 220, FlxG.height - 200, 0xFFFFFFFF, goBack, 1.0, true);
         #if !mobile
-        coolBackButton.visible = PointlessPins.isMouseActive;
+        coolBackButton.visible = FunkBucks.isMouseActive;
         FlxMouseEvent.add(coolBackButton, coolBackButton.playHoldAnim, coolBackButton.playConfirmAnim);
         #end
         coolBackButton.zIndex = 100000;
@@ -266,7 +266,7 @@ class PinBoard extends MusicBeatSubState
         handleControls(elapsed);
         handleTouchControls();
 
-        coolBackButton.visible = #if mobile true; #else PointlessPins.isMouseActive; #end
+        coolBackButton.visible = #if mobile true; #else FunkBucks.isMouseActive; #end
 
         // trace(FlxG.mouse.wheel);
 

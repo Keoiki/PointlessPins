@@ -5,7 +5,7 @@ import balphabet.BAlphabetTyped;
 import flixel.util.FlxSignal;
 import flixel.util._FlxSignal.FlxSignal1;
 import flixel.util._FlxSignal.FlxSignal2;
-import funkbucks.PointlessPins;
+import funkbucks.FunkBucks;
 import funkin.PlayerSettings;
 import funkin.graphics.FunkinSprite;
 import funkin.group.FunkinGroup;
@@ -156,7 +156,7 @@ class PinDialogue extends FunkinGroup
         nextDelayed = dialogueLine.delayNextLine;
         delayHidden = nextDelayed && dialogueLine.hideDuringDelay;
 
-        if (dialogueLine.speaker?.toLowerCase() == "ophelia" && !PointlessPins.hasObtainedPin("ophelia"))
+        if (dialogueLine.speaker?.toLowerCase() == "ophelia" && !FunkBucks.hasObtainedPin("ophelia"))
         {
             dialogueLine.speaker = null;
         }

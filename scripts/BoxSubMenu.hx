@@ -97,7 +97,7 @@ class BoxSubMenu extends MusicBeatSubState
         coolBackButton = new FunkinBackButton(FlxG.width - 220, FlxG.height / 2, 0xFFFFFFFF, goBack, 1.0, true);
         coolBackButton.y -= coolBackButton.height / 2;
         #if !mobile
-        coolBackButton.visible = PointlessPins.isMouseActive;
+        coolBackButton.visible = FunkBucks.isMouseActive;
         FlxMouseEvent.add(coolBackButton, coolBackButton.playHoldAnim, coolBackButton.playConfirmAnim);
         #end
         add(coolBackButton);
@@ -111,7 +111,7 @@ class BoxSubMenu extends MusicBeatSubState
         super.create();
     }
 
-    var prevMouseActive:Bool = PointlessPins.isMouseActive;
+    var prevMouseActive:Bool = FunkBucks.isMouseActive;
     public function update(elapsed:Float):Void
     {
         if (controls.BACK_P)
@@ -119,28 +119,28 @@ class BoxSubMenu extends MusicBeatSubState
             goBack();
         }
 
-        if (controls.UI_LEFT_P || (TouchUtil.pressAction(leftArrowHitbox, camera) && !PointlessPins.isMouseTooFast))
+        if (controls.UI_LEFT_P || (TouchUtil.pressAction(leftArrowHitbox, camera) && !FunkBucks.isMouseTooFast))
         {
             changeSelection(-1);
         }
 
-        if (controls.UI_RIGHT_P || (TouchUtil.pressAction(rightArrowHitbox, camera) && !PointlessPins.isMouseTooFast))
+        if (controls.UI_RIGHT_P || (TouchUtil.pressAction(rightArrowHitbox, camera) && !FunkBucks.isMouseTooFast))
         {
             changeSelection(1);
         }
 
-        if (controls.ACCEPT_P || (TouchUtil.pressAction(boxHitbox, camera) && !PointlessPins.isMouseTooFast))
+        if (controls.ACCEPT_P || (TouchUtil.pressAction(boxHitbox, camera) && !FunkBucks.isMouseTooFast))
         {
             pressedAccept();
         }
 
-        coolBackButton.visible = #if mobile true; #else PointlessPins.isMouseActive; #end
+        coolBackButton.visible = #if mobile true; #else FunkBucks.isMouseActive; #end
 
-        if (prevMouseActive != PointlessPins.isMouseActive)
+        if (prevMouseActive != FunkBucks.isMouseActive)
         {
             updatePurchaseLable();
         }
-        prevMouseActive = PointlessPins.isMouseActive;
+        prevMouseActive = FunkBucks.isMouseActive;
 
         super.update(elapsed);
     }
@@ -212,15 +212,15 @@ class BoxSubMenu extends MusicBeatSubState
         switch (STATE)
         {
             case "CHOOSING", "COOLDOWN":
-                boxPurchaseLable.text = PointlessPins.isMouseActive ? "<b><c=2A4DFF>TAP</c> the box to purchase.</b>" : "<b>Press <c=2A4DFF>ACCEPT</c> to purchase.</b>";
+                boxPurchaseLable.text = FunkBucks.isMouseActive ? "<b><c=2A4DFF>TAP</c> the box to purchase.</b>" : "<b>Press <c=2A4DFF>ACCEPT</c> to purchase.</b>";
             case "CONFIRMING":
-                boxPurchaseLable.text = PointlessPins.isMouseActive ? "<b><c=2BFF31>TAP</c> the box again to confirm.</b>" : "<b>Press <c=2BFF31>ACCEPT</c> again to confirm.</b>";
+                boxPurchaseLable.text = FunkBucks.isMouseActive ? "<b><c=2BFF31>TAP</c> the box again to confirm.</b>" : "<b>Press <c=2BFF31>ACCEPT</c> again to confirm.</b>";
         }
     }
 
     function updateOpenedCount():Void
     {
-        boxPurchaseCount.text = 'You have opened ${PointlessPins.getOpenedBoxCount(box.bID)} of these boxes.';
+        boxPurchaseCount.text = 'You have opened ${FunkBucks.getOpenedBoxCount(box.bID)} of these boxes.';
     }
 
     function updateBoxInfoText():Void
@@ -243,7 +243,7 @@ class BoxSubMenu extends MusicBeatSubState
         var boxOddsText = "";
         for (i in 0...box.chances.length)
         {
-            var rarityColor:String = ReflectUtil.getAnonymousField(PointlessPins.pinData, box.chances[i][0]).color;
+            var rarityColor:String = ReflectUtil.getAnonymousField(FunkBucks.pinData, box.chances[i][0]).color;
             boxOddsText += '<c=$rarityColor>${box.chances[i][0]}</c>: ${FlxMath.roundDecimal(box.chances[i][1] / box.totalWeight * 100, 2)}%';
             if (i < box.chances.length - 1) boxOddsText += "\n";
         }
@@ -253,7 +253,7 @@ class BoxSubMenu extends MusicBeatSubState
 
     function checkIfPlayerIsRichEnough():Bool
     {
-        if (PointlessPins.getFunkCoins() < box.price)
+        if (FunkBucks.getFunkCoins() < box.price)
         {
             _parentState.insufficientFunkBucks();
             return false;
@@ -264,7 +264,7 @@ class BoxSubMenu extends MusicBeatSubState
     function openBox():Void
     {
         _parentState.deductFunkBucks(box.price);
-        PointlessPins.addOpenedBox(box.bID);
+        FunkBucks.addOpenedBox(box.bID);
 
         var randomPin:PinData = box.rollRandomRarityPin();
         var unlockState:PinUnlockState = new PinUnlockState(randomPin);

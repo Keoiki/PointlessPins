@@ -55,7 +55,7 @@ typedef BoxData = {
     ?special:Bool // Is the box only obtainable by special means? This makes it not purchasable. (optional, default: false)
 }
 
-class PointlessPins extends Module
+class FunkBucks extends Module
 {
     var menuPin;
     var menuPin2;
@@ -77,14 +77,14 @@ class PointlessPins extends Module
 
     function new():Void
     {
-        super('PointlessPins', -20000000000);
+        super('FunkBucks', -20000000000);
 
         FlxG.signals.postGameStart.addOnce(versionCheck);
     }
 
     function onCreate(event:ScriptEvent):Void
     {
-        PointlessPins.save = Save.instance.getModOptions("keoiki.funkbucks");
+        FunkBucks.save = Save.instance.getModOptions("keoiki.funkbucks");
 
         loadPinData();
 
@@ -131,21 +131,21 @@ class PointlessPins extends Module
 
     function loadPinData():Void
     {
-        PointlessPins.pinData = SerializerUtil.fromJSON(Assets.getText("data/pointlesspins/pins.json"));
+        FunkBucks.pinData = SerializerUtil.fromJSON(Assets.getText("data/pointlesspins/pins.json"));
 
-        PointlessPins.boxData = SerializerUtil.fromJSON(Assets.getText("data/pointlesspins/boxes.json"));
+        FunkBucks.boxData = SerializerUtil.fromJSON(Assets.getText("data/pointlesspins/boxes.json"));
         var orderByOrder = function(a, b)
         {
-            return FlxSort.byValues(-1, PointlessPins.boxData[a].order, PointlessPins.boxData[b].order);
+            return FlxSort.byValues(-1, FunkBucks.boxData[a].order, FunkBucks.boxData[b].order);
         }
-        PointlessPins.boxData.sort(orderByOrder);
+        FunkBucks.boxData.sort(orderByOrder);
     }
 
     public static function getPinByID(pinID:String):PinData
     {
-        for (rarity in ReflectUtil.getAnonymousFieldsOf(PointlessPins.pinData))
+        for (rarity in ReflectUtil.getAnonymousFieldsOf(FunkBucks.pinData))
         {
-            for (pin in ReflectUtil.getAnonymousField(PointlessPins.pinData, rarity).pins)
+            for (pin in ReflectUtil.getAnonymousField(FunkBucks.pinData, rarity).pins)
             {
                 if (pin.id == pinID)
                 {
@@ -176,7 +176,7 @@ class PointlessPins extends Module
     public static function getAllPinIDsOfRarity(rarity:String, includeSpecials:Bool = false):Array<String>
     {
         var pinIDs:Array<String> = [];
-        for (pin in ReflectUtil.getAnonymousField(PointlessPins.pinData, rarity).pins)
+        for (pin in ReflectUtil.getAnonymousField(FunkBucks.pinData, rarity).pins)
         {
             if (pin.special && !includeSpecials) continue;
             pinIDs.push(pin.id);
@@ -186,30 +186,30 @@ class PointlessPins extends Module
 
     public static function addFunkCoins(amount:Int, addToLifetime:Bool = true):Void
     {
-        PointlessPins.setFunkCoins(amount, addToLifetime);
+        FunkBucks.setFunkCoins(amount, addToLifetime);
     }
 
     public static function setFunkCoins(amount:Int, addToLifetime:Bool = true):Void
     {
-        PointlessPins.save.funkBucks = PointlessPins.getFunkCoins() + Std.int(amount);
+        FunkBucks.save.funkBucks = FunkBucks.getFunkCoins() + Std.int(amount);
         if (addToLifetime)
         {
             /** Do not decrease the lifetime amount. **/
-            PointlessPins.save.funkBucksLifetime = PointlessPins.getFunkCoinsLifeTime() + Math.max(0, Std.int(amount));
+            FunkBucks.save.funkBucksLifetime = FunkBucks.getFunkCoinsLifeTime() + Math.max(0, Std.int(amount));
         }
-        PointlessPins.saveTheData();
-        trace("Current FunkBucks: " + PointlessPins.getFunkCoins());
-        trace("Lifetime FunkBucks: " + PointlessPins.getFunkCoinsLifeTime());
+        FunkBucks.saveTheData();
+        trace("Current FunkBucks: " + FunkBucks.getFunkCoins());
+        trace("Lifetime FunkBucks: " + FunkBucks.getFunkCoinsLifeTime());
     }
 
     public static function getFunkCoins():Int
     {
-        return PointlessPins.save.funkBucks ?? 0;
+        return FunkBucks.save.funkBucks ?? 0;
     }
 
     public static function getFunkCoinsLifeTime():Int
     {
-        return PointlessPins.save.funkBucksLifetime ?? 0;
+        return FunkBucks.save.funkBucksLifetime ?? 0;
     }
 
     public static function addBlueJewels(amount:Int = 1, addToLifetime:Bool = true):Int
@@ -217,49 +217,49 @@ class PointlessPins extends Module
         var conversionToBucks:Int = 0;
         if (addToLifetime)
         {
-            PointlessPins.save.blueJewelsLifetime = PointlessPins.getBlueJewelsLifeTime() + amount;
+            FunkBucks.save.blueJewelsLifetime = FunkBucks.getBlueJewelsLifeTime() + amount;
         }
-        if (PointlessPins.getBlueJewels() + amount > PointlessPins.maximumBlueJewels)
+        if (FunkBucks.getBlueJewels() + amount > FunkBucks.maximumBlueJewels)
         {
-            conversionToBucks = (PointlessPins.getBlueJewels() + amount - PointlessPins.maximumBlueJewels) * PointlessPins.bucksForBlueJewel;
+            conversionToBucks = (FunkBucks.getBlueJewels() + amount - FunkBucks.maximumBlueJewels) * FunkBucks.bucksForBlueJewel;
         }
-        PointlessPins.save.blueJewels = FlxMath.bound(PointlessPins.getBlueJewels() + amount, 0, PointlessPins.maximumBlueJewels);
-        PointlessPins.saveTheData();
+        FunkBucks.save.blueJewels = FlxMath.bound(FunkBucks.getBlueJewels() + amount, 0, FunkBucks.maximumBlueJewels);
+        FunkBucks.saveTheData();
         return conversionToBucks;
     }
 
     public static function getBlueJewels():Int
     {
-        return PointlessPins.save.blueJewels ?? 0;
+        return FunkBucks.save.blueJewels ?? 0;
     }
 
     public static function getBlueJewelsLifeTime():Int
     {
-        return PointlessPins.save.blueJewelsLifetime ?? 0;
+        return FunkBucks.save.blueJewelsLifetime ?? 0;
     }
 
     public static function addBlueJewelPity(amount:Int = 1):Void
     {
-        PointlessPins.save.blueJewelPity = FlxMath.bound(PointlessPins.getBlueJewelPity() + amount, 0, PointlessPins.maxBlueJewelPity);
-        PointlessPins.saveTheData();
+        FunkBucks.save.blueJewelPity = FlxMath.bound(FunkBucks.getBlueJewelPity() + amount, 0, FunkBucks.maxBlueJewelPity);
+        FunkBucks.saveTheData();
     }
 
     public static function getBlueJewelPity():Int
     {
-        return PointlessPins.save.blueJewelPity ?? 0;
+        return FunkBucks.save.blueJewelPity ?? 0;
     }
 
     public static function addOpenedBox(boxID:String):Void
     {
         var boxesMap = getOpenedBoxCounts();
         boxesMap.set(boxID, (boxesMap.get(boxID) ?? 0) + 1);
-        PointlessPins.save.openedBoxes = boxesMap;
-        PointlessPins.saveTheData();
+        FunkBucks.save.openedBoxes = boxesMap;
+        FunkBucks.saveTheData();
     }
 
     public static function getOpenedBoxCounts():StringMap<String, Int>
     {
-        return PointlessPins.save.openedBoxes ?? new StringMap();
+        return FunkBucks.save.openedBoxes ?? new StringMap();
     }
 
     public static function getOpenedBoxCount(boxID:String):Int
@@ -283,8 +283,8 @@ class PointlessPins extends Module
         }
         var pinsMap = getObtainedPins();
         pinsMap.set(pinID, isNewPin ? 1 : pinsMap.get(pinID) + 1);
-        PointlessPins.save.obtainedPins = pinsMap;
-        PointlessPins.saveTheData();
+        FunkBucks.save.obtainedPins = pinsMap;
+        FunkBucks.saveTheData();
         return isNewPin;
     }
 
@@ -295,7 +295,7 @@ class PointlessPins extends Module
 
     public static function getObtainedPins():StringMap<String, Int>
     {
-        return PointlessPins.save.obtainedPins ?? new StringMap();
+        return FunkBucks.save.obtainedPins ?? new StringMap();
     }
 
     public static function getObtainedPin(pinID:String):Int
@@ -305,35 +305,35 @@ class PointlessPins extends Module
 
     public static function setPrevSongs(songs:Array<String>):Void
     {
-        PointlessPins.save.previousSongs = songs;
-        PointlessPins.saveTheData();
+        FunkBucks.save.previousSongs = songs;
+        FunkBucks.saveTheData();
     }
 
     public static function getPrevSongs():Array<String>
     {
-        return PointlessPins.save.previousSongs ?? new Array();
+        return FunkBucks.save.previousSongs ?? new Array();
     }
 
     public static function addOpheliaAnger(anger:Int, addToTotal:Bool = true):Void
     {
-        if (PointlessPins.save.opheliaAnger == null) PointlessPins.save.opheliaAnger = 0;
-        PointlessPins.save.opheliaAnger += anger;
+        if (FunkBucks.save.opheliaAnger == null) FunkBucks.save.opheliaAnger = 0;
+        FunkBucks.save.opheliaAnger += anger;
         if (addToTotal)
         {
-            PointlessPins.save.opheliaAngerTotal = PointlessPins.getOpheliaAngerTotal() + anger;
+            FunkBucks.save.opheliaAngerTotal = FunkBucks.getOpheliaAngerTotal() + anger;
         }
-        PointlessPins.saveTheData();
+        FunkBucks.saveTheData();
     }
 
     public static function getOpheliaAnger():Int
     {
-        var prevAngerTimestamp:Float = PointlessPins.save.opheliaAngerTime ?? -1;
+        var prevAngerTimestamp:Float = FunkBucks.save.opheliaAngerTime ?? -1;
         if (prevAngerTimestamp == -1)
         {
             // trace("No stored anger timestamp!");
             return 0;
         }
-        var currentAnger:Int = PointlessPins.save.opheliaAnger ?? 0;
+        var currentAnger:Int = FunkBucks.save.opheliaAnger ?? 0;
         if (currentAnger == 0)
         {
             // trace("No stored anger!");
@@ -342,25 +342,25 @@ class PointlessPins extends Module
         var currentTimestamp:Float = Date.now().getTime();
         var angerGone:Int = Math.floor((Math.floor(currentTimestamp - prevAngerTimestamp)) / opheliaAngerCooldown);
         // trace(currentTimestamp, prevAngerTimestamp);
-        // trace(PointlessPins.save.opheliaAnger);
+        // trace(FunkBucks.save.opheliaAnger);
         // trace(Math.floor(currentTimestamp) - Math.floor(prevAngerTimestamp));
         // trace("Anger gone: " + angerGone);
-        PointlessPins.save.opheliaAnger = Math.max(0, currentAnger - angerGone);
-        if (PointlessPins.save.opheliaAnger == 0)
+        FunkBucks.save.opheliaAnger = Math.max(0, currentAnger - angerGone);
+        if (FunkBucks.save.opheliaAnger == 0)
         {
-            PointlessPins.save.opheliaAngerTime = -1;
+            FunkBucks.save.opheliaAngerTime = -1;
         }
         else
         {
-            PointlessPins.save.opheliaAngerTime = prevAngerTimestamp + angerGone * opheliaAngerCooldown;
+            FunkBucks.save.opheliaAngerTime = prevAngerTimestamp + angerGone * opheliaAngerCooldown;
         }
-        PointlessPins.saveTheData();
-        return PointlessPins.save.opheliaAnger;
+        FunkBucks.saveTheData();
+        return FunkBucks.save.opheliaAnger;
     }
 
     public static function getOpheliaAngerTotal():Int
     {
-        return PointlessPins.save.opheliaAngerTotal ?? 0;
+        return FunkBucks.save.opheliaAngerTotal ?? 0;
     }
 
     /**
@@ -374,16 +374,16 @@ class PointlessPins extends Module
      */
     public static function setDailies(dailies:Array<String>):Void
     {
-        PointlessPins.save.dailies = dailies;
-        PointlessPins.saveTheData();
+        FunkBucks.save.dailies = dailies;
+        FunkBucks.saveTheData();
     }
 
     public static function getDailies():Array<String>
     {
-        var dailyDateNum:Int = PointlessPins.save.dailyDate ?? -1;
+        var dailyDateNum:Int = FunkBucks.save.dailyDate ?? -1;
         var date:Date = Date.now();
         var currentDate:Int = date.getDate();
-        final supportedModdedVariations:Array<String> = PointlessPins.getSupportedModdedVariations();
+        final supportedModdedVariations:Array<String> = FunkBucks.getSupportedModdedVariations();
         if (dailyDateNum != currentDate)
         {
             var baseGameSongIDs:Array<String> = SongRegistry.instance.listBaseGameEntryIds();
@@ -391,7 +391,7 @@ class PointlessPins extends Module
             baseGameSongIDs.remove("tutorial"); // Boring.
             baseGameSongIDs.remove("spaghetti"); // I'm removing this out of spite for how many DAMN TIMES it has appeared. No game, I do NOT want SPAGHETTI (feat. j-hope of BTS) (Clean ver.) 4 days IN A ROW!
             var dailies:Array<String> = [];
-            for (i in 0...PointlessPins.dailySongCount)
+            for (i in 0...FunkBucks.dailySongCount)
             {
                 var songID:String = baseGameSongIDs[FlxG.random.int(0, baseGameSongIDs.length - 1)];
                 var songVariations:Array<String> = SongRegistry.instance.fetchEntry(songID).variations;
@@ -403,44 +403,44 @@ class PointlessPins extends Module
                 // Only one variation per song, thanks!
                 baseGameSongIDs.remove(songID);
             }
-            PointlessPins.save.dailyDate = currentDate;
-            PointlessPins.setDailies(dailies);
+            FunkBucks.save.dailyDate = currentDate;
+            FunkBucks.setDailies(dailies);
             return dailies;
         }
         else
         {
             // The default empty array should never get returned, but I'll keep it here just in case.
-            return PointlessPins.save.dailies ?? new Array();
+            return FunkBucks.save.dailies ?? new Array();
         }
     }
 
     public static function addClaimedMilestone(milestone:String):Void
     {
-        var _obtainedMilestones:Array<String> = PointlessPins.getClaimedMilestones();
+        var _obtainedMilestones:Array<String> = FunkBucks.getClaimedMilestones();
         if (_obtainedMilestones.contains(milestone))
         {
             trace("User already obtained milestone: " + milestone);
             return;
         }
         _obtainedMilestones.push(milestone);
-        PointlessPins.save.obtainedMilestones = _obtainedMilestones;
-        PointlessPins.saveTheData();
+        FunkBucks.save.obtainedMilestones = _obtainedMilestones;
+        FunkBucks.saveTheData();
     }
 
     public static function hasClaimedMilestone(milestone:String):Bool
     {
-        return PointlessPins.getClaimedMilestones().contains(milestone);
+        return FunkBucks.getClaimedMilestones().contains(milestone);
     }
 
     public static function getClaimedMilestones():Array<String>
     {
-        return PointlessPins.save.obtainedMilestones ?? new Array();
+        return FunkBucks.save.obtainedMilestones ?? new Array();
     }
 
     public static function getBoxDiscount():Float
     {
         var discount:Float = 1.0;
-        var claimedRewards:Array<String> = PointlessPins.getClaimedMilestones();
+        var claimedRewards:Array<String> = FunkBucks.getClaimedMilestones();
         for (i in 0...claimedRewards.length)
         {
             switch (claimedRewards[i])
@@ -454,7 +454,7 @@ class PointlessPins extends Module
     public static function getFunkCoinBonus():Float
     {
         var bonusMultiplier:Float = 1.0;
-        var claimedRewards:Array<String> = PointlessPins.getClaimedMilestones();
+        var claimedRewards:Array<String> = FunkBucks.getClaimedMilestones();
         for (i in 0...claimedRewards.length)
         {
             switch (claimedRewards[i])
@@ -468,7 +468,7 @@ class PointlessPins extends Module
 
     public static function saveTheData():Void
     {
-        Save.instance.setModOptions("keoiki.funkbucks", PointlessPins.save);
+        Save.instance.setModOptions("keoiki.funkbucks", FunkBucks.save);
     }
 
     /**
@@ -493,16 +493,16 @@ class PointlessPins extends Module
         #if !mobile
         if (FlxG.keys.pressed.ANY)
         {
-            PointlessPins.isMouseActive = false;
+            FunkBucks.isMouseActive = false;
         }
         else if (Math.abs(FlxG.mouse.deltaViewX) > 24 || Math.abs(FlxG.mouse.deltaViewY) > 24)
         {
-            PointlessPins.isMouseActive = true;
+            FunkBucks.isMouseActive = true;
         }
-        PointlessPins.isMouseTooFast = Math.abs(FlxG.mouse.deltaViewX) > 0 || Math.abs(FlxG.mouse.deltaViewY) > 0;
+        FunkBucks.isMouseTooFast = Math.abs(FlxG.mouse.deltaViewX) > 0 || Math.abs(FlxG.mouse.deltaViewY) > 0;
         #else  
-        PointlessPins.isMouseActive = true;
-        PointlessPins.isMouseTooFast = false;
+        FunkBucks.isMouseActive = true;
+        FunkBucks.isMouseTooFast = false;
         #end
 
         if (FlxG.state is MainMenuState && FlxG.state.subState == null)
@@ -514,9 +514,9 @@ class PointlessPins extends Module
 
             if (FlxG.keys.justPressed.Q)
             {
-                // PointlessPins.save.obtainedMilestones = [];
-                // PointlessPins.saveTheData();
-                trace(PointlessPins.getClaimedMilestones());
+                // FunkBucks.save.obtainedMilestones = [];
+                // FunkBucks.saveTheData();
+                trace(FunkBucks.getClaimedMilestones());
             }
 
             if (FlxG.keys.justPressed.J)
@@ -611,20 +611,20 @@ class PointlessPins extends Module
             var bucksToAward:Float = scoreToUse / 2500;
             // +50% for All Sicks, the great get richer, yikes.
             if (Highscore.tallies.totalNotes == Highscore.tallies.sick) bucksToAward *= 1.5;
-            bucksToAward *= PointlessPins.getFunkCoinBonus();
+            bucksToAward *= FunkBucks.getFunkCoinBonus();
 
             // No playing the same songs or weeks multiple times in a row!
-            var previousSongs:Array<String> = PointlessPins.getPrevSongs();
-            var currentDailies:Array<String> = PointlessPins.getDailies();
+            var previousSongs:Array<String> = FunkBucks.getPrevSongs();
+            var currentDailies:Array<String> = FunkBucks.getDailies();
             var currentSongOrWeek:String = PlayStatePlaylist.isStoryMode ? PlayStatePlaylist.campaignId :
                     Std.string(PlayState.instance.currentChart.song.id + "-" + PlayState.instance.currentVariation);
             var penaltyCount:Int = previousSongs.filter(entry -> entry == currentSongOrWeek).length;
-            var repeatPenalty:Float = PointlessPins.penalties[penaltyCount];
-            var resultTextColor:String = PointlessPins.penaltyColors[penaltyCount];
+            var repeatPenalty:Float = FunkBucks.penalties[penaltyCount];
+            var resultTextColor:String = FunkBucks.penaltyColors[penaltyCount];
             var awardedJewels:Int = 0;
             var awardNormalCompletionJewel:Bool = false;
 
-            PointlessPins.addBlueJewelPity(#if keoiki.endlessmode EndlessStatus.isEndless ? Math.floor(EndlessStatus.currentLoopFloat) : #end 1);
+            FunkBucks.addBlueJewelPity(#if keoiki.endlessmode EndlessStatus.isEndless ? Math.floor(EndlessStatus.currentLoopFloat) : #end 1);
 
             // Sorry Endless Mode...
             // NVM Endless Mode players stay winning!
@@ -648,13 +648,13 @@ class PointlessPins extends Module
                 bucksToAward *= 1.5;
                 resultTextColor = "00FF00";
                 currentDailies.remove(currentSongOrWeek);
-                PointlessPins.setDailies(currentDailies);
+                FunkBucks.setDailies(currentDailies);
                 resultTextColor = "00FF00";
                 trace("Daily Bonus +50%! Remaining dailies: " + currentDailies);
             }
             else
             {
-                awardNormalCompletionJewel = FlxG.random.bool(Math.pow(PointlessPins.getBlueJewelPity(), 2) / 1000);
+                awardNormalCompletionJewel = FlxG.random.bool(Math.pow(FunkBucks.getBlueJewelPity(), 2) / 1000);
                 bucksToAward *= repeatPenalty;
                 trace("Repeat penalty: " + repeatPenalty * 100 + "%");
             }
@@ -671,25 +671,25 @@ class PointlessPins extends Module
                     // Make sure we're working with a 5 long array at most.
                     previousSongs.pop();
                 }
-                PointlessPins.setPrevSongs(previousSongs);
+                FunkBucks.setPrevSongs(previousSongs);
             }
 
             // Normal completion jewel stacks with the Daily Song one(s).
             if (awardNormalCompletionJewel)
             {
                 awardedJewels++;
-                PointlessPins.save.blueJewelPity = 0;
+                FunkBucks.save.blueJewelPity = 0;
                 PoinltessPins.saveTheData();
             }
             
             bucksToAward = Math.ceil(bucksToAward);
-            var excessFunkBucks:Int = PointlessPins.addBlueJewels(awardedJewels);
+            var excessFunkBucks:Int = FunkBucks.addBlueJewels(awardedJewels);
             bucksToAward += excessFunkBucks;
-            awardedJewels -= excessFunkBucks / PointlessPins.bucksForBlueJewel;
-            PointlessPins.addFunkCoins(bucksToAward);
+            awardedJewels -= excessFunkBucks / FunkBucks.bucksForBlueJewel;
+            FunkBucks.addFunkCoins(bucksToAward);
 
             trace(currentSongOrWeek, rank, bucksToAward, awardedJewels, excessFunkBucks, previousSongs);
-            trace(awardNormalCompletionJewel, PointlessPins.getBlueJewelPity(), Math.pow(PointlessPins.getBlueJewelPity(), 2) / 1000);
+            trace(awardNormalCompletionJewel, FunkBucks.getBlueJewelPity(), Math.pow(FunkBucks.getBlueJewelPity(), 2) / 1000);
 
             var funkBucksText = new BAlphabet(40, 50, '<b><c=$resultTextColor>${bucksToAward > 0 ? "+" : ""}$bucksToAward</c></b> ${PTIcon.Buck}');
             funkBucksText.scale.set(0.65, 0.65);
@@ -756,7 +756,7 @@ class PointlessPins extends Module
             trace(wantedPinIDs);
             for (pinID in wantedPinIDs)
             {
-                PointlessPins.setObtainedPin(pinID);
+                FunkBucks.setObtainedPin(pinID);
             }
         }
     }

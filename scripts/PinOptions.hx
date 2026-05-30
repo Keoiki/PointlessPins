@@ -12,10 +12,10 @@ class PinOptions extends Module
 
     public function onCreate(event:ScriptEvent):Void
     {
-        if (PointlessPins.save.modifierText == null)
+        if (FunkBucks.save.modifierText == null)
         {
-            PointlessPins.save.modifierText = "percentage";
-            PointlessPins.saveTheData();
+            FunkBucks.save.modifierText = "percentage";
+            FunkBucks.saveTheData();
         }
     }
 
@@ -30,10 +30,10 @@ class PinOptions extends Module
                 ["Percentage" => "percentage", "Multiplier" => "multiplier"],
                 function(key:String, value:String):Void
                 {
-                    PointlessPins.save.modifierText = value;
-                    PointlessPins.saveTheData();
+                    FunkBucks.save.modifierText = value;
+                    FunkBucks.saveTheData();
                 },
-                switch (PointlessPins.save.modifierText)
+                switch (FunkBucks.save.modifierText)
                 {
                     case "multiplier": "Multiplier";
                     default: "Percentage";

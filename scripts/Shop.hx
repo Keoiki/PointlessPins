@@ -324,13 +324,13 @@ class Shop extends MusicBeatState
         screenBlack.scrollFactor.set(0, 0);
         add(screenBlack);
 
-        funkBucksText = new BAlphabet(FlxG.width - 20, 25, '<b>${PointlessPins.getFunkCoins()}</b> ${PTIcon.Buck}');
+        funkBucksText = new BAlphabet(FlxG.width - 20, 25, '<b>${FunkBucks.getFunkCoins()}</b> ${PTIcon.Buck}');
         funkBucksText.scale.set(0.65, 0.65);
         funkBucksText.alignment = "right";
         // funkBucksText.setScrollFactor(0, 0);
         add(funkBucksText);
 
-        blueJewelsText = new BAlphabet(FlxG.width - 20, funkBucksText.y + 70, '<b><c=82E9FF>${PointlessPins.getBlueJewels()}<s=0.5>/${PointlessPins.maximumBlueJewels}</s></c></b> ${PTIcon.Jewel}');
+        blueJewelsText = new BAlphabet(FlxG.width - 20, funkBucksText.y + 70, '<b><c=82E9FF>${FunkBucks.getBlueJewels()}<s=0.5>/${FunkBucks.maximumBlueJewels}</s></c></b> ${PTIcon.Jewel}');
         blueJewelsText.alignment = "right";
         blueJewelsText.scale.set(0.65, 0.65);
         // blueJewelsText.setScrollFactor(0, 0);
@@ -345,7 +345,7 @@ class Shop extends MusicBeatState
 
         coolBackButton = new FunkinBackButton(FlxG.width - 220, FlxG.height - 200, 0xFFFFFFFF, goBack, 0.5);
         #if !mobile
-        coolBackButton.visible = PointlessPins.isMouseActive;
+        coolBackButton.visible = FunkBucks.isMouseActive;
         FlxMouseEvent.add(coolBackButton, coolBackButton.playHoldAnim, coolBackButton.playConfirmAnim);
         #end
         add(coolBackButton);
@@ -422,7 +422,7 @@ class Shop extends MusicBeatState
             coolBackButton.enabled = false;
             return;
         }
-        coolBackButton.visible = #if mobile true; #else PointlessPins.isMouseActive; #end
+        coolBackButton.visible = #if mobile true; #else FunkBucks.isMouseActive; #end
         coolBackButton.enabled = true;
 
         handleCameraMovement();
@@ -432,7 +432,7 @@ class Shop extends MusicBeatState
 
         // Pins
 
-        if (FlxG.keys.justPressed.ONE || (TouchUtil.pressAction(iconPins) && !PointlessPins.isMouseTooFast && !TouchUtil.overlaps(coolBackButton, cameraHUD)))
+        if (FlxG.keys.justPressed.ONE || (TouchUtil.pressAction(iconPins) && !FunkBucks.isMouseTooFast && !TouchUtil.overlaps(coolBackButton, cameraHUD)))
         {
             disallowInputs = true;
             cameraFollowPoint.setPosition(iconPins.x + iconPins.width / 2, iconPins.y + 50);
@@ -460,7 +460,7 @@ class Shop extends MusicBeatState
 
         // Boxes
 
-        if (FlxG.keys.justPressed.TWO || (TouchUtil.pressAction(iconBoxes) && !PointlessPins.isMouseTooFast && !TouchUtil.overlaps(coolBackButton, cameraHUD)))
+        if (FlxG.keys.justPressed.TWO || (TouchUtil.pressAction(iconBoxes) && !FunkBucks.isMouseTooFast && !TouchUtil.overlaps(coolBackButton, cameraHUD)))
         {
             if (isOpheliaGone || Ophelia.caught)
             {
@@ -495,7 +495,7 @@ class Shop extends MusicBeatState
 
         // Exchange
 
-        if (FlxG.keys.justPressed.THREE || (TouchUtil.pressAction(lableExchange) && !PointlessPins.isMouseTooFast && !TouchUtil.overlaps(coolBackButton, cameraHUD)))
+        if (FlxG.keys.justPressed.THREE || (TouchUtil.pressAction(lableExchange) && !FunkBucks.isMouseTooFast && !TouchUtil.overlaps(coolBackButton, cameraHUD)))
         {
             if (isOpheliaGone)
             {
@@ -525,7 +525,7 @@ class Shop extends MusicBeatState
 
         // Rewards
 
-        if (FlxG.keys.justPressed.FOUR || (TouchUtil.pressAction(lableRewards) && !PointlessPins.isMouseTooFast && !TouchUtil.overlaps(coolBackButton, cameraHUD)))
+        if (FlxG.keys.justPressed.FOUR || (TouchUtil.pressAction(lableRewards) && !FunkBucks.isMouseTooFast && !TouchUtil.overlaps(coolBackButton, cameraHUD)))
         {
             if (isOpheliaGone)
             {
@@ -707,7 +707,7 @@ class Shop extends MusicBeatState
         }
 
         // Ophelia's sprite extends behind the counter, we don't wanna count pressing in that area as well.
-        if (TouchUtil.pressAction(opheliaHitbox, camera) && !TouchUtil.overlaps(coolBackButton, cameraHUD) && !PointlessPins.isMouseTooFast)
+        if (TouchUtil.pressAction(opheliaHitbox, camera) && !TouchUtil.overlaps(coolBackButton, cameraHUD) && !FunkBucks.isMouseTooFast)
         {
             if (Tuntematon.gone && !Ophelia.caught)
             {
@@ -728,7 +728,7 @@ class Shop extends MusicBeatState
             ophelia.annoyance++;
             trace("Boop! " + ophelia.annoyance);
 
-            if (ophelia.annoyance == 50 &&!PointlessPins.hasObtainedPin("ophelia"))
+            if (ophelia.annoyance == 50 &&!FunkBucks.hasObtainedPin("ophelia"))
             {
                 new FlxTimer().start(0.5, function(_:FlxTimer)
                 {
@@ -746,7 +746,7 @@ class Shop extends MusicBeatState
                 return;
             }
 
-            if (ophelia.annoyance == 75 && PointlessPins.getOpheliaAnger() == 0)
+            if (ophelia.annoyance == 75 && FunkBucks.getOpheliaAnger() == 0)
             {
                 if (dialog != null) remove(dialog);
                 dialog = new PinDialogue("angerWarning");
@@ -768,18 +768,18 @@ class Shop extends MusicBeatState
 
             if (ophelia.annoyance % 100 == 0)
             {
-                if (PointlessPins.getOpheliaAnger() == 0)
+                if (FunkBucks.getOpheliaAnger() == 0)
                 {
-                    // PointlessPins.save.opheliaAngerTime = Date.now().getTime();
+                    // FunkBucks.save.opheliaAngerTime = Date.now().getTime();
                 }
                 disallowInputs = true;
-                if (PointlessPins.getOpheliaAngerTotal() > 0)
+                if (FunkBucks.getOpheliaAngerTotal() > 0)
                 {
-                    if (PointlessPins.getOpheliaAnger() > 5)
+                    if (FunkBucks.getOpheliaAnger() > 5)
                     {
                         opheliaAngerDialogue("Repeat3");
                     }
-                    else if (PointlessPins.getOpheliaAnger() > 0)
+                    else if (FunkBucks.getOpheliaAnger() > 0)
                     {
                         opheliaAngerDialogue("Repeat2");
                     }
@@ -792,7 +792,7 @@ class Shop extends MusicBeatState
                 {
                     opheliaAngerDialogue("Initial");
                 }
-                // PointlessPins.addOpheliaAnger(1);
+                // FunkBucks.addOpheliaAnger(1);
                 trace("FUCK YOU!!!!");
                 return;
             }
@@ -824,7 +824,7 @@ class Shop extends MusicBeatState
     {
         ophelia.playAnimation("PickingPin", false, true);
         FlxTween.tween(cameraFollowPoint, { x: cameraFollowPoint.x - 50, y: cameraFollowPoint.y + 25 }, 2, { ease: FlxEase.cubeOut });
-        var substate = new PinUnlockState(PointlessPins.getPinByID("ophelia"));
+        var substate = new PinUnlockState(FunkBucks.getPinByID("ophelia"));
         substate.cameras = [cameraSubState];
         substate.closeCallback = () -> {
             disallowInputs = false;
@@ -981,7 +981,7 @@ class Shop extends MusicBeatState
     var previousFunkBucks:Int;
     public function deductFunkBucks(amount:Int):Void
     {
-        var currentFunkBucks:Int = previousFunkBucks = PointlessPins.getFunkCoins();
+        var currentFunkBucks:Int = previousFunkBucks = FunkBucks.getFunkCoins();
         var remainingFunkBucks:Int = currentFunkBucks - amount;
 
         buckSound.pitch = 1.0;
@@ -990,12 +990,12 @@ class Shop extends MusicBeatState
             funkBucksText.text = '<b>${Math.floor(remainingFunkBucks)}</b> ${PTIcon.Buck}';
         }}, updateFunkBucks);
 
-        PointlessPins.addFunkCoins(-amount, false);
+        FunkBucks.addFunkCoins(-amount, false);
     }
 
     public function addFunkBucks(amount:Int):Void
     {
-        var currentFunkBucks:Int = PointlessPins.getFunkCoins() + amount;
+        var currentFunkBucks:Int = FunkBucks.getFunkCoins() + amount;
 
         funkBucksText.text = '<b>$currentFunkBucks</b> ${PTIcon.Buck}';
         funkBucksText.y -= 20;
@@ -1005,26 +1005,26 @@ class Shop extends MusicBeatState
             FlxTween.color(letter, 0.5, 0xFF00FF00, 0xFFFFFFFF);
         });
 
-        PointlessPins.addFunkCoins(amount, false);
+        FunkBucks.addFunkCoins(amount, false);
     }
 
     public function deductBlueJewel(amount:Int):Void
     {
-        var currentJewels:Int = PointlessPins.getBlueJewels();
+        var currentJewels:Int = FunkBucks.getBlueJewels();
         var remainingJewels:Int = currentJewels - amount;
 
-        blueJewelsText.text = '<b><c=82E9FF>$remainingJewels<s=0.5>/${PointlessPins.maximumBlueJewels}</s></c></b> ${PTIcon.Jewel}';
+        blueJewelsText.text = '<b><c=82E9FF>$remainingJewels<s=0.5>/${FunkBucks.maximumBlueJewels}</s></c></b> ${PTIcon.Jewel}';
         blueJewelsText.y += 20;
         FunkinSound.playOnce(Paths.sound("bluejewel"));
 
-        PointlessPins.addBlueJewels(-amount, false);
+        FunkBucks.addBlueJewels(-amount, false);
     }
 
     public function addBlueJewel(amount:Int):Void
     {
-        var currentJewels:Int = PointlessPins.getBlueJewels() + amount;
+        var currentJewels:Int = FunkBucks.getBlueJewels() + amount;
 
-        blueJewelsText.text = '<b><c=82E9FF>$currentJewels<s=0.5>/${PointlessPins.maximumBlueJewels}</s></c></b> ${PTIcon.Jewel}';
+        blueJewelsText.text = '<b><c=82E9FF>$currentJewels<s=0.5>/${FunkBucks.maximumBlueJewels}</s></c></b> ${PTIcon.Jewel}';
         blueJewelsText.y -= 20;
         FunkinSound.playOnce(Paths.sound("bluejewel"));
 
@@ -1032,7 +1032,7 @@ class Shop extends MusicBeatState
             FlxTween.color(letter, 0.5, 0xFF00FF00, letter.curLetter.colored ? 0xFFFFFFFF : 0xFF82E9FF);
         });
 
-        PointlessPins.addBlueJewels(amount, false);
+        FunkBucks.addBlueJewels(amount, false);
     }
 
     function updateFunkBucks(value:Float):Void

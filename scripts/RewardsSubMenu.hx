@@ -156,7 +156,7 @@ class RewardsSubMenu extends MusicBeatSubState
 
         coolBackButton = new FunkinBackButton(FlxG.width - 220, FlxG.height - 200, 0xFFFFFFFF, goBack, 1.0, true);
         #if !mobile
-        coolBackButton.visible = PointlessPins.isMouseActive;
+        coolBackButton.visible = FunkBucks.isMouseActive;
         FlxMouseEvent.add(coolBackButton, coolBackButton.playHoldAnim, coolBackButton.playConfirmAnim);
         #end
         add(coolBackButton);
@@ -173,7 +173,7 @@ class RewardsSubMenu extends MusicBeatSubState
         super.create();       
     }
 
-    var prevMouseActive:Bool = PointlessPins.isMouseActive;
+    var prevMouseActive:Bool = FunkBucks.isMouseActive;
     public function update(elapsed:Float):Void
     {
         handleControls(elapsed);
@@ -183,13 +183,13 @@ class RewardsSubMenu extends MusicBeatSubState
             goBack();
         }
 
-        coolBackButton.visible = !allowedMovement ? false : #if mobile true; #else PointlessPins.isMouseActive; #end
+        coolBackButton.visible = !allowedMovement ? false : #if mobile true; #else FunkBucks.isMouseActive; #end
 
-        if (prevMouseActive != PointlessPins.isMouseActive)
+        if (prevMouseActive != FunkBucks.isMouseActive)
         {
             // updatePurchaseLable();
         }
-        prevMouseActive = PointlessPins.isMouseActive;
+        prevMouseActive = FunkBucks.isMouseActive;
 
         super.update(elapsed);
     }
@@ -450,7 +450,7 @@ class RewardsSubMenu extends MusicBeatSubState
                 if (currentItem.reached && !currentItem.claimed)
                 {
                     trace("Attempting to claim reward: " + currentItem.rID);
-                    PointlessPins.addClaimedMilestone(currentItem.rID);
+                    FunkBucks.addClaimedMilestone(currentItem.rID);
                     switch (currentItem.type)
                     {
                         case RewardType.FunkBuck:
@@ -501,7 +501,7 @@ class RewardsSubMenu extends MusicBeatSubState
                         }
                         case RewardType.Pin:
                         {
-                            var unlockState:PinUnlockState = new PinUnlockState(PointlessPins.getPinByID(currentItem.reward));
+                            var unlockState:PinUnlockState = new PinUnlockState(FunkBucks.getPinByID(currentItem.reward));
                             unlockState.cameras = [camera];
                             unlockState.closeCallback = () -> {
                                 populateItems(CATEGORY, PAGE);
@@ -581,7 +581,7 @@ class RewardItem extends ScriptedFlxSpriteGroup
         claimed = switch (type)
         {
             case RewardType.Category: false;
-            default: PointlessPins.hasClaimedMilestone(rID);
+            default: FunkBucks.hasClaimedMilestone(rID);
         }
 
         switch (type)
@@ -597,7 +597,7 @@ class RewardItem extends ScriptedFlxSpriteGroup
             case RewardType.Pin:
             {
                 icon = new PinSprite(0, 0);
-                icon.isUnknown = !PointlessPins.hasObtainedPin(reward);
+                icon.isUnknown = !FunkBucks.hasObtainedPin(reward);
                 if (!icon.isUnknown) icon.isUnlocked = true;
                 icon.setupPin(reward, "", "", 0.5, claimed ? 0.5 : 1, true);
                 icon.y -= 70;
@@ -672,9 +672,9 @@ class RewardItem extends ScriptedFlxSpriteGroup
         {
             switch (category)
             {
-                case "funkbucks": reached = PointlessPins.getFunkCoinsLifeTime() >= requirement;
-                case "bluejewels": reached = PointlessPins.getBlueJewelsLifeTime() >= requirement;
-                default: reached = PointlessPins.getOpenedBoxCount(category) >= requirement;
+                case "funkbucks": reached = FunkBucks.getFunkCoinsLifeTime() >= requirement;
+                case "bluejewels": reached = FunkBucks.getBlueJewelsLifeTime() >= requirement;
+                default: reached = FunkBucks.getOpenedBoxCount(category) >= requirement;
             }
         }
         else
