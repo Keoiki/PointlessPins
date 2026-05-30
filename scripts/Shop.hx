@@ -324,13 +324,13 @@ class Shop extends MusicBeatState
         screenBlack.scrollFactor.set(0, 0);
         add(screenBlack);
 
-        funkBucksText = new BAlphabet(FlxG.width - 20, 25, '<b>${FunkBucks.getFunkCoins()}</b> ${PTIcon.Buck}');
+        funkBucksText = new BAlphabet(FlxG.width - 20, 25, '<b>${FunkBucks.getFunkCoins()}</b> ${FBIcon.Buck}');
         funkBucksText.scale.set(0.65, 0.65);
         funkBucksText.alignment = "right";
         // funkBucksText.setScrollFactor(0, 0);
         add(funkBucksText);
 
-        blueJewelsText = new BAlphabet(FlxG.width - 20, funkBucksText.y + 70, '<b><c=82E9FF>${FunkBucks.getBlueJewels()}<s=0.5>/${FunkBucks.maximumBlueJewels}</s></c></b> ${PTIcon.Jewel}');
+        blueJewelsText = new BAlphabet(FlxG.width - 20, funkBucksText.y + 70, '<b><c=82E9FF>${FunkBucks.getBlueJewels()}<s=0.5>/${FunkBucks.maximumBlueJewels}</s></c></b> ${FBIcon.Jewel}');
         blueJewelsText.alignment = "right";
         blueJewelsText.scale.set(0.65, 0.65);
         // blueJewelsText.setScrollFactor(0, 0);
@@ -987,7 +987,7 @@ class Shop extends MusicBeatState
         buckSound.pitch = 1.0;
         var easeToUse:FlxEase = amount >= 500 ? FlxEase.expoOut : FlxEase.quartOut;
         FlxTween.num(currentFunkBucks, remainingFunkBucks, 2.5, { ease: easeToUse, onComplete: function(_) {
-            funkBucksText.text = '<b>${Math.floor(remainingFunkBucks)}</b> ${PTIcon.Buck}';
+            funkBucksText.text = '<b>${Math.floor(remainingFunkBucks)}</b> ${FBIcon.Buck}';
         }}, updateFunkBucks);
 
         FunkBucks.addFunkCoins(-amount, false);
@@ -997,7 +997,7 @@ class Shop extends MusicBeatState
     {
         var currentFunkBucks:Int = FunkBucks.getFunkCoins() + amount;
 
-        funkBucksText.text = '<b>$currentFunkBucks</b> ${PTIcon.Buck}';
+        funkBucksText.text = '<b>$currentFunkBucks</b> ${FBIcon.Buck}';
         funkBucksText.y -= 20;
         FunkinSound.playOnce(Paths.sound("fav"), 0.35);
 
@@ -1013,7 +1013,7 @@ class Shop extends MusicBeatState
         var currentJewels:Int = FunkBucks.getBlueJewels();
         var remainingJewels:Int = currentJewels - amount;
 
-        blueJewelsText.text = '<b><c=82E9FF>$remainingJewels<s=0.5>/${FunkBucks.maximumBlueJewels}</s></c></b> ${PTIcon.Jewel}';
+        blueJewelsText.text = '<b><c=82E9FF>$remainingJewels<s=0.5>/${FunkBucks.maximumBlueJewels}</s></c></b> ${FBIcon.Jewel}';
         blueJewelsText.y += 20;
         FunkinSound.playOnce(Paths.sound("bluejewel"));
 
@@ -1024,7 +1024,7 @@ class Shop extends MusicBeatState
     {
         var currentJewels:Int = FunkBucks.getBlueJewels() + amount;
 
-        blueJewelsText.text = '<b><c=82E9FF>$currentJewels<s=0.5>/${FunkBucks.maximumBlueJewels}</s></c></b> ${PTIcon.Jewel}';
+        blueJewelsText.text = '<b><c=82E9FF>$currentJewels<s=0.5>/${FunkBucks.maximumBlueJewels}</s></c></b> ${FBIcon.Jewel}';
         blueJewelsText.y -= 20;
         FunkinSound.playOnce(Paths.sound("bluejewel"));
 
@@ -1039,7 +1039,7 @@ class Shop extends MusicBeatState
     {
         if (previousFunkBucks != Math.floor(value))
         {
-            funkBucksText.text = '<b>${Math.floor(value)}</b> ${PTIcon.Buck}';
+            funkBucksText.text = '<b>${Math.floor(value)}</b> ${FBIcon.Buck}';
             funkBucksText.y += 5;
             FunkinSound.playOnce(Paths.sound("fav"), 0.35);
         }

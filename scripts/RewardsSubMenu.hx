@@ -30,7 +30,7 @@ class RewardsSubMenu extends MusicBeatSubState
         "funkbucks" => {
             name: "funkbucks",
             description: "Total FunkBucks obtained.",
-            requirementIcon: PTIcon.Buck,
+            requirementIcon: FBIcon.Buck,
             order: 0,
             rewards: [
                 "1" => {id: "funkbucks01", requirement: 100, type: RewardType.FunkBuck, reward: 20},
@@ -53,7 +53,7 @@ class RewardsSubMenu extends MusicBeatSubState
         "bluejewels" => {
             name: "bluejewels",
             description: "Total Blue Jewels obtained.",
-            requirementIcon: PTIcon.Jewel,
+            requirementIcon: FBIcon.Jewel,
             order: 1,
             rewards: [
                 "1" => {id: "bluejewel01", requirement: 1, type: RewardType.FunkBuck, reward: 250},
@@ -67,7 +67,7 @@ class RewardsSubMenu extends MusicBeatSubState
         "cardboard" => {
             name: "cardboard",
             description: "Total Cardboard Boxes opened.",
-            requirementIcon: PTIcon.CardboardBox,
+            requirementIcon: FBIcon.CardboardBox,
             order: 2,
             rewards: [
                 "1" => {id: "cardboardbox01", requirement: 10, type: RewardType.FunkBuck, reward: 100},
@@ -82,7 +82,7 @@ class RewardsSubMenu extends MusicBeatSubState
         "smallgiftbox" => {
             name: "smallgiftbox",
             description: "Total Small Giftboxes opened.",
-            requirementIcon: PTIcon.SmallGiftbox,
+            requirementIcon: FBIcon.SmallGiftbox,
             order: 3,
             rewards: [
                 "1" => {id: "smallgiftbox01", requirement: 10, type: RewardType.FunkBuck, reward: 200},
@@ -627,13 +627,13 @@ class RewardItem extends ScriptedFlxSpriteGroup
                 icon.x -= icon.width / 2;
                 icon.y -= icon.height - 8;
 
-                number = new BAlphabet(0, 0, '<b>$reward</b> ${PTIcon.Buck}');
+                number = new BAlphabet(0, 0, '<b>$reward</b> ${FBIcon.Buck}');
                 number.alignment = "center";
                 number.scale.set(0.4, 0.4);
             }
             case RewardType.Jewel:
             {
-                number = new BAlphabet(0, 0, '<b>$reward</b> ${PTIcon.Jewel}');
+                number = new BAlphabet(0, 0, '<b>$reward</b> ${FBIcon.Jewel}');
                 number.alignment = "center";
                 number.scale.set(0.4, 0.4);
             }

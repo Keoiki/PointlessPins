@@ -165,7 +165,7 @@ class PinBoard extends MusicBeatSubState
             var tc:String = ReflectUtil.getAnonymousField(pinJSON, PIN_RARITIES[i]).color;
             var pinsInRarity:Int = PINS_BY_RARITY[i].length;
             if (PIN_RARITIES[i] == "Special") pinsInRarity--;
-            var star:String = unlockedPinsPerRarity[i] >= pinsInRarity ? "&#xE011; " : "";
+            var star:String = unlockedPinsPerRarity[i] == PINS_BY_RARITY[i].length ? '${FBIcon.Star} ' : '';
             var rarityText = new BAlphabet(PIN_X_START - 24, textOffset, "<b>" + star + "<c=" + tc + ">" + PIN_RARITIES[i] + "</c>  <s=0.5>(" + (unlockedPinsPerRarity[i] ?? 0) + "/" + pinsInRarity + ")</s></b>");
             rarityText.scale.set(0.8, 0.8);
             add(rarityText);

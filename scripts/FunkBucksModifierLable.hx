@@ -57,7 +57,7 @@ class FunkBucksModifierLable extends Module
             if (isEndlessOn && canBeUpdated && addedToState)
             {
                 canBeUpdated = false;
-                modifierText.text = '<b><c=00BBFF>${formatModifier(0.25)} ${PTIcon.Buck} (Endless)</c></b>';
+                modifierText.text = '<b><c=00BBFF>${formatModifier(0.25)} ${FBIcon.Buck} (Endless)</c></b>';
                 modifierText.alpha = 1;
             }
             else if (!isEndlessOn && !canBeUpdated && addedToState)
@@ -126,7 +126,7 @@ class FunkBucksModifierLable extends Module
         var currentWeek:String = FlxG.state.currentLevelId;
         var repeatPenalty:Float = PointlessPins.getPrevSongs().filter(week -> week == currentWeek).length;
 
-        modifierText.text = '$bonusDisplay<b><c=${PointlessPins.penaltyColors[repeatPenalty]}>${formatModifier(PointlessPins.penalties[repeatPenalty])}</c></b> ${PTIcon.Buck}';
+        modifierText.text = '$bonusDisplay<b><c=${PointlessPins.penaltyColors[repeatPenalty]}>${formatModifier(PointlessPins.penalties[repeatPenalty])}</c></b> ${FBIcon.Buck}';
     }
 
     override public function onFreeplayIntroDone(event:FreeplayScriptEvent)
@@ -181,12 +181,12 @@ class FunkBucksModifierLable extends Module
             var currentSong:String = event.capsule.freeplayData.data.id + "-" + event.variationId;
             if (PointlessPins.getDailies().contains(currentSong))
             {
-                modifierText.text = '$bonusDisplay<b><c=00FF00>${formatModifier(1.5)}</c> ${PTIcon.Buck} (Daily)</b>';
+                modifierText.text = '$bonusDisplay<b><c=00FF00>${formatModifier(1.5)}</c> ${FBIcon.Buck} (Daily)</b>';
             }
             else
             {
                 var repeatPenalty:Float = PointlessPins.getPrevSongs().filter(song -> song == currentSong).length;
-                modifierText.text = '$bonusDisplay<b><c=${PointlessPins.penaltyColors[repeatPenalty]}>${formatModifier(PointlessPins.penalties[repeatPenalty])}</c></b> ${PTIcon.Buck}';
+                modifierText.text = '$bonusDisplay<b><c=${PointlessPins.penaltyColors[repeatPenalty]}>${formatModifier(PointlessPins.penalties[repeatPenalty])}</c></b> ${FBIcon.Buck}';
             }
         }
     }

@@ -58,16 +58,16 @@ class DailyBoard extends FunkinGroup
                 switch (dailySongVariation)
                 {
                     case "default": variationToAdd = ""; // Nothing gets added to default variation names.
-                    case "erect": variationToAdd += PTIcon.Erect;
-                    case "bf": variationToAdd += PTIcon.Boyfriend;
-                    case "pico": variationToAdd += PTIcon.Pico;
-                    case "hundrec": variationToAdd += PTIcon.Hundrec;
-                    case "gooey": variationToAdd += PTIcon.Gooey;
-                    case "remnants": variationToAdd += ["darnell", "lit-up", "2hot", "blazin"].contains(dailySongID) ? PTIcon.RemnantPico : PTIcon.RemnantBF;
-                    case "bfremnants": variationToAdd += PTIcon.RemnantBF;
-                    case "reimu": variationToAdd += PTIcon.Reimu;
-                    case "qt": variationToAdd += PTIcon.QT;
-                    case "spookymod": variationToAdd += PTIcon.SpookyKids;
+                    case "erect": variationToAdd += FBIcon.Erect;
+                    case "bf": variationToAdd += FBIcon.Boyfriend;
+                    case "pico": variationToAdd += FBIcon.Pico;
+                    case "hundrec": variationToAdd += FBIcon.Hundrec;
+                    case "gooey": variationToAdd += FBIcon.Gooey;
+                    case "remnants": variationToAdd += ["darnell", "lit-up", "2hot", "blazin"].contains(dailySongID) ? FBIcon.RemnantPico : FBIcon.RemnantBF;
+                    case "bfremnants": variationToAdd += FBIcon.RemnantBF;
+                    case "reimu": variationToAdd += FBIcon.Reimu;
+                    case "qt": variationToAdd += FBIcon.QT;
+                    case "spookymod": variationToAdd += FBIcon.SpookyKids;
                     default:
                     {
                         variationToAdd += '&#xFFFD;';

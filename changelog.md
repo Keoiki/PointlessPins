@@ -36,6 +36,7 @@
 
 ### Changed
 
+- The "PointlessPins" class and module name have been changed to "FunkBucks".
 - The shop itself has gone under a major visual upgrade.
 - Increased the cost of Cardboard Boxes from 10 to 20 FunkBucks.
 - Added a 1% chance to get a Rare pin from Cardboard Boxes.

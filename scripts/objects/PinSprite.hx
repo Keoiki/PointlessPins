@@ -29,9 +29,9 @@ class PinSprite extends FunkinSprite
         {
             switch (e.matched(1).toLowerCase())
             {
-                case "mod": return PTIcon.Modded;
-                case "internet": return PTIcon.Internet;
-                case "game": return PTIcon.Game;
+                case "mod": return FBIcon.Modded;
+                case "internet": return FBIcon.Internet;
+                case "game": return FBIcon.Game;
                 default: return "";
             }
         });

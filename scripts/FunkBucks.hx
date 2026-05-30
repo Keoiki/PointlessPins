@@ -654,8 +654,8 @@ class FunkBucks extends Module
             }
             else
             {
-                awardNormalCompletionJewel = FlxG.random.bool(Math.pow(FunkBucks.getBlueJewelPity(), 2) / 1000);
                 bucksToAward *= repeatPenalty;
+                awardNormalCompletionJewel = FlxG.random.bool(Math.pow(FunkBucks.getBlueJewelPity(), 2) / 1000);
                 trace("Repeat penalty: " + repeatPenalty * 100 + "%");
             }
 
@@ -691,7 +691,7 @@ class FunkBucks extends Module
             trace(currentSongOrWeek, rank, bucksToAward, awardedJewels, excessFunkBucks, previousSongs);
             trace(awardNormalCompletionJewel, FunkBucks.getBlueJewelPity(), Math.pow(FunkBucks.getBlueJewelPity(), 2) / 1000);
 
-            var funkBucksText = new BAlphabet(40, 50, '<b><c=$resultTextColor>${bucksToAward > 0 ? "+" : ""}$bucksToAward</c></b> ${PTIcon.Buck}');
+            var funkBucksText = new BAlphabet(40, 50, '<b><c=$resultTextColor>${bucksToAward > 0 ? "+" : ""}$bucksToAward</c></b> ${FBIcon.Buck}');
             funkBucksText.scale.set(0.65, 0.65);
             funkBucksText.alpha = 0;
             funkBucksText.zIndex = 5000;
@@ -706,7 +706,7 @@ class FunkBucks extends Module
 
             if (awardedJewels > 0)
             {
-                var jewelsText = new BAlphabet(30, 70, '<b><c=82E9FF>+${awardedJewels}</c></b> ${PTIcon.Jewel}');
+                var jewelsText = new BAlphabet(30, 70, '<b><c=82E9FF>+${awardedJewels}</c></b> ${FBIcon.Jewel}');
                 jewelsText.resetOrigin();
                 jewelsText.scale.set(0.65, 0.65);
                 jewelsText.alpha = 0;
@@ -765,7 +765,7 @@ class FunkBucks extends Module
 /**
  * This class contains a constant for each text icon the mod adds.
  */
-class PTIcon
+class FBIcon
 {
     static final Buck:String = "&#xE000;";
     static final Jewel:String = "&#xE001;";

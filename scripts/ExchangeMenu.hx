@@ -35,13 +35,13 @@ class ExchangeMenu extends MusicBeatSubState
         bg.alpha = 0.8;
         add(bg);
 
-        var button01:PinButton = new PinButton(150, 100, 400, 110, '<b>${jewelCosts[0]} ${PTIcon.Jewel} &#x21E8; ${PointlessPins.bucksForBlueJewel} ${PTIcon.Buck}</b>');
+        var button01:PinButton = new PinButton(150, 100, 400, 110, '<b>${jewelCosts[0]} ${FBIcon.Jewel} &#x21E8; ${PointlessPins.bucksForBlueJewel} ${FBIcon.Buck}</b>');
         add(button01);
-        var button02:PinButton = new PinButton(150, 225, 400, 110, '<b>${jewelCosts[1]} ${PTIcon.Jewel} &#x21E8; 1 ${PTIcon.Legendary}</b>');
+        var button02:PinButton = new PinButton(150, 225, 400, 110, '<b>${jewelCosts[1]} ${FBIcon.Jewel} &#x21E8; 1 ${FBIcon.Legendary}</b>');
         add(button02);
-        var button03:PinButton = new PinButton(150, 350, 400, 110, '<b>${jewelCosts[2]} ${PTIcon.Jewel} &#x21E8; 1 ${PTIcon.Mythic}</b>');
+        var button03:PinButton = new PinButton(150, 350, 400, 110, '<b>${jewelCosts[2]} ${FBIcon.Jewel} &#x21E8; 1 ${FBIcon.Mythic}</b>');
         add(button03);
-        var button04:PinButton = new PinButton(150, 475, 400, 110, '<b>${jewelCosts[3]} ${PTIcon.Jewel} &#x21E8; 1 ${PTIcon.Divine}</b>');
+        var button04:PinButton = new PinButton(150, 475, 400, 110, '<b>${jewelCosts[3]} ${FBIcon.Jewel} &#x21E8; 1 ${FBIcon.Divine}</b>');
         add(button04);
 
         buttons.push(button01);
@@ -56,7 +56,7 @@ class ExchangeMenu extends MusicBeatSubState
         confirmScreenBG.visible = false;
         add(confirmScreenBG);
 
-        confirmScreenText = new BAlphabet(FlxG.width / 2, confirmScreenBG.y + 75, '<b>Exchange 5 ${PTIcon.Jewel} for:\n1 Unique <c=FFB51C>Legendary</c> Pin?</b>');
+        confirmScreenText = new BAlphabet(FlxG.width / 2, confirmScreenBG.y + 75, '<b>Exchange 5 ${FBIcon.Jewel} for:\n1 Unique <c=FFB51C>Legendary</c> Pin?</b>');
         confirmScreenText.alignment = "center";
         confirmScreenText.scale.set(0.6, 0.6);
         confirmScreenText.visible = false;
@@ -139,10 +139,10 @@ class ExchangeMenu extends MusicBeatSubState
                 }
                 switch (confirmedItem)
                 {
-                    case 0: confirmScreenText.text = '<b>Exchange ${jewelCosts[0]} ${PTIcon.Jewel} for:\n500 ${PTIcon.Buck}?</b>';
-                    case 1: confirmScreenText.text = '<b>Exchange ${jewelCosts[1]} ${PTIcon.Jewel} for:\n1 Unique <c=FFB51C>Legendary</c> Pin?</b>\n<s=0.5>(A pin you don\'t own yet!)</s>';
-                    case 2: confirmScreenText.text = '<b>Exchange ${jewelCosts[2]} ${PTIcon.Jewel} for:\n1 Unique <c=FF57F7>Mythic</c> Pin?</b>\n<s=0.5>(A pin you don\'t own yet!)</s>';
-                    case 3: confirmScreenText.text = '<b>Exchange ${jewelCosts[3]} ${PTIcon.Jewel} for:\n1 Unique <c=66FFFF>Divine</c> Pin?</b>\n<s=0.5>(A pin you don\'t own yet!)</s>';
+                    case 0: confirmScreenText.text = '<b>Exchange ${jewelCosts[0]} ${FBIcon.Jewel} for:\n500 ${FBIcon.Buck}?</b>';
+                    case 1: confirmScreenText.text = '<b>Exchange ${jewelCosts[1]} ${FBIcon.Jewel} for:\n1 Unique <c=FFB51C>Legendary</c> Pin?</b>\n<s=0.5>(A pin you don\'t own yet!)</s>';
+                    case 2: confirmScreenText.text = '<b>Exchange ${jewelCosts[2]} ${FBIcon.Jewel} for:\n1 Unique <c=FF57F7>Mythic</c> Pin?</b>\n<s=0.5>(A pin you don\'t own yet!)</s>';
+                    case 3: confirmScreenText.text = '<b>Exchange ${jewelCosts[3]} ${FBIcon.Jewel} for:\n1 Unique <c=66FFFF>Divine</c> Pin?</b>\n<s=0.5>(A pin you don\'t own yet!)</s>';
                 }
                 savedSelection = selected;
                 allowedMovement = false;
