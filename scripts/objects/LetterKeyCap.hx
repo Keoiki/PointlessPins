@@ -39,7 +39,7 @@ class KeyCap extends FunkinGroup
 
     override function update(elapsed:Float):Void
     {
-        this.visible = !PointlessPins.isMouseActive;
+        this.visible = !FunkBucks.isMouseActive;
 
         super.update(elapsed);
     }

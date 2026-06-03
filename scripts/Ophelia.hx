@@ -35,7 +35,7 @@ class Ophelia extends FunkinSprite
             return;
         }
 
-        var anger:Int = PointlessPins.getOpheliaAnger();
+        var anger:Int = FunkBucks.getOpheliaAnger();
         if (animationsWithVariations.contains(name))
         {
             var nameToUse:String = name;
