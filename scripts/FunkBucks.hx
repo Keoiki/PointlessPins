@@ -160,11 +160,11 @@ class FunkBucks extends Module
     public static function getUnlockedPinsCount():Int
     {
         var count:Int = 0;
-        for (rarity in ReflectUtil.getAnonymousFieldsOf(PointlessPins.pinData))
+        for (rarity in ReflectUtil.getAnonymousFieldsOf(FunkBucks.pinData))
         {
-            for (pin in ReflectUtil.getAnonymousField(PointlessPins.pinData, rarity).pins)
+            for (pin in ReflectUtil.getAnonymousField(FunkBucks.pinData, rarity).pins)
             {
-                if (PointlessPins.hasObtainedPin(pin.id))
+                if (FunkBucks.hasObtainedPin(pin.id))
                 {
                     count++;
                 }

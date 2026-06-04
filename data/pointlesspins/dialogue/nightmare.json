@@ -1,0 +1,41 @@
+[
+    {
+        "text": "Huh?",
+        "speaker": "Ophelia",
+        "canSkip": false
+    },
+    {
+        "text": "A hand?<d=0.5/> Behind the shelf?",
+        "speaker": "Ophelia",
+        "canSkip": false
+    },
+    {
+        "text": "Have you listened to too many scary stories or something?",
+        "speaker": "Ophelia",
+        "canSkip": false
+    },
+    {
+        "text": "<S><a=0.5>I assure you we do hands out rewards.</a></S>",
+        "canSkip": false
+    },
+    {
+        "text": "...",
+        "speaker": "Ophelia",
+        "canSkip": false
+    },
+    {
+        "text": "Wait<d=0.25/> what?",
+        "speaker": "Ophelia",
+        "canSkip": false
+    },
+    {
+        "text": "I didn't say anything.",
+        "speaker": "Ophelia",
+        "canSkip": false
+    },
+    {
+        "text": "I swear if this is some elaborate prank on your end.",
+        "speaker": "Ophelia",
+        "canSkip": false
+    }
+]

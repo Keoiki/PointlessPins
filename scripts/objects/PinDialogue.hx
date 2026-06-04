@@ -164,6 +164,7 @@ class PinDialogue extends FunkinGroup
         if (dialogueLine.speaker != null)
         {
             speakerName.text = dialogueLine.speaker;
+            speakerName.localVisible = true;
             speakerBox.localVisible = true;
             speakerBox.localScale.x = speakerName.width * speakerName.localScale.x / 2 + 16;
         }

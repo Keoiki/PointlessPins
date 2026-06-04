@@ -35,7 +35,7 @@ class ExchangeMenu extends MusicBeatSubState
         bg.alpha = 0.8;
         add(bg);
 
-        var button01:PinButton = new PinButton(150, 100, 400, 110, '<b>${jewelCosts[0]} ${FBIcon.Jewel} &#x21E8; ${PointlessPins.bucksForBlueJewel} ${FBIcon.Buck}</b>');
+        var button01:PinButton = new PinButton(150, 100, 400, 110, '<b>${jewelCosts[0]} ${FBIcon.Jewel} &#x21E8; ${FunkBucks.bucksForBlueJewel} ${FBIcon.Buck}</b>');
         add(button01);
         var button02:PinButton = new PinButton(150, 225, 400, 110, '<b>${jewelCosts[1]} ${FBIcon.Jewel} &#x21E8; 1 ${FBIcon.Legendary}</b>');
         add(button02);
@@ -74,7 +74,7 @@ class ExchangeMenu extends MusicBeatSubState
 
         coolBackButton = new FunkinBackButton(FlxG.width - 220, FlxG.height - 200, 0xFFFFFFFF, goBack, 1.0, true);
         #if !mobile
-        coolBackButton.visible = PointlessPins.isMouseActive;
+        coolBackButton.visible = FunkBucks.isMouseActive;
         FlxMouseEvent.add(coolBackButton, coolBackButton.playHoldAnim, coolBackButton.playConfirmAnim);
         #end
         add(coolBackButton);
@@ -91,7 +91,7 @@ class ExchangeMenu extends MusicBeatSubState
     {
         super.update(elapsed);
 
-        coolBackButton.visible = !allowedMovement ? false : #if mobile true; #else PointlessPins.isMouseActive; #end
+        coolBackButton.visible = !allowedMovement ? false : #if mobile true; #else FunkBucks.isMouseActive; #end
         coolBackButton.active = allowedMovement;
 
         if (allowedMovement)
@@ -123,7 +123,7 @@ class ExchangeMenu extends MusicBeatSubState
 
             if (confirmedItem != -1)
             {
-                var tooPoor:Bool = PointlessPins.getBlueJewels() < jewelCosts[confirmedItem];
+                var tooPoor:Bool = FunkBucks.getBlueJewels() < jewelCosts[confirmedItem];
                 // var tooPoor:Bool = false;
                 if (!buttons[confirmedItem].isActive)
                 {
@@ -193,7 +193,7 @@ class ExchangeMenu extends MusicBeatSubState
                 {
                     case 0:
                     {
-                        _parentState.addFunkBucks(PointlessPins.bucksForBlueJewel);
+                        _parentState.addFunkBucks(FunkBucks.bucksForBlueJewel);
                         goBack();
                         new FlxTimer().start(0.25, function(_:FlxTimer) {
                             allowedMovement = true;
@@ -204,10 +204,10 @@ class ExchangeMenu extends MusicBeatSubState
                     {
                         goBack();
                         var rarities:Array<String> = ["Legendary", "Mythic", "Divine"];
-                        var lockedPinsOfRarity:Array<String> = PointlessPins.getAllPinIDsOfRarity(rarities[savedSelection - 1]).filter(function(pinID:String):Bool {
-                            return !PointlessPins.hasObtainedPin(pinID);
+                        var lockedPinsOfRarity:Array<String> = FunkBucks.getAllPinIDsOfRarity(rarities[savedSelection - 1]).filter(function(pinID:String):Bool {
+                            return !FunkBucks.hasObtainedPin(pinID);
                         });
-                        var substate = new PinUnlockState(PointlessPins.getPinByID(lockedPinsOfRarity[FlxG.random.int(0, lockedPinsOfRarity.length - 1)]));
+                        var substate = new PinUnlockState(FunkBucks.getPinByID(lockedPinsOfRarity[FlxG.random.int(0, lockedPinsOfRarity.length - 1)]));
                         substate.cameras = [camera];
                         substate.closeCallback = () ->
                         {
@@ -271,30 +271,30 @@ class ExchangeMenu extends MusicBeatSubState
         buttons[2].isActive = false;
         buttons[3].isActive = false;
 
-        var legendaries:Array<String> = PointlessPins.getAllPinIDsOfRarity("Legendary");
+        var legendaries:Array<String> = FunkBucks.getAllPinIDsOfRarity("Legendary");
         for (pin in legendaries)
         {
-            if (!PointlessPins.hasObtainedPin(pin))
+            if (!FunkBucks.hasObtainedPin(pin))
             {
                 buttons[1].isActive = true;
                 break;
             }
         }
 
-        var mythics:Array<String> = PointlessPins.getAllPinIDsOfRarity("Mythic");
+        var mythics:Array<String> = FunkBucks.getAllPinIDsOfRarity("Mythic");
         for (pin in mythics)
         {
-            if (!PointlessPins.hasObtainedPin(pin))
+            if (!FunkBucks.hasObtainedPin(pin))
             {
                 buttons[2].isActive = true;
                 break;
             }
         }
 
-        var divines:Array<String> = PointlessPins.getAllPinIDsOfRarity("Divine");
+        var divines:Array<String> = FunkBucks.getAllPinIDsOfRarity("Divine");
         for (pin in divines)
         {
-            if (!PointlessPins.hasObtainedPin(pin))
+            if (!FunkBucks.hasObtainedPin(pin))
             {
                 buttons[3].isActive = true;
                 break;

@@ -100,7 +100,7 @@ class FunkBucksModifierLable extends Module
     {
         if (addedToState) return;
 
-        bonusPercentage = PointlessPins.getFunkCoinBonus();
+        bonusPercentage = FunkBucks.getFunkCoinBonus();
 
         modifierText = new BAlphabet(FlxG.width - 20, 640, "");
         modifierText.scale.set(0.5, 0.5);
@@ -124,14 +124,14 @@ class FunkBucksModifierLable extends Module
         modifierText.alpha = 1;
 
         var currentWeek:String = FlxG.state.currentLevelId;
-        var repeatPenalty:Float = PointlessPins.getPrevSongs().filter(week -> week == currentWeek).length;
+        var repeatPenalty:Float = FunkBucks.getPrevSongs().filter(week -> week == currentWeek).length;
 
-        modifierText.text = '$bonusDisplay<b><c=${PointlessPins.penaltyColors[repeatPenalty]}>${formatModifier(PointlessPins.penalties[repeatPenalty])}</c></b> ${FBIcon.Buck}';
+        modifierText.text = '$bonusDisplay<b><c=${FunkBucks.penaltyColors[repeatPenalty]}>${formatModifier(FunkBucks.penalties[repeatPenalty])}</c></b> ${FBIcon.Buck}';
     }
 
     override public function onFreeplayIntroDone(event:FreeplayScriptEvent)
     {
-        bonusPercentage = PointlessPins.getFunkCoinBonus();
+        bonusPercentage = FunkBucks.getFunkCoinBonus();
 
         modifierText = new BAlphabet(20, FlxG.height + 10, "");
         modifierText.scale.set(0.5, 0.5);
@@ -179,14 +179,14 @@ class FunkBucksModifierLable extends Module
         {
             onRandom = false;
             var currentSong:String = event.capsule.freeplayData.data.id + "-" + event.variationId;
-            if (PointlessPins.getDailies().contains(currentSong))
+            if (FunkBucks.getDailies().contains(currentSong))
             {
                 modifierText.text = '$bonusDisplay<b><c=00FF00>${formatModifier(1.5)}</c> ${FBIcon.Buck} (Daily)</b>';
             }
             else
             {
-                var repeatPenalty:Float = PointlessPins.getPrevSongs().filter(song -> song == currentSong).length;
-                modifierText.text = '$bonusDisplay<b><c=${PointlessPins.penaltyColors[repeatPenalty]}>${formatModifier(PointlessPins.penalties[repeatPenalty])}</c></b> ${FBIcon.Buck}';
+                var repeatPenalty:Float = FunkBucks.getPrevSongs().filter(song -> song == currentSong).length;
+                modifierText.text = '$bonusDisplay<b><c=${FunkBucks.penaltyColors[repeatPenalty]}>${formatModifier(FunkBucks.penalties[repeatPenalty])}</c></b> ${FBIcon.Buck}';
             }
         }
     }
@@ -198,7 +198,7 @@ class FunkBucksModifierLable extends Module
 
     function formatModifier(modifier:Float):String
     {
-        switch (PointlessPins.save.modifierText)
+        switch (FunkBucks.save.modifierText)
         {
             case "multiplier": return '${modifier}x';
             default: return '${modifier * 100}%';
@@ -207,7 +207,7 @@ class FunkBucksModifierLable extends Module
 
     function formatBonusModifier(modifier:Float):String
     {
-        switch (PointlessPins.save.modifierText)
+        switch (FunkBucks.save.modifierText)
         {
             case "multiplier": return '+${modifier}x';
             default: return '+${modifier * 100 - 100}%';
