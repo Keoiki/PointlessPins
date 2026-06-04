@@ -14,6 +14,7 @@ import flixel.tweens.FlxTween;
 import flixel.tweens.FlxEase;
 import flixel.math.FlxMath;
 import flixel.input.mouse.FlxMouseEvent;
+import flixel.addons.transition.FlxTransitionableState;
 import flixel.FlxObject;
 import balphabet.BAlphabetTyped;
 import balphabet.BAlphabet;
@@ -30,6 +31,8 @@ class Shop extends MusicBeatState
     var STATE:String = "MAIN";
     var cameraFollowPoint:FlxObject;
     var justGainedFocus:Bool = false;
+
+    var cannotDoText:BAlphabet;
 
     // Dialogue
     var canContinue:Bool = false;
@@ -95,13 +98,19 @@ class Shop extends MusicBeatState
         add(cameraFollowPoint);
         camera.follow(cameraFollowPoint, null, 0.05);
 
-        FunkinSound.playMusic('chartEditorLoop',
+        if (Ophelia.caught)
         {
-            statingVolume: 0.0,
-            overrideExisting: true,
-            restartTrack: false,
-            persist: true
-        });
+            FlxG.sound.music.stop();
+        }
+        else
+        {
+            FunkinSound.playMusic('chartEditorLoop',
+            {
+                overrideExisting: true,
+                restartTrack: false,
+                persist: true
+            });
+        }
 
         // Shop
 
@@ -121,6 +130,19 @@ class Shop extends MusicBeatState
         dailiesText.zIndex = -996;
         dailiesText.setScrollFactor(0.85, 0.85);
         add(dailiesText);
+
+        if (!PointlessPins.hasObtainedPin("tuntematon") && PointlessPins.getUnlockedPinsCount() >= 30 && FlxG.random.bool(1) && !Tuntematon.gone && !Ophelia.caught)
+        {
+            var shelf:FunkinSprite = new FunkinSprite(1350 - spriteNudge, 0).loadTexture("shop/rewardsshelf");
+            shelf.zIndex = -980;
+            shelf.scrollFactor.set(0.85, 0.85);
+            add(shelf);
+
+            var t:Tuntematon = new Tuntematon(1350 - spriteNudge + shelf.width, 80);
+            t.zIndex = -979;
+            t.scrollFactor.set(0.85, 0.85);
+            add(t);
+        }
 
         lighting = new FunkinSprite(wall.x, wall.y).loadTexture("shop/lighting");
         lighting.zIndex = -900;
@@ -168,8 +190,29 @@ class Shop extends MusicBeatState
         randombox03.zIndex = 489;
         add(randombox03);
 
+        if (Ophelia.caught)
+        {
+            remove(dailiesText);
+            remove(dailyBoard);
+            remove(lighting);
+            remove(fbStack01);
+            remove(fbStack02);
+            remove(fbStack03);
+            remove(randombox01);
+            remove(randombox02);
+            remove(randombox03);
+            lighting = new FunkinSprite(-800, -440).makeSolidColor(3000, 1600, 0xFF3C1B41);
+            lighting.zIndex = 5000;
+            lighting.scrollFactor.set(0, 0);
+            lighting.blend = 9;
+            lighting.alpha = 0.85;
+            add(lighting);
+        }
+
         for (i in 0...3)
         {
+            if (Ophelia.caught) break;
+
             var lamp:FunkinSprite = new FunkinSprite(40 + (i * 640) - spriteNudge, -270, "shop/lamp");
             lamp.zIndex = 1000;
             lamp.scrollFactor.set(1.1, 1.1);
@@ -246,6 +289,12 @@ class Shop extends MusicBeatState
         funkBucksText.scrollFactor.set(0, 0);
         add(funkBucksText);
 
+        cannotDoText = new BAlphabet(FlxG.width / 2, FlxG.height - 100, "<b><c=FF0000>You cannot do that right now.</c></b>");
+        cannotDoText.alignment = "center";
+        cannotDoText.setScale(0.5);
+        cannotDoText.alpha = 0.0001;
+        add(cannotDoText);
+
         dialogueBar = new FunkinSprite(0, 32).makeSolidColor(FlxG.width, 96, 0xFF000000);
         dialogueBar.alpha = 0.0;
         add(dialogueBar);
@@ -283,6 +332,7 @@ class Shop extends MusicBeatState
         funkBucksText.cameras = [cameraHUD];
         dialogueBar.cameras = [cameraHUD];
         dialogueText.cameras = [cameraHUD];
+        cannotDoText.cameras = [cameraHUD];
         coolBackButton.cameras = [cameraHUD];
 
         if (ModStore.get("pinsIsOutdated") && ModStore.get("pinsHasShownOutdate") == null)
@@ -338,6 +388,10 @@ class Shop extends MusicBeatState
                 {
                     opheliaAngerRepeatDialogue();
                 }
+                case "???":
+                {
+                    ebgquwwghobehjovbefogbeqir();
+                }
                 default: {}
             }
         }
@@ -385,6 +439,13 @@ class Shop extends MusicBeatState
 
         if (FlxG.keys.justPressed.TWO || (TouchUtil.pressAction(iconBoxes) && !isMouseTooFast && !TouchUtil.overlaps(coolBackButton, cameraHUD)))
         {
+            if (Ophelia.caught)
+            {
+                FlxTween.completeTweensOf(cannotDoText);
+                FlxTween.tween(cannotDoText, { alpha: 1 }, 2, { ease: FlxEase.cubeOut, type: 16 });
+                return;
+            }
+
             disallowInputs = true;
             cameraFollowPoint.setPosition(iconBoxes.x + iconBoxes.width / 2, iconBoxes.y - 4);
             showMenuItems(false);
@@ -559,6 +620,22 @@ class Shop extends MusicBeatState
         // Ophelia's sprite extends behind the counter, we don't wanna count pressing in that area as well.
         if (TouchUtil.pressAction(opheliaHitbox, camera) && !TouchUtil.overlaps(coolBackButton, cameraHUD) && !isMouseTooFast)
         {
+            if (Tuntematon.gone && !Ophelia.caught)
+            {
+                ophelia.annoyance = 0;
+                dialogueCount = 0;
+                disallowInputs = true;
+                STATE = "???";
+                ebgquwwghobehjovbefogbeqir();
+                return;
+            }
+            else if (Ophelia.caught)
+            {
+                FlxTween.completeTweensOf(cannotDoText);
+                FlxTween.tween(cannotDoText, { alpha: 1 }, 2, { ease: FlxEase.cubeOut, type: 16 });
+                return;
+            }
+
             ophelia.annoyance++;
             trace("Boop! " + ophelia.annoyance);
 
@@ -771,6 +848,111 @@ class Shop extends MusicBeatState
                 FlxTween.tween(camera, { zoom: 1 }, 1, { ease: FlxEase.cubeOut });
                 FlxTween.tween(funkBucksText, { alpha: 1 }, 1, { ease: FlxEase.cubeOut });
                 dialogueCount = -1;
+            }
+        }
+    }
+
+    function ebgquwwghobehjovbefogbeqir():Void
+    {
+        switch (dialogueCount)
+        {
+            case 0:
+            {
+                canContinue = false;
+                showMenuItems(false);
+                dialogueDisappearTimer?.cancel();
+                dialogueBar.alpha = 0.75;
+                dialogueText.finish();
+                dialogueText.text = "Huh?";
+                dialogueText.startTyping();
+
+                cameraFollowPoint.setPosition(opheliaHitbox.x + opheliaHitbox.width / 2, opheliaHitbox.y + 115);
+                FlxTween.tween(camera, { zoom: 1.5 }, 1, { ease: FlxEase.cubeOut });
+                FlxTween.tween(funkBucksText, { alpha: 0 }, 1, { ease: FlxEase.cubeOut });
+                new FlxTimer().start(1, function(_:FlxTimer) {
+                    canContinue = true;
+                });
+                coolBackButton.visible = false;
+
+                dialogueCount = 1;
+            }
+            case 1:
+            {
+                canContinue = false;
+                dialogueText.text = "Shelf?<d=1.0/> Hand?";
+                dialogueText.startTyping();
+
+                new FlxTimer().start(2.0, function(_:FlxTimer) {
+                    canContinue = true;
+                });
+
+                dialogueCount = 2;
+            }
+            case 2:
+            {
+                canContinue = false;
+                ophelia.suffix = "Confused";
+                dialogueText.text = "Wait,<d=0.5/> a shelf?";
+                dialogueText.startTyping();
+
+                new FlxTimer().start(2.0, function(_:FlxTimer) {
+                    canContinue = true;
+                });
+
+                dialogueCount = 3;
+            }
+            case 3:
+            {
+                canContinue = false;
+                dialogueText.text = "But that's not supposed to be here yet...";
+                dialogueText.startTyping();
+
+                new FlxTimer().start(3.0, function(_:FlxTimer) {
+                    canContinue = true;
+                });
+
+                dialogueCount = 4;
+            }
+            case 4:
+            {
+                canContinue = false;
+                ophelia.suffix = "";
+                ophelia.playAnimation("LookAtShelf");
+                // cameraFollowPoint.setPosition(opheliaHitbox.x + opheliaHitbox.width / 2 + 50, opheliaHitbox.y + 115);
+                FlxTween.tween(cameraFollowPoint, { x: cameraFollowPoint.x + 200 }, 0.5, { ease: FlxEase.cubeOut });
+                dialogueText.visible = false;
+                dialogueBar.alpha = 0;
+
+                new FlxTimer().start(2.0, function(_:FlxTimer) {
+                    FlxG.sound.music.stop();
+                });
+
+                new FlxTimer().start(10.0, function(_:FlxTimer) {
+                    var t2:Tuntematon = new Tuntematon(FlxG.width - 110, 320);
+                    t2.animation.play("grab", true, true);
+                    t2.scrollFactor.set();
+                    t2.cameras = [cameraHUD];
+                    t2.scale.set(1.5, 1.5);
+                    add(t2);
+
+                    var staticSound:FunkinSound = FunkinSound.load(Paths.sound("static loop"), 0, true, false, true, false);
+                    staticSound.volume = 0.0;
+                    staticSound.fadeOut(6.0, 0.1);
+
+                    var t3:FunkinSprite = new FunkinSprite(2000 - spriteNudge, 230).loadTexture("shop/t");
+                    add(t3);
+                    FlxTween.tween(screenBlack, { alpha: 0.85 }, 5.4, { ease: FlxEase.cubeIn });
+                    FlxTween.tween(t3, { x: ophelia.x + ophelia.width / 2 + 100 }, 0.50, { startDelay: 5.0, ease: FlxEase.cubeIn, onComplete: function() {
+                        PointlessPins.setObtainedPin("tuntematon");
+                        Ophelia.caught = true;
+                        screenBlack.alpha = 1.0;
+                        t2.alpha = 0.0;
+                        FlxTransitionableState.skipNextTransIn = true;
+                        FlxG.switchState(() -> new MainMenuState());
+                    }});
+                });
+
+                dialogueCount = 555555555;
             }
         }
     }

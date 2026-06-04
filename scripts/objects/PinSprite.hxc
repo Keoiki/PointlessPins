@@ -11,6 +11,8 @@ class PinSprite extends FunkinSprite
     var scaleOverride:Float;
     var rarity:String = "Unknown";
     var artist:String = "Keoiki";
+    var source:String = "Unknown";
+    var lockedText:String = "Unknown";
     var special:Bool = false;
     var isUnlocked:Bool = false;
     var isUnknown:Bool = false;
@@ -70,6 +72,8 @@ class PinSprite extends FunkinSprite
 
     override function update(elapsed:Float):Void
     {
+        if (pID == "tuntematon") visible = false;
+
         // blendShader?.update(elapsed);
         super.update(elapsed);
     }

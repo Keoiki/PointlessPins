@@ -52,6 +52,7 @@ class PinBoard extends MusicBeatSubState
     var pinDescription:BAlphabet;
     var pinArtist:BAlphabet;
     var pinUnlockCount:BAlphabet;
+    var pinSource:BAlphabet;
 
     var unlockedPinsData;
     var unlockedPins:Int = 0;
@@ -146,18 +147,24 @@ class PinBoard extends MusicBeatSubState
                 }
                 pin.isUnlocked = isPinUnlocked;
                 pin.artist = pinData.artist;
+                pin.source = pinData.source;
                 pin.special = pinData.special ?? false;
+                pin.lockedText = pinData.lockedText ?? "This pin can be unlocked from a box.";
                 pin.setupPin(pinData.id, pinData.name, pinData.description, pinData.scale);
                 add(pin);
                 pins.push(pin);
 
                 pinRowLengths[currentRow]++;
                 pinCount++;
+
+                if (pinData.id == "tuntematon") pinCount--;
             }
 
             var tc:String = ReflectUtil.getAnonymousField(pinJSON, PIN_RARITIES[i]).color;
-            var star:String = unlockedPinsPerRarity[i] == PINS_BY_RARITY[i].length ? "&#xE011; " : "";
-            var rarityText = new BAlphabet(PIN_X_START - 24, textOffset, "<b>" + star + "<c=" + tc + ">" + PIN_RARITIES[i] + "</c>  <s=0.5>(" + (unlockedPinsPerRarity[i] ?? 0) + "/" + PINS_BY_RARITY[i].length + ")</s></b>");
+            var pinsInRarity:Int = PINS_BY_RARITY[i].length;
+            if (PIN_RARITIES[i] == "Special") pinsInRarity--;
+            var star:String = unlockedPinsPerRarity[i] >= pinsInRarity ? "&#xE011; " : "";
+            var rarityText = new BAlphabet(PIN_X_START - 24, textOffset, "<b>" + star + "<c=" + tc + ">" + PIN_RARITIES[i] + "</c>  <s=0.5>(" + (unlockedPinsPerRarity[i] ?? 0) + "/" + pinsInRarity + ")</s></b>");
             rarityText.setScale(0.8);
             add(rarityText);
 
@@ -195,6 +202,11 @@ class PinBoard extends MusicBeatSubState
         pinUnlockCount.setScale(0.3);
         add(pinUnlockCount);
 
+        pinSource = new BAlphabet(pinNameBox.x + pinNameBox.width - 10, pinNameBox.y + 10, "");
+        pinSource.setScale(0.3);
+        pinSource.alignment = "right";
+        add(pinSource);
+
         var menuUnlockedText = new BAlphabet(FlxG.width / 2, pinNameBox.y + pinNameBox.height + 20, "<b>Total Unlocked: " + unlockedPins + "/" + pinCount + "</b>");
         menuUnlockedText.setScale(0.5);
         menuUnlockedText.alignment = "center";
@@ -205,6 +217,7 @@ class PinBoard extends MusicBeatSubState
         pinDescription.cameras = [subCamHUD];
         pinArtist.cameras = [subCamHUD];
         pinUnlockCount.cameras = [subCamHUD];
+        pinSource.cameras = [subCamHUD];
         menuUnlockedText.cameras = [subCamHUD];
 
         var boardWidth:Float = pins[15].getGraphicMidpoint(pinMidpoint).x - pins[0].getGraphicMidpoint(pinMidpoint).x + 300;
@@ -321,12 +334,21 @@ class PinBoard extends MusicBeatSubState
             pinDescription.alpha = 0;
             pinArtist.alpha = 0;
             pinUnlockCount.alpha = 0;
+            pinSource.alpha = 0;
             pinName.y = pinNameBox.y + 40;
             if (!availablePin.isUnlocked)
             {
+                pinName.y = pinNameBox.y + 25;
+                pinDescription.alpha = 1;
+
                 if (pinName.text != 'Not unlocked yet!')
                 {
                     pinName.text = 'Not unlocked yet!';
+                }
+                
+                if (availablePin.lockedText != pinDescription.text)
+                {
+                    pinDescription.text = availablePin.lockedText;
                 }
             }
             else
@@ -337,11 +359,19 @@ class PinBoard extends MusicBeatSubState
                     pinDescription.alpha = 1;
                     pinName.y = pinNameBox.y + 25;
                 }
+
                 if (availablePin.artist != null)
                 {
                     pinArtist.text = 'Created by: ${availablePin.artist}';
                     pinArtist.alpha = 1;
                 }
+
+                if (availablePin.source != null)
+                {
+                    pinSource.text = availablePin.source;
+                    pinSource.alpha = 1;
+                }
+
                 pinName.text = availablePin.name;
 
                 if (!availablePin.special)

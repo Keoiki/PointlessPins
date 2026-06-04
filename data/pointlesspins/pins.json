@@ -39,7 +39,7 @@
             { "id": "pico-christmas", "name": "Pico (Christmas)" },
             { "id": "nene-christmas", "name": "Nene (Christmas)" },
             { "id": "santa", "name": "Mall Santa" },
-            { "id": "pico-picoschool", "name": "Pico (Original)", "description": "from \"Pico's School\"", "scale": 0.47 }
+            { "id": "pico-picoschool", "name": "Pico (Original)", "source": "from: \"Pico's School\"", "scale": 0.47 }
         ]
     },
     "Rare": {
@@ -47,8 +47,8 @@
         "color": "2A4DFF",
         "pins":
         [
-            { "id": "nessie-funkinnews", "name": "Nessie", "description": "Mascot for \"Funkin News\"" },
-            { "id": "ophelia", "name": "Ophelia", "description": "You'll stop annoying her now, right?" , "special": true}
+            { "id": "nessie-funkinnews", "name": "Nessie", "source": "from: \"Funkin News\" Twitter" },
+            { "id": "ophelia", "name": "Ophelia", "description": "You'll stop annoying her now, right?" , "special": true, "lockedText": "It wouldn't be smart to annoy <c=67B1D8>her.</c>"}
         ]
     },
     "Epic": {
@@ -80,7 +80,8 @@
         "color": "FF4C50",
         "pins":
         [
-            { "id": "spaghetti", "name": "Spaghetti", "description": "Obtained by completing \"SPAGHETTI\"", "special": true }
+            { "id": "spaghetti", "name": "Spaghetti", "description": "This isn't a hotspot, sorry!", "special": true, "lockedText": "Complete a certain song." },
+            { "id": "tuntematon", "name": " ", "description": "<a=0.05>She got what she deserved.</a>", "special": true, "lockedText": "<a=0.05>She has it coming.</a>" }
         ]
     }
 }

@@ -8,6 +8,8 @@ class Ophelia extends FunkinSprite
 {
     var annoyance:Int = 0;
     var animationsWithVariations:Array<String> = ["Idle", "Talk"];
+    var suffix:String = "";
+    static var caught:Bool = false;
 
     override function new(x:Float, y:Float):Void
     {
@@ -27,6 +29,12 @@ class Ophelia extends FunkinSprite
 
     function playAnimation(name:String, looped:Bool = false, forced:Bool = false):Void
     {
+        if (Ophelia.caught)
+        {
+            animation.play("OutCold", true);
+            return;
+        }
+
         var anger:Int = PointlessPins.getOpheliaAnger();
         if (animationsWithVariations.contains(name))
         {
@@ -42,7 +50,7 @@ class Ophelia extends FunkinSprite
                 name = nameToUse;
             }
         }
-        animation.play(name, forced);
+        animation.play(name + suffix, forced);
         animation.curAnim.looped = looped;
     }
 }

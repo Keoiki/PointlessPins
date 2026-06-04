@@ -1,3 +1,15 @@
+## [1.2.0] - 04/06/2026
+
+### Added
+
+- Added descriptions for locked pins explaining how to get them.
+- Added "source" text to pins, to show where or what they're from, without clogging the pin description.
+
+### Changed
+
+- The box purchase confirmation is more clearly indicated.
+- The FunkBuck text in the Results now shows up faster and follows the coloring scheme used for the Modifier lable.
+
 ## [1.1.2] - 26/03/2026
 
 ### Changed
