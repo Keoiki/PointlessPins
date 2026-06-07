@@ -89,6 +89,7 @@ class TimedCoinsManager extends Module
             if (TimedCoinsManager.time <= 0)
             {
                 TimedCoinsManager.time = 0;
+                FunkinSound.playOnce(Paths.sound("ranks/rankinbad"));
                 TimedCoinsManager.stopEvent();
             }
         }
@@ -102,7 +103,7 @@ class TimedCoinsManager extends Module
 
         if (TimedCoinsManager.eventMusic == null)
         {
-            TimedCoinsManager.eventMusic = FunkinSound.load(Paths.music("timedEvent"), 1.0, true, false, false, true);
+            TimedCoinsManager.eventMusic = FunkinSound.load(Paths.music("girlfriendsRingtone/girlfriendsRingtone"), 1.0, true, false, false, true);
         }
         TimedCoinsManager.eventMusic.play();
 
@@ -130,8 +131,16 @@ class TimedCoinsManager extends Module
 
         if (TimedCoinsManager.coinsCollected >= 8)
         {
+            if (FunkBucks.hasObtainedPin("clovercoin"))
+            {
+                // 200 Funkbuck
+            }
+            else
+            {
+                // the clover coin pin
+            }
+            FunkinSound.playOnce(Paths.sound("ranks/rankinperfect"));
             TimedCoinsManager.stopEvent();
-            // FlxG.switchState(new Shop());
         }
     }
 

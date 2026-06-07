@@ -477,8 +477,8 @@ class FunkBucks extends Module
         {
             switch (claimedRewards[i])
             {
-                case "funkbucks08": bonusMultiplier += 0.025;
-                case "funkbucks11", "funkbucks14": bonusMultiplier += 0.05;
+                case "funkbucks07", "funkbucks11": bonusMultiplier += 0.025;
+                case "funkbucks14": bonusMultiplier += 0.05;
             }
         }
         return bonusMultiplier;

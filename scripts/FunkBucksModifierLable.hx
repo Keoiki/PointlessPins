@@ -1,6 +1,7 @@
 package funkbucks;
 
 import balphabet.BAlphabet;
+import flixel.math.FlxMath;
 import flixel.tweens.FlxEase;
 import flixel.tweens.FlxTween;
 import funkin.modding.module.Module;
@@ -100,7 +101,7 @@ class FunkBucksModifierLable extends Module
     {
         if (addedToState) return;
 
-        bonusPercentage = FunkBucks.getFunkCoinBonus();
+        bonusPercentage = FlxMath.roundDecimal(FunkBucks.getFunkCoinBonus(), 2);
 
         modifierText = new BAlphabet(FlxG.width - 20, 640, "");
         modifierText.scale.set(0.5, 0.5);
@@ -131,7 +132,7 @@ class FunkBucksModifierLable extends Module
 
     override public function onFreeplayIntroDone(event:FreeplayScriptEvent)
     {
-        bonusPercentage = FunkBucks.getFunkCoinBonus();
+        bonusPercentage = FlxMath.roundDecimal(FunkBucks.getFunkCoinBonus(), 2);
 
         modifierText = new BAlphabet(20, FlxG.height + 10, "");
         modifierText.scale.set(0.5, 0.5);

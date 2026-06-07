@@ -22,3 +22,5 @@ char=57473 offsetY=4 colored=true
 char=57474 offsetY=4 colored=true
 char=57475 offsetY=6 colored=true
 char=57476 offsetY=14 colored=true
+char=57477 offsetY=18 colored=true
+char=57478 offsetY=10 colored=true

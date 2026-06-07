@@ -35,17 +35,13 @@ class RewardsSubMenu extends MusicBeatSubState
             rewards: [
                 "1" => {id: "funkbucks01", requirement: 100, type: RewardType.FunkBuck, reward: 50},
                 "2" => {id: "funkbucks02", requirement: 500, type: RewardType.Box, reward: "cardboard|5"},
-                "3" => {id: "funkbucks03", requirement: 1000, type: RewardType.FunkBuck, reward: 200},
+                "3" => {id: "funkbucks03", requirement: 1000, type: RewardType.FunkBuck, reward: 100},
                 "4" => {id: "funkbucks04", requirement: 2000, type: RewardType.Box, reward: "smallgiftbox|5"},
-                "5" => {id: "funkbucks05", requirement: 3000, type: RewardType.FunkBuck, reward: 500},
-                // "6" => {id: "funkbucks06", requirement: 5000, type: RewardType.FunkBuck, reward: 0},
-                // "7" => {id: "funkbucks07", requirement: 7500, type: RewardType.FunkBuck, reward: 0},
-                "8" => {id: "funkbucks08", requirement: 10000, type: RewardType.BonusFunkBuck, reward: 2.5},
-                // "9" => {id: "funkbucks09", requirement: 12500, type: RewardType.FunkBuck, reward: 0},
-                // "10" => {id: "funkbucks10", requirement: 15000, type: RewardType.FunkBuck, reward: 0},
-                "11" => {id: "funkbucks11", requirement: 20000, type: RewardType.BonusFunkBuck, reward: 5.0},
+                "5" => {id: "funkbucks05", requirement: 3000, type: RewardType.FunkBuck, reward: 150},
+                "6" => {id: "funkbucks06", requirement: 4000, type: RewardType.FunkBuck, reward: 200},
+                "7" => {id: "funkbucks07", requirement: 5000, type: RewardType.BonusFunkBuck, reward: 2.5},
+                "11" => {id: "funkbucks11", requirement: 20000, type: RewardType.BonusFunkBuck, reward: 2.5},
                 "12" => {id: "funkbucks12", requirement: 25000, type: RewardType.Pin, reward: "funkbuck"},
-                // "13" => {id: "funkbucks13", requirement: 30000, type: RewardType.FunkBuck, reward: 0},
                 "14" => {id: "funkbucks14", requirement: 40000, type: RewardType.BonusFunkBuck, reward: 5.0},
                 "15" => {id: "funkbucks15", requirement: 50000, type: RewardType.FunkBuck, reward: 2500}
             ]
