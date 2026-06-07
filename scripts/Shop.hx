@@ -1085,6 +1085,24 @@ class Shop extends MusicBeatState
         FunkinSound.playOnce(Paths.sound("CS_locked"), 0.5);
     }
 
+    function unlockPinsInQueue():Void
+    {
+        disallowInputs = true;
+        var nextPin:String = FunkBucks.pinUnlockQueue.pop();
+        if (nextPin != null)
+        {
+            trace("Unlocking pin: " + nextPin);
+            var substate = new PinUnlockState(FunkBucks.getPinByID(nextPin));
+            substate.cameras = [cameraSubState];
+            openSubState(substate);
+        }
+        else
+        {
+            disallowInputs = false;
+            checkForEvents();
+        }
+    }
+
     function checkForEvents():Void
     {
         if (FunkBucks.getUnlockedPinsCount() >= 30 /*&& !FunkBucks.hasSeenEvent("cloverCoinButton")*/)
@@ -1114,7 +1132,7 @@ class Shop extends MusicBeatState
         new FlxTimer().start(0.1, function(_:FlxTimer)
         {
             disallowInputs = false;
-            checkForEvents();
+            unlockPinsInQueue();
         });
         super.closeSubState();
     }

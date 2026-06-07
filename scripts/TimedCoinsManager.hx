@@ -49,18 +49,6 @@ class TimedCoinsManager extends Module
         TimedCoinsManager.hud.angle = -7.5;
         FlxG.plugins.addPlugin(TimedCoinsManager.hud);
 
-        // timer = new BAlphabet(30, 550, "<c=2BFF31><b><s=0.5>TIME</s>\n<m>00:00:00</b></c></m>");
-        // timer.setScrollFactor(0, 0);
-        // timer.scale.set(0.8, 0.8);
-        // timer.angle = -7.5;
-        // timer.zIndex = 1000000000;
-        // FlxG.plugins.addPlugin(timer);
-
-        // TimedCoinsManager.time = 300;
-        // TimedCoinsManager.running = true;
-
-        // trace(hud.background.alpha);
-
         super.onCreate(event);
     }
 
@@ -83,7 +71,6 @@ class TimedCoinsManager extends Module
                 for (i in 0...TimedCoinsManager.spawnedCoins.length)
                 {
                     var coin:CloverCoin = TimedCoinsManager.spawnedCoins[i];
-                    // trace(coin.data.split("|")[5], FlxG.state.currentLevelId + "-" + FlxG.state.currentDifficultyId);
                     if (!coin.canCollect) return;
                     if (coin.data.split("|")[5] == FlxG.state.currentLevelId + "-" + FlxG.state.currentDifficultyId)
                     {
@@ -95,8 +82,6 @@ class TimedCoinsManager extends Module
                     }
                 }
             }
-
-            // trace(TimedCoinsManager.spawnedCoins.length);
 
             TimedCoinsManager.time -= FlxG.elapsed;
             FlxG.sound.music?.stop();
@@ -114,7 +99,6 @@ class TimedCoinsManager extends Module
     public static function startEvent(length:Float):Void
     {
         TimedCoinsManager.chooseCoinLocations();
-        // return;
 
         if (TimedCoinsManager.eventMusic == null)
         {
@@ -125,19 +109,9 @@ class TimedCoinsManager extends Module
         TimedCoinsManager.time = length;
         TimedCoinsManager.running = true;
         TimedCoinsManager.hud.doIntro();
-        // TimedCoinsManager.hud.alpha = 1.0;
         TimedCoinsManager.coinsCollected = 0;
         TimedCoinsManager.hud.counter.text = '${FBIcon.Clover}× <b><c=2BFF31>${TimedCoinsManager.coinsCollected}</c> / <c=2BFF31>8</c></b>';
         TimedCoinsManager.checkForCoinsInState(FlxG.state);
-
-        for (i in 0...8)
-        {
-            // var coin:CloverCoin = new CloverCoin(0, 0);
-            // coin.x = 20 + (90 * i);
-            // coin.y = 200;
-            // coin.scrollFactor.set();
-            // FlxG.state.add(coin);
-        }
     }
 
     public static function stopEvent():Void
@@ -178,7 +152,6 @@ class TimedCoinsManager extends Module
                     }
                     final spot:String = '$menu|${spotInfo[0]}|${spotInfo[1]}|${spotInfo[2]}|${spotInfo[3]}';
                     TimedCoinsManager.chosenCoinLocations.push(spot);
-                    trace(spot);
                 }
                 case "main":
                 {
@@ -190,7 +163,6 @@ class TimedCoinsManager extends Module
                     }
                     final spot:String = '$menu|${spotInfo[0]}|${spotInfo[1]}|${spotInfo[2]}|${spotInfo[3]}';
                     TimedCoinsManager.chosenCoinLocations.push(spot);
-                    trace(spot);
                 }
                 case "story":
                 {
@@ -201,7 +173,6 @@ class TimedCoinsManager extends Module
                     spotInfo = [FlxG.random.float(10, FlxG.width - 80), FlxG.random.float(65, 360), 0.0, 0.0]; // x, y, scroll x, scroll y
                     final spot:String = '$menu|${spotInfo[0]}|${spotInfo[1]}|${spotInfo[2]}|${spotInfo[3]}|${levelID}-${difficulty}';
                     TimedCoinsManager.chosenCoinLocations.push(spot);
-                    trace(spot);
                 }
                 case "freeplay":
                 {
@@ -224,7 +195,6 @@ class TimedCoinsManager extends Module
                     }
                     final spot:String = '$menu|${spotInfo[0]}|${spotInfo[1]}|${spotInfo[2]}|${spotInfo[3]}|${song}';
                     TimedCoinsManager.chosenCoinLocations.push(spot);
-                    trace(spot);
                 }
                 case "charSelect":
                 {
@@ -237,7 +207,6 @@ class TimedCoinsManager extends Module
                     }
                     final spot:String = '$menu|${spotInfo[0]}|${spotInfo[1]}|${spotInfo[2]}|${spotInfo[3]}';
                     TimedCoinsManager.chosenCoinLocations.push(spot);
-                    trace(spot);
                 }
                 default: trace("?????????????????");
             }
@@ -385,14 +354,12 @@ class TimedCoinsManager extends Module
 
         if (!TimedCoinsManager.running || TimedCoinsManager.spawnedCoins.length == 0)
         {
-            // trace("No coins to check / Not running!");
             return;
         }
 
         for (i in 0...TimedCoinsManager.spawnedCoins.length)
         {
             var coin:CloverCoin = TimedCoinsManager.spawnedCoins[i];
-            // trace(coin.data.split("|")[5], event.capsule.freeplayData?.data?.id + "-" + event.variationId);
             if (!coin.canCollect) return;
             if (coin.data.split("|")[5] == event.capsule.freeplayData?.data?.id + "-" + event.variationId)
             {
