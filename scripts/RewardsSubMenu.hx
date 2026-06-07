@@ -33,11 +33,11 @@ class RewardsSubMenu extends MusicBeatSubState
             requirementIcon: FBIcon.Buck,
             order: 0,
             rewards: [
-                "1" => {id: "funkbucks01", requirement: 100, type: RewardType.FunkBuck, reward: 20},
-                "2" => {id: "funkbucks02", requirement: 500, type: RewardType.Box, reward: "cardboard"},
-                "3" => {id: "funkbucks03", requirement: 1000, type: RewardType.FunkBuck, reward: 50},
-                "4" => {id: "funkbucks04", requirement: 2000, type: RewardType.Box, reward: "smallgiftbox"},
-                "5" => {id: "funkbucks05", requirement: 3000, type: RewardType.FunkBuck, reward: 150},
+                "1" => {id: "funkbucks01", requirement: 100, type: RewardType.FunkBuck, reward: 50},
+                "2" => {id: "funkbucks02", requirement: 500, type: RewardType.Box, reward: "cardboard|5"},
+                "3" => {id: "funkbucks03", requirement: 1000, type: RewardType.FunkBuck, reward: 200},
+                "4" => {id: "funkbucks04", requirement: 2000, type: RewardType.Box, reward: "smallgiftbox|5"},
+                "5" => {id: "funkbucks05", requirement: 3000, type: RewardType.FunkBuck, reward: 500},
                 // "6" => {id: "funkbucks06", requirement: 5000, type: RewardType.FunkBuck, reward: 0},
                 // "7" => {id: "funkbucks07", requirement: 7500, type: RewardType.FunkBuck, reward: 0},
                 "8" => {id: "funkbucks08", requirement: 10000, type: RewardType.BonusFunkBuck, reward: 2.5},
@@ -47,21 +47,21 @@ class RewardsSubMenu extends MusicBeatSubState
                 "12" => {id: "funkbucks12", requirement: 25000, type: RewardType.Pin, reward: "funkbuck"},
                 // "13" => {id: "funkbucks13", requirement: 30000, type: RewardType.FunkBuck, reward: 0},
                 "14" => {id: "funkbucks14", requirement: 40000, type: RewardType.BonusFunkBuck, reward: 5.0},
-                "15" => {id: "funkbucks15", requirement: 50000, type: RewardType.FunkBuck, reward: 1000}
+                "15" => {id: "funkbucks15", requirement: 50000, type: RewardType.FunkBuck, reward: 2500}
             ]
         },
-        "bluejewels" => {
-            name: "bluejewels",
-            description: "Total Blue Jewels obtained.",
+        "melodystones" => {
+            name: "melodystones",
+            description: "Total Melody Stones obtained.",
             requirementIcon: FBIcon.Jewel,
             order: 1,
             rewards: [
-                "1" => {id: "bluejewel01", requirement: 1, type: RewardType.FunkBuck, reward: 250},
-                "2" => {id: "bluejewel02", requirement: 2, type: RewardType.Pin, reward: "bluejewel"},
-                // "3" => {id: "bluejewel03", requirement: 5, type: RewardType.Box, reward: "smallgiftbox"},
-                "4" => {id: "bluejewel04", requirement: 10, type: RewardType.FunkBuck, reward: 2500},
-                // "5" => {id: "bluejewel05", requirement: 15, type: RewardType.Pin, reward: "funkbuck"},
-                "6" => {id: "bluejewel06", requirement: 20, type: RewardType.FunkBuck, reward: 10000}
+                "1" => {id: "melodystone01", requirement: 1, type: RewardType.FunkBuck, reward: 250},
+                "2" => {id: "melodystone02", requirement: 2, type: RewardType.Pin, reward: "melodystone"},
+                // "3" => {id: "melodystone03", requirement: 5, type: RewardType.Box, reward: "smallgiftbox"},
+                "4" => {id: "melodystone04", requirement: 10, type: RewardType.FunkBuck, reward: 2500},
+                // "5" => {id: "melodystone05", requirement: 15, type: RewardType.Pin, reward: "funkbuck"},
+                "6" => {id: "melodystone06", requirement: 20, type: RewardType.FunkBuck, reward: 10000}
             ]
         },
         "cardboard" => {
@@ -185,10 +185,7 @@ class RewardsSubMenu extends MusicBeatSubState
 
         coolBackButton.visible = !allowedMovement ? false : #if mobile true; #else FunkBucks.isMouseActive; #end
 
-        if (prevMouseActive != FunkBucks.isMouseActive)
-        {
-            // updatePurchaseLable();
-        }
+        // if (prevMouseActive != FunkBucks.isMouseActive) { }
         prevMouseActive = FunkBucks.isMouseActive;
 
         super.update(elapsed);
@@ -412,7 +409,7 @@ class RewardsSubMenu extends MusicBeatSubState
                 var currentCategory = categories.get(CATEGORY);
                 var beforeReq:String = "open";
                 var afterReq:String = "boxes";
-                if (CATEGORY == "funkbucks" || CATEGORY == "bluejewels")
+                if (CATEGORY == "funkbucks" || CATEGORY == "melodystones")
                 {
                     beforeReq = "obtain";
                     afterReq = "total";
@@ -457,47 +454,22 @@ class RewardsSubMenu extends MusicBeatSubState
                         {
                             _parentState.addFunkBucks(currentItem.reward);
                             populateItems(CATEGORY, PAGE);
-                            hasUpdatedRewardText = false;
+                            rewardText.text = 'You got ${currentItem.reward} ${FBIcon.Buck} FunkBucks!';
+                            // hasUpdatedRewardText = false;
                         }
                         case RewardType.Jewel:
                         {
                             _parentState.addBlueJewel(currentItem.reward);
                             populateItems(CATEGORY, PAGE);
-                            hasUpdatedRewardText = false;
+                            rewardText.text = 'You got ${currentItem.reward} ${FBIcon.Jewel} Melody Stones!';
+                            // hasUpdatedRewardText = false;
                         }
                         case RewardType.Box:
                         {
-                            allowedMovement = false;
-                            var randomPin:PinData = currentItem.icon.rollRandomRarityPin();
-                            var unlockState:PinUnlockState = new PinUnlockState(randomPin);
-                            unlockState.closeCallback = () -> {
-                                allowedMovement = true;
-                                populateItems(CATEGORY, PAGE);
-                                hasUpdatedRewardText = false;
-                                FlxTween.tween(cursor, { alpha: 1 }, 1.0, { ease: FlxEase.quartOut });
-                                FlxTween.tween(bottomBar, { alpha: 1 }, 1.0, { ease: FlxEase.quartOut });
-                                FlxTween.tween(rewardText, { alpha: 1 }, 1.0, { ease: FlxEase.quartOut });
-                            };
-                            unlockState.cameras = [camera];
-                            FlxTween.tween(currentItem, { x: FlxG.width / 2, y: FlxG.height / 2 + 160 }, 1.0, { ease: FlxEase.quartOut });
-                            FlxTween.tween(cursor, { alpha: 0 }, 1.5, { ease: FlxEase.quartOut });
-                            FlxTween.tween(bottomBar, { alpha: 0 }, 1.5, { ease: FlxEase.quartOut });
-                            FlxTween.tween(rewardText, { alpha: 0 }, 1.5, { ease: FlxEase.quartOut });
-                            FlxTween.tween(darkOverlay, { alpha: 0.75 }, 1.5, { ease: FlxEase.quadInOut });
-                            FlxTween.tween(camera, { zoom: 1.15 }, 1.5, { ease: FlxEase.quadInOut });
-                            FlxTween.tween(_parentState.camera, { zoom: 1.35 }, 1.5, { ease: FlxEase.quadInOut });
-                            new FlxTimer().start(1.2, function(_:FlxTimer) {
-                                currentItem.icon.animation.play("Opening");
-                                new FlxTimer().start(currentItem.icon.revealTime / 24, function(_:FlxTimer) {
-                                    FlxTween.tween(darkOverlay, { alpha: 0 }, 0.5, { ease: FlxEase.expoOut });
-                                    FlxTween.tween(camera, { zoom: 1 }, 1, { ease: FlxEase.backOut });
-                                    FlxTween.tween(_parentState.camera, { zoom: 1.2 }, 1, { ease: FlxEase.backOut });
-                                    openSubState(unlockState);
-                                });
-                            });
-                            darkOverlay.zIndex = 1000;
-                            currentItem.zIndex = 1100;
-                            refresh();
+                            FunkBucks.addFreeBox(currentItem.reward, currentItem._rollCount);
+                            populateItems(CATEGORY, PAGE);
+                            rewardText.text = 'You got ${currentItem._rollCount} free rolls for ${currentItem._boxName}!';
+                            // hasUpdatedRewardText = false;
                         }
                         case RewardType.Pin:
                         {
@@ -508,6 +480,16 @@ class RewardsSubMenu extends MusicBeatSubState
                                 hasUpdatedRewardText = false;
                             };
                             openSubState(unlockState);
+                        }
+                        case RewardType.BonusFunkBuck:
+                        {
+                            populateItems(CATEGORY, PAGE);
+                            rewardText.text = 'The amount of FunkBucks you earn from songs\nhas been permanently increased by <c=00FF00>${currentItem.reward}%</c>!';
+                        }
+                        case RewardType.DiscountBox:
+                        {
+                            populateItems(CATEGORY, PAGE);
+                            rewardText.text = 'The cost of boxes has been permanently\ndecreased by <c=00FF00>${currentItem.reward}%</c>!';
                         }
                         default: 
                         {
@@ -560,6 +542,10 @@ class RewardItem extends ScriptedFlxSpriteGroup
     var reached:Bool;
     var claimed:Bool;
 
+    // Only used for Boxes
+    var _rollCount:Int = 0;
+    var _boxName:String;
+
     public function new(_position:Int, _rID:String, _requirement:Int, _type:RewardType, _reward:String, _category:String):Void
     {
         super(0, 0);
@@ -569,6 +555,27 @@ class RewardItem extends ScriptedFlxSpriteGroup
         type = _type;
         reward = _reward;
         category = _category;
+
+        // mfw no "type == RewardType.Box"
+        switch (type)
+        {
+            case RewardType.Box:
+            {
+                var ass:Array<String> = reward.split("|");
+                reward = ass[0];
+                _rollCount = Std.parseInt(ass[1]);
+                for (box in FunkBucks.boxData)
+                {
+                    if (box.id == reward)
+                    {
+                        _boxName = box.name;
+                        break;
+                    }
+                }
+            }
+            default:
+        }
+
         setupItem();
 
         // trace(rID, requirement, reward, position);
@@ -609,6 +616,10 @@ class RewardItem extends ScriptedFlxSpriteGroup
                 icon.scale.set(0.8, 0.8);
                 icon.x -= 30;
                 icon.y -= 20;
+
+                number = new BAlphabet(0, 0, '<b><c=00FF00>$_rollCount Free</c></b>');
+                number.alignment = "center";
+                number.scale.set(0.4, 0.4);
             }
             case RewardType.FunkBuck:
             {
@@ -673,7 +684,7 @@ class RewardItem extends ScriptedFlxSpriteGroup
             switch (category)
             {
                 case "funkbucks": reached = FunkBucks.getFunkCoinsLifeTime() >= requirement;
-                case "bluejewels": reached = FunkBucks.getBlueJewelsLifeTime() >= requirement;
+                case "melodystones": reached = FunkBucks.getBlueJewelsLifeTime() >= requirement;
                 default: reached = FunkBucks.getOpenedBoxCount(category) >= requirement;
             }
         }
@@ -717,7 +728,7 @@ class RewardItem extends ScriptedFlxSpriteGroup
         {
             switch (type)
             {
-                case RewardType.Box: icon.animation.play("Opened");
+                // case RewardType.Box: icon.animation.play("Opened");
                 default:
             }
         }

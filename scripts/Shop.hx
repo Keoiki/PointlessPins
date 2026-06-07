@@ -29,6 +29,7 @@ using StringTools;
 class Shop extends MusicBeatState
 {
     // Important
+    var savedCamZoom:Float = 0.0;
     var cameraHUD:FunkinCamera;
     var cameraSubState:FunkinCamera;
     var spriteNudge:Float = (1600 - FlxG.width) / 2;
@@ -54,6 +55,7 @@ class Shop extends MusicBeatState
     var clock:Clock;
     var dailyBoard:DailyBoard;
     var rewardShelf:RewardShelf;
+    var cloverEventButton:FunkinSprite;
 
     var television:FunkinSprite;
 
@@ -111,7 +113,7 @@ class Shop extends MusicBeatState
             isOpheliaGone = true;
         }
 
-        if (isOpheliaGone || Ophelia.caught)
+        if (TimedCoinsManager.running || isOpheliaGone || Ophelia.caught)
         {
             FlxG.sound.music.stop();
         }
@@ -148,7 +150,13 @@ class Shop extends MusicBeatState
         rewardShelf.zIndex = -995;
         add(rewardShelf);
 
-        if (!FunkBucks.hasObtainedPin("tuntematon") && FunkBucks.getUnlockedPinsCount() >= 30 && FlxG.random.bool(0.1) && !Tuntematon.gone && !Ophelia.caught)
+        cloverEventButton = new FunkinSprite(2055 - spriteNudge, -250).makeSolidColor(150, 150, 0xFF00FF00);
+        cloverEventButton.scrollFactor.set(0.85, 0.85);
+        cloverEventButton.zIndex = -990;
+        cloverEventButton.visible = FunkBucks.getUnlockedPinsCount() >= 30;
+        add(cloverEventButton);
+
+        if (!FunkBucks.hasObtainedPin("tuntematon") && FunkBucks.getUnlockedPinsCount() >= 75 && FlxG.random.bool(0.1) && !Tuntematon.gone && !Ophelia.caught)
         {
             var t:Tuntematon = new Tuntematon(1350 - spriteNudge + rewardShelf.shelf.width, 80);
             t.zIndex = -979;
@@ -157,7 +165,7 @@ class Shop extends MusicBeatState
         }
 
         lighting = new FunkinSprite(-800, -440).makeSolidColor(3000, 1600, 0xFF3C1B41);
-        lighting.zIndex = 5000;
+        lighting.zIndex = 10000;
         lighting.scrollFactor.set(0, 0);
         lighting.blend = 9;
         lighting.alpha = isOpheliaGone ? 0.85 : 0;
@@ -201,18 +209,12 @@ class Shop extends MusicBeatState
         {
             remove(dailyBoard);
             remove(rewardShelf);
-            remove(lighting);
             remove(fbStack10);
             remove(fbStack11);
             remove(fbStack20);
             remove(fbStack21);
             remove(fbStack30);
-            lighting = new FunkinSprite(-800, -440).makeSolidColor(3000, 1600, 0xFF3C1B41);
-            lighting.zIndex = 5000;
-            lighting.scrollFactor.set(0, 0);
-            lighting.blend = 9;
-            lighting.alpha = 0.85;
-            add(lighting);
+            lighting.alpha = 0.9;
         }
         else
         {
@@ -228,7 +230,7 @@ class Shop extends MusicBeatState
             if (Ophelia.caught) break;
 
             var lamp:FunkinSprite = new FunkinSprite(-400 + (i * 1020) - spriteNudge, -460, "shop/lamp");
-            lamp.zIndex = 1000;
+            lamp.zIndex = 2000;
             lamp.scrollFactor.set(1.1, 1.0);
             add(lamp);
             lamp.scale.set(0.8, 0.8);
@@ -325,7 +327,7 @@ class Shop extends MusicBeatState
         // funkBucksText.setScrollFactor(0, 0);
         add(funkBucksText);
 
-        blueJewelsText = new BAlphabet(FlxG.width - 20, funkBucksText.y + 70, '<b><c=82E9FF>${FunkBucks.getBlueJewels()}<s=0.5>/${FunkBucks.maximumBlueJewels}</s></c></b> ${FBIcon.Jewel}');
+        blueJewelsText = new BAlphabet(FlxG.width - 20, funkBucksText.y + 70, '<b><c=82E9FF>${FunkBucks.getBlueJewels()}</c></b> ${FBIcon.Jewel}');
         blueJewelsText.alignment = "right";
         blueJewelsText.scale.set(0.65, 0.65);
         // blueJewelsText.setScrollFactor(0, 0);
@@ -415,6 +417,7 @@ class Shop extends MusicBeatState
         if (disallowInputs)
         {
             coolBackButton.enabled = false;
+            coolBackButton.visible = false;
             return;
         }
         coolBackButton.visible = #if mobile true; #else FunkBucks.isMouseActive; #end
@@ -429,14 +432,22 @@ class Shop extends MusicBeatState
 
         if (FlxG.keys.justPressed.ONE || (TouchUtil.pressAction(iconPins) && !FunkBucks.isMouseTooFast && !TouchUtil.overlaps(coolBackButton, cameraHUD)))
         {
+            if (TimedCoinsManager.running)
+            {
+                FlxTween.completeTweensOf(cannotDoText);
+                FlxTween.tween(cannotDoText, { alpha: 1 }, 2, { ease: FlxEase.cubeOut, type: 16 });
+                return;
+            }
+
             disallowInputs = true;
             cameraFollowPoint.setPosition(iconPins.x + iconPins.width / 2, iconPins.y + 50);
+            savedCamZoom = camera.zoom;
 
             var substate = new PinBoard();
             substate.closeCallback = function()
             {
                 FlxTween.tween(coolBackButton, { alpha: 0.5 }, 1, { ease: FlxEase.cubeOut });
-                FlxTween.tween(camera, { zoom: 1 }, 1, { ease: FlxEase.cubeOut });
+                FlxTween.tween(camera, { zoom: savedCamZoom }, 1, { ease: FlxEase.cubeOut });
                 FlxTween.tween(funkBucksText, { alpha: 1 }, 1, { ease: FlxEase.cubeOut });
                 FlxTween.tween(blueJewelsText, { alpha: 1 }, 1, { ease: FlxEase.cubeOut });
                 FlxTween.tween(screenBlack, { alpha: 0 }, 1, { ease: FlxEase.cubeOut });
@@ -457,7 +468,7 @@ class Shop extends MusicBeatState
 
         if (FlxG.keys.justPressed.TWO || (TouchUtil.pressAction(iconBoxes) && !FunkBucks.isMouseTooFast && !TouchUtil.overlaps(coolBackButton, cameraHUD)))
         {
-            if (isOpheliaGone || Ophelia.caught)
+            if (isOpheliaGone || Ophelia.caught || TimedCoinsManager.running)
             {
                 FlxTween.completeTweensOf(cannotDoText);
                 FlxTween.tween(cannotDoText, { alpha: 1 }, 2, { ease: FlxEase.cubeOut, type: 16 });
@@ -467,12 +478,13 @@ class Shop extends MusicBeatState
             disallowInputs = true;
             cameraFollowPoint.setPosition(iconBoxes.x + iconBoxes.width / 2, iconBoxes.y - 4);
             showMenuItems(false);
+            savedCamZoom = camera.zoom;
 
             var substate = new BoxSubMenu();
             substate.closeCallback = function()
             {
                 FlxTween.tween(coolBackButton, { alpha: 0.5 }, 1, { ease: FlxEase.cubeOut });
-                FlxTween.tween(camera, { zoom: 1 }, 1, { ease: FlxEase.cubeOut });
+                FlxTween.tween(camera, { zoom: savedCamZoom }, 1, { ease: FlxEase.cubeOut });
                 FlxTween.tween(blueJewelsText, { alpha: 1 }, 1, { ease: FlxEase.cubeOut });
                 FlxTween.tween(screenBlack, { alpha: 0 }, 1, { ease: FlxEase.cubeOut });
                 showMenuItems();
@@ -492,7 +504,7 @@ class Shop extends MusicBeatState
 
         if (FlxG.keys.justPressed.THREE || (TouchUtil.pressAction(lableExchange) && !FunkBucks.isMouseTooFast && !TouchUtil.overlaps(coolBackButton, cameraHUD)))
         {
-            if (isOpheliaGone || Ophelia.caught)
+            if (isOpheliaGone || Ophelia.caught || FunkBucks.getOpheliaAnger() > 0 || TimedCoinsManager.running)
             {
                 FlxTween.completeTweensOf(cannotDoText);
                 FlxTween.tween(cannotDoText, { alpha: 1 }, 2, { ease: FlxEase.cubeOut, type: 16 });
@@ -502,12 +514,13 @@ class Shop extends MusicBeatState
             disallowInputs = true;
             cameraFollowPoint.setPosition(ophelia.x - 50, 305);
             showMenuItems(false);
+            savedCamZoom = camera.zoom;
 
             var substate = new ExchangeMenu();
             substate.closeCallback = function()
             {
                 FlxTween.tween(coolBackButton, { alpha: 0.5 }, 1, { ease: FlxEase.cubeOut });
-                FlxTween.tween(camera, { zoom: 1 }, 1, { ease: FlxEase.cubeOut });
+                FlxTween.tween(camera, { zoom: savedCamZoom }, 1, { ease: FlxEase.cubeOut });
                 showMenuItems();
             }
             substate.cameras = [cameraSubState];
@@ -522,7 +535,7 @@ class Shop extends MusicBeatState
 
         if (FlxG.keys.justPressed.FOUR || (TouchUtil.pressAction(lableRewards) && !FunkBucks.isMouseTooFast && !TouchUtil.overlaps(coolBackButton, cameraHUD)))
         {
-            if (isOpheliaGone || Ophelia.caught)
+            if (isOpheliaGone || Ophelia.caught || TimedCoinsManager.running)
             {
                 FlxTween.completeTweensOf(cannotDoText);
                 FlxTween.tween(cannotDoText, { alpha: 1 }, 2, { ease: FlxEase.cubeOut, type: 16 });
@@ -530,9 +543,10 @@ class Shop extends MusicBeatState
             }
 
             disallowInputs = true;
-            cameraFollowPoint.setPosition(1705, 240);
+            cameraFollowPoint.setPosition(rewardShelf.x + rewardShelf.shelf.width / 1.35 - 2.5, 240);
             showMenuItems(false);
             rewardShelf.toggleItems();
+            savedCamZoom = camera.zoom;
 
             var substate = new RewardsSubMenu();
             substate.closeCallback = function()
@@ -540,7 +554,7 @@ class Shop extends MusicBeatState
                 ophelia.playAnimation("Idle", true, true);
                 FlxTween.tween(coolBackButton, { alpha: 0.5 }, 1, { ease: FlxEase.cubeOut });
                 // FlxTween.tween(counter, { alpha: 1 }, 1, { ease: FlxEase.cubeIn });
-                FlxTween.tween(camera, { zoom: 1 }, 1, { ease: FlxEase.cubeOut });
+                FlxTween.tween(camera, { zoom: savedCamZoom }, 1, { ease: FlxEase.cubeOut });
                 showMenuItems();
                 rewardShelf.toggleItems(true);
             }
@@ -696,7 +710,7 @@ class Shop extends MusicBeatState
      */
     function checkIfAnnoyedOphelia():Void
     {
-        if (isOpheliaGone || !ophelia.canAnnoy)
+        if (isOpheliaGone || !ophelia.canAnnoy || TimedCoinsManager.running)
         {
             return;
         }
@@ -731,6 +745,7 @@ class Shop extends MusicBeatState
                 disallowInputs = true;
                 showMenuItems(false);
                 cameraFollowPoint.setPosition(opheliaHitbox.x + opheliaHitbox.width / 2, opheliaHitbox.y + 115);
+                savedCamZoom = camera.zoom;
                 FlxTween.tween(camera, { zoom: 1.5 }, 1, { ease: FlxEase.cubeOut });
                 FlxTween.tween(funkBucksText, { alpha: 0 }, 1, { ease: FlxEase.cubeOut });
                 FlxTween.tween(blueJewelsText, { alpha: 0 }, 1, { ease: FlxEase.cubeOut });
@@ -822,7 +837,7 @@ class Shop extends MusicBeatState
         substate.closeCallback = () -> {
             disallowInputs = false;
             showMenuItems(true);
-            FlxTween.tween(camera, { zoom: 1 }, 1, { ease: FlxEase.cubeOut });
+            FlxTween.tween(camera, { zoom: savedCamZoom }, 1, { ease: FlxEase.cubeOut });
             FlxTween.tween(funkBucksText, { alpha: 1 }, 1, { ease: FlxEase.cubeOut });
             FlxTween.tween(blueJewelsText, { alpha: 1 }, 1, { ease: FlxEase.cubeOut });
         }
@@ -853,13 +868,14 @@ class Shop extends MusicBeatState
         {
             disallowInputs = false;
             showMenuItems(true);
-            FlxTween.tween(camera, { zoom: 1 }, 1, { ease: FlxEase.cubeOut });
+            FlxTween.tween(camera, { zoom: savedCamZoom }, 1, { ease: FlxEase.cubeOut });
             FlxTween.tween(funkBucksText, { alpha: 1 }, 1, { ease: FlxEase.cubeOut });
             FlxTween.tween(blueJewelsText, { alpha: 1 }, 1, { ease: FlxEase.cubeOut });
         });
         
         showMenuItems(false);
         cameraFollowPoint.setPosition(opheliaHitbox.x + opheliaHitbox.width / 2, opheliaHitbox.y + 100);
+        savedCamZoom = camera.zoom;
         FlxTween.tween(camera, { zoom: 1.35 }, 1, { ease: FlxEase.cubeOut });
         FlxTween.tween(funkBucksText, { alpha: 0 }, 1, { ease: FlxEase.cubeOut });
         FlxTween.tween(blueJewelsText, { alpha: 0 }, 1, { ease: FlxEase.cubeOut });
@@ -882,10 +898,6 @@ class Shop extends MusicBeatState
 
         dialog.onNextLine.add((dialogueIndex, dialogueText) ->
         {
-            if (dialogueIndex == 3)
-            {
-                FlxG.sound.music.stop();
-            }
             switch (dialogueIndex)
             {
                 case 1: ophelia.suffix = "Confused";
@@ -938,6 +950,55 @@ class Shop extends MusicBeatState
         coolBackButton.visible = false;
     }
 
+    function cloverCoinButtonIntro():Void
+    {
+        if (dialog != null) remove(dialog);
+        dialog = new PinDialogue('cloverButton');
+        add(dialog);
+        dialog.cameras = [cameraHUD];
+
+        dialog.dialogueText.letterCallback = () ->
+        {
+            FunkinSound.playOnce(Paths.sound("chartingSounds/keyboard" + FlxG.random.int(1, 3)), 1.0);
+            ophelia.playAnimation('Talk', false, false);
+        }
+
+        dialog.onNextLine.add((dialogueIndex, dialogueText) ->
+        {
+            switch (dialogueIndex)
+            {
+                case 2:
+                    ophelia.suffix = "Confused";
+                    cameraFollowPoint.setPosition(2300 - spriteNudge, -225);
+                    FlxTween.tween(camera, { zoom: 2 }, 1, { ease: FlxEase.cubeOut });
+                case 4:
+                    cameraFollowPoint.setPosition(opheliaHitbox.x + opheliaHitbox.width / 2, opheliaHitbox.y + 100);
+                    FlxTween.tween(camera, { zoom: 1.35 }, 1, { ease: FlxEase.cubeOut });
+                case 5: ophelia.suffix = "Annoyed";
+                case 6: ophelia.suffix = "";
+            }
+        });
+
+        dialog.onCompleteDialogue.add(() ->
+        {
+            ophelia.suffix = "";
+            disallowInputs = false;
+            showMenuItems(true);
+            FlxTween.tween(camera, { zoom: savedCamZoom }, 1, { ease: FlxEase.cubeOut });
+            FlxTween.tween(funkBucksText, { alpha: 1 }, 1, { ease: FlxEase.cubeOut });
+            FlxTween.tween(blueJewelsText, { alpha: 1 }, 1, { ease: FlxEase.cubeOut });
+        });
+        
+        disallowInputs = true;
+        showMenuItems(false);
+        cameraFollowPoint.setPosition(opheliaHitbox.x + opheliaHitbox.width / 2, opheliaHitbox.y + 100);
+        savedCamZoom = camera.zoom;
+        FlxTween.tween(camera, { zoom: 1.35 }, 1, { ease: FlxEase.cubeOut });
+        FlxTween.tween(funkBucksText, { alpha: 0 }, 1, { ease: FlxEase.cubeOut });
+        FlxTween.tween(blueJewelsText, { alpha: 0 }, 1, { ease: FlxEase.cubeOut });
+        coolBackButton.visible = false;
+    }
+
     var previousFunkBucks:Int;
     public function deductFunkBucks(amount:Int):Void
     {
@@ -973,7 +1034,7 @@ class Shop extends MusicBeatState
         var currentJewels:Int = FunkBucks.getBlueJewels();
         var remainingJewels:Int = currentJewels - amount;
 
-        blueJewelsText.text = '<b><c=82E9FF>$remainingJewels<s=0.5>/${FunkBucks.maximumBlueJewels}</s></c></b> ${FBIcon.Jewel}';
+        blueJewelsText.text = '<b><c=82E9FF>$remainingJewels</c></b> ${FBIcon.Jewel}';
         blueJewelsText.y += 20;
         FunkinSound.playOnce(Paths.sound("bluejewel"));
 
@@ -984,7 +1045,7 @@ class Shop extends MusicBeatState
     {
         var currentJewels:Int = FunkBucks.getBlueJewels() + amount;
 
-        blueJewelsText.text = '<b><c=82E9FF>$currentJewels<s=0.5>/${FunkBucks.maximumBlueJewels}</s></c></b> ${FBIcon.Jewel}';
+        blueJewelsText.text = '<b><c=82E9FF>$currentJewels</c></b> ${FBIcon.Jewel}';
         blueJewelsText.y -= 20;
         FunkinSound.playOnce(Paths.sound("bluejewel"));
 
@@ -1024,6 +1085,15 @@ class Shop extends MusicBeatState
         FunkinSound.playOnce(Paths.sound("CS_locked"), 0.5);
     }
 
+    function checkForEvents():Void
+    {
+        if (FunkBucks.getUnlockedPinsCount() >= 30 /*&& !FunkBucks.hasSeenEvent("cloverCoinButton")*/)
+        {
+            cloverEventButton.visible = true;
+            // cloverCoinButtonIntro();
+        }
+    }
+
     override function onFocus():Void
     {
         justGainedFocus = true;
@@ -1041,8 +1111,10 @@ class Shop extends MusicBeatState
 
     override function closeSubState():Void
     {
-        new FlxTimer().start(0.1, function(_:FlxTimer) {
+        new FlxTimer().start(0.1, function(_:FlxTimer)
+        {
             disallowInputs = false;
+            checkForEvents();
         });
         super.closeSubState();
     }

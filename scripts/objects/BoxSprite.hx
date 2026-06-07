@@ -52,7 +52,6 @@ class BoxSprite extends FunkinSprite
         bID = boxData[boxDataIndex].id;
         name = boxData[boxDataIndex].name;
         description = boxData[boxDataIndex].description;
-        price = boxData[boxDataIndex].cost;
         revealTime = boxData[boxDataIndex].revealTime;
         chances = boxData[boxDataIndex].chances;
         rollsPins = boxData[boxDataIndex].rollsPins ?? false;
@@ -63,24 +62,11 @@ class BoxSprite extends FunkinSprite
             totalWeight += weight[1];
         }
 
-        var opheliaAnger:Int = FunkBucks.getOpheliaAnger();
-        if (opheliaAnger > 0)
-        {
-            angerModifier = 1.0 + (0.2 * opheliaAnger);
-            price += price * (angerModifier - 1.0);
-        }
-        else
-        {
-            angerModifier = 1.0;
-        }
-
-        var discount:Float = FunkBucks.getBoxDiscount();
-        price = FlxMath.roundDecimal(price * discount, 0);
-        discountModifier = (1 - discount) * 100;
+        updatePrice();
 
         if (change != 0)
         {
-            loadTextureAtlas("pointlesspins/boxes/" + boxData[boxDataIndex].id, null, {
+            loadTextureAtlas("pointlesspins/boxes/" + bID, null, {
                 applyStageMatrix: true,
                 useRenderTexture: true
             });
@@ -96,6 +82,34 @@ class BoxSprite extends FunkinSprite
                 updateBoxInfo(i - boxDataIndex, forceSpecial);
                 return;
             }
+        }
+    }
+
+    public function updatePrice():Void
+    {
+        if (FunkBucks.getFreeBoxCount(bID) > 0)
+        {
+            price = 0;
+            discountModifier = 0.0;
+        }
+        else
+        {
+            price = boxData[boxDataIndex].cost;
+
+            var opheliaAnger:Int = FunkBucks.getOpheliaAnger();
+            if (opheliaAnger > 0)
+            {
+                angerModifier = 1.0 + (0.2 * opheliaAnger);
+                price += price * (angerModifier - 1.0);
+            }
+            else
+            {
+                angerModifier = 1.0;
+            }
+
+            var discount:Float = FunkBucks.getBoxDiscount();
+            price = FlxMath.roundDecimal(price * discount, 0);
+            discountModifier = (1 - discount) * 100;
         }
     }
 

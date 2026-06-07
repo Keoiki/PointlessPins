@@ -18,14 +18,42 @@
         "description": "Oooh, I wonder what's inside!\nIt's a pin, yeah.",
         "revealTime": 26,
         "chances": [
-            [ "Common", 596.5 ],
+            [ "Common", 595 ],
             [ "Uncommon", 350 ],
             [ "Rare", 50 ],
-            [ "Legendary", 2.5 ],
-            [ "Mythic", 1 ]
+            [ "Epic", 5 ]
         ],
         "cost": 50,
         "order": 1
+    },
+    {
+        "id": "smallgiftbox",
+        "name": "<c=2BFF31>Box #3</c>",
+        "description": "Don't try opening these yet, thanks!",
+        "revealTime": 26,
+        "chances": [
+            [ "Uncommon", 696.5 ],
+            [ "Rare", 250 ],
+            [ "Epic", 50 ],
+            [ "Legendary", 2.5 ],
+            [ "Mythic", 1]
+        ],
+        "cost": 200,
+        "order": 2
+    },
+    {
+        "id": "smallgiftbox",
+        "name": "<c=2A4DFF>Box #4</c>",
+        "description": "Don't try opening these yet, thanks!",
+        "revealTime": 26,
+        "chances": [
+            [ "Rare", 825 ],
+            [ "Epic", 150 ],
+            [ "Legendary", 20 ],
+            [ "Mythic", 5 ]
+        ],
+        "cost": 500,
+        "order": 3
     },
     {
         "id": "bonusreward",
@@ -33,8 +61,9 @@
         "description": "This box contains a special reward!",
         "revealTime": 26,
         "chances": [ ],
-        "cost": 1000000000,
+        "cost": 0,
         "order": -1,
-        "special": true
+        "special": true,
+        "rollsPins": true
     }
 ]

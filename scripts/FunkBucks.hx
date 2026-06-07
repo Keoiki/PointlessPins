@@ -16,6 +16,7 @@ import funkbucks.objects.PinSprite;
 import funkin.Highscore;
 import funkin.audio.FunkinSound;
 import funkin.data.song.SongRegistry;
+import funkin.graphics.FunkinSprite;
 import funkin.modding.PolymodHandler;
 import funkin.modding.ModStore;
 import funkin.modding.module.Module;
@@ -63,7 +64,6 @@ class FunkBucks extends Module
     static final penalties:Array<Float> = [1.0, 0.66, 0.33, 0.0, -0.5, -1];
     static final penaltyColors:Array<String> = ["FFFFFF", "FFAAAA", "FF5555", "FF0000", "AA0000", "550000"];
     static final opheliaAngerCooldown:Int = 1000 * 60 * 60 * 4;
-    static final maximumBlueJewels:Int = 20;
     static final maxBlueJewelPity:Int = 100;
     static final bucksForBlueJewel:Int = 500;
     static final dailySongCount:Int = 5;
@@ -74,6 +74,12 @@ class FunkBucks extends Module
     public static var boxData;
     public static var isMouseActive:Bool = false;
     public static var isMouseTooFast:Bool = false;
+
+    /**
+     * Add pin IDs to this array when you want to show unlocked pins the next time the player enters the shop.
+     * Remember that the PinUnlockState marks pins as unlocked inside itself, so be sure you want the player to have that pin!
+     */
+    public static var pinUnlockQueue:Array<String> = [];
 
     function new():Void
     {
@@ -214,18 +220,12 @@ class FunkBucks extends Module
 
     public static function addBlueJewels(amount:Int = 1, addToLifetime:Bool = true):Int
     {
-        var conversionToBucks:Int = 0;
         if (addToLifetime)
         {
             FunkBucks.save.blueJewelsLifetime = FunkBucks.getBlueJewelsLifeTime() + amount;
         }
-        if (FunkBucks.getBlueJewels() + amount > FunkBucks.maximumBlueJewels)
-        {
-            conversionToBucks = (FunkBucks.getBlueJewels() + amount - FunkBucks.maximumBlueJewels) * FunkBucks.bucksForBlueJewel;
-        }
-        FunkBucks.save.blueJewels = FlxMath.bound(FunkBucks.getBlueJewels() + amount, 0, FunkBucks.maximumBlueJewels);
+        FunkBucks.save.blueJewels = FunkBucks.getBlueJewels() + amount;
         FunkBucks.saveTheData();
-        return conversionToBucks;
     }
 
     public static function getBlueJewels():Int
@@ -265,6 +265,24 @@ class FunkBucks extends Module
     public static function getOpenedBoxCount(boxID:String):Int
     {
         return getOpenedBoxCounts().get(boxID) ?? 0;
+    }
+
+    public static function addFreeBox(boxID:String, amount:Int):Void
+    {
+        var boxesMap = getFreeBoxCounts();
+        boxesMap.set(boxID, (boxesMap.get(boxID) ?? 0) + amount);
+        FunkBucks.save.freeBoxes = boxesMap;
+        FunkBucks.saveTheData();
+    }
+
+    public static function getFreeBoxCounts():StringMap<String, Int>
+    {
+        return FunkBucks.save.freeBoxes ?? new StringMap();
+    }
+
+    public static function getFreeBoxCount(boxID:String):Int
+    {
+        return getFreeBoxCounts().get(boxID) ?? 0;
     }
 
     public static function setObtainedPin(pinID:String):Bool
@@ -466,6 +484,30 @@ class FunkBucks extends Module
         return bonusMultiplier;
     }
 
+    public static function hasSeenEvent(event:String):Bool
+    {
+        return FunkBucks.getSeenEvents().contains(event);
+    }
+
+    public static function addSeenEvent(event:String):Void
+    {
+        if (FunkBucks.hasSeenEvent(event))
+        {
+            trace('Player has already seen event: $event');
+            return;
+        }
+
+        var _seenEvents:Array<String> = FunkBucks.getSeenEvents();
+        _seenEvents.push(event);
+        FunkBucks.save.seenEvents = _seenEvents;
+        FunkBucks.saveTheData();
+    }
+
+    static function getSeenEvents():Array<String>
+    {
+        return FunkBucks.save.seenEvents ?? new Array();
+    }
+
     public static function saveTheData():Void
     {
         Save.instance.setModOptions("keoiki.funkbucks", FunkBucks.save);
@@ -504,6 +546,18 @@ class FunkBucks extends Module
         FunkBucks.isMouseActive = true;
         FunkBucks.isMouseTooFast = false;
         #end
+
+        if (FlxG.keys.justPressed.L)
+        {
+            TimedCoinsManager.startEvent(90);
+        }
+
+        if (FlxG.keys.justPressed.FIVE)
+        {
+            // trace(ReflectUtil.getClassNameOf(FlxG.state));
+            trace(FlxG.mouse.gameX, FlxG.mouse.gameY);
+            trace(FlxG.mouse.x, FlxG.mouse.y);
+        }
 
         if (FlxG.state is MainMenuState && FlxG.state.subState == null)
         {
@@ -549,6 +603,7 @@ class FunkBucks extends Module
 
     override function onStateChangeEnd(event:StateChangeScriptEvent):Void
     {
+        // trace(event.targetState);
         if (event.targetState is MainMenuState)
         {
             menuPin = new PinSprite(100, 100);
@@ -561,6 +616,10 @@ class FunkBucks extends Module
             var keycap01 = new KeyCap(115, 115, "P");
             event.targetState.add(keycap01);
             #end
+
+            // var aaaa:FunkinSprite = new FunkinSprite(1100, 20).makeSolidColor(70, 70, 0xFFFF00FF);
+            // aaaa.scrollFactor.set(0, 0);
+            // event.targetState.add(aaaa);
 
             // var test:BAlphabetTyped = new BAlphabetTyped(0, 400, "Test <b>of</b> some<d=1.0/> events.");
             // test.scale.set(0.75, 0.75);
@@ -621,7 +680,7 @@ class FunkBucks extends Module
             var penaltyCount:Int = previousSongs.filter(entry -> entry == currentSongOrWeek).length;
             var repeatPenalty:Float = FunkBucks.penalties[penaltyCount];
             var resultTextColor:String = FunkBucks.penaltyColors[penaltyCount];
-            var awardedJewels:Int = 0;
+            var jewelsToAward:Int = 0;
             var awardNormalCompletionJewel:Bool = false;
 
             FunkBucks.addBlueJewelPity(#if keoiki.endlessmode EndlessStatus.isEndless ? Math.floor(EndlessStatus.currentLoopFloat) : #end 1);
@@ -639,11 +698,11 @@ class FunkBucks extends Module
             {
                 if (FlxG.random.bool(0.5))
                 {
-                    awardedJewels = 2;
+                    jewelsToAward = 2;
                 }
                 else if (FlxG.random.bool(2))
                 {
-                    awardedJewels = 1;
+                    jewelsToAward = 1;
                 }
                 bucksToAward *= 1.5;
                 resultTextColor = "00FF00";
@@ -677,18 +736,16 @@ class FunkBucks extends Module
             // Normal completion jewel stacks with the Daily Song one(s).
             if (awardNormalCompletionJewel)
             {
-                awardedJewels++;
+                jewelsToAward++;
                 FunkBucks.save.blueJewelPity = 0;
                 PoinltessPins.saveTheData();
             }
             
             bucksToAward = Math.ceil(bucksToAward);
-            var excessFunkBucks:Int = FunkBucks.addBlueJewels(awardedJewels);
-            bucksToAward += excessFunkBucks;
-            awardedJewels -= excessFunkBucks / FunkBucks.bucksForBlueJewel;
             FunkBucks.addFunkCoins(bucksToAward);
+            FunkBucks.addBlueJewels(jewelsToAward);
 
-            trace(currentSongOrWeek, rank, bucksToAward, awardedJewels, excessFunkBucks, previousSongs);
+            trace(currentSongOrWeek, rank, bucksToAward, jewelsToAward, previousSongs);
             trace(awardNormalCompletionJewel, FunkBucks.getBlueJewelPity(), Math.pow(FunkBucks.getBlueJewelPity(), 2) / 1000);
 
             var funkBucksText = new BAlphabet(40, 50, '<b><c=$resultTextColor>${bucksToAward > 0 ? "+" : ""}$bucksToAward</c></b> ${FBIcon.Buck}');
@@ -704,9 +761,9 @@ class FunkBucks extends Module
                 FunkinSound.playOnce(Paths.sound(bucksToAward >= 0 ? "fav" : "unfav"), 1.5);
             });
 
-            if (awardedJewels > 0)
+            if (jewelsToAward > 0)
             {
-                var jewelsText = new BAlphabet(30, 70, '<b><c=82E9FF>+${awardedJewels}</c></b> ${FBIcon.Jewel}');
+                var jewelsText = new BAlphabet(30, 70, '<b><c=82E9FF>+${jewelsToAward}</c></b> ${FBIcon.Jewel}');
                 jewelsText.resetOrigin();
                 jewelsText.scale.set(0.65, 0.65);
                 jewelsText.alpha = 0;
@@ -775,6 +832,7 @@ class FBIcon
 
     static final OpheliaMad:String = "&#xE010;";
     static final Star:String = "&#xE011;";
+    static final Clover:String = "&#xE012;";
     
     static final Common:String = "&#xE020;";
     static final Uncommon:String = "&#xE021;";

@@ -228,16 +228,26 @@ class BoxSubMenu extends MusicBeatSubState
         boxName.text = '<b>${box.name}</b>';
         boxDescription.text = box.description;
 
-        var boxPriceText:String = '<b>${box.price} ${FBIcon.Buck}</b>\n';
-        if (box.angerModifier > 1.0)
+        var freeRolls:Int = FunkBucks.getFreeBoxCount(box.bID);
+        var boxPriceText:String = '<b>${freeRolls > 0 ? "FREE" : box.price} ${FBIcon.Buck}</b>\n';
+
+        if (freeRolls > 0)
         {
-            boxPriceText += '<b><s=0.75>(${FBIcon.OpheliaMad} <c=FF0000>x${box.angerModifier}</c>)</s></b>';
+            boxPriceText += '<b><s=0.75>(<c=00FF00>x${freeRolls}</c>)</s></b>';
         }
-        if (box.discountModifier > 0.0)
+        else
         {
-            if (box.angerModifier > 1.0) boxPriceText += " ";
-            boxPriceText += '<b><s=0.75>(<c=00FF00>-${box.discountModifier}%</c>)</s></b>';
+            if (box.angerModifier > 1.0)
+            {
+                boxPriceText += '<b><s=0.75>(${FBIcon.OpheliaMad} <c=FF0000>x${box.angerModifier}</c>)</s></b>';
+            }
+            if (box.discountModifier > 0.0)
+            {
+                if (box.angerModifier > 1.0) boxPriceText += " ";
+                boxPriceText += '<b><s=0.75>(<c=00FF00>-${box.discountModifier}%</c>)</s></b>';
+            }
         }
+        
         boxPrice.text = boxPriceText;
 
         var boxOddsText = "";
@@ -263,7 +273,8 @@ class BoxSubMenu extends MusicBeatSubState
 
     function openBox():Void
     {
-        _parentState.deductFunkBucks(box.price);
+        if (box.price > 0) _parentState.deductFunkBucks(box.price);
+        if (FunkBucks.getFreeBoxCount(box.bID) > 0) FunkBucks.addFreeBox(box.bID, -1);
         FunkBucks.addOpenedBox(box.bID);
 
         var randomPin:PinData = box.rollRandomRarityPin();
@@ -303,9 +314,11 @@ class BoxSubMenu extends MusicBeatSubState
     function closeBox():Void
     {
         box.animation.play("Closed");
+        box.updatePrice();
         STATE = "CHOOSING";
         updatePurchaseLable();
         updateOpenedCount();
+        updateBoxInfoText();
 
         FlxTween.tween(boxName, { alpha: 1 }, 0.5, { ease: FlxEase.quartOut });
         FlxTween.tween(boxDescription, { alpha: 1 }, 0.5, { ease: FlxEase.quartOut });

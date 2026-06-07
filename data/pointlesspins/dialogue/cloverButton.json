@@ -1,0 +1,44 @@
+[
+    {
+        "text": "I wanna let you in on something about the pins.",
+        "speaker": "Ophelia",
+        "canSkip": false
+    },
+    {
+        "text": "When you collect a certain amount of them,<d=0.25/> something around here might change.",
+        "speaker": "Ophelia",
+        "canSkip": false
+    },
+    {
+        "text": "Just now,<d=0.25/> this <c=2BFF31>big green button</c> on the right side wall appeared.",
+        "speaker": "Ophelia",
+        "canSkip": false,
+        "boxY": 560
+    },
+    {
+        "text": "Even though I'm in charge here,<d=0.25/> I'm not really sure what it does.",
+        "speaker": "Ophelia",
+        "canSkip": false,
+        "boxY": 560
+    },
+    {
+        "text": "Well based on everything here,<d=0.25/> it'll probably give you a pin.",
+        "speaker": "Ophelia",
+        "canSkip": false
+    },
+    {
+        "text": "And before you say anything..",
+        "speaker": "Ophelia",
+        "canSkip": false
+    },
+    {
+        "text": "As long as an individual pin has no point,<d=0.25/> this operation will be fine.",
+        "speaker": "Ophelia",
+        "canSkip": false
+    },
+    {
+        "text": "Never said anything about the collective count of your pins.",
+        "speaker": "Ophelia",
+        "canSkip": false
+    }
+]

@@ -1,30 +1,37 @@
-## [2.0.0] - ??/??/2026
+## [2.0.0] - ??/06/2026
 
 ### Added
 
-- Added Blue Jewels. They have a rare chance to be obtained after completing a song.
-    - Your chance to obtain one increases with each song completed, up to 10% at 100 songs.
-    - They have a higher chance on Daily Songs.
-    - You can only have 20 Blue Jewels at a time, so make sure you spend them once you're at full capacity.
-- Added the Exchange section to the Shop.
-    - You can exchange one Blue Jewel for 500 FunkBucks, or more to buy a Legendary or higher rarity pin you DON'T already own.
-- Added the Rewards section to the Shop.
-    - You can claim extra some of the following based on your lifetime FunkBucks or Blue Jewels collected, or how many of each box you've opened:
-        - FunkBucks
-        - Blue Jewels
-        - Pins
-        - Boxes
-        - Box Discounts
-            - A permanent discount when buying boxes.
-        - Bonus FunkBucks
-            - A permanent multiplier to how many FunkBucks you earn when completing songs and weeks.
 - Added 49 new pins:
     - 12 Common
     - 16 Uncommon
     - 10 Rare
-    - 6 Epic
+    - 7 Epic
     - 3 Legendary
     - 1 Special
+        - Recount this shit after the update is done bruh
+- Added ###THE THIRD BOX### which costs 200 FunkBucks to open.
+- Added ###THE FOURTH BOX### which costs 500 FunkBucks to open.
+- Added Melody Stones. They have a rare chance to be obtained after completing a song.
+    - Your chance to obtain one increases with each song completed, up to 10% at 100 songs.
+    - They have a higher chance on Daily Songs.
+- Added the Exchange section to the Shop.
+    - You can exchange one Melody Stone for 500 FunkBucks, or more to buy a Legendary or higher rarity pin you DON'T already own.
+- Added the Rewards section to the Shop.
+    - As mush as Ophelia hates to give free things, she's forced to.
+    - You can claim extra some of the following based on your lifetime FunkBucks or Melody Stones collected, or how many of each box you've opened:
+        - FunkBucks
+        - Melody Stones
+        - Pins
+        - Free Box rolls
+        - Box Discounts
+            - A permanent discount when buying boxes.
+        - Bonus FunkBucks
+            - A permanent multiplier to how many FunkBucks you earn when completing songs and weeks.
+- Added a Clover Coin timed event. Collect 8 Clover Coins scattered through out the menus of the game within the time limit to win!
+    - Available once 30 pins have been collected.
+    - First event grants a pin.
+    - Repeat events can only be tried once a day, have a stricter time limit, and grant 200 FunkBucks.
 - Added support for the following modded variations as Dailies:
     - Remnants (Funkin' Remnants)
     - Gooey (Gooey Mix)
@@ -38,10 +45,9 @@
 
 - The "PointlessPins" class and module name have been changed to "FunkBucks".
 - The shop itself has gone under a major visual upgrade.
-- Increased the cost of Cardboard Boxes from 10 to 20 FunkBucks.
-- Added a 1% chance to get a Rare pin from Cardboard Boxes.
-- Increased the cost of Small Giftboxes from 25 to 50 FunkBucks.
-- Added a 0.25% chance to get a Legendary pin from Small Giftboxes.
+- Increased the cost of the Cheap Cardboard Boxes from 10 to 20 FunkBucks.
+- Increased the cost of the Small Giftboxes from 25 to 50 FunkBucks.
+- Adjusted the chances of the Cheap Cardboard Boxes and Small Giftboxes.
 - Rewrote how dialogue is handled, it isn't garbage code anymore.
 
 ## [1.2.0] - 04/06/2026

@@ -151,7 +151,7 @@ class PinBoard extends MusicBeatSubState
                 pin.artist = pinData.artist;
                 pin.source = pinData.source;
                 pin.special = pinData.special ?? false;
-                pin.lockedText = pinData.lockedText ?? "This pin can be unlocked from a box.";
+                pin.lockedText = pinData.lockedText ?? (pin.special ? "This pin has a special unlock condition." : "This pin can be unlocked from a box.");
                 pin.setupPin(pinData.id, pinData.name, pinData.description, pinData.scale);
                 add(pin);
                 pins.push(pin);
