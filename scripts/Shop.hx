@@ -720,7 +720,7 @@ class Shop extends MusicBeatState
         {
             if (Tuntematon.gone && !Ophelia.caught)
             {
-                ophelia.annoyance = 0;
+                Ophelia.annoyance = 0;
                 disallowInputs = true;
                 ebgquwwghobehjovbefogbeqir();
                 return;
@@ -732,10 +732,10 @@ class Shop extends MusicBeatState
                 return;
             }
 
-            ophelia.annoyance++;
-            trace("Boop! " + ophelia.annoyance);
+            Ophelia.annoyance++;
+            trace("Boop! " + Ophelia.annoyance);
 
-            if (ophelia.annoyance == 50 && !FunkBucks.hasObtainedPin("ophelia"))
+            if (Ophelia.annoyance == 50 && !FunkBucks.hasObtainedPin("ophelia"))
             {
                 new FlxTimer().start(0.5, function(_:FlxTimer)
                 {
@@ -754,7 +754,7 @@ class Shop extends MusicBeatState
                 return;
             }
 
-            if (ophelia.annoyance == 75 && FunkBucks.getOpheliaAnger() == 0)
+            if (Ophelia.annoyance == 75 && FunkBucks.getOpheliaAnger() == 0)
             {
                 if (dialog != null) remove(dialog);
                 dialog = new PinDialogue("angerWarning");
@@ -774,7 +774,7 @@ class Shop extends MusicBeatState
                 });
             }
 
-            if (ophelia.annoyance % 100 == 0)
+            if (Ophelia.annoyance % 100 == 0)
             {
                 if (FunkBucks.getOpheliaAnger() == 0)
                 {

@@ -5,7 +5,7 @@ using StringTools;
 
 class Ophelia extends FunkinSprite
 {
-    var annoyance:Int = 0;
+    static var annoyance:Int = 0;
     var canAnnoy:Bool = true;
     var animationsWithVariations:Array<String> = ["Idle", "Talk"];
     var suffix:String = "";
@@ -36,11 +36,11 @@ class Ophelia extends FunkinSprite
         }
 
         var anger:Int = FunkBucks.getOpheliaAnger();
-        if (animationsWithVariations.contains(name))
+        if (animationsWithVariations.contains(name) && suffix == "")
         {
             var nameToUse:String = name;
 
-            if (anger > 0 || annoyance > 50)
+            if (anger > 0 || Ophelia.annoyance > 50)
             {
                 nameToUse += "Annoyed";
             }

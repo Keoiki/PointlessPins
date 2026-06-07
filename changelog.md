@@ -49,6 +49,7 @@
 - Increased the cost of the Small Giftboxes from 25 to 50 FunkBucks.
 - Adjusted the chances of the Cheap Cardboard Boxes and Small Giftboxes.
 - Rewrote how dialogue is handled, it isn't garbage code anymore.
+- Ophelia's annoyance now persists after exiting and re-entering the Shop.
 
 ## [1.2.0] - 04/06/2026
 
