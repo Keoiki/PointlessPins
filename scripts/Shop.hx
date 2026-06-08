@@ -1088,7 +1088,7 @@ class Shop extends MusicBeatState
     function unlockPinsInQueue():Void
     {
         disallowInputs = true;
-        var nextPin:String = FunkBucks.pinUnlockQueue.pop();
+        var nextPin:String = FunkBucks.pinUnlockQueue.shift();
         if (nextPin != null)
         {
             trace("Unlocking pin: " + nextPin);

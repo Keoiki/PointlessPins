@@ -11,7 +11,7 @@
     - 1 Special
         - Recount this shit after the update is done bruh
 - Added ###THE THIRD BOX### which costs 200 FunkBucks to open.
-- Added ###THE FOURTH BOX### which costs 500 FunkBucks to open.
+- Added ###THE FOURTH BOX### which costs 600 FunkBucks to open.
 - Added Melody Stones. They have a rare chance to be obtained after completing a song.
     - Your chance to obtain one increases with each song completed, up to 10% at 100 songs.
     - They have a higher chance on Daily Songs.

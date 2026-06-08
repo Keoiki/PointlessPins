@@ -1,7 +1,7 @@
 [
     {
         "id": "cardboard",
-        "name": "Cheap Cardboard Box",
+        "name": "Cardboard Box",
         "description": "An inexpensive cardboard box.\nContents are equally inexpensive.",
         "revealTime": 26,
         "chances": [
@@ -18,33 +18,33 @@
         "description": "Oooh, I wonder what's inside!\nIt's a pin, yeah.",
         "revealTime": 26,
         "chances": [
-            [ "Common", 595 ],
+            [ "Common", 590 ],
             [ "Uncommon", 350 ],
             [ "Rare", 50 ],
-            [ "Epic", 5 ]
+            [ "Epic", 10 ]
         ],
         "cost": 50,
         "order": 1
     },
     {
         "id": "smallgiftbox",
-        "name": "<c=2BFF31>Box #3</c>",
-        "description": "Don't try opening these yet, thanks!",
+        "name": "<c=2BFF31>Fancy Coffret</c>",
+        "description": "Finally something that looks nice.\nSay goodbye to those Commons!",
         "revealTime": 26,
         "chances": [
             [ "Uncommon", 696.5 ],
             [ "Rare", 250 ],
             [ "Epic", 50 ],
             [ "Legendary", 2.5 ],
-            [ "Mythic", 1]
+            [ "Mythic", 1 ]
         ],
         "cost": 200,
         "order": 2
     },
     {
         "id": "smallgiftbox",
-        "name": "<c=2A4DFF>Box #4</c>",
-        "description": "Don't try opening these yet, thanks!",
+        "name": "<c=2A4DFF>Glimmering Pouch</c>",
+        "description": "\"<c=67B1D8>Hey, what?! This isn't a box!</c>\"\nRegardless, it still holds pins within,\nquite rare ones at that.",
         "revealTime": 26,
         "chances": [
             [ "Rare", 825 ],
@@ -52,7 +52,7 @@
             [ "Legendary", 20 ],
             [ "Mythic", 5 ]
         ],
-        "cost": 500,
+        "cost": 600,
         "order": 3
     },
     {
