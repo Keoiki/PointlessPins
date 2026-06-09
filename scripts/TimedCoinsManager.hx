@@ -71,7 +71,7 @@ class TimedCoinsManager extends Module
                 for (i in 0...TimedCoinsManager.spawnedCoins.length)
                 {
                     var coin:CloverCoin = TimedCoinsManager.spawnedCoins[i];
-                    if (!coin.canCollect) return;
+                    if (!coin.canCollect) continue;
                     if (coin.data.split("|")[5] == FlxG.state.currentLevelId + "-" + FlxG.state.currentDifficultyId)
                     {
                         coin.visible = true;
@@ -153,11 +153,12 @@ class TimedCoinsManager extends Module
             {
                 case "shop":
                 {
-                    final location:Int = FlxG.random.int(0, 1);
+                    final location:Int = FlxG.random.int(0, 2);
                     switch (location)
                     {
                         case 0: spotInfo = [FlxG.random.float(-1150, 2340), FlxG.random.float(-360, -320), 0.85, 0.85];
                         case 1: spotInfo = [FlxG.random.float(-1150, 1850), FlxG.random.float(650, 740), 1.0, 1.0];
+                        case 2: spotInfo = [1440, 345, 1.0, 1.0];
                     }
                     final spot:String = '$menu|${spotInfo[0]}|${spotInfo[1]}|${spotInfo[2]}|${spotInfo[3]}';
                     TimedCoinsManager.chosenCoinLocations.push(spot);

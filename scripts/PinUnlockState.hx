@@ -50,15 +50,16 @@ class PinUnlockState extends MusicBeatSubState
         pin.setupPin(pinData.id, pinData.name, pinData.description, 0.2, 1, true);
         add(pin);
 
+        var sparkleGoBoom:Bool = FlxG.random.bool(0.1);
         var sparkData = getSparkleData(pinData.rarity);
         sparkles = new FlxEmitter(FlxG.width / 2 - 50, 200);
         sparkles.setSize(100, 100);
-        sparkles.loadParticles(Paths.image("pinsparkle"), FlxG.random.bool(0.1) ? 5000 : sparkData.amount, 0);
+        sparkles.loadParticles(Paths.image("pinsparkle"), sparkleGoBoom ? 5000 : sparkData.amount, 0);
         sparkles.acceleration.set(0, 50, 0, 150, 0, 400, 0, 600);
         sparkles.scale.set(0.3, null, 1.2, null, 0.1, null, 0.7, null);
         sparkles.keepScaleRatio = true;
         sparkles.color.set(Std.parseInt('0xFF$rarityColor'));
-        sparkles.speed.set(sparkData.speedMin, sparkData.speedMax, 0, 0);
+        sparkles.speed.set(sparkleGoBoom ? 50 : sparkData.speedMin, sparkleGoBoom ? 3000 : sparkData.speedMax, 0, 0);
         sparkles.alpha.set(1.0, 1.0, 0.0, 0.0);
         sparkles.angle.set(-180, 180, -180, 180);
         sparkles.ignoreAngularVelocity = true;
