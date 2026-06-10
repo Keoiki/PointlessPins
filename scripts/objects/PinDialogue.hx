@@ -19,8 +19,8 @@ typedef PinDialogueLine =
     ?speed:Float, // The speed of the text typing. (optional, default: 0.05)
     ?letterStep:Int, // The amount of letters to display each writing step. (optional, default: 1)
     ?canSkip:Bool, // Whether the line can be skipped. (optional, default: true)
-    ?instantComplete:Bool, // Whether to instantly complete the line. (optional, default: false)
-    ?delayNextLine:Bool, // Whether to delay the next line. The next line will not start until it's manually triggered. (optional, default: false)
+    ?instantComplete:Bool, // Whether to instantly complete the line. Ignored if the line is delayed. (optional, default: false)
+    ?delayLine:Bool, // Whether to delay the line. The line will not start until it's manually triggered. (optional, default: false)
     ?hideDuringDelay:Bool, // If delayed, should the dialogue UI be hidden? (optional, default: false)
     ?boxY:Float // The Y level of the dialogue. (optional, default: ???)
 }
@@ -91,7 +91,7 @@ class PinDialogue extends FunkinGroup
 
     var hasEnded:Bool = false;
     var canSkip:Bool = true;
-    var nextDelayed:Bool = false;
+    var isDelayed:Bool = false;
     var delayHidden:Bool = false;
 
     override function update(elapsed:Float):Void
@@ -100,6 +100,12 @@ class PinDialogue extends FunkinGroup
 
         if (!hasEnded)
         {
+            if (isDelayed)
+            {
+                if (delayHidden) this.visible = false;
+                canSkip = false;
+            }
+
             if ((PlayerSettings.player1.controls.CUTSCENE_ADVANCE || TouchUtil.pressAction()) && canSkip)
             {
                 if (!dialogueText.finishedText)
@@ -109,15 +115,7 @@ class PinDialogue extends FunkinGroup
                 }
                 else
                 {
-                    if (nextDelayed)
-                    {
-                        if (delayHidden) this.visible = false;
-                        canSkip = false;
-                    }
-                    else
-                    {
-                        doNextLine();
-                    }
+                    doNextLine();
                 }
             }
         }
@@ -149,12 +147,9 @@ class PinDialogue extends FunkinGroup
         dialogueLine.letterStep ??= 1;
         dialogueLine.canSkip ??= true;
         dialogueLine.instantComplete ??= false;
-        dialogueLine.delayNextLine ??= false;
+        dialogueLine.delayLine ??= false;
         dialogueLine.hideDuringDelay ??= false;
         dialogueLine.boxY ??= 32;
-
-        nextDelayed = dialogueLine.delayNextLine;
-        delayHidden = nextDelayed && dialogueLine.hideDuringDelay;
 
         if (dialogueLine.speaker?.toLowerCase() == "ophelia" && !FunkBucks.hasObtainedPin("ophelia"))
         {
@@ -182,15 +177,34 @@ class PinDialogue extends FunkinGroup
         this.y = dialogueLine.boxY;
         this.visible = true;
 
+        isDelayed = dialogueLine.delayLine;
+        delayHidden = isDelayed && dialogueLine.hideDuringDelay;
+
         dialogueText.localY -= dialogueText.rows * 16;
 
-        dialogueText.start();
-
-        if (dialogueLine.instantComplete)
+        if (!isDelayed)
         {
-            dialogueText.finish();
+            dialogueText.start();
+
+            if (dialogueLine.instantComplete)
+            {
+                dialogueText.finish();
+            }
+        }
+        else
+        {
+            dialogueText.localVisible = false;
         }
 
         onNextLine.dispatch(dialogueIndex, dialogueText);
+    }
+
+    public function startFromDelay():Void
+    {
+        if (!isDelayed) return;
+        isDelayed = false;
+        if (delayHidden) this.visible = true;
+        dialogueText.localVisible = true;
+        dialogueText.start();
     }
 }

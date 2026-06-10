@@ -762,8 +762,9 @@ class Shop extends MusicBeatState
                 dialog.cameras = [cameraHUD];
                 ophelia.canAnnoy = false;
 
-                dialog.dialogueText.letterCallback = () ->
+                dialog.dialogueText.letterCallback = (code) ->
                 {
+                    if (FunkBucks.skipTalking.contains(code)) return;
                     FunkinSound.playOnce(Paths.sound("chartingSounds/keyboard" + FlxG.random.int(1, 3)), 1.0);
                     ophelia.playAnimation('Talk', false, false);
                 }
@@ -816,8 +817,9 @@ class Shop extends MusicBeatState
         add(dialog);
         dialog.cameras = [cameraHUD];
 
-        dialog.dialogueText.letterCallback = () ->
+        dialog.dialogueText.letterCallback = (code) ->
         {
+            if (FunkBucks.skipTalking.contains(code)) return;
             FunkinSound.playOnce(Paths.sound("chartingSounds/keyboard" + FlxG.random.int(1, 3)), 1.0);
             ophelia.playAnimation('Talk', false, false);
         }
@@ -858,8 +860,9 @@ class Shop extends MusicBeatState
         add(dialog);
         dialog.cameras = [cameraHUD];
 
-        dialog.dialogueText.letterCallback = () ->
+        dialog.dialogueText.letterCallback = (code) ->
         {
+            if (FunkBucks.skipTalking.contains(code)) return;
             FunkinSound.playOnce(Paths.sound("chartingSounds/keyboard" + FlxG.random.int(1, 3)), 1.0);
             ophelia.playAnimation('Talk', false, false);
         }
@@ -889,9 +892,10 @@ class Shop extends MusicBeatState
         add(dialog);
         dialog.cameras = [cameraHUD];
 
-        dialog.dialogueText.letterCallback = () ->
+        dialog.dialogueText.letterCallback = (code) ->
         {
             if (dialog.dialogueIndex == 3 || dialog.dialogueIndex == 4) return;
+            if (FunkBucks.skipTalking.contains(code)) return;
             FunkinSound.playOnce(Paths.sound("chartingSounds/keyboard" + FlxG.random.int(1, 3)), 1.0);
             ophelia.playAnimation('Talk', false, false);
         }
@@ -957,8 +961,9 @@ class Shop extends MusicBeatState
         add(dialog);
         dialog.cameras = [cameraHUD];
 
-        dialog.dialogueText.letterCallback = () ->
+        dialog.dialogueText.letterCallback = (code) ->
         {
+            if (FunkBucks.skipTalking.contains(code)) return;
             FunkinSound.playOnce(Paths.sound("chartingSounds/keyboard" + FlxG.random.int(1, 3)), 1.0);
             ophelia.playAnimation('Talk', false, false);
         }
@@ -969,11 +974,15 @@ class Shop extends MusicBeatState
             {
                 case 2:
                     ophelia.suffix = "Confused";
-                    cameraFollowPoint.setPosition(2300 - spriteNudge, -225);
-                    FlxTween.tween(camera, { zoom: 2 }, 1, { ease: FlxEase.cubeOut });
+                    cameraFollowPoint.setPosition(2300 - spriteNudge, -200);
+                    FlxTween.tween(camera, { zoom: 2 }, 1, { ease: FlxEase.cubeOut, onComplete: function() {
+                        dialog.startFromDelay();
+                    }});
                 case 4:
                     cameraFollowPoint.setPosition(opheliaHitbox.x + opheliaHitbox.width / 2, opheliaHitbox.y + 100);
-                    FlxTween.tween(camera, { zoom: 1.35 }, 1, { ease: FlxEase.cubeOut });
+                    FlxTween.tween(camera, { zoom: 1.35 }, 1, { ease: FlxEase.cubeOut, onComplete: function() {
+                        dialog.startFromDelay();
+                    }});
                 case 5: ophelia.suffix = "Annoyed";
                 case 6: ophelia.suffix = "";
             }

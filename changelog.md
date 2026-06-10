@@ -45,6 +45,7 @@
 
 - The "PointlessPins" class and module name have been changed to "FunkBucks".
 - The shop itself has gone under a major visual upgrade.
+- Increased the amount of daily songs from 3 to 5.
 - Increased the cost of the Cheap Cardboard Boxes from 10 to 20 FunkBucks.
 - Increased the cost of the Small Giftboxes from 25 to 50 FunkBucks.
 - Adjusted the chances of the Cheap Cardboard Boxes and Small Giftboxes.

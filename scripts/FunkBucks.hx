@@ -67,6 +67,7 @@ class FunkBucks extends Module
     static final maxBlueJewelPity:Int = 100;
     static final bucksForBlueJewel:Int = 500;
     static final dailySongCount:Int = 5;
+    static final skipTalking:Array<Int> = [33, 44, 46, 63];
 
     static var save;
 

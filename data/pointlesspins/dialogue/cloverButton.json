@@ -13,7 +13,9 @@
         "text": "Just now,<d=0.25/> this <c=2BFF31>big green button</c> on the right side wall appeared.",
         "speaker": "Ophelia",
         "canSkip": false,
-        "boxY": 560
+        "boxY": 560,
+        "delayLine": true,
+        "hideDuringDelay": true
     },
     {
         "text": "Even though I'm in charge here,<d=0.25/> I'm not really sure what it does.",
@@ -24,7 +26,9 @@
     {
         "text": "Well based on everything here,<d=0.25/> it'll probably give you a pin.",
         "speaker": "Ophelia",
-        "canSkip": false
+        "canSkip": false,
+        "delayLine": true,
+        "hideDuringDelay": true
     },
     {
         "text": "And before you say anything..",
