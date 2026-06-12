@@ -1,0 +1,13 @@
+{
+  "timeFormat": "ms",
+  "artist": "Keoiki",
+  "songName": "Clover Coin Event",
+  "timeChanges": [
+    { "t": 0, "bpm": 167 },
+    { "t": 17245.51, "bpm": 176 },
+    { "t": 28154.60, "bpm": 190 }
+  ],
+  "generatedBy": "Manual (by Keoiki)",
+  "looped": true,
+  "version": "2.0.0"
+}
