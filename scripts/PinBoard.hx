@@ -355,8 +355,8 @@ class PinBoard extends MusicBeatSubState
                 {
                     pinDescription.text = availablePin.description;
                     pinDescription.alpha = 1;
-                    pinName.y -= pinDescription.rows + 1 * 20;
-                    pinDescription.y -= pinDescription.rows + 1 * 20;
+                    pinName.y -= pinDescription.rows * 20;
+                    pinDescription.y -= pinDescription.rows * 20;
                 }
 
                 if (availablePin.artist != null)
