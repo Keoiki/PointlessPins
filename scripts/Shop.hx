@@ -376,7 +376,7 @@ class Shop extends MusicBeatState
             var alert:BAlphabet = new BAlphabet(30, 30, '');
             alert.scale.set(0.4, 0.4);
             alert.lineHeight = 60;
-            alert.text = '<c=FFB51C><b>New version is available:</c> <c=00FF00>${ModStore.get("funkbucksNewVersion")}!</c>\n<s=0.75>${ModStore.get("funkbucksNewVersionInfo")}</s></b>';
+            alert.text = '<c=FFB51C><b>New version is available:</c> <c=00FF00>${ModStore.get("funkbucksNewVersion")}</c>\n<s=0.75>${ModStore.get("funkbucksNewVersionInfo")}</s></b>';
             alert.zIndex = 100000;
             add(alert);
             alert.cameras = [cameraHUD];
