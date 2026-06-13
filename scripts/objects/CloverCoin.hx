@@ -10,8 +10,8 @@ using StringTools;
 
 class CloverCoin extends FunkinSprite
 {
-    var canCollect:Bool = false;
-    var data:String = "";
+    public var canCollect:Bool = false;
+    public var data:String = "";
 
     public function new(x:Float, y:Float):Void
     {

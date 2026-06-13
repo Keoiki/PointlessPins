@@ -9,8 +9,8 @@ import funkin.group.FunkinGroup;
 class TimedCoinsHUD extends FunkinGroup
 {
     var background:FunkinSprite;
-    var counter:BAlphabet;
-    var timer:BAlphabet;
+    public var counter:BAlphabet;
+    public var timer:BAlphabet;
 
     public function new(x:Float, y:Float)
     {
@@ -65,7 +65,6 @@ class TimedCoinsHUD extends FunkinGroup
 
     public function doIntro():Void
     {
-        trace("HI");
         FlxTween.tween(background, { localY: background.localY + 30, localAlpha: 0.8 }, 0.5, { ease: FlxEase.quartOut });
         var i:Int = 0;
         for (letter in counter.letters)

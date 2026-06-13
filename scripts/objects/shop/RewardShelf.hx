@@ -7,7 +7,7 @@ import flixel.tweens.FlxTween;
 
 class RewardShelf extends FunkinGroup
 {
-    var shelf:FunkinSprite;
+    public var shelf:FunkinSprite;
     var randomItems:Array<FunkinSprite> = [];
     var randomItemsTop:Array<FunkinSprite> = [];
 

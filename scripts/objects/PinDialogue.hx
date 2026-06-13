@@ -29,13 +29,13 @@ class PinDialogue extends FunkinGroup
 {
     var currentDialogue:Array<PinDialogueLine>;
 
-    var dialogueID:String = "";
-    var dialogueIndex:Int = -1;
+    public var dialogueID:String = "";
+    public var dialogueIndex:Int = -1;
 
-    var dialogueText:BAlphabetTyped;
-    var dialogueBox:FunkinSprite;
-    var speakerBox:FunkinSprite;
-    var speakerName:BAlphabet;
+    public var dialogueText:BAlphabetTyped;
+    public var dialogueBox:FunkinSprite;
+    public var speakerBox:FunkinSprite;
+    public var speakerName:BAlphabet;
     var advanceIcon:FunkinSprite;
     
     public var onNextLine:FlxSignal2 = new FlxSignal2();

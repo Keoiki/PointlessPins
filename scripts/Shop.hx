@@ -371,17 +371,28 @@ class Shop extends MusicBeatState
         cannotDoText.cameras = [cameraHUD];
         coolBackButton.cameras = [cameraHUD];
 
-        if (ModStore.get("pinsIsOutdated") && ModStore.get("pinsHasShownOutdate") == null)
+        if (ModStore.get("funkbucksOutdated") && ModStore.get("funkbucksShownOutdate") == null)
         {
-            var alert:BAlphabet = new BAlphabet(30, 30, '<c=00FF00><b>Version ${ModStore.get("pinsOnlineVersion")} is available!</b></c>');
+            var alert:BAlphabet = new BAlphabet(30, 30, '');
             alert.scale.set(0.4, 0.4);
+            alert.lineHeight = 60;
+            alert.text = '<c=FFB51C><b>New version is available:</c> <c=00FF00>${ModStore.get("funkbucksNewVersion")}!</c>\n<s=0.75>${ModStore.get("funkbucksNewVersionInfo")}</s></b>';
             alert.zIndex = 100000;
             add(alert);
             alert.cameras = [cameraHUD];
-            new FlxTimer().start(8, (_:FlxTimer) -> {
+
+            var alertBG:FunkinSprite = new FunkinSprite(0, 0).makeSolidColor(alert.width + 60, alert.height + 60, 0xFF000000);
+            alertBG.zIndex = 99999;
+            alertBG.alpha = 0.5;
+            alertBG.cameras = [cameraHUD];
+            add(alertBG);
+            
+            new FlxTimer().start(14, (_:FlxTimer) -> {
                 FlxTween.tween(alert, { alpha: 0 }, 2, { ease: FlxEase.quintOut });
+                FlxTween.tween(alertBG, { alpha: 0 }, 2, { ease: FlxEase.quintOut });
             });
-            ModStore.register("pinsHasShownOutdate", true);
+
+            ModStore.register("funkbucksShownOutdate", true);
         }
 
         persistentUpdate = true;
@@ -553,7 +564,6 @@ class Shop extends MusicBeatState
             {
                 ophelia.playAnimation("Idle", true, true);
                 FlxTween.tween(coolBackButton, { alpha: 0.5 }, 1, { ease: FlxEase.cubeOut });
-                // FlxTween.tween(counter, { alpha: 1 }, 1, { ease: FlxEase.cubeIn });
                 FlxTween.tween(camera, { zoom: savedCamZoom }, 1, { ease: FlxEase.cubeOut });
                 showMenuItems();
                 rewardShelf.toggleItems(true);
@@ -561,7 +571,6 @@ class Shop extends MusicBeatState
             substate.cameras = [cameraSubState];
 
             FlxTween.tween(coolBackButton, { alpha: 0 }, 1, { ease: FlxEase.cubeIn });
-            // FlxTween.tween(counter, { alpha: 0 }, 1, { ease: FlxEase.cubeIn });
             FlxTween.tween(camera, { zoom: 1.2 }, 1, { ease: FlxEase.cubeOut, onComplete: function()
             {
                 openSubState(substate);
@@ -996,6 +1005,7 @@ class Shop extends MusicBeatState
             FlxTween.tween(camera, { zoom: savedCamZoom }, 1, { ease: FlxEase.cubeOut });
             FlxTween.tween(funkBucksText, { alpha: 1 }, 1, { ease: FlxEase.cubeOut });
             FlxTween.tween(blueJewelsText, { alpha: 1 }, 1, { ease: FlxEase.cubeOut });
+            // FunkBucks.setEvent("cloverCoinButton", 1);
         });
         
         disallowInputs = true;
@@ -1114,7 +1124,7 @@ class Shop extends MusicBeatState
 
     function checkForEvents():Void
     {
-        if (FunkBucks.getUnlockedPinsCount() >= 30 /*&& !FunkBucks.hasSeenEvent("cloverCoinButton")*/)
+        if (FunkBucks.getUnlockedPinsCount() >= 30 /*&& FunkBucks.getEvent("cloverCoinButton") == 0*/)
         {
             cloverEventButton.visible = true;
             // cloverCoinButtonIntro();

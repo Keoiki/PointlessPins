@@ -61,13 +61,13 @@ class FunkBucks extends Module
     var menuPin;
     var menuPin2;
 
-    static final penalties:Array<Float> = [1.0, 0.66, 0.33, 0.0, -0.5, -1];
-    static final penaltyColors:Array<String> = ["FFFFFF", "FFAAAA", "FF5555", "FF0000", "AA0000", "550000"];
-    static final opheliaAngerCooldown:Int = 1000 * 60 * 60 * 4;
-    static final maxBlueJewelPity:Int = 100;
-    static final bucksForBlueJewel:Int = 500;
-    static final dailySongCount:Int = 5;
-    static final skipTalking:Array<Int> = [33, 44, 46, 63];
+    public static final penalties:Array<Float> = [1.0, 0.66, 0.33, 0.0, -0.5, -1];
+    public static final penaltyColors:Array<String> = ["FFFFFF", "FFAAAA", "FF5555", "FF0000", "AA0000", "550000"];
+    public static final opheliaAngerCooldown:Int = 1000 * 60 * 60 * 4;
+    public static final maxBlueJewelPity:Int = 100;
+    public static final bucksForBlueJewel:Int = 1000;
+    public static final dailySongCount:Int = 5;
+    public static final skipTalking:Array<Int> = [33, 44, 46, 63];
 
     static var save;
 
@@ -100,16 +100,18 @@ class FunkBucks extends Module
 
     function versionCheck():Void
     {
-        var modVersion:String = null;
+        var localVersion:String = null;
         var onlineVersion:String = "0.0.0";
+        var onlineVersionInfo:String = "";
+
         try
         {
-            modVersion = PolymodHandler.modFileSystem.getMetadataById("keoiki.funkbucks", "script_runtime").modVersion.version.join(".");
+            localVersion = PolymodHandler.modFileSystem.getMetadataById("keoiki.funkbucks", "script_runtime").modVersion.version.join(".");
         }
         catch (err:Dynamic)
         {
             trace(err);
-            ModStore.register("pinsIsOutdated", false);
+            ModStore.register("funkbucksOutdated", false);
             #if mobile
             throw "Local mod version could not be found!\nThe message I put here for desktop users might be too long for mobile users.\nI can't be bothered to test that, maybe the text box is scrollable?\nJust change the mod ID back, man, so you can get notified of updates again."
             #else
@@ -117,23 +119,57 @@ class FunkBucks extends Module
             #end
             return;
         }
+
         var request:URLRequest = new URLRequest("https://raw.githubusercontent.com/Keoiki/PointlessPins/main/version.txt");
         var loader:URLLoader = new URLLoader();
         loader.dataFormat = "text";
-        var loadSuccessful = () -> {
-            onlineVersion = loader.data;
-            ModStore.register("pinsIsOutdated", VersionUtil.validateVersionStr(onlineVersion, ">" + modVersion));
-            ModStore.register("pinsOnlineVersion", onlineVersion);
+
+        var loadSuccessful = () ->
+        {
+            if (loader.data == null) 
+            {
+                ModStore.register("funkbucksOutdated", false);
+                ModStore.register("funkbucksNewVersion", onlineVersion);
+                trace("Somehow got no version data despite the request being successful?");
+            }
+
+            if (loader.data.indexOf("|||") != -1)
+            {
+                var versionInfo:Array<String> = loader.data.split("|||");
+                onlineVersion = versionInfo[0];
+                onlineVersionInfo = versionInfo[1];
+            }
+            else
+            {
+                onlineVersion = loader.data;
+            }
+
+            ModStore.register("funkbucksOutdated", VersionUtil.validateVersionStr(onlineVersion, ">" + localVersion));
+            ModStore.register("funkbucksNewVersion", onlineVersion);
+            ModStore.register("funkbucksNewVersionInfo", onlineVersionInfo);
         }
-        var loadFailed = () -> {
-            ModStore.register("pinsIsOutdated", false);
-            ModStore.register("pinsOnlineVersion", onlineVersion);
-            trace("Failed to load online version!");
+
+        var loadFailed = () ->
+        {
+            ModStore.register("funkbucksOutdated", false);
+            ModStore.register("funkbucksNewVersion", onlineVersion);
+            ModStore.register("funkbucksNewVersionInfo", onlineVersionInfo);
+            trace("Failed to fetch online version!");
         }
+
         loader.addEventListener("complete", loadSuccessful);
         loader.addEventListener("ioError", loadFailed);
         loader.addEventListener("securityError", loadFailed);
         loader.load(request);
+
+        // Testing stuff.
+
+        // ModStore.remove("funkbucksOutdated");
+        // ModStore.remove("funkbucksNewVersion");
+        // ModStore.remove("funkbucksNewVersionInfo");
+        // ModStore.register("funkbucksOutdated", true);
+        // ModStore.register("funkbucksNewVersion", "2.1.0");
+        // ModStore.register("funkbucksNewVersionInfo", "- Removed Hundrec.");
     }
 
     function loadPinData():Void
@@ -485,28 +521,22 @@ class FunkBucks extends Module
         return bonusMultiplier;
     }
 
-    public static function hasSeenEvent(event:String):Bool
+    public static function getEvent(event:String):Int
     {
-        return FunkBucks.getSeenEvents().contains(event);
+        return FunkBucks.getEvents().get(event) ?? 0;
     }
 
-    public static function addSeenEvent(event:String):Void
+    static function getEvents():StringMap<String, Int>
     {
-        if (FunkBucks.hasSeenEvent(event))
-        {
-            trace('Player has already seen event: $event');
-            return;
-        }
+        return FunkBucks.save.events ?? new StringMap();
+    }
 
-        var _seenEvents:Array<String> = FunkBucks.getSeenEvents();
-        _seenEvents.push(event);
-        FunkBucks.save.seenEvents = _seenEvents;
+    public static function setEvent(event:String, value:Int):Void
+    {
+        var _events = FunkBucks.getEvents();
+        _events.set(event, value);
+        FunkBucks.save.events = _events;
         FunkBucks.saveTheData();
-    }
-
-    static function getSeenEvents():Array<String>
-    {
-        return FunkBucks.save.seenEvents ?? new Array();
     }
 
     public static function saveTheData():Void

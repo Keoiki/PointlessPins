@@ -5,22 +5,21 @@ import funkin.graphics.FunkinSprite;
 
 class PinSprite extends FunkinSprite
 {
-    var position:Array<Int> = [0, 0];
-    var pID:String;
-    var name:String;
-    var description:String;
-    var scaleOverride:Float;
-    var rarity:String = "Unknown";
-    var artist:String = "Keoiki";
-    var source(default, set):String = "Unknown";
-    var lockedText:String = "Unknown";
-    var special:Bool = false;
-    var isUnlocked:Bool = false;
-    var isUnknown:Bool = false;
-    var unlockCount:Int = 0;
-    var hasGlint:Bool = false;
-    // var blendShader:PinGlint;
-    var rotationTween:FlxTween = null;
+    public var position:Array<Int> = [0, 0];
+    public var pID:String;
+    public var name:String;
+    public var description:String;
+    public var scaleOverride:Float;
+    public var rarity:String = "Unknown";
+    public var artist:String = "Keoiki";
+    public var source(default, set):String = "Unknown";
+    public var lockedText:String = "Unknown";
+    public var special:Bool = false;
+    public var isUnlocked:Bool = false;
+    public var isUnknown:Bool = false;
+    public var unlockCount:Int = 0;
+    public var hasGlint:Bool = false;
+    public var rotationTween:FlxTween = null;
 
     function set_source(value:String):String
     {
@@ -112,18 +111,13 @@ class PinSprite extends FunkinSprite
             });
         }
 
-        if (unlockCount >= 15)
-        {
-            // blendShader = new PinGlint();
-            // shader = blendShader;
-        }
+        // if (unlockCount >= 15) { }
     }
 
     override function update(elapsed:Float):Void
     {
         if (pID == "tuntematon") visible = false;
 
-        // blendShader?.update(elapsed);
         super.update(elapsed);
     }
 }
