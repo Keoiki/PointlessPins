@@ -179,8 +179,8 @@ class PinBoard extends MusicBeatSubState
         pinRows = pinRowLengths.length;
         pinsCreated = true;
 
-        pinNameBox = new FunkinSprite(140, 530);
-        pinNameBox.makeSolidColor(1000, 120, 0xFF000000);
+        pinNameBox = new FunkinSprite(0, 540);
+        pinNameBox.makeSolidColor(FlxG.width, 180, 0xFF000000);
         pinNameBox.alpha = 0.80;
         pinNameBox.screenCenter(0x01);
         add(pinNameBox);
@@ -190,30 +190,25 @@ class PinBoard extends MusicBeatSubState
         pinName.alignment = "center";
         add(pinName);
 
-        pinDescription = new BAlphabet(FlxG.width / 2, pinNameBox.y + 65, "");
+        pinDescription = new BAlphabet(FlxG.width / 2, pinName.y + 55, "");
         pinDescription.scale.set(0.4, 0.4);
         pinDescription.alignment = "center";
         add(pinDescription);
         pinDescription.lineHeight = 60;
 
-        pinArtist = new BAlphabet(pinNameBox.x + pinNameBox.width - 10, pinNameBox.y + 95, "");
+        pinArtist = new BAlphabet(pinNameBox.x + pinNameBox.width - 25, FlxG.height - 35, "");
         pinArtist.scale.set(0.3, 0.3);
         pinArtist.alignment = "right";
         add(pinArtist);
 
-        pinUnlockCount = new BAlphabet(pinNameBox.x + 10, pinNameBox.y + 95, "");
+        pinUnlockCount = new BAlphabet(pinNameBox.x + 25, FlxG.height - 35, "");
         pinUnlockCount.scale.set(0.3, 0.3);
         add(pinUnlockCount);
 
-        pinSource = new BAlphabet(pinNameBox.x + pinNameBox.width - 10, pinNameBox.y + 10, "");
+        pinSource = new BAlphabet(pinNameBox.x + pinNameBox.width - 25, pinNameBox.y + 25, "");
         pinSource.scale.set(0.3, 0.3);
         pinSource.alignment = "right";
         add(pinSource);
-
-        var menuUnlockedText = new BAlphabet(FlxG.width / 2, pinNameBox.y + pinNameBox.height + 20, "<b>Total Unlocked: " + unlockedPins + "/" + pinCount + "</b>");
-        menuUnlockedText.scale.set(0.5, 0.5);
-        menuUnlockedText.alignment = "center";
-        add(menuUnlockedText);
 
         pinNameBox.cameras = [subCamHUD];
         pinName.cameras = [subCamHUD];
@@ -221,7 +216,7 @@ class PinBoard extends MusicBeatSubState
         pinArtist.cameras = [subCamHUD];
         pinUnlockCount.cameras = [subCamHUD];
         pinSource.cameras = [subCamHUD];
-        menuUnlockedText.cameras = [subCamHUD];
+        // menuUnlockedText.cameras = [subCamHUD];
 
         var boardWidth:Float = pins[15].getGraphicMidpoint(pinMidpoint).x - pins[0].getGraphicMidpoint(pinMidpoint).x + 300;
         var boardHeight:Float = pins[pins.length - 1].getGraphicMidpoint(pinMidpoint).y - pins[0].getGraphicMidpoint(pinMidpoint).y + 350;
@@ -230,10 +225,16 @@ class PinBoard extends MusicBeatSubState
         pinBoard.x = pins[0].getGraphicMidpoint(pinMidpoint).x - 150;
         pinBoard.y = pins[0].getGraphicMidpoint(pinMidpoint).y - 225;
         pinBoard.zIndex = -1000;
+
+        var star:String = unlockedPins >= pinCount ? '${FBIcon.Star}' : '';
+        var menuUnlockedText = new BAlphabet(PIN_X_START - 24, pinBoard.y + - 70, '$star <b>Total: $unlockedPins/$pinCount</b>');
+        menuUnlockedText.scale.set(0.7, 0.7);
+        // menuUnlockedText.alignment = "center";
+        add(menuUnlockedText);
         
         camera.minScrollX = pins[0].getGraphicMidpoint(pinMidpoint).x - 200;
         camera.maxScrollX = pins[15].getGraphicMidpoint(pinMidpoint).x + 200;
-        camera.minScrollY = pins[0].getGraphicMidpoint(pinMidpoint).y - 250;
+        camera.minScrollY = pins[0].getGraphicMidpoint(pinMidpoint).y - 500;
         camera.maxScrollY = pins[pins.length - 1].getGraphicMidpoint(pinMidpoint).y + 300;
 
         pinMidpoint = pins[0].getGraphicMidpoint(pinMidpoint);
@@ -241,7 +242,8 @@ class PinBoard extends MusicBeatSubState
         cursor.y = pinMidpoint.y - cursor.height / 2;
 
         FlxG.touches.swipeThreshold.set(100, 100);
-        coolBackButton = new FunkinBackButton(FlxG.width - 220, FlxG.height - 200, 0xFFFFFFFF, goBack, 1.0, true);
+        coolBackButton = new FunkinBackButton(FlxG.width - 220, FlxG.height / 2, 0xFFFFFFFF, goBack, 1.0, true);
+        coolBackButton.y -= coolBackButton.height / 2;
         #if !mobile
         coolBackButton.visible = FunkBucks.isMouseActive;
         FlxMouseEvent.add(coolBackButton, coolBackButton.playHoldAnim, coolBackButton.playConfirmAnim);
@@ -328,10 +330,11 @@ class PinBoard extends MusicBeatSubState
             pinSource.alpha = 0;
             pinUnlockCount.alpha = 0;
             pinSource.alpha = 0;
-            pinName.y = pinNameBox.y + 40;
+            pinName.y = pinNameBox.y + 70;
+            pinDescription.y = pinName.y + 40;
             if (!availablePin.isUnlocked)
             {
-                pinName.y = pinNameBox.y + 25;
+                // pinName.y -= 20;
                 pinDescription.alpha = 1;
 
                 if (pinName.text != 'Not unlocked yet!')
@@ -343,6 +346,8 @@ class PinBoard extends MusicBeatSubState
                 {
                     pinDescription.text = availablePin.lockedText;
                 }
+                
+                pinName.y -= pinDescription.rows * 20;
             }
             else
             {
@@ -350,7 +355,8 @@ class PinBoard extends MusicBeatSubState
                 {
                     pinDescription.text = availablePin.description;
                     pinDescription.alpha = 1;
-                    pinName.y = pinNameBox.y + 25;
+                    pinName.y -= pinDescription.rows + 1 * 20;
+                    pinDescription.y -= pinDescription.rows + 1 * 20;
                 }
 
                 if (availablePin.artist != null)

@@ -111,7 +111,7 @@
         [
             { "id": "hundrec", "name": "Hundrec", "description": "\"This is Hundrec, Production Manager for The Funkin' Crew.\"" },
             { "id": "whitty", "name": "Whitty", "source": "#MOD# VS. Whitty" },
-            { "id": "rank-goldperfect", "name": "Golden Perfect Rank", "description": "Did you know this rank grants an extra 50% FunkBucks? Well now you do.", "special": true, "lockedText": "Complete any song with a certain rank." }
+            { "id": "rank-goldperfect", "name": "Golden Perfect Rank", "description": "Did you know this rank grants an extra 50% FunkBucks?\n<s=0.75><c=FFB51C>Well now you do.</c></s>", "special": true, "lockedText": "Complete any song with a certain rank." }
         ]
     },
     "Mythic": {
