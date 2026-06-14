@@ -19,11 +19,14 @@ class BoxSubMenu extends MusicBeatSubState
 {
     // Important
     var STATE:String = "CHOOSING";
+    var boxIndex:Int = 0;
+    var boxCount:Int = 0;
 
     var darkOverlay:FunkinSprite;
     var box:BoxSprite;
     var arrowLeft:FunkinSprite;
     var arrowRight:FunkinSprite;
+    var menuDots:Array<FunkinSprite> = [];
 
     // Text
     var boxName:BAlphabet;
@@ -41,35 +44,54 @@ class BoxSubMenu extends MusicBeatSubState
 
     override function create():Void
     {
+        // Special boxes are never shown on this menu.
+        for (i in 0...FunkBucks.boxData.length)
+        {
+            if (!FunkBucks.boxData[i].special)
+            {
+                boxCount++;
+            }
+        }
+
         darkOverlay = new FunkinSprite(-64, -64).makeSolidColor(FlxG.width + 128, FlxG.height + 128, 0xFF000000);
         darkOverlay.alpha = 0;
         add(darkOverlay);
 
-        boxName = new BAlphabet(FlxG.width / 2, 510, "");
-        boxName.alignment = "center";
+        for (i in 0...boxCount)
+        {
+            var dot:FunkinSprite = new FunkinSprite(FlxG.width / 2 + 40 * i - 20 * boxCount + 10, 680).loadTexture("menucountdot");
+            dot.scale.set(0.75, 0.75);
+            dot.alpha = 0.2;
+            menuDots.push(dot);
+            add(dot);
+        }
+
+        boxName = new BAlphabet(30, 25, "");
+        // boxName.alignment = "center";
         boxName.scale.set(0.7, 0.7);
         add(boxName);
 
-        boxPrice = new BAlphabet(FlxG.width / 2, boxName.y + 60, "");
+        boxPrice = new BAlphabet(FlxG.width / 2, 560, "");
         boxPrice.alignment = "center";
         boxPrice.scale.set(0.5, 0.5);
         add(boxPrice);
 
-        boxDescription = new BAlphabet(30, boxPrice.y, "");
+        boxDescription = new BAlphabet(30, boxName.y + 60, "");
         boxDescription.scale.set(0.4, 0.4);
         add(boxDescription);
 
-        boxOdds = new BAlphabet(FlxG.width - 30, boxPrice.y, "");
-        boxOdds.alignment = "right";
+        boxOdds = new BAlphabet(30, boxPrice.y, "");
+        // boxOdds.alignment = "right";
         boxOdds.scale.set(0.3, 0.3);
         add(boxOdds);
 
-        boxPurchaseLable = new BAlphabet(30, 450, "");
+        boxPurchaseLable = new BAlphabet(FlxG.width / 2, 510, "");
+        boxPurchaseLable.alignment = "center";
         boxPurchaseLable.scale.set(0.4, 0.4);
         add(boxPurchaseLable);
 
-        boxPurchaseCount = new BAlphabet(FlxG.width / 2, FlxG.height - 45, "");
-        boxPurchaseCount.alignment = "center";
+        boxPurchaseCount = new BAlphabet(FlxG.width / 2, 50, "");
+        // boxPurchaseCount.alignment = "center";
         boxPurchaseCount.scale.set(0.3, 0.3);
         boxPurchaseCount.alpha = 0.5;
         add(boxPurchaseCount);
@@ -102,8 +124,9 @@ class BoxSubMenu extends MusicBeatSubState
         #end
         add(coolBackButton);
 
-        updateBoxInfoText();
-        updateOpenedCount();
+        // updateBoxInfoText();
+        // updateOpenedCount();
+        changeSelection();
         updatePurchaseLable();
 
         persistentUpdate = true;
@@ -182,6 +205,13 @@ class BoxSubMenu extends MusicBeatSubState
     {
         if (STATE != "CHOOSING") return;
 
+        boxIndex = PinUtil.wrapAround(boxIndex + change, 0, boxCount - 1);
+
+        for (i in 0...menuDots.length)
+        {
+            menuDots[i].alpha = i == boxIndex ? 1 : 0.2;
+        }
+
         if (change > 0)
         {
 			FlxTween.completeTweensOf(arrowRight);
@@ -220,7 +250,8 @@ class BoxSubMenu extends MusicBeatSubState
 
     function updateOpenedCount():Void
     {
-        boxPurchaseCount.text = 'You have opened ${FunkBucks.getOpenedBoxCount(box.bID)} of these boxes.';
+        boxPurchaseCount.x = boxName.x + boxName.width + 20;
+        boxPurchaseCount.text = '(Opened: ${FunkBucks.getOpenedBoxCount(box.bID)})';
     }
 
     function updateBoxInfoText():Void
@@ -309,6 +340,10 @@ class BoxSubMenu extends MusicBeatSubState
         FlxTween.tween(arrowLeft, { alpha: 0 }, 0.5, { ease: FlxEase.quartOut });
         FlxTween.tween(arrowRight, { alpha: 0 }, 0.5, { ease: FlxEase.quartOut });
         FlxTween.tween(coolBackButton, { alpha: 0 }, 0.5, { ease: FlxEase.quartOut });
+        for (i in 0...menuDots.length)
+        {
+            FlxTween.tween(menuDots[i], { alpha: 0 }, 0.5, { ease: FlxEase.quartOut });
+        }
     }
 
     function closeBox():Void
@@ -329,5 +364,9 @@ class BoxSubMenu extends MusicBeatSubState
         FlxTween.tween(arrowLeft, { alpha: 1 }, 0.5, { ease: FlxEase.quartOut });
         FlxTween.tween(arrowRight, { alpha: 1 }, 0.5, { ease: FlxEase.quartOut });
         FlxTween.tween(coolBackButton, { alpha: 1 }, 0.5, { ease: FlxEase.quartOut });
+        for (i in 0...menuDots.length)
+        {
+            FlxTween.tween(menuDots[i], { alpha: boxIndex == i ? 1 : 0.2 }, 0.5, { ease: FlxEase.quartOut });
+        }
     }
 }
