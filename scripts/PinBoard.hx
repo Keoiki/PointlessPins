@@ -219,21 +219,28 @@ class PinBoard extends MusicBeatSubState
         // menuUnlockedText.cameras = [subCamHUD];
 
         var boardWidth:Float = pins[15].getGraphicMidpoint(pinMidpoint).x - pins[0].getGraphicMidpoint(pinMidpoint).x + 300;
-        var boardHeight:Float = pins[pins.length - 1].getGraphicMidpoint(pinMidpoint).y - pins[0].getGraphicMidpoint(pinMidpoint).y + 350;
-        var pinBoard:FlxSliceSprite = new FlxSliceSprite(Assets.getBitmapData("images/pinboard.png"), FlxRect.get(40, 40, 220, 220), boardWidth, boardHeight);
+        var boardHeight:Float = pins[pins.length - 1].getGraphicMidpoint(pinMidpoint).y - pins[0].getGraphicMidpoint(pinMidpoint).y + 390;
+        var pinBoard:FlxSliceSprite = new FlxSliceSprite(Assets.getBitmapData("images/pinboard.png"), FlxRect.get(60, 60, 180, 180), boardWidth, boardHeight);
         add(pinBoard);
         pinBoard.x = pins[0].getGraphicMidpoint(pinMidpoint).x - 150;
         pinBoard.y = pins[0].getGraphicMidpoint(pinMidpoint).y - 225;
         pinBoard.zIndex = -1000;
 
         var star:String = unlockedPins >= pinCount ? '${FBIcon.Star}' : '';
-        var menuUnlockedText = new BAlphabet(PIN_X_START - 24, pinBoard.y + - 70, '$star <b>Total: $unlockedPins/$pinCount</b>');
+        var menuUnlockedText = new BAlphabet(PIN_X_START - 24, pinBoard.y - 50, '$star <b>Total: $unlockedPins/$pinCount</b>');
         menuUnlockedText.scale.set(0.7, 0.7);
-        // menuUnlockedText.alignment = "center";
+        menuUnlockedText.zIndex = -990;
         add(menuUnlockedText);
+
+        var pinBoardExt:FlxSliceSprite = new FlxSliceSprite(Assets.getBitmapData("images/pinboardext.png"), FlxRect.get(15, 15, 70, 25),
+            menuUnlockedText.width + 40, 100);
+        add(pinBoardExt);
+        pinBoardExt.x = menuUnlockedText.x - 10;
+        pinBoardExt.y = menuUnlockedText.y - 30;
+        pinBoardExt.zIndex = -995;
         
-        camera.minScrollX = pins[0].getGraphicMidpoint(pinMidpoint).x - 200;
-        camera.maxScrollX = pins[15].getGraphicMidpoint(pinMidpoint).x + 200;
+        camera.minScrollX = pins[0].getGraphicMidpoint(pinMidpoint).x - 300;
+        camera.maxScrollX = pins[15].getGraphicMidpoint(pinMidpoint).x + 300;
         camera.minScrollY = pins[0].getGraphicMidpoint(pinMidpoint).y - 500;
         camera.maxScrollY = pins[pins.length - 1].getGraphicMidpoint(pinMidpoint).y + 300;
 

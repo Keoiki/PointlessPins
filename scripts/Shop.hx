@@ -451,7 +451,7 @@ class Shop extends MusicBeatState
             }
 
             disallowInputs = true;
-            cameraFollowPoint.setPosition(iconPins.x + iconPins.width / 2, iconPins.y + 50);
+            cameraFollowPoint.setPosition(iconPins.x + iconPins.width / 2, iconPins.y + 45);
             savedCamZoom = camera.zoom;
 
             var substate = new PinBoard();
