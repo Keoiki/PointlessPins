@@ -126,22 +126,25 @@ class FunkBucks extends Module
 
         var loadSuccessful = () ->
         {
-            if (loader.data == null) 
+            var versionData:Null<String> = Std.string(loader.data);
+
+            if (versionData == null)
             {
                 ModStore.register("funkbucksOutdated", false);
                 ModStore.register("funkbucksNewVersion", onlineVersion);
+                ModStore.register("funkbucksNewVersionInfo", onlineVersionInfo);
                 trace("Somehow got no version data despite the request being successful?");
             }
 
-            if (loader.data.indexOf("|||") != -1)
+            if (versionData.indexOf("|||") != -1)
             {
-                var versionInfo:Array<String> = loader.data.split("|||");
+                var versionInfo:Array<String> = versionData.split("|||");
                 onlineVersion = versionInfo[0];
                 onlineVersionInfo = versionInfo[1];
             }
             else
             {
-                onlineVersion = loader.data;
+                onlineVersion = versionData;
             }
 
             ModStore.register("funkbucksOutdated", VersionUtil.validateVersionStr(onlineVersion, ">" + localVersion));

@@ -139,7 +139,7 @@ class ExchangeMenu extends MusicBeatSubState
                 }
                 switch (confirmedItem)
                 {
-                    case 0: confirmScreenText.text = '<b>Exchange ${jewelCosts[0]} ${FBIcon.Jewel} for:\n500 ${FBIcon.Buck}?</b>';
+                    case 0: confirmScreenText.text = '<b>Exchange ${jewelCosts[0]} ${FBIcon.Jewel} for:\n${FunkBucks.bucksForBlueJewel} ${FBIcon.Buck}?</b>';
                     case 1: confirmScreenText.text = '<b>Exchange ${jewelCosts[1]} ${FBIcon.Jewel} for:\n1 Unique <c=FFB51C>Legendary</c> Pin?</b>\n<s=0.5>(A pin you don\'t own yet!)</s>';
                     case 2: confirmScreenText.text = '<b>Exchange ${jewelCosts[2]} ${FBIcon.Jewel} for:\n1 Unique <c=FF57F7>Mythic</c> Pin?</b>\n<s=0.5>(A pin you don\'t own yet!)</s>';
                     case 3: confirmScreenText.text = '<b>Exchange ${jewelCosts[3]} ${FBIcon.Jewel} for:\n1 Unique <c=66FFFF>Divine</c> Pin?</b>\n<s=0.5>(A pin you don\'t own yet!)</s>';

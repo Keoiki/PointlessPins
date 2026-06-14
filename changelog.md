@@ -10,13 +10,14 @@
     - 3 Legendary
     - 1 Special
         - Recount this shit after the update is done bruh
-- Added ###THE THIRD BOX### which costs 200 FunkBucks to open.
-- Added ###THE FOURTH BOX### which costs 600 FunkBucks to open.
-- Added Melody Stones. They have a rare chance to be obtained after completing a song.
+- Added "Fancy Coffret" box, which costs 200 FunkBucks to open.
+- Added "Glimmering Pouch" box, which costs 600 FunkBucks to open.
+- Added Melody Stones.
+    - They have a rare chance to be obtained after completing a song.
     - Your chance to obtain one increases with each song completed, up to 10% at 100 songs.
     - They have a higher chance on Daily Songs.
 - Added the Exchange section to the Shop.
-    - You can exchange one Melody Stone for 500 FunkBucks, or more to buy a Legendary or higher rarity pin you DON'T already own.
+    - You can exchange one Melody Stone for 1000 FunkBucks, or more to buy a Legendary or higher rarity pin you DON'T already own.
 - Added the Rewards section to the Shop.
     - As mush as Ophelia hates to give free things, she's forced to.
     - You can claim extra some of the following based on your lifetime FunkBucks or Melody Stones collected, or how many of each box you've opened:
@@ -28,11 +29,12 @@
             - A permanent discount when buying boxes.
         - Bonus FunkBucks
             - A permanent multiplier to how many FunkBucks you earn when completing songs and weeks.
-- Added a Clover Coin timed event. Collect 8 Clover Coins scattered through out the menus of the game within the time limit to win!
+- Added a Clover Coin timed event.
+    - Collect 8 Clover Coins scattered through out the menus of the game within the time limit to win!
     - Available once 30 pins have been collected.
     - First event grants a pin.
     - Repeat events can only be tried once a day, have a stricter time limit, and grant 200 FunkBucks.
-- Added support for the following modded variations as Dailies:
+- Added support for several modded variations as Dailies:
     - Remnants (Funkin' Remnants)
     - Gooey (Gooey Mix)
     - Reimu (Funkin' Incident)
@@ -46,9 +48,9 @@
 - The "PointlessPins" class and module name have been changed to "FunkBucks".
 - The shop itself has gone under a major visual upgrade.
 - Increased the amount of daily songs from 3 to 5.
-- Increased the cost of the Cheap Cardboard Boxes from 10 to 20 FunkBucks.
+- Increased the cost of the Cardboard Boxes from 10 to 20 FunkBucks.
 - Increased the cost of the Small Giftboxes from 25 to 50 FunkBucks.
-- Adjusted the chances of the Cheap Cardboard Boxes and Small Giftboxes.
+- Adjusted the chances of the Cardboard Boxes and Small Giftboxes.
 - Rewrote how dialogue is handled, it isn't garbage code anymore.
 - Ophelia's annoyance now persists after exiting and re-entering the Shop.
 

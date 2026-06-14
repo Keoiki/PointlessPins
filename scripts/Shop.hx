@@ -1019,13 +1019,15 @@ class Shop extends MusicBeatState
     }
 
     var previousFunkBucks:Int;
+    var passingThroughCost:Int = 0;
     public function deductFunkBucks(amount:Int):Void
     {
         var currentFunkBucks:Int = previousFunkBucks = FunkBucks.getFunkCoins();
         var remainingFunkBucks:Int = currentFunkBucks - amount;
+        passingThroughCost = amount;
 
         buckSound.pitch = 1.0;
-        var easeToUse:FlxEase = amount >= 500 ? FlxEase.expoOut : FlxEase.quartOut;
+        var easeToUse:FlxEase = amount >= 500 ? FlxEase.circOut : FlxEase.quartOut;
         FlxTween.num(currentFunkBucks, remainingFunkBucks, 2.5, { ease: easeToUse, onComplete: function(_) {
             funkBucksText.text = '<b>${Math.floor(remainingFunkBucks)}</b> ${FBIcon.Buck}';
         }}, updateFunkBucks);
@@ -1075,13 +1077,22 @@ class Shop extends MusicBeatState
         FunkBucks.addBlueJewels(amount, false);
     }
 
+    final soundThresholds:Array<Int> = [100, 500, 1000, 2500];
     function updateFunkBucks(value:Float):Void
     {
         if (previousFunkBucks != Math.floor(value))
         {
+            var mod:Int = 0;
+            for (index => value in soundThresholds)
+            {
+                if (passingThroughCost >= value)
+                {
+                    mod = index + 1;
+                }
+            }
             funkBucksText.text = '<b>${Math.floor(value)}</b> ${FBIcon.Buck}';
             funkBucksText.y += 5;
-            FunkinSound.playOnce(Paths.sound("fav"), 0.35);
+            if (Math.abs(Math.floor(value) % (mod + 1)) == 0) FunkinSound.playOnce(Paths.sound("fav"), 0.35);
         }
         previousFunkBucks = Math.floor(value);
     }

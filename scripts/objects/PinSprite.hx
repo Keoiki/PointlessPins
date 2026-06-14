@@ -60,23 +60,15 @@ class PinSprite extends FunkinSprite
 
         var fileToLoad:String = "images/pointlesspins/pins/" + pID + ".png";
         
-        if (isUnknown)
+        if ((!Assets.exists(fileToLoad) && isUnlocked) || isUnknown)
         {
-            // loadTexture("unknownpin");
             fileToLoad = "images/unknownpin.png";
             scaleOverride = 0.45;
         }
-        else if (!Assets.exists("images/pointlesspins/pins/" + pID + ".png") || !isUnlocked)
+        else if (!isUnlocked)
         {
-            // loadTexture("pinknob");
             fileToLoad = "images/pinknob.png";
             scaleOverride = 1;
-        }
-        else
-        {
-            // This function literally doesn't work.
-            // loadTextureAsync("images/pointlesspins/pins/" + pID + ".png", true);
-            // loadTexture("pointlesspins/pins/" + pID);
         }
 
         if (loadImmediately)
