@@ -76,8 +76,15 @@ class PinUnlockState extends MusicBeatSubState
         }
         else
         {
-            var duplicatePinCount:Int = FunkBucks.getObtainedPins().get(pinData.id);
-            unlockMsgText = '<b>You got a <c=434253>duplicate ($duplicatePinCount)</c> pin!</b>';
+            if (pinData.special ?? false)
+            {
+                unlockMsgText = '<b>You got a <c=FF0000>duplicate special</c> pin... oops?</b>';
+            }
+            else
+            {
+                var duplicatePinCount:Int = FunkBucks.getObtainedPins().get(pinData.id);
+                unlockMsgText = '<b>You got a <c=434253>duplicate ($duplicatePinCount)</c> pin!</b>';
+            }
         }
 
         var unlockMessage:BAlphabet = new BAlphabet(FlxG.width / 2, 420, unlockMsgText);

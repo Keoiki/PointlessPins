@@ -15,7 +15,7 @@ class PinOptions extends Module
         if (FunkBucks.save.modifierText == null)
         {
             FunkBucks.save.modifierText = "percentage";
-            FunkBucks.saveTheData();
+            FunkBucks.flushSave();
         }
     }
 
@@ -31,7 +31,7 @@ class PinOptions extends Module
                 function(key:String, value:String):Void
                 {
                     FunkBucks.save.modifierText = value;
-                    FunkBucks.saveTheData();
+                    FunkBucks.flushSave();
                 },
                 switch (FunkBucks.save.modifierText)
                 {

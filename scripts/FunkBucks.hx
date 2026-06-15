@@ -94,6 +94,13 @@ class FunkBucks extends Module
     {
         FunkBucks.save = Save.instance.getModOptions("keoiki.funkbucks");
 
+        // Load default values if there are no saved values, such as when a new player begins their journey to gather all of the Pointless Pins. (roll credits)
+        if (ReflectUtil.fields(FunkBucks.save).length == 0)
+        {
+            FunkBucks.save = FunkBucks.getDefaultSaveValues();
+            FunkBucks.flushSave();
+        }
+
         loadPinData();
 
         super.onCreate(event);
@@ -244,19 +251,21 @@ class FunkBucks extends Module
             /** Do not decrease the lifetime amount. **/
             FunkBucks.save.funkBucksLifetime = FunkBucks.getFunkCoinsLifeTime() + Math.max(0, Std.int(amount));
         }
-        FunkBucks.saveTheData();
+        FunkBucks.flushSave();
         trace("Current FunkBucks: " + FunkBucks.getFunkCoins());
         trace("Lifetime FunkBucks: " + FunkBucks.getFunkCoinsLifeTime());
     }
 
     public static function getFunkCoins():Int
     {
-        return FunkBucks.save.funkBucks ?? 0;
+        if (FunkBucks.save.funkBucks == null) FunkBucks.save.funkBucks = 0;
+        return FunkBucks.save.funkBucks;
     }
 
     public static function getFunkCoinsLifeTime():Int
     {
-        return FunkBucks.save.funkBucksLifetime ?? 0;
+        if (FunkBucks.save.funkBucksLifetime == null) FunkBucks.save.funkBucksLifetime = 0;
+        return FunkBucks.save.funkBucksLifetime;
     }
 
     public static function addBlueJewels(amount:Int = 1, addToLifetime:Bool = true):Int
@@ -266,28 +275,31 @@ class FunkBucks extends Module
             FunkBucks.save.blueJewelsLifetime = FunkBucks.getBlueJewelsLifeTime() + amount;
         }
         FunkBucks.save.blueJewels = FunkBucks.getBlueJewels() + amount;
-        FunkBucks.saveTheData();
+        FunkBucks.flushSave();
     }
 
     public static function getBlueJewels():Int
     {
-        return FunkBucks.save.blueJewels ?? 0;
+        if (FunkBucks.save.blueJewels == null) FunkBucks.save.blueJewels = 0;
+        return FunkBucks.save.blueJewels;
     }
 
     public static function getBlueJewelsLifeTime():Int
     {
-        return FunkBucks.save.blueJewelsLifetime ?? 0;
+        if (FunkBucks.save.blueJewelsLifetime == null) FunkBucks.save.blueJewelsLifetime = 0;
+        return FunkBucks.save.blueJewelsLifetime;
     }
 
     public static function addBlueJewelPity(amount:Int = 1):Void
     {
         FunkBucks.save.blueJewelPity = FlxMath.bound(FunkBucks.getBlueJewelPity() + amount, 0, FunkBucks.maxBlueJewelPity);
-        FunkBucks.saveTheData();
+        FunkBucks.flushSave();
     }
 
     public static function getBlueJewelPity():Int
     {
-        return FunkBucks.save.blueJewelPity ?? 0;
+        if (FunkBucks.save.blueJewelPity == null) FunkBucks.save.blueJewelPity = 0;
+        return FunkBucks.save.blueJewelPity;
     }
 
     public static function addOpenedBox(boxID:String):Void
@@ -295,12 +307,13 @@ class FunkBucks extends Module
         var boxesMap = getOpenedBoxCounts();
         boxesMap.set(boxID, (boxesMap.get(boxID) ?? 0) + 1);
         FunkBucks.save.openedBoxes = boxesMap;
-        FunkBucks.saveTheData();
+        FunkBucks.flushSave();
     }
 
     public static function getOpenedBoxCounts():StringMap<String, Int>
     {
-        return FunkBucks.save.openedBoxes ?? new StringMap();
+        if (FunkBucks.save.openedBoxes == null) FunkBucks.save.openedBoxes = new StringMap();
+        return FunkBucks.save.openedBoxes;
     }
 
     public static function getOpenedBoxCount(boxID:String):Int
@@ -313,12 +326,13 @@ class FunkBucks extends Module
         var boxesMap = getFreeBoxCounts();
         boxesMap.set(boxID, (boxesMap.get(boxID) ?? 0) + amount);
         FunkBucks.save.freeBoxes = boxesMap;
-        FunkBucks.saveTheData();
+        FunkBucks.flushSave();
     }
 
     public static function getFreeBoxCounts():StringMap<String, Int>
     {
-        return FunkBucks.save.freeBoxes ?? new StringMap();
+        if (FunkBucks.save.freeBoxes == null) FunkBucks.save.freeBoxes = new StringMap();
+        return FunkBucks.save.freeBoxes;
     }
 
     public static function getFreeBoxCount(boxID:String):Int
@@ -343,7 +357,7 @@ class FunkBucks extends Module
         var pinsMap = getObtainedPins();
         pinsMap.set(pinID, isNewPin ? 1 : pinsMap.get(pinID) + 1);
         FunkBucks.save.obtainedPins = pinsMap;
-        FunkBucks.saveTheData();
+        FunkBucks.flushSave();
         return isNewPin;
     }
 
@@ -354,7 +368,8 @@ class FunkBucks extends Module
 
     public static function getObtainedPins():StringMap<String, Int>
     {
-        return FunkBucks.save.obtainedPins ?? new StringMap();
+        if (FunkBucks.save.obtainedPins == null) FunkBucks.save.obtainedPins = new StringMap();
+        return FunkBucks.save.obtainedPins;
     }
 
     public static function getObtainedPin(pinID:String):Int
@@ -365,12 +380,13 @@ class FunkBucks extends Module
     public static function setPrevSongs(songs:Array<String>):Void
     {
         FunkBucks.save.previousSongs = songs;
-        FunkBucks.saveTheData();
+        FunkBucks.flushSave();
     }
 
     public static function getPrevSongs():Array<String>
     {
-        return FunkBucks.save.previousSongs ?? new Array();
+        if (FunkBucks.save.previousSongs == null) FunkBucks.save.previousSongs = new Array();
+        return FunkBucks.save.previousSongs;
     }
 
     public static function addOpheliaAnger(anger:Int, addToTotal:Bool = true):Void
@@ -381,18 +397,21 @@ class FunkBucks extends Module
         {
             FunkBucks.save.opheliaAngerTotal = FunkBucks.getOpheliaAngerTotal() + anger;
         }
-        FunkBucks.saveTheData();
+        FunkBucks.flushSave();
     }
 
     public static function getOpheliaAnger():Int
     {
-        var prevAngerTimestamp:Float = FunkBucks.save.opheliaAngerTime ?? -1;
+        if (FunkBucks.save.opheliaAnger == null) FunkBucks.save.opheliaAnger = 0;
+        if (FunkBucks.save.opheliaAngerTime == null) FunkBucks.save.opheliaAngerTime = -1;
+
+        var prevAngerTimestamp:Float = FunkBucks.save.opheliaAngerTime;
         if (prevAngerTimestamp == -1)
         {
             // trace("No stored anger timestamp!");
             return 0;
         }
-        var currentAnger:Int = FunkBucks.save.opheliaAnger ?? 0;
+        var currentAnger:Int = FunkBucks.save.opheliaAnger;
         if (currentAnger == 0)
         {
             // trace("No stored anger!");
@@ -413,13 +432,14 @@ class FunkBucks extends Module
         {
             FunkBucks.save.opheliaAngerTime = prevAngerTimestamp + angerGone * opheliaAngerCooldown;
         }
-        FunkBucks.saveTheData();
+        FunkBucks.flushSave();
         return FunkBucks.save.opheliaAnger;
     }
 
     public static function getOpheliaAngerTotal():Int
     {
-        return FunkBucks.save.opheliaAngerTotal ?? 0;
+        if (FunkBucks.save.opheliaAngerTotal == null) FunkBucks.save.opheliaAngerTotal = 0;
+        return FunkBucks.save.opheliaAngerTotal;
     }
 
     /**
@@ -434,12 +454,14 @@ class FunkBucks extends Module
     public static function setDailies(dailies:Array<String>):Void
     {
         FunkBucks.save.dailies = dailies;
-        FunkBucks.saveTheData();
+        FunkBucks.flushSave();
     }
 
     public static function getDailies():Array<String>
     {
-        var dailyDateNum:Int = FunkBucks.save.dailyDate ?? -1;
+        if (FunkBucks.save.dailyDate == null) FunkBucks.save.dailyDate = -1;
+
+        var dailyDateNum:Int = FunkBucks.save.dailyDate;
         var date:Date = Date.now();
         var currentDate:Int = date.getDate();
         final supportedModdedVariations:Array<String> = FunkBucks.getSupportedModdedVariations();
@@ -469,7 +491,8 @@ class FunkBucks extends Module
         else
         {
             // The default empty array should never get returned, but I'll keep it here just in case.
-            return FunkBucks.save.dailies ?? new Array();
+            if (FunkBucks.save.dailies == null) FunkBucks.save.dailies = new Array();
+            return FunkBucks.save.dailies;
         }
     }
 
@@ -483,7 +506,7 @@ class FunkBucks extends Module
         }
         _obtainedMilestones.push(milestone);
         FunkBucks.save.obtainedMilestones = _obtainedMilestones;
-        FunkBucks.saveTheData();
+        FunkBucks.flushSave();
     }
 
     public static function hasClaimedMilestone(milestone:String):Bool
@@ -493,7 +516,8 @@ class FunkBucks extends Module
 
     public static function getClaimedMilestones():Array<String>
     {
-        return FunkBucks.save.obtainedMilestones ?? new Array();
+        if (FunkBucks.save.obtainedMilestones == null) FunkBucks.save.obtainedMilestones = new Array();
+        return FunkBucks.save.obtainedMilestones;
     }
 
     public static function getBoxDiscount():Float
@@ -532,7 +556,8 @@ class FunkBucks extends Module
 
     static function getEvents():StringMap<String, Int>
     {
-        return FunkBucks.save.events ?? new StringMap();
+        if (FunkBucks.save.events == null) FunkBucks.save.events = new StringMap();
+        return FunkBucks.save.events;
     }
 
     public static function setEvent(event:String, value:Int):Void
@@ -540,12 +565,77 @@ class FunkBucks extends Module
         var _events = FunkBucks.getEvents();
         _events.set(event, value);
         FunkBucks.save.events = _events;
-        FunkBucks.saveTheData();
+        FunkBucks.flushSave();
     }
 
-    public static function saveTheData():Void
+    public static function flushSave():Void
     {
         Save.instance.setModOptions("keoiki.funkbucks", FunkBucks.save);
+    }
+
+    /**
+     * Returns a new save object with default values.
+     */
+    public static function getDefaultSaveValues():Void
+    {
+        return
+        {
+            // Map of all pin IDs that have been unlocked.
+            obtainedPins: new StringMap(),
+
+            // Map of all box IDs that have been opened.
+            openedBoxes: new StringMap(),
+
+            // Map of all the current free boxes available.
+            freeBoxes: new StringMap(),
+
+            /**
+            * An array of the current remaining dailies.
+            * The date of the last daily. Works based on local time.
+            */
+            dailies: new Array(),
+            dailyDate: 0,
+
+            // An array of the previous 5 songs played, used for penalizing repeated songs.
+            previousSongs: new Array(),
+
+            /**
+             * Number of FunkBucks currently held.
+             * Number of FunkBucks obtained ever. Rewards do not increase this value.
+             */
+            funkBucks: 0,
+            funkBucksLifetime: 0,
+
+            /**
+             * Number of Melody Stones currently held.
+             * Number of Melody Stones obtained ever. Rewards do not increase this value.
+             * The current pity for a Melody Stone. Has a range of 0-100, which equals to 0%-10%.
+             */
+            blueJewels: 0,
+            blueJewelsLifetime: 0,
+            blueJewelPity: 0,
+
+            /**
+             * Ophelia's current anger.
+             * Ophelia's total anger.
+             * Timestamp of the last initial anger.
+             */
+            opheliaAnger: 0,
+            opheliaAngerTotal: 0,
+            opheliaAngerTime: -1,
+            
+            // An array of all Reward IDs that have been collected.
+            obtainedMilestones: new Array(),
+
+            /**
+             * Map of all event IDs that have been registered.
+             * The meaning of each value of each event ID can vary.
+             */
+            events: new StringMap(),
+
+            // The current modifier format. Either "multiplier" or "percentage".
+            modifierText: "percentage"
+        }
     }
 
     /**
@@ -604,7 +694,7 @@ class FunkBucks extends Module
             if (FlxG.keys.justPressed.Q)
             {
                 // FunkBucks.save.obtainedMilestones = [];
-                // FunkBucks.saveTheData();
+                // FunkBucks.flushSave();
                 trace(FunkBucks.getClaimedMilestones());
             }
 
@@ -773,7 +863,7 @@ class FunkBucks extends Module
             {
                 jewelsToAward++;
                 FunkBucks.save.blueJewelPity = 0;
-                PoinltessPins.saveTheData();
+                PoinltessPins.flushSave();
             }
             
             bucksToAward = Math.ceil(bucksToAward);
@@ -845,10 +935,10 @@ class FunkBucks extends Module
         }
         if (wantedPinIDs.length > 0)
         {
-            trace(wantedPinIDs);
             for (pinID in wantedPinIDs)
             {
-                FunkBucks.setObtainedPin(pinID);
+                if (FunkBucks.hasObtainedPin(pinID)) continue;
+                FunkBucks.pinUnlockQueue.push(pinID);
             }
         }
     }

@@ -107,6 +107,8 @@ class PinSprite extends FunkinSprite
 
     override function update(elapsed:Float):Void
     {
+        if (pID == 'tuntematon') visible = false;
+
         super.update(elapsed);
     }
 }
