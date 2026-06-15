@@ -51,7 +51,7 @@ class PinButton extends FunkinGroup
     {
         if (isSelected)
         {
-            button.color = isActive ? 0xFFA3A3FF : 0xFF22227B;
+            button.color = isActive ? 0xFF7E7EFF : 0xFF22227B;
         }
         else
         {
