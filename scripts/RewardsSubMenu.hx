@@ -97,6 +97,7 @@ class RewardsSubMenu extends MusicBeatSubState
     var hasUpdatedRewardText:Bool = false;
     var totalItems:Int = 14;
     var currentShownItems:Array<FlxObject> = [];
+    var menuDots:Array<FunkinSprite> = [];
 
     // UI
 
@@ -120,9 +121,9 @@ class RewardsSubMenu extends MusicBeatSubState
         bottomBar = new FunkinSprite(0, FlxG.height - 130).makeSolidColor(FlxG.width, 130, 0xBF000000);
         add(bottomBar);
 
-        rewardText = new BAlphabet(FlxG.width / 2, FlxG.height - 100, "Reward Text Here");
+        rewardText = new BAlphabet(FlxG.width / 2, FlxG.height - 110, "Reward Text Here", { lineHeight: 70 });
         rewardText.alignment = "center";
-        rewardText.scale.set(0.5, 0.5);
+        rewardText.scale.set(0.45, 0.45);
         add(rewardText);
         
         arrowLeft = new FunkinSprite(220, 260).loadTexture("shop/boxarrow");
@@ -209,7 +210,12 @@ class RewardsSubMenu extends MusicBeatSubState
         {
             item.destroy();
         }
+        for (dot in menuDots)
+        {
+            dot.destroy();
+        }
         currentShownItems = [];
+        menuDots = [];
         totalItems = 0;
         if (CATEGORY == "none")
         {
@@ -244,6 +250,16 @@ class RewardsSubMenu extends MusicBeatSubState
                 add(item);
                 currentShownItems.push(item);
             }
+        }
+
+        var pages:Int = Math.ceil(totalItems / 9);
+        for (i in 0...pages)
+        {
+            var dot:FunkinSprite = new FunkinSprite(FlxG.width / 2 + 40 * i - 20 * pages + 10, 680).loadTexture("menucountdot");
+            dot.scale.set(0.75, 0.75);
+            dot.alpha = 0.2;
+            menuDots.push(dot);
+            add(dot);
         }
         // trace(currentShownItems.length);
     }
@@ -376,6 +392,11 @@ class RewardsSubMenu extends MusicBeatSubState
         
         POSITION = (POSITION_ARRAY[0] + ((POSITION_ARRAY[1]) * 3) + (PAGE * 9));
         resultingPosition = POSITION % 9;
+
+        for (i in 0...menuDots.length)
+        {
+            menuDots[i].alpha = i == PAGE ? 1 : 0.2;
+        }
 
         arrowLeft.visible = PAGE > 0;
         arrowRight.visible = totalItems > (PAGE + 1) * 9;

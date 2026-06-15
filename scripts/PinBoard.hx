@@ -117,6 +117,7 @@ class PinBoard extends MusicBeatSubState
         {
             if (PINS_BY_RARITY[i].length == 0) continue;
 
+            var pinsInRarity:Int = 0;
             pinRows = Math.ceil(PINS_BY_RARITY[i].length / PINS_PER_ROW);
 
             for (j in 0...PINS_BY_RARITY[i].length)
@@ -157,14 +158,15 @@ class PinBoard extends MusicBeatSubState
                 pins.push(pin);
 
                 pinRowLengths[currentRow]++;
-                pinCount++;
 
-                if (pinData.id == "tuntematon") pinCount--;
+                if (!pinData.noCount ?? false)
+                {
+                    pinCount++;
+                    pinsInRarity++;
+                }
             }
 
             var tc:String = ReflectUtil.getAnonymousField(pinJSON, PIN_RARITIES[i]).color;
-            var pinsInRarity:Int = PINS_BY_RARITY[i].length;
-            if (PIN_RARITIES[i] == "Special") pinsInRarity--;
             var star:String = unlockedPinsPerRarity[i] >= pinsInRarity ? '${FBIcon.Star} ' : '';
             var rarityText = new BAlphabet(PIN_X_START - 24, textOffset, "<b>" + star + "<c=" + tc + ">" + PIN_RARITIES[i] + "</c>  <s=0.5>(" + (unlockedPinsPerRarity[i] ?? 0) + "/" + pinsInRarity + ")</s></b>");
             rarityText.scale.set(0.8, 0.8);
@@ -190,11 +192,10 @@ class PinBoard extends MusicBeatSubState
         pinName.alignment = "center";
         add(pinName);
 
-        pinDescription = new BAlphabet(FlxG.width / 2, pinName.y + 55, "");
+        pinDescription = new BAlphabet(FlxG.width / 2, pinName.y + 55, "", { lineHeight: 60 });
         pinDescription.scale.set(0.4, 0.4);
         pinDescription.alignment = "center";
         add(pinDescription);
-        pinDescription.lineHeight = 60;
 
         pinArtist = new BAlphabet(pinNameBox.x + pinNameBox.width - 25, FlxG.height - 35, "");
         pinArtist.scale.set(0.3, 0.3);
@@ -226,16 +227,16 @@ class PinBoard extends MusicBeatSubState
         pinBoard.y = pins[0].getGraphicMidpoint(pinMidpoint).y - 225;
         pinBoard.zIndex = -1000;
 
-        var star:String = unlockedPins >= pinCount ? '${FBIcon.Star}' : '';
-        var menuUnlockedText = new BAlphabet(PIN_X_START - 24, pinBoard.y - 50, '$star <b>Total: $unlockedPins/$pinCount</b>');
+        var star:String = unlockedPins >= pinCount ? '<s=1.5>${FBIcon.Star}</s><o=20,20/> ' : '';
+        var menuUnlockedText = new BAlphabet(PIN_X_START - 24, pinBoard.y - 50, '$star<b>Total: $unlockedPins/$pinCount</b>');
         menuUnlockedText.scale.set(0.7, 0.7);
         menuUnlockedText.zIndex = -990;
         add(menuUnlockedText);
 
         var pinBoardExt:FlxSliceSprite = new FlxSliceSprite(Assets.getBitmapData("images/pinboardext.png"), FlxRect.get(15, 15, 70, 25),
-            menuUnlockedText.width + 40, 100);
+            menuUnlockedText.width + 60, 100);
         add(pinBoardExt);
-        pinBoardExt.x = menuUnlockedText.x - 10;
+        pinBoardExt.x = menuUnlockedText.x - 30;
         pinBoardExt.y = menuUnlockedText.y - 30;
         pinBoardExt.zIndex = -995;
         
@@ -310,9 +311,9 @@ class PinBoard extends MusicBeatSubState
         {
             cursorY++;
         }
-        if (controls.ACCEPT)
+        if (controls.ACCEPT_P)
         {
-
+            trace("Pin selected.");
         }
 
         if (cursorY < 0) cursorY = pinRows - 1;
@@ -423,7 +424,7 @@ class PinBoard extends MusicBeatSubState
 
                 if (pin.position[0] == cursorX && pin.position[1] == cursorY)
                 {
-                    trace("Pin clicked/touched.");
+                    trace("Pin selected.");
                 }
                 else
                 {

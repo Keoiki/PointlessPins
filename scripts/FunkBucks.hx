@@ -37,11 +37,12 @@ typedef PinData = {
     id:String, // The ID of a pin.
     name:String, // The visible name of a pin.
     ?description:String, // The description of a pin. (optional)
-    ?scale:Float, // The scale of a pin in the Pins Menu. (optional, default: 0.5)
+    ?scale:Float, // The scale of a pin on the Pin Board. (optional, default: 0.5)
     ?artist:String, // The artist of a pin. (optional)
     ?source:String, // The source of a pin, whether it's based on a mod, or something else. (optional)
     ?special:Bool, // Whether or not a pin can only be unlocked once. Excludes them from Mystery Boxes. (optional, default: false)
-    ?lockedText:String // The text to display when a pin is locked. (optional, use when `special` is true)
+    ?lockedText:String, // The text to display when a pin is locked. (optional, use when `special` is true)
+    ?noCount:Bool // Use sparringly.
 }
 
 typedef BoxData = {
@@ -655,7 +656,7 @@ class FunkBucks extends Module
             // aaaa.scrollFactor.set(0, 0);
             // event.targetState.add(aaaa);
 
-            // var test:BAlphabetTyped = new BAlphabetTyped(0, 400, "Test <b>of</b> some<d=1.0/> events.");
+            // var test:BAlphabet = new BAlphabet(0, 400, "<b>AA <c=00FF00>Color testing.</c></b>\nAAAAAAA\nBBBBB", { lineHeight: 90 });
             // test.scale.set(0.75, 0.75);
             // test.setScrollFactor(0, 0);
             // event.targetState.add(test);

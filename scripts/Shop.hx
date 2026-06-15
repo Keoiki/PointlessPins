@@ -373,10 +373,10 @@ class Shop extends MusicBeatState
 
         if (ModStore.get("funkbucksOutdated") && ModStore.get("funkbucksShownOutdate") == null)
         {
-            var alert:BAlphabet = new BAlphabet(30, 30, '');
+            var alert:BAlphabet = new BAlphabet(30, 30,
+                '<c=FFB51C><b>New version is available:</c> <c=00FF00>${ModStore.get("funkbucksNewVersion")}</c>\n<s=0.75>${ModStore.get("funkbucksNewVersionInfo")}</s></b>',
+                { lineHeight: 60 });
             alert.scale.set(0.4, 0.4);
-            alert.lineHeight = 60;
-            alert.text = '<c=FFB51C><b>New version is available:</c> <c=00FF00>${ModStore.get("funkbucksNewVersion")}</c>\n<s=0.75>${ModStore.get("funkbucksNewVersionInfo")}</s></b>';
             alert.zIndex = 100000;
             add(alert);
             alert.cameras = [cameraHUD];

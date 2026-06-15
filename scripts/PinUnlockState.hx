@@ -91,11 +91,9 @@ class PinUnlockState extends MusicBeatSubState
 
         if (pinData.description != null && pinData.description != "")
         {
-            var unlockedPinDescription:BAlphabet = new BAlphabet(FlxG.width / 2, unlockedPinName.y + 140, "");
-            unlockedPinDescription.lineHeight = 60;
+            var unlockedPinDescription:BAlphabet = new BAlphabet(FlxG.width / 2, unlockedPinName.y + 140, pinData.description, { lineHeight: 60 });
             unlockedPinDescription.alignment = "center";
             unlockedPinDescription.scale.set(0.45, 0.45);
-            unlockedPinDescription.text = pinData.description;
             add(unlockedPinDescription);
         }
 

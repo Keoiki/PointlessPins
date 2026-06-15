@@ -103,10 +103,9 @@ class FunkBucksModifierLable extends Module
 
         bonusPercentage = FlxMath.roundDecimal(FunkBucks.getFunkCoinBonus(), 2);
 
-        modifierText = new BAlphabet(FlxG.width - 20, 640, "");
+        modifierText = new BAlphabet(FlxG.width - 20, 640, "", { lineHeight: 70 });
         modifierText.scale.set(0.5, 0.5);
         modifierText.alignment = "right";
-        modifierText.lineHeight = 70;
         FlxG.state.add(modifierText);
 
         #if mobile 
@@ -134,9 +133,8 @@ class FunkBucksModifierLable extends Module
     {
         bonusPercentage = FlxMath.roundDecimal(FunkBucks.getFunkCoinBonus(), 2);
 
-        modifierText = new BAlphabet(20, FlxG.height + 10, "");
+        modifierText = new BAlphabet(20, FlxG.height + 10, "", { lineHeight: 70 });
         modifierText.scale.set(0.5, 0.5);
-        modifierText.lineHeight = 70;
 
         FlxG.state.subState.add(modifierText);
         modifierText.camera = FlxG.state.subState.funnyCam;

@@ -18,7 +18,6 @@ class PinSprite extends FunkinSprite
     public var isUnlocked:Bool = false;
     public var isUnknown:Bool = false;
     public var unlockCount:Int = 0;
-    public var hasGlint:Bool = false;
     public var rotationTween:FlxTween = null;
 
     function set_source(value:String):String
@@ -31,7 +30,7 @@ class PinSprite extends FunkinSprite
                 case "mod": return FBIcon.Modded;
                 case "internet": return FBIcon.Internet;
                 case "game": return FBIcon.Game;
-                default: return "";
+                default: return "<color=FF0000>!Unknown Source Type!</color>";
             }
         });
 
@@ -108,8 +107,6 @@ class PinSprite extends FunkinSprite
 
     override function update(elapsed:Float):Void
     {
-        if (pID == "tuntematon") visible = false;
-
         super.update(elapsed);
     }
 }
