@@ -15,7 +15,7 @@
         "canSkip": false
     },
     {
-        "text": "<S><a=0.5>I assure you we do hands out rewards.</a></S>",
+        "text": "<S><a=0.5>Käsi.<d=0.5/> Tuhoa kolikot.<d=0.5/> Pinssejä hauluat?<d=5/> <c=FF0000>Ei.</c><d=1/> Hyllyn takana?<d=0.5/> Pinssit on tuhottava.</a></S>",
         "canSkip": false
     },
     {
@@ -31,6 +31,10 @@
     {
         "text": "I didn't say anything.",
         "speaker": "Ophelia",
+        "canSkip": false
+    },
+    {
+        "text": "<S><a=0.5>Kuulit oikein.<d=0.5/> Melodi Kivet.<d=0.5/>.<d=0.5/>.<d=0.5/> <c=67B1D8>Ophelia</c>.<d=1/> Sun vuoro on seuraava.</a></S>",
         "canSkip": false
     },
     {

@@ -348,7 +348,7 @@ class TimedCoinsManager extends Module
                     coin.scrollFactor.set(spotInfo[3], spotInfo[4]);
                     coin.data = TimedCoinsManager.chosenCoinLocations[i];
                     coin.camera = event.targetState.funnyCam;
-                    coin.zIndex = 1500;
+                    coin.zIndex = 5000;
                     coin.canCollect = true;
                     event.targetState.add(coin);
                     event.targetState.refresh();

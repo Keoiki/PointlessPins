@@ -4,6 +4,7 @@ import funkin.graphics.FunkinSprite;
 import funkin.group.FunkinGroup;
 import flixel.tweens.FlxEase;
 import flixel.tweens.FlxTween;
+import flixel.util.FlxTimer;
 
 class RewardShelf extends FunkinGroup
 {
@@ -66,6 +67,18 @@ class RewardShelf extends FunkinGroup
         {
             if (item == null) continue;
             FlxTween.tween(item, { localAlpha: targetAlpha }, 0.35, { startDelay: FlxG.random.float(0, 0.5) });
+        }
+    }
+
+    public function removeItems():Void
+    {
+        return;
+        for (item in randomItems)
+        {
+            if (item == null) continue;
+            new FlxTimer().start(FlxG.random.float(0.5, 4), function(_:FlxTimer) {
+                this.remove(item);
+            });
         }
     }
 }

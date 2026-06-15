@@ -609,7 +609,7 @@ class FunkBucks extends Module
             /**
              * Number of Melody Stones currently held.
              * Number of Melody Stones obtained ever. Rewards do not increase this value.
-             * The current pity for a Melody Stone. Has a range of 0-100, which equals to 0%-10%.
+             * The current pity for a Melody Stone. Has a range of 0-100, which equals to 0%-20%.
              */
             blueJewels: 0,
             blueJewelsLifetime: 0,
@@ -831,7 +831,7 @@ class FunkBucks extends Module
                 }
                 bucksToAward *= 1.5;
                 resultTextColor = "00FF00";
-                awardNormalCompletionJewel = FlxG.random.bool(Math.pow(FunkBucks.getBlueJewelPity(), 2) / 1000);
+                awardNormalCompletionJewel = FlxG.random.bool((Math.pow(FunkBucks.getBlueJewelPity(), 2) / 1000) * 2);
                 currentDailies.remove(currentSongOrWeek);
                 FunkBucks.setDailies(currentDailies);
                 trace("Daily Bonus +50%! Remaining dailies: " + currentDailies);
@@ -839,7 +839,7 @@ class FunkBucks extends Module
             else
             {
                 bucksToAward *= repeatPenalty;
-                awardNormalCompletionJewel = FlxG.random.bool(Math.pow(FunkBucks.getBlueJewelPity(), 2) / 1000);
+                awardNormalCompletionJewel = FlxG.random.bool((Math.pow(FunkBucks.getBlueJewelPity(), 2) / 1000) * 2);
                 trace("Repeat penalty: " + repeatPenalty * 100 + "%");
             }
 
@@ -871,7 +871,7 @@ class FunkBucks extends Module
             FunkBucks.addBlueJewels(jewelsToAward);
 
             trace(currentSongOrWeek, rank, bucksToAward, jewelsToAward, previousSongs);
-            trace(awardNormalCompletionJewel, FunkBucks.getBlueJewelPity(), Math.pow(FunkBucks.getBlueJewelPity(), 2) / 1000);
+            trace(awardNormalCompletionJewel, FunkBucks.getBlueJewelPity(), (Math.pow(FunkBucks.getBlueJewelPity(), 2) / 1000) * 2);
 
             var funkBucksText = new BAlphabet(40, 50, '<b><c=$resultTextColor>${bucksToAward > 0 ? "+" : ""}$bucksToAward</c></b> ${FBIcon.Buck}');
             funkBucksText.scale.set(0.65, 0.65);

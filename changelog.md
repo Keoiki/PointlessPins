@@ -2,33 +2,26 @@
 
 ### Added
 
-- Added 49 new pins:
-    - 12 Common
-    - 16 Uncommon
-    - 10 Rare
-    - 7 Epic
-    - 3 Legendary
+- Added 64 new pins:
+    - 13 Common
+    - 20 Uncommon
+    - 16 Rare
+    - 9 Epic
+    - 5 Legendary
     - 1 Special
-        - Recount this shit after the update is done bruh
 - Added "Fancy Coffret" box, which costs 200 FunkBucks to open.
 - Added "Glimmering Pouch" box, which costs 600 FunkBucks to open.
 - Added Melody Stones.
     - They have a rare chance to be obtained after completing a song.
-    - Your chance to obtain one increases with each song completed, up to 10% at 100 songs.
+    - Your chance to obtain one increases with each song completed, up to 20% at 100 songs.
     - They have a higher chance on Daily Songs.
 - Added the Exchange section to the Shop.
     - You can exchange one Melody Stone for 1000 FunkBucks, or more to buy a Legendary or higher rarity pin you DON'T already own.
 - Added the Rewards section to the Shop.
     - As mush as Ophelia hates to give free things, she's forced to.
     - You can claim extra some of the following based on your lifetime FunkBucks or Melody Stones collected, or how many of each box you've opened:
-        - FunkBucks
-        - Melody Stones
-        - Pins
-        - Free Box rolls
-        - Box Discounts
-            - A permanent discount when buying boxes.
-        - Bonus FunkBucks
-            - A permanent multiplier to how many FunkBucks you earn when completing songs and weeks.
+        - FunkBucks, Melody Stones, Pins, Boxes, Box Discounts, and Bonus FunkBucks Multiplier
+        - FunkBucks, Melody Stones, and Boxes obtained from Rewards don't count towards their respective categories.
 - Added a Clover Coin timed event.
     - Collect 8 Clover Coins scattered through out the menus of the game within the time limit to win!
     - Available once 30 pins have been collected.
@@ -47,6 +40,8 @@
 
 - The "PointlessPins" class and module name have been changed to "FunkBucks".
 - The shop itself has gone under a major visual upgrade.
+- The Pin Board graphics have been updated.
+- The text in the Box Menu has been moved around.
 - Increased the amount of daily songs from 3 to 5.
 - Increased the cost of the Cardboard Boxes from 10 to 20 FunkBucks.
 - Increased the cost of the Small Giftboxes from 25 to 50 FunkBucks.

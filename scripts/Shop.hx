@@ -903,7 +903,7 @@ class Shop extends MusicBeatState
 
         dialog.dialogueText.letterCallback = (code) ->
         {
-            if (dialog.dialogueIndex == 3 || dialog.dialogueIndex == 4) return;
+            if (dialog.dialogueIndex == 3 || dialog.dialogueIndex == 4 || dialog.dialogueIndex == 7) return;
             if (FunkBucks.skipTalking.contains(code)) return;
             FunkinSound.playOnce(Paths.sound("chartingSounds/keyboard" + FlxG.random.int(1, 3)), 1.0);
             ophelia.playAnimation('Talk', false, false);
@@ -916,7 +916,7 @@ class Shop extends MusicBeatState
                 case 1: ophelia.suffix = "Confused";
                 case 3: FlxG.sound.music.stop(); ophelia.suffix = ""; ophelia.playAnimation("Idle", true, true);
                 case 5: ophelia.suffix = "Confused";
-                case 7: ophelia.suffix = "Annoyed";
+                case 8: ophelia.suffix = "Annoyed";
             }
         });
 
@@ -925,6 +925,18 @@ class Shop extends MusicBeatState
             ophelia.suffix = "";
             ophelia.playAnimation("LookAtShelf");
             FlxTween.tween(cameraFollowPoint, { x: cameraFollowPoint.x + 200 }, 0.5, { ease: FlxEase.cubeOut });
+
+            // new FlxTimer().start(3.0, function(_:FlxTimer) {
+                // remove(dailyBoard);
+            // });
+
+            // new FlxTimer().start(4.0, function(_:FlxTimer) {
+                // rewardShelf.removeItems();
+            // });
+
+            // new FlxTimer().start(9.5, function(_:FlxTimer) {
+                // remove(rewardShelf);
+            // });
 
             new FlxTimer().start(10.0, function(_:FlxTimer) {
                 var t2:Tuntematon = new Tuntematon(FlxG.width - 110, 320);
