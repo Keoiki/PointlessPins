@@ -43,7 +43,7 @@
     },
     {
         "id": "smallgiftbox",
-        "name": "<c=2A4DFF>Glimmering Pouch</c>",
+        "name": "<c=2A4DFF>Shimmering Pouch</c>",
         "description": "\"<c=67B1D8>Hey, what?! This isn't a box!</c>\"\nRegardless, it still holds pins within,\nquite rare ones at that.",
         "revealTime": 26,
         "chances": [

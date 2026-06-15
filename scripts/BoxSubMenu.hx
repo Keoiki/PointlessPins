@@ -34,7 +34,6 @@ class BoxSubMenu extends MusicBeatSubState
     var boxPrice:BAlphabet;
     var boxOdds:BAlphabet;
     var boxPurchaseLable:BAlphabet;
-    var boxPurchaseCount:BAlphabet;
 
     var coolBackButton:FunkinBackButton;
 
@@ -90,12 +89,6 @@ class BoxSubMenu extends MusicBeatSubState
         boxPurchaseLable.scale.set(0.4, 0.4);
         add(boxPurchaseLable);
 
-        boxPurchaseCount = new BAlphabet(FlxG.width / 2, 50, "");
-        // boxPurchaseCount.alignment = "center";
-        boxPurchaseCount.scale.set(0.3, 0.3);
-        boxPurchaseCount.alpha = 0.5;
-        add(boxPurchaseCount);
-
         box = new BoxSprite(FlxG.width / 2, 490);
         add(box);
         
@@ -124,8 +117,6 @@ class BoxSubMenu extends MusicBeatSubState
         #end
         add(coolBackButton);
 
-        // updateBoxInfoText();
-        // updateOpenedCount();
         changeSelection();
         updatePurchaseLable();
 
@@ -234,7 +225,6 @@ class BoxSubMenu extends MusicBeatSubState
 
         box.updateBoxInfo(change);
         updateBoxInfoText();
-        updateOpenedCount();
     }
 
     function updatePurchaseLable():Void
@@ -246,12 +236,6 @@ class BoxSubMenu extends MusicBeatSubState
             case "CONFIRMING":
                 boxPurchaseLable.text = FunkBucks.isMouseActive ? "<b><c=2BFF31>TAP</c> the box again to confirm.</b>" : "<b>Press <c=2BFF31>ACCEPT</c> again to confirm.</b>";
         }
-    }
-
-    function updateOpenedCount():Void
-    {
-        boxPurchaseCount.x = boxName.x + boxName.width + 20;
-        boxPurchaseCount.text = '(Opened: ${FunkBucks.getOpenedBoxCount(box.bID)})';
     }
 
     function updateBoxInfoText():Void
@@ -304,10 +288,13 @@ class BoxSubMenu extends MusicBeatSubState
 
     function openBox():Void
     {
-        if (box.price > 0) _parentState.deductFunkBucks(box.price);
+        if (box.price > 0)
+        {
+            _parentState.deductFunkBucks(box.price);
+            FunkBucks.addOpenedBox(box.bID);
+        }
         if (FunkBucks.getFreeBoxCount(box.bID) > 0) FunkBucks.addFreeBox(box.bID, -1);
-        FunkBucks.addOpenedBox(box.bID);
-
+        
         var randomPin:PinData = box.rollRandomRarityPin();
         var unlockState:PinUnlockState = new PinUnlockState(randomPin);
         unlockState.closeCallback = closeBox;
@@ -336,7 +323,6 @@ class BoxSubMenu extends MusicBeatSubState
         FlxTween.tween(boxPrice, { alpha: 0 }, 0.5, { ease: FlxEase.quartOut });
         FlxTween.tween(boxOdds, { alpha: 0 }, 0.5, { ease: FlxEase.quartOut });
         FlxTween.tween(boxPurchaseLable, { alpha: 0 }, 0.5, { ease: FlxEase.quartOut });
-        FlxTween.tween(boxPurchaseCount, { alpha: 0 }, 0.5, { ease: FlxEase.quartOut });
         FlxTween.tween(arrowLeft, { alpha: 0 }, 0.5, { ease: FlxEase.quartOut });
         FlxTween.tween(arrowRight, { alpha: 0 }, 0.5, { ease: FlxEase.quartOut });
         FlxTween.tween(coolBackButton, { alpha: 0 }, 0.5, { ease: FlxEase.quartOut });
@@ -352,7 +338,6 @@ class BoxSubMenu extends MusicBeatSubState
         box.updatePrice();
         STATE = "CHOOSING";
         updatePurchaseLable();
-        updateOpenedCount();
         updateBoxInfoText();
 
         FlxTween.tween(boxName, { alpha: 1 }, 0.5, { ease: FlxEase.quartOut });
@@ -360,7 +345,6 @@ class BoxSubMenu extends MusicBeatSubState
         FlxTween.tween(boxPrice, { alpha: 1 }, 0.5, { ease: FlxEase.quartOut });
         FlxTween.tween(boxOdds, { alpha: 1 }, 0.5, { ease: FlxEase.quartOut });
         FlxTween.tween(boxPurchaseLable, { alpha: 1 }, 0.5, { ease: FlxEase.quartOut });
-        FlxTween.tween(boxPurchaseCount, { alpha: 0.5 }, 0.5, { ease: FlxEase.quartOut });
         FlxTween.tween(arrowLeft, { alpha: 1 }, 0.5, { ease: FlxEase.quartOut });
         FlxTween.tween(arrowRight, { alpha: 1 }, 0.5, { ease: FlxEase.quartOut });
         FlxTween.tween(coolBackButton, { alpha: 1 }, 0.5, { ease: FlxEase.quartOut });

@@ -16,7 +16,7 @@ import funkin.util.TouchUtil;
 
 class ExchangeMenu extends MusicBeatSubState
 {
-    var jewelCosts:Array<Int> = [1, 5, 10, 15];
+    var jewelCosts:Array<Int> = [1, 10, 15, 20];
     var buttons:Array<PinButton> = [];
     var selected:Int = 0;
     var savedSelection:Int = -1;
@@ -28,20 +28,26 @@ class ExchangeMenu extends MusicBeatSubState
     var confirmScreenText:BAlphabet;
     var yesButton:PinButton;
     var noButton:PinButton;
+    var bottomText:BAlphabet;
 
     override function create():Void
     {
-        var bg:FunkinSprite = new FunkinSprite(125, 0).makeSolidColor(450, FlxG.height, 0xFF000000);
-        bg.alpha = 0.8;
-        add(bg);
+        // var bg:FunkinSprite = new FunkinSprite(125, 0).makeSolidColor(450, FlxG.height, 0xFF000000);
+        // bg.alpha = 0.8;
+        // add(bg);
 
-        var button01:PinButton = new PinButton(150, 100, 400, 110, '<b>${jewelCosts[0]} ${FBIcon.Jewel} &#x21E8; ${FunkBucks.bucksForBlueJewel} ${FBIcon.Buck}</b>');
+        var bg:FlxSliceSprite = new FlxSliceSprite(Assets.getBitmapData("images/pinboard.png"), FlxRect.get(60, 60, 180, 180), 560, 1400);
+        add(bg);
+        bg.x = 75;
+        bg.y = -80;
+
+        var button01:PinButton = new PinButton(155, 100, 400, 110, '<b>${jewelCosts[0]} ${FBIcon.Jewel} &#x21E8; ${FunkBucks.bucksForBlueJewel} ${FBIcon.Buck}</b>');
         add(button01);
-        var button02:PinButton = new PinButton(150, 225, 400, 110, '<b>${jewelCosts[1]} ${FBIcon.Jewel} &#x21E8; 1 ${FBIcon.Legendary}</b>');
+        var button02:PinButton = new PinButton(155, 225, 400, 110, '<b>${jewelCosts[1]} ${FBIcon.Jewel} &#x21E8; 1 ${FBIcon.Legendary}</b>');
         add(button02);
-        var button03:PinButton = new PinButton(150, 350, 400, 110, '<b>${jewelCosts[2]} ${FBIcon.Jewel} &#x21E8; 1 ${FBIcon.Mythic}</b>');
+        var button03:PinButton = new PinButton(155, 350, 400, 110, '<b>${jewelCosts[2]} ${FBIcon.Jewel} &#x21E8; 1 ${FBIcon.Mythic}</b>');
         add(button03);
-        var button04:PinButton = new PinButton(150, 475, 400, 110, '<b>${jewelCosts[3]} ${FBIcon.Jewel} &#x21E8; 1 ${FBIcon.Divine}</b>');
+        var button04:PinButton = new PinButton(155, 475, 400, 110, '<b>${jewelCosts[3]} ${FBIcon.Jewel} &#x21E8; 1 ${FBIcon.Divine}</b>');
         add(button04);
 
         buttons.push(button01);
@@ -71,6 +77,11 @@ class ExchangeMenu extends MusicBeatSubState
         noButton.x -= noButton.button.width / 2 - 150;
         add(noButton);
         noButton.visible = false;
+
+        bottomText = new BAlphabet(355, 620, '<b>---</b>', { lineHeight: 70 });
+        bottomText.alignment = "center";
+        bottomText.scale.set(0.5, 0.5);
+        add(bottomText);
 
         coolBackButton = new FunkinBackButton(FlxG.width - 220, FlxG.height - 200, 0xFFFFFFFF, goBack, 1.0, true);
         #if !mobile
@@ -130,11 +141,13 @@ class ExchangeMenu extends MusicBeatSubState
                     FunkinSound.playOnce(Paths.sound("CS_locked"), 0.5);
                     FlxTween.completeTweensOf(buttons[confirmedItem]);
                     FlxTween.tween(buttons[confirmedItem], { y: buttons[confirmedItem].y + 10 }, 0.5, { ease: FlxEase.cubeOut, type: 16 });
+                    bottomText.text = '<bold><color=FF0000>There are no more pins of\nthis rarity to unlock!</bold>';
                     return;
                 }
                 if (tooPoor)
                 {
                     _parentState.insufficientBlueJewels();
+                    bottomText.text = '<bold>You do not have enough\n<color=32A8E7>Melody Stones</color>!</bold>';
                     return;
                 }
                 switch (confirmedItem)
@@ -251,6 +264,7 @@ class ExchangeMenu extends MusicBeatSubState
 
     function changeSelection(change:Int = 0)
     {
+        bottomText.text = "<b>---</b>";
         buttons[selected].isSelected = false;
         selected = PinUtil.wrapAround(selected + change, 0, buttons.length - 1);
         buttons[selected].isSelected = true;

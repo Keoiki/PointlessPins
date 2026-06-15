@@ -249,11 +249,11 @@ class FunkBucks extends Module
         if (addToLifetime)
         {
             /** Do not decrease the lifetime amount. **/
-            FunkBucks.save.funkBucksLifetime = FunkBucks.getFunkCoinsLifeTime() + Math.max(0, Std.int(amount));
+            FunkBucks.save.funkBucksLifetime = FunkBucks.getFunkCoinsLifetime() + Math.max(0, Std.int(amount));
         }
         FunkBucks.flushSave();
         trace("Current FunkBucks: " + FunkBucks.getFunkCoins());
-        trace("Lifetime FunkBucks: " + FunkBucks.getFunkCoinsLifeTime());
+        trace("Lifetime FunkBucks: " + FunkBucks.getFunkCoinsLifetime());
     }
 
     public static function getFunkCoins():Int
@@ -262,7 +262,7 @@ class FunkBucks extends Module
         return FunkBucks.save.funkBucks;
     }
 
-    public static function getFunkCoinsLifeTime():Int
+    public static function getFunkCoinsLifetime():Int
     {
         if (FunkBucks.save.funkBucksLifetime == null) FunkBucks.save.funkBucksLifetime = 0;
         return FunkBucks.save.funkBucksLifetime;
@@ -272,7 +272,7 @@ class FunkBucks extends Module
     {
         if (addToLifetime)
         {
-            FunkBucks.save.blueJewelsLifetime = FunkBucks.getBlueJewelsLifeTime() + amount;
+            FunkBucks.save.blueJewelsLifetime = FunkBucks.getBlueJewelsLifetime() + amount;
         }
         FunkBucks.save.blueJewels = FunkBucks.getBlueJewels() + amount;
         FunkBucks.flushSave();
@@ -284,7 +284,7 @@ class FunkBucks extends Module
         return FunkBucks.save.blueJewels;
     }
 
-    public static function getBlueJewelsLifeTime():Int
+    public static function getBlueJewelsLifetime():Int
     {
         if (FunkBucks.save.blueJewelsLifetime == null) FunkBucks.save.blueJewelsLifetime = 0;
         return FunkBucks.save.blueJewelsLifetime;
@@ -528,7 +528,7 @@ class FunkBucks extends Module
         {
             switch (claimedRewards[i])
             {
-                case "cardboardbox03", "smallgiftbox03": discount -= 0.025;
+                case "cardboardbox03", "smallgiftbox03": discount -= 0.05;
             }
         }
         return discount;
@@ -970,6 +970,8 @@ class FBIcon
     
     static final CardboardBox:String = "&#xE030;";
     static final SmallGiftbox:String = "&#xE031;";
+    static final FancyCoffret:String = "&#xE032;";
+    static final ShimmeringPouch:String = "&#xE033;";
 
     static final Modded:String = "&#xE070;";
     static final Internet:String = "&#xE071;";

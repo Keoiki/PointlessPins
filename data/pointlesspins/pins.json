@@ -90,7 +90,7 @@
             { "id": "rank-excellent", "name": "Excellent Rank", "description": "It pains to get a single Bad and getting this rank.", "special": true, "lockedText": "Complete any song with a certain rank." },
             { "id": "glimmeringpouch", "name": "Glimmering Pouch", "special": true, "lockedText": "This pin is unlockable from the Rewards." },
             { "id": "qt", "name": "QT", "source": "#MOD# QT: Rewired" },
-            { "id": "sky-redux", "name": "Sky", "source": "#MODS# Heartbreak Havoc" },
+            { "id": "sky-redux", "name": "Sky", "source": "#MOD# Heartbreak Havoc" },
             { "id": "sky", "name": "Sky", "description": "No no, wrong type of sky!" },
             { "id": "opheebop-ssn", "name": "Opheebop", "description": "Freedom!", "source": "#MOD# Salty's Sunday Night" },
             { "id": "powers-amongus", "name": "Powers", "description": "Cue the sax solo!", "source": "#MOD# VS. Impostor" },

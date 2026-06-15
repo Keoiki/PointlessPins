@@ -5,6 +5,7 @@ import balphabet.BAlphabet;
 import balphabet.BAlphabetTyped;
 import flixel.FlxObject;
 import flixel.addons.transition.FlxTransitionableState;
+import flixel.effects.particles.FlxEmitter;
 import flixel.input.mouse.FlxMouseEvent;
 import flixel.math.FlxMath;
 import flixel.math.FlxPoint;
@@ -69,13 +70,14 @@ class Shop extends MusicBeatState
     var lableBoxes:BAlphabet;
     var keycapBoxes:KeyCap;
 
-    var iconRewards:FunkinSprite;
-    var lableRewards:BAlphabet;
-    var keycapRewards:KeyCap;
-
     var iconExchange:FunkinSprite;
     var lableExchange:BAlphabet;
     var keycapExchange:KeyCap;
+
+    var iconRewards:FunkinSprite;
+    var lableRewards:BAlphabet;
+    var keycapRewards:KeyCap;
+    var rewardsSparkles:FlxEmitter;
 
     // UI
     var funkBucksText:BAlphabet;
@@ -276,20 +278,43 @@ class Shop extends MusicBeatState
         // box.zIndex = 520;
         // add(box);
 
+        iconRewards = new FunkinSprite(1740 - spriteNudge, 330).loadTexture("shop/iconrewards");
+        iconRewards.zIndex = 493;
+        add(iconRewards);
+
         lableRewards = new BAlphabet(1850 - spriteNudge, 520, "<b>Rewards</b>");
         lableRewards.alignment = "center";
         lableRewards.scale.set(0.65, 0.65);
         lableRewards.zIndex = 514;
         add(lableRewards);
 
+        rewardsSparkles = new FlxEmitter(1740 - spriteNudge, 330);
+        rewardsSparkles.setSize(150, 150);
+        rewardsSparkles.loadParticles(Paths.image("pinsparkle"), 30, 0);
+        rewardsSparkles.acceleration.set(1, 1, -1, -3, 5, 5, -5, -10);
+        rewardsSparkles.scale.set(0.1, null, 0.3, null, 0.0, null, 0.1, null);
+        rewardsSparkles.keepScaleRatio = true;
+        rewardsSparkles.color.set(0xFFFFFFFF, 0xFFFFFF00);
+        rewardsSparkles.speed.set(0, -1, 0, 0);
+        rewardsSparkles.alpha.set(0.3, 0.9, 0.0, 0.0);
+        rewardsSparkles.angle.set(-180, 180, -180, 180);
+        rewardsSparkles.ignoreAngularVelocity = true;
+        rewardsSparkles.lifespan.set(10, 15);
+        rewardsSparkles.blend = 0;
+        rewardsSparkles.zIndex = 502;
+        add(rewardsSparkles);
+        rewardsSparkles.focusOn(iconRewards);
+        rewardsSparkles.start(false, 0.45);
+
         counterItems.push(iconPins);
         counterItems.push(iconBoxes);
-        // counterItems.push(iconRewards);
         // counterItems.push(iconExchange);
+        counterItems.push(iconRewards);
         counterItems.push(lablePins);
         counterItems.push(lableBoxes);
-        counterItems.push(lableRewards);
         counterItems.push(lableExchange);
+        counterItems.push(lableRewards);
+        // counterItems.push(rewardsSparkles);
 
         #if !mobile
         keycapPins = new KeyCap(lablePins.x - 45, 570, "1", false);
@@ -544,7 +569,7 @@ class Shop extends MusicBeatState
 
         // Rewards
 
-        if (FlxG.keys.justPressed.FOUR || (TouchUtil.pressAction(lableRewards) && !FunkBucks.isMouseTooFast && !TouchUtil.overlaps(coolBackButton, cameraHUD)))
+        if (FlxG.keys.justPressed.FOUR || (TouchUtil.pressAction(iconRewards) && !FunkBucks.isMouseTooFast && !TouchUtil.overlaps(coolBackButton, cameraHUD)))
         {
             if (isOpheliaGone || Ophelia.caught || TimedCoinsManager.running)
             {
@@ -558,6 +583,8 @@ class Shop extends MusicBeatState
             showMenuItems(false);
             rewardShelf.toggleItems();
             savedCamZoom = camera.zoom;
+            
+            rewardsSparkles.kill();
 
             var substate = new RewardsSubMenu();
             substate.closeCallback = function()
@@ -567,6 +594,8 @@ class Shop extends MusicBeatState
                 FlxTween.tween(camera, { zoom: savedCamZoom }, 1, { ease: FlxEase.cubeOut });
                 showMenuItems();
                 rewardShelf.toggleItems(true);
+                rewardsSparkles.revive();
+                rewardsSparkles.start(false, 0.45);
             }
             substate.cameras = [cameraSubState];
 

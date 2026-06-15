@@ -40,10 +40,12 @@ class RewardsSubMenu extends MusicBeatSubState
                 "5" => {id: "funkbucks05", requirement: 3000, type: RewardType.FunkBuck, reward: 150},
                 "6" => {id: "funkbucks06", requirement: 4000, type: RewardType.FunkBuck, reward: 200},
                 "7" => {id: "funkbucks07", requirement: 5000, type: RewardType.BonusFunkBuck, reward: 2.5},
+                "8" => {id: "funkbucks08", requirement: 10000, type: RewardType.Jewel, reward: 1},
                 "11" => {id: "funkbucks11", requirement: 20000, type: RewardType.BonusFunkBuck, reward: 2.5},
                 "12" => {id: "funkbucks12", requirement: 25000, type: RewardType.Pin, reward: "funkbuck"},
+                "13" => {id: "funkbucks13", requirement: 30000, type: RewardType.Jewel, reward: 3},
                 "14" => {id: "funkbucks14", requirement: 40000, type: RewardType.BonusFunkBuck, reward: 5.0},
-                "15" => {id: "funkbucks15", requirement: 50000, type: RewardType.FunkBuck, reward: 2500}
+                "15" => {id: "funkbucks15", requirement: 50000, type: RewardType.FunkBuck, reward: 5000}
             ]
         },
         "melodystones" => {
@@ -52,42 +54,71 @@ class RewardsSubMenu extends MusicBeatSubState
             requirementIcon: FBIcon.Jewel,
             order: 1,
             rewards: [
-                "1" => {id: "melodystone01", requirement: 1, type: RewardType.FunkBuck, reward: 250},
+                "1" => {id: "melodystone01", requirement: 1, type: RewardType.FunkBuck, reward: 1000},
                 "2" => {id: "melodystone02", requirement: 2, type: RewardType.Pin, reward: "melodystone"},
                 // "3" => {id: "melodystone03", requirement: 5, type: RewardType.Box, reward: "smallgiftbox"},
-                "4" => {id: "melodystone04", requirement: 10, type: RewardType.FunkBuck, reward: 2500},
+                "4" => {id: "melodystone04", requirement: 10, type: RewardType.FunkBuck, reward: 10000},
                 // "5" => {id: "melodystone05", requirement: 15, type: RewardType.Pin, reward: "funkbuck"},
-                "6" => {id: "melodystone06", requirement: 20, type: RewardType.FunkBuck, reward: 10000}
+                "6" => {id: "melodystone06", requirement: 20, type: RewardType.FunkBuck, reward: 20000}
+            ]
+        },
+        "totalboxes" => {
+            name: "totalboxes",
+            description: "Total Boxes opened.",
+            requirementIcon: "total",
+            order: 2,
+            rewards: [
+                "1" => {id: "totalboxes", requirement: 25, type: RewardType.Box, reward: "cardboard|5"}
             ]
         },
         "cardboard" => {
             name: "cardboard",
             description: "Total Cardboard Boxes opened.",
             requirementIcon: FBIcon.CardboardBox,
-            order: 2,
+            order: 3,
             rewards: [
                 "1" => {id: "cardboardbox01", requirement: 10, type: RewardType.FunkBuck, reward: 100},
                 "2" => {id: "cardboardbox02", requirement: 50, type: RewardType.Pin, reward: "cardboardbox"},
-                "3" => {id: "cardboardbox03", requirement: 100, type: RewardType.DiscountBox, reward: 2.5},
+                "3" => {id: "cardboardbox03", requirement: 100, type: RewardType.DiscountBox, reward: 5},
                 "4" => {id: "cardboardbox04", requirement: 250, type: RewardType.FunkBuck, reward: 500},
                 "5" => {id: "cardboardbox05", requirement: 500, type: RewardType.Jewel, reward: 2},
                 "6" => {id: "cardboardbox06", requirement: 750, type: RewardType.FunkBuck, reward: 1500},
-                "7" => {id: "cardboardbox07", requirement: 1000, type: RewardType.Jewel, reward: 4}
+                "7" => {id: "cardboardbox07", requirement: 1000, type: RewardType.Jewel, reward: 5}
             ]
         },
         "smallgiftbox" => {
             name: "smallgiftbox",
             description: "Total Small Giftboxes opened.",
             requirementIcon: FBIcon.SmallGiftbox,
-            order: 3,
+            order: 4,
             rewards: [
-                "1" => {id: "smallgiftbox01", requirement: 10, type: RewardType.FunkBuck, reward: 200},
+                "1" => {id: "smallgiftbox01", requirement: 10, type: RewardType.FunkBuck, reward: 250},
                 "2" => {id: "smallgiftbox02", requirement: 40, type: RewardType.Pin, reward: "smallgiftbox"},
-                "3" => {id: "smallgiftbox03", requirement: 80, type: RewardType.DiscountBox, reward: 2.5},
-                "4" => {id: "smallgiftbox04", requirement: 150, type: RewardType.FunkBuck, reward: 1000},
+                "3" => {id: "smallgiftbox03", requirement: 80, type: RewardType.DiscountBox, reward: 5},
+                "4" => {id: "smallgiftbox04", requirement: 150, type: RewardType.FunkBuck, reward: 1500},
                 "5" => {id: "smallgiftbox05", requirement: 300, type: RewardType.Jewel, reward: 3},
-                "6" => {id: "smallgiftbox06", requirement: 550, type: RewardType.FunkBuck, reward: 3000},
-                "7" => {id: "smallgiftbox07", requirement: 800, type: RewardType.Jewel, reward: 6}
+                "6" => {id: "smallgiftbox06", requirement: 550, type: RewardType.FunkBuck, reward: 10000},
+                "7" => {id: "smallgiftbox07", requirement: 800, type: RewardType.Jewel, reward: 8}
+            ]
+        },
+        "fancycoffret" => {
+            name: "fancycoffret",
+            description: "Total Fancy Coffrets opened.",
+            requirementIcon: FBIcon.FancyCoffret,
+            order: 5,
+            rewards: [
+                "1" => {id: "fancycoffret", requirement: 10, type: RewardType.FunkBuck, reward: 200},
+                // Box Discount: 2.5%
+            ]
+        },
+        "shimmeringpouch" => {
+            name: "shimmeringpouch",
+            description: "Total Shimmering Pouches opened.",
+            requirementIcon: FBIcon.ShimmeringPouch,
+            order: 6,
+            rewards: [
+                "1" => {id: "shimmeringpouch", requirement: 10, type: RewardType.FunkBuck, reward: 200},
+                // Box Discount: 2.5%
             ]
         }
     ];
@@ -419,7 +450,20 @@ class RewardsSubMenu extends MusicBeatSubState
             if (currentItem == null) return;
             if (CATEGORY == "none")
             {
-                rewardText.text = categories.get(currentItem.reward).description;
+                var count:Int = 0;
+                switch (categories.get(currentItem.reward).name)
+                {
+                    case "funkbucks": count = FunkBucks.getFunkCoinsLifetime();
+                    case "melodystones": count = FunkBucks.getBlueJewelsLifetime();
+                    case "totalboxes":
+                        for (box => opens in FunkBucks.getOpenedBoxCounts())
+                        {
+                            if (!["cardboard", "smallgiftbox", "fancycoffret", "shimmeringpouch"].contains(box)) continue;
+                            count += opens;
+                        }
+                    default: count = FunkBucks.getOpenedBoxCount(categories.get(currentItem.reward).name);
+                }
+                rewardText.text = '${categories.get(currentItem.reward).description}\n<scale=0.8><color=00FF00>Total:</color> $count</scale>';
             }
             else
             {
@@ -518,6 +562,8 @@ class RewardsSubMenu extends MusicBeatSubState
                 else
                 {
                     FunkinSound.playOnce(Paths.sound("CS_locked"));
+                    cursor.x += FlxG.random.float(-20, 20);
+                    cursor.y += FlxG.random.float(-20, 20);
                 }
             }
         }
@@ -614,7 +660,7 @@ class RewardItem extends ScriptedFlxSpriteGroup
             {
                 isCategory = true;
 
-                icon = new FunkinSprite(0, 0).loadTexture('shop/rewards/category-$reward');
+                icon = new FunkinSprite(0, 8).loadTexture('shop/rewards/category-$reward');
                 icon.x -= icon.width / 2;
                 icon.y -= icon.height;
             }
@@ -700,8 +746,8 @@ class RewardItem extends ScriptedFlxSpriteGroup
         {
             switch (category)
             {
-                case "funkbucks": reached = FunkBucks.getFunkCoinsLifeTime() >= requirement;
-                case "melodystones": reached = FunkBucks.getBlueJewelsLifeTime() >= requirement;
+                case "funkbucks": reached = FunkBucks.getFunkCoinsLifetime() >= requirement;
+                case "melodystones": reached = FunkBucks.getBlueJewelsLifetime() >= requirement;
                 default: reached = FunkBucks.getOpenedBoxCount(category) >= requirement;
             }
         }
