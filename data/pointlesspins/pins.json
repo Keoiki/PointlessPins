@@ -28,7 +28,7 @@
             { "id": "bundleofcash", "name": "Bundle of Cash" },
             { "id": "musicdisk", "name": "Music Disk" },
             { "id": "apple", "name": "Apple", "description": "Who the hell gives apples as a christmas present?!" },
-            { "id": "rank-good", "name": "Good Rank", "description": "Remember when this rank's BF animation played for all?", "special": true, "lockedText": "Complete any song with a certain rank." },
+            { "id": "rank-good", "name": "Good Rank", "description": "Remember when BF's animation for this rank played for everything?", "special": true, "lockedText": "Complete any song with a certain rank." },
             { "id": "cardboardbox", "name": "Cardboard Box", "description": "The cheapest of them all.", "special": true, "lockedText": "This pin is unlockable from the Rewards." },
             { "id": "haxe", "name": "Haxe", "description": "The backbone of this game." },
             { "id": "boyfriend-amongus-week1", "name": "Boyfriend (Polus)", "source": "#MOD# VS. Impostor" },
