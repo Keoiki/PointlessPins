@@ -547,6 +547,101 @@ class Shop extends MusicBeatState
                 return;
             }
 
+            if (FunkBucks.getEvent("exchangeUnlocked") != 1)
+            { 
+                if (FunkBucks.getBlueJewels() > 0 || FunkBucks.getBlueJewelsLifetime() > 0)
+                {
+                    if (dialog != null) remove(dialog);
+                    dialog = new PinDialogue('exchangeUnlock');
+                    add(dialog);
+                    dialog.cameras = [cameraHUD];
+
+                    dialog.dialogueText.letterCallback = (code) ->
+                    {
+                        if (FunkBucks.skipTalking.contains(code)) return;
+                        FunkinSound.playOnce(Paths.sound("chartingSounds/keyboard" + FlxG.random.int(1, 3)), 1.0);
+                        ophelia.playAnimation('Talk', false, false);
+                    }
+
+                    dialog.onNextLine.add((dialogueIndex, dialogueText) ->
+                    {
+                        switch (dialogueIndex)
+                        {
+                            case 2:
+                                ophelia.suffix = "Confused";
+                                ophelia.playAnimation("Idle", true, true);
+                                new FlxTimer().start(1.5, (_:FlxTimer) -> {
+                                    ophelia.suffix = "";
+                                    dialog.startFromDelay();
+                                });
+                        }
+                    });
+
+                    dialog.onCompleteDialogue.add(() ->
+                    {
+                        ophelia.suffix = "";
+                        disallowInputs = false;
+                        showMenuItems(true);
+                        FlxTween.tween(camera, { zoom: savedCamZoom }, 1, { ease: FlxEase.cubeOut });
+                        FlxTween.tween(funkBucksText, { alpha: 1 }, 1, { ease: FlxEase.cubeOut });
+                        FlxTween.tween(blueJewelsText, { alpha: 1 }, 1, { ease: FlxEase.cubeOut });
+                        FunkBucks.setEvent("exchangeUnlocked", 1);
+                    });
+        
+                    disallowInputs = true;
+                    showMenuItems(false);
+                    cameraFollowPoint.setPosition(opheliaHitbox.x + opheliaHitbox.width / 2, opheliaHitbox.y + 100);
+                    savedCamZoom = camera.zoom;
+                    FlxTween.tween(camera, { zoom: 1.25 }, 1, { ease: FlxEase.cubeOut });
+                    FlxTween.tween(funkBucksText, { alpha: 0 }, 1, { ease: FlxEase.cubeOut });
+                    FlxTween.tween(blueJewelsText, { alpha: 0 }, 1, { ease: FlxEase.cubeOut });
+                    coolBackButton.visible = false;
+                }
+                else
+                {
+                    if (dialog != null) remove(dialog);
+                    dialog = new PinDialogue("exchangeLocked");
+                    add(dialog);
+                    dialog.cameras = [cameraHUD];
+
+                    dialog.dialogueText.letterCallback = (code) ->
+                    {
+                        if (FunkBucks.skipTalking.contains(code)) return;
+                        FunkinSound.playOnce(Paths.sound("chartingSounds/keyboard" + FlxG.random.int(1, 3)), 1.0);
+                        ophelia.playAnimation('Talk', false, false);
+                    }
+
+                    dialog.onNextLine.add((dialogueIndex, dialogueText) ->
+                    {
+                        switch (dialogueIndex)
+                        {
+                            case 1: ophelia.suffix = "Annoyed";
+                        }
+                    });
+
+                    dialog.onCompleteDialogue.add(() ->
+                    {
+                        disallowInputs = false;
+                        ophelia.suffix = "";
+                        ophelia.playAnimation("Idle", true, true);
+                        showMenuItems(true);
+                        FlxTween.tween(camera, { zoom: savedCamZoom }, 1, { ease: FlxEase.cubeOut });
+                        FlxTween.tween(funkBucksText, { alpha: 1 }, 1, { ease: FlxEase.cubeOut });
+                        FlxTween.tween(blueJewelsText, { alpha: 1 }, 1, { ease: FlxEase.cubeOut });
+                    });
+
+                    disallowInputs = true;
+                    showMenuItems(false);
+                    cameraFollowPoint.setPosition(opheliaHitbox.x + opheliaHitbox.width / 2, opheliaHitbox.y + 100);
+                    savedCamZoom = camera.zoom;
+                    FlxTween.tween(camera, { zoom: 1.25 }, 1, { ease: FlxEase.cubeOut });
+                    FlxTween.tween(funkBucksText, { alpha: 0 }, 1, { ease: FlxEase.cubeOut });
+                    FlxTween.tween(blueJewelsText, { alpha: 0 }, 1, { ease: FlxEase.cubeOut });
+                    coolBackButton.visible = false;
+                }
+                return;
+            }
+
             disallowInputs = true;
             cameraFollowPoint.setPosition(ophelia.x - 50, 305);
             showMenuItems(false);

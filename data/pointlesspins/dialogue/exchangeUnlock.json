@@ -7,13 +7,12 @@
     {
         "text": "Ooh I see,<d=0.5/> you've found one of <c=82E9FF>those</c>.",
         "speaker": "Ophelia",
-        "delayNextLine": true,
-        "hideDuringDelay": true,
         "canSkip": false
     },
     {
-        "text": "Sure, why not.",
+        "text": "Sure,<d=0.5/> why not.",
         "speaker": "Ophelia",
-        "canSkip": false
+        "canSkip": false,
+        "delayLine": true
     }
 ]

@@ -10,7 +10,7 @@
     - 5 Legendary
     - 1 Special
 - Added "Fancy Coffret" box, which costs 200 FunkBucks to open.
-- Added "Glimmering Pouch" box, which costs 600 FunkBucks to open.
+- Added "Shimmering Pouch" box, which costs 600 FunkBucks to open.
 - Added Melody Stones.
     - They have a rare chance to be obtained after completing a song.
     - Your chance to obtain one increases with each song completed, up to 20% at 100 songs.
@@ -26,7 +26,7 @@
     - Collect 8 Clover Coins scattered through out the menus of the game within the time limit to win!
     - Available once 30 pins have been collected.
     - First event grants a pin.
-    - Repeat events can only be tried once a day, have a stricter time limit, and grant 200 FunkBucks.
+    - Repeat events can only be tried once a day, have a stricter time limit, and grant 500 FunkBucks.
 - Added support for several modded variations as Dailies:
     - Remnants (Funkin' Remnants)
     - Gooey (Gooey Mix)
@@ -42,6 +42,7 @@
 - The shop itself has gone under a major visual upgrade.
 - The Pin Board graphics have been updated.
 - The text in the Box Menu has been moved around.
+    - The opened box count text has been removed and the counts can now be seen in the new Rewards menu.
 - Increased the amount of daily songs from 3 to 5.
 - Increased the cost of the Cardboard Boxes from 10 to 20 FunkBucks.
 - Increased the cost of the Small Giftboxes from 25 to 50 FunkBucks.
