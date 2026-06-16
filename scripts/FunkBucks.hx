@@ -609,7 +609,7 @@ class FunkBucks extends Module
             /**
              * Number of Melody Stones currently held.
              * Number of Melody Stones obtained ever. Rewards do not increase this value.
-             * The current pity for a Melody Stone. Has a range of 0-100, which equals to 0%-20%.
+             * The current pity for a Melody Stone. Has a range of 0-100, which equals to 0%-20%. (0%-60% on Dailies)
              */
             blueJewels: 0,
             blueJewelsLifetime: 0,
