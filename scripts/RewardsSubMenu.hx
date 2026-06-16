@@ -469,11 +469,15 @@ class RewardsSubMenu extends MusicBeatSubState
             {
                 var currentCategory = categories.get(CATEGORY);
                 var beforeReq:String = "open";
-                var afterReq:String = "boxes";
+                var afterReq:String = "in total";
                 if (CATEGORY == "funkbucks" || CATEGORY == "melodystones")
                 {
                     beforeReq = "obtain";
                     afterReq = "total";
+                }
+                else if (CATEGORY == "totalboxes")
+                {
+                    afterReq = "boxes";
                 }
                 if (!currentItem.claimed)
                 {

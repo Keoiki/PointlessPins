@@ -76,7 +76,7 @@ class PinDialogue extends FunkinGroup
         speakerBox = new FunkinSprite(0, 0);
         speakerBox.localX = 24;
         speakerBox.localY = -16;
-        speakerBox.frames = FlxG.bitmap.create(2, 16, 0xBF000000, false, 'pinDialogueSpeakerBox').imageFrame;
+        speakerBox.frames = FlxG.bitmap.create(1, 16, 0xBF000000, false, 'pinDialogueSpeakerBox').imageFrame;
         speakerBox.origin.x = 0;
         this.add(speakerBox);
 
@@ -161,13 +161,13 @@ class PinDialogue extends FunkinGroup
             speakerName.text = dialogueLine.speaker;
             speakerName.localVisible = true;
             speakerBox.localVisible = true;
-            speakerBox.localScale.x = speakerName.width * speakerName.localScale.x / 2 + 16;
         }
         else
         {
             speakerBox.localVisible = false;
             speakerName.localVisible = false;
         }
+        speakerBox.localScale.x = speakerName.width + 32;
 
         dialogueText.text = dialogueLine.text;
         dialogueText.speed = dialogueLine.speed;
