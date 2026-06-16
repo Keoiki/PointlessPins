@@ -244,7 +244,7 @@ class BoxSubMenu extends MusicBeatSubState
         boxDescription.text = box.description;
 
         var freeRolls:Int = FunkBucks.getFreeBoxCount(box.bID);
-        var boxPriceText:String = '<b>${freeRolls > 0 ? "FREE" : box.price} ${FBIcon.Buck}</b>\n';
+        var boxPriceText:String = '<b>${freeRolls > 0 ? "FREE" : box.price} ${FBIcon.Buck}${FunkBucks.debug_boxes ? "<c=FF0000>*</c>" : ""}</b>\n';
 
         if (freeRolls > 0)
         {
@@ -278,6 +278,7 @@ class BoxSubMenu extends MusicBeatSubState
 
     function checkIfPlayerIsRichEnough():Bool
     {
+        if (FunkBucks.debug_boxes) return true;
         if (FunkBucks.getFunkCoins() < box.price)
         {
             _parentState.insufficientFunkBucks();
@@ -288,15 +289,19 @@ class BoxSubMenu extends MusicBeatSubState
 
     function openBox():Void
     {
-        if (box.price > 0)
+        if (!FunkBucks.debug_boxes)
         {
-            _parentState.deductFunkBucks(box.price);
-            FunkBucks.addOpenedBox(box.bID);
+            if (box.price > 0)
+            {
+                _parentState.deductFunkBucks(box.price);
+                FunkBucks.addOpenedBox(box.bID);
+            }
+            if (FunkBucks.getFreeBoxCount(box.bID) > 0) FunkBucks.addFreeBox(box.bID, -1);
         }
-        if (FunkBucks.getFreeBoxCount(box.bID) > 0) FunkBucks.addFreeBox(box.bID, -1);
         
         var randomPin:PinData = box.rollRandomRarityPin();
         var unlockState:PinUnlockState = new PinUnlockState(randomPin);
+        if (FunkBucks.debug_boxes) unlockState.debug = true;
         unlockState.closeCallback = closeBox;
         unlockState.cameras = [camera];
 

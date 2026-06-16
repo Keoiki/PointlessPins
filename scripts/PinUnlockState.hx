@@ -18,6 +18,7 @@ class PinUnlockState extends MusicBeatSubState
     var canClose:Bool = false;
     var closeTimer:Float = 0.0;
     var sparkles:FlxEmitter;
+    public var debug:Bool = false;
 
     override function new(_pinData, _time:Float = 1.0):Void
     {
@@ -69,7 +70,7 @@ class PinUnlockState extends MusicBeatSubState
         sparkles.start();
 
         var unlockMsgText:String = "";
-        if (FunkBucks.setObtainedPin(pinData.id))
+        if (debug || FunkBucks.setObtainedPin(pinData.id))
         // if (true) // For testing, also doesn't mark a pin as unlocked since the function above is never called.
         {
             unlockMsgText = "<b>You got a <c=00FF00>NEW</c> pin!</b>";

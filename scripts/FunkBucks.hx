@@ -78,6 +78,24 @@ class FunkBucks extends Module
     public static var isMouseTooFast:Bool = false;
 
     /**
+     * Set this value to determine how to show the pins on the Pin Board.
+     * Null is default behavior. False shows them as locked and True shows them as unlocked.
+     * A red * indicates if this is on.
+     */
+    public static var debug_pins:Null<Bool> = null;
+
+    /**
+     * Set this value to True to test opening boxes.
+     * Boxes opened with this enabled:
+     * - don't cost anything,
+     * - don't count towards your opened total,
+     * - don't take away from your free boxes count,
+     * - and the pins unlocked do not actually unlock but rather show up as NEW no matter what.
+     * A red * indicates if this is on.
+     */
+    public static var debug_boxes:Bool = false;
+
+    /**
      * Add pin IDs to this array when you want to show unlocked pins the next time the player enters the shop.
      * Remember that the PinUnlockState marks pins as unlocked inside itself, so be sure you want the player to have that pin!
      */
