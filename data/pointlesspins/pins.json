@@ -70,8 +70,7 @@
             { "id": "boyfriend-amongus-week2", "name": "Boyfriend (MIRA HQ)", "source": "#MOD# VS. Impostor" },
             { "id": "girlfriend-amongus-week2", "name": "Girlfriend (MIRA HQ)", "source": "#MOD# VS. Impostor" },
             { "id": "green-amongus-week2", "name": "Green", "description": "No fun allowed, even on New Task Day.", "source": "#MOD# VS. Impostor" },
-            { "id": "fireice-adofai", "name": "Fire and Ice", "description": "Two planets in perfect equilibrium, don't disrupt it.", "source": "#GAME# A Dance of <c=F76243>Fire</c> and <c=5CAADC>Ice</c>" },
-            { "id": "strawberry-celeste", "name": "Strawberry", "description": "Can you collect all 202 of them?", "source": "#GAME# Celeste" },
+            { "id": "strawberry-celeste", "name": "Strawberry", "description": "Can you collect all 175 (or even 202) of them?", "source": "#GAME# Celeste" },
             { "id": "secretcoin-gd", "name": "Secret Coin", "description": "Never enough with you...", "source": "#GAME# Geometry Dash" }
         ]
     },

@@ -32,8 +32,8 @@
         "description": "Finally something that looks nice.\nSay goodbye to those Commons!",
         "revealTime": 26,
         "chances": [
-            [ "Uncommon", 696.5 ],
-            [ "Rare", 250 ],
+            [ "Uncommon", 646.5 ],
+            [ "Rare", 300 ],
             [ "Epic", 50 ],
             [ "Legendary", 2.5 ],
             [ "Mythic", 1 ]

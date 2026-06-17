@@ -671,7 +671,7 @@ class RewardItem extends ScriptedFlxSpriteGroup
             case RewardType.Pin:
             {
                 icon = new PinSprite(0, 0);
-                icon.isUnknown = !FunkBucks.hasObtainedPin(reward);
+                icon.isUnknown = !FunkBucks.hasClaimedMilestone(rID);
                 if (!icon.isUnknown) icon.isUnlocked = true;
                 icon.setupPin(reward, "", "", 0.5, claimed ? 0.5 : 1, true);
                 icon.y -= 70;
