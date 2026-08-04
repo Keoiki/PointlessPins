@@ -5,3 +5,5 @@ scripts/old/
 shaders/unused/
 scripts/shaders/unused/
 shared/images/
+# Mario Sunshine timed event song my beloved
+music/timedEvent.ogg
