@@ -158,6 +158,7 @@ class FunkBucks extends Module
 
         try
         {
+            // For 0.9.0: getMetadataById -> getMetadataByModId
             localVersion = PolymodHandler.modFileSystem.getMetadataById("keoiki.funkbucks", "script_runtime").modVersion.version.join(".");
         }
         catch (err:Dynamic)

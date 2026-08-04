@@ -74,10 +74,6 @@ class RealJob extends DialogBase
     {
         shop.shopkeeper.suffix = "";
         shop.shopkeeper.playAnimation('Idle', true, true);
-        shop.disallowInputs = false;
-        shop.showMenuItems(true);
-        FlxTween.tween(shop.camera, { zoom: shop.savedCamZoom }, 1, { ease: FlxEase.cubeOut });
-        FlxTween.tween(shop.funkBucksText, { alpha: 1 }, 1, { ease: FlxEase.cubeOut });
-        FlxTween.tween(shop.blueJewelsText, { alpha: 1 }, 1, { ease: FlxEase.cubeOut });
+        returnControlShop();
     }
 }

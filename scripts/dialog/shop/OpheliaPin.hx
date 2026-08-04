@@ -118,10 +118,6 @@ class OpheliaPin extends DialogBase
 
     override function finish():Void
     {
-        shop.disallowInputs = false;
-        shop.showMenuItems(true);
-        FlxTween.tween(shop.camera, { zoom: shop.savedCamZoom }, 1, { ease: FlxEase.cubeOut });
-        shop.toggleDisplayBucks(true);
-        shop.toggleDisplayJewels(true);
+        returnControlShop();
     }
 }
