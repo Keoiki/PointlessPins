@@ -54,6 +54,7 @@ class DailyBoard extends FunkinGroup
                 var dailySongVariation:String = dailies[i].substring(dailies[i].lastIndexOf("-") + 1, dailies[i].length);
                 var dailySong:Array<SongMetadata> = SongRegistry.instance.fetchEntry(dailySongID);
                 var songNameToAdd:String = dailySong.songName.length > 11 ? dailySong.songName.substr(0, 11).trim() + "." : dailySong.songName;
+                if ('$dailySongID-$dailySongVariation' == "spaghetti-default") songNameToAdd = "SPAGHETTI";
                 var variationToAdd:String = " ";
                 switch (dailySongVariation)
                 {
@@ -71,7 +72,7 @@ class DailyBoard extends FunkinGroup
                     default:
                     {
                         variationToAdd += '&#xFFFD;';
-                        trace('Not a base variation, how\'d this get in here?? - ${dailySongVariation}');
+                        trace('Not a base or supported modded variation, how\'d this get in here?? - ${dailySongVariation}');
                     }
                 }
                 dailiesList += songNameToAdd + variationToAdd;

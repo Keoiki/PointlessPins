@@ -1,0 +1,25 @@
+{
+    "dialogue":
+    [
+        {
+            "text": "This hanging board in the middle displays your current daily songs.",
+            "speaker": "Ophelia",
+            "canSkip": false
+        },
+        {
+            "text": "Completed daily songs will add an additional 50% to the FunkBucks you earn.",
+            "speaker": "Ophelia",
+            "canSkip": false
+        },
+        {
+            "text": "The daily board resets at midnight according to your local time.",
+            "speaker": "Ophelia",
+            "canSkip": false
+        },
+        {
+            "text": "We don't offer similar bonuses for Weeks, but maybe later!",
+            "speaker": "Ophelia",
+            "canSkip": false
+        }
+    ]
+}

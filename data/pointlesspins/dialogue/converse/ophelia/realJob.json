@@ -1,0 +1,30 @@
+{
+    "dialogue":
+    [
+        {
+            "text": "I should've expected this to happen.",
+            "speaker": "Ophelia",
+            "canSkip": false
+        },
+        {
+            "text": "<c=EA8645>April</c> tends to run her mouth\neven when I tell her not to.",
+            "speaker": "Ophelia",
+            "canSkip": false
+        },
+        {
+            "text": "Well,<d=1.0/> w<e=animNormal/>hat exactly are you gonna do\nwith that information?",
+            "speaker": "Ophelia",
+            "canSkip": false
+        },
+        {
+            "text": "You can go take a hike if you think\nI'll ever let you see more than this shop.",
+            "speaker": "Ophelia",
+            "canSkip": false
+        },
+        {
+            "text": "Go back to collecting those pins,<d=0.25/>\nand forget about this,<d=0.25/> '<e=animAnnoyed/>aight?",
+            "speaker": "Ophelia",
+            "canSkip": false
+        }
+    ]
+}

@@ -1,0 +1,30 @@
+{
+    "dialogue":
+    [
+        {
+            "text": "...",
+            "speaker": "April",
+            "canSkip": false
+        },
+        {
+            "text": "Oh, you're here.",
+            "speaker": "April",
+            "canSkip": false
+        },
+        {
+            "text": "Name's April.",
+            "speaker": "April",
+            "canSkip": false
+        },
+        {
+            "text": "Ophelia has me filling in for weekends while she goes to parties.",
+            "speaker": "April",
+            "canSkip": false
+        },
+        {
+            "text": "Nah, realistically, she's probably sleeping in her office, <i>again</i>.",
+            "speaker": "April",
+            "canSkip": false
+        }
+    ]
+}

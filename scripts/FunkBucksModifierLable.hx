@@ -14,7 +14,7 @@ import funkin.ui.story.StoryMenuState;
 class FunkBucksModifierLable extends Module
 {
     var pinModule:Module;
-    var modifierText;
+    var modifierText:BAlphabet;
 
     var addedToState:Bool = false;
 

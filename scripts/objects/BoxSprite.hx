@@ -12,8 +12,8 @@ import funkin.util.ReflectUtil;
  */
 class BoxSprite extends FunkinSprite
 {
-    var pinData;
-    var boxData;
+    var pinData:PinData;
+    var boxData:BoxData;
     var boxDataIndex:Int = 0;
 
     var bID:String;
@@ -21,7 +21,7 @@ class BoxSprite extends FunkinSprite
     var description:String;
     var price:Int;
     var revealTime:Int;
-    var chances;
+    var chances:Array<Array<Dynamic>>;
     var rollsPins:Bool;
 
     var totalWeight:Int;

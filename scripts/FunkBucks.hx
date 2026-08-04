@@ -59,8 +59,8 @@ typedef BoxData = {
 
 class FunkBucks extends Module
 {
-    var menuPin;
-    var menuPin2;
+    var menuPin:PinSprite;
+    var menuPin2:PinSprite;
 
     public static final penalties:Array<Float> = [1.0, 0.66, 0.33, 0.0, -0.5, -1];
     public static final penaltyColors:Array<String> = ["FFFFFF", "FFAAAA", "FF5555", "FF0000", "AA0000", "550000"];
@@ -72,8 +72,8 @@ class FunkBucks extends Module
 
     static var save;
 
-	public static var pinData;
-    public static var boxData;
+	public static var pinData:PinData;
+    public static var boxData:BoxData;
     public static var isMouseActive:Bool = false;
     public static var isMouseTooFast:Bool = false;
 
@@ -82,7 +82,7 @@ class FunkBucks extends Module
      * Null is default behavior. False shows them as locked and True shows them as unlocked.
      * A red * indicates if this is on.
      */
-    public static var debug_pins:Null<Bool> = null;
+    public static var debug_pins:Null<Bool> = true;
 
     /**
      * Set this value to True to test opening boxes.
@@ -101,6 +101,15 @@ class FunkBucks extends Module
      */
     public static var pinUnlockQueue:Array<String> = [];
 
+    /**
+     * The order in which April will sell her pins in the "Exchange" option, with the ID and Melody Stone price.
+     */
+    public static final aprilPinOrder:Array<Array<Dynamic>> = [
+        ["april", 2], 
+        ["", 4],
+        ["ophelia-business", 10]
+    ];
+
     function new():Void
     {
         super('FunkBucks', -20000000000);
@@ -116,8 +125,25 @@ class FunkBucks extends Module
         if (ReflectUtil.fields(FunkBucks.save).length == 0)
         {
             FunkBucks.save = FunkBucks.getDefaultSaveValues();
+            // Change default "dialogueFlavor" setting depending on the player's current settings.
+            #if mobile
+            FunkBucks.save.dialogueFlavor = "nice";
+            #else
+            if (!Preferences.naughtyness || Constants.CENSOR_EXPLETIVES)
+            {
+                FunkBucks.save.dialogueFlavor = "nice";
+            }
+            #end
             FunkBucks.flushSave();
         }
+        // var defaultSaveValues = FunkBucks.getDefaultSaveValues();
+        // for (field in ReflectUtil.fields(defaultSaveValues))
+        // {
+            // if (ReflectUtil.getField(FunkBucks.save, field) == null)
+            // {
+                // ReflectUtil.setField(FunkBucks.save, field, ReflectUtil.getField(defaultSaveValues, field));
+            // }
+        // }
 
         loadPinData();
 
@@ -138,11 +164,11 @@ class FunkBucks extends Module
         {
             trace(err);
             ModStore.register("funkbucksOutdated", false);
-            #if mobile
-            throw "Local mod version could not be found!\nThe message I put here for desktop users might be too long for mobile users.\nI can't be bothered to test that, maybe the text box is scrollable?\nJust change the mod ID back, man, so you can get notified of updates again."
-            #else
-            throw "Local mod version could not be found!\nWhy did you change the mod ID?\nI mean, it couldn't have been an accident, 0.8.4 changed how mod IDs work.\nThey aren't based off of the folder names anymore unless you don't provide an id the the metadata.\nYou had to manually go into the metadata file, and change the \"id\" field to something else.\nDo you NOT want to be notified when a new update drops?\nOkay.\nAre you still reading this?\nYou want me to keep going? Probably not.\nNow go change the mod ID back and continue opening those boxes!\n\n\nAlso, if the reason why you are getting this message is because someone told you that changing the mod ID does something cool,\nyou and that person better watch your backs.";
-            #end
+            // #if mobile
+            // throw "Local mod version could not be found!\nThe message I put here for desktop users might be too long for mobile users.\nI can't be bothered to test that, maybe the text box is scrollable?\nJust change the mod ID back, man, so you can get notified of updates again."
+            // #else
+            // throw "Local mod version could not be found!\nWhy did you change the mod ID?\nI mean, it couldn't have been an accident, 0.8.4 changed how mod IDs work.\nThey aren't based off of the folder names anymore unless you don't provide an id the the metadata.\nYou had to manually go into the metadata file, and change the \"id\" field to something else.\nDo you NOT want to be notified when a new update drops?\nOkay.\nAre you still reading this?\nYou want me to keep going? Probably not.\nNow go change the mod ID back and continue opening those boxes!\n\n\nAlso, if the reason why you are getting this message is because someone told you that changing the mod ID does something cool,\nyou and that person better watch your backs.";
+            // #end
             return;
         }
 
@@ -465,9 +491,12 @@ class FunkBucks extends Module
      * Each day, 3 songs are randomly picked that will have a +50% FunkBuck modifier on them.
      * The +50% modifier will override any negative modifiers, however the song will still be added to the list of previous songs.
      * The following are not eligible for daily bonuses:
+     * 
      * - modded songs,
      * - modded variations to base game songs, and (Subject to be supported in the future)
      * - any and all levels.
+     * 
+     * (Daily song selection has been moved to `checkForNewDay()`)
      */
     public static function setDailies(dailies:Array<String>):Void
     {
@@ -477,41 +506,10 @@ class FunkBucks extends Module
 
     public static function getDailies():Array<String>
     {
-        if (FunkBucks.save.dailyDate == null) FunkBucks.save.dailyDate = -1;
-
-        var dailyDateNum:Int = FunkBucks.save.dailyDate;
-        var date:Date = Date.now();
-        var currentDate:Int = date.getDate();
-        final supportedModdedVariations:Array<String> = FunkBucks.getSupportedModdedVariations();
-        if (dailyDateNum != currentDate)
-        {
-            var baseGameSongIDs:Array<String> = SongRegistry.instance.listBaseGameEntryIds();
-            baseGameSongIDs.remove("test"); // Test isn't easily available. (Does it even work properly? No.)
-            baseGameSongIDs.remove("tutorial"); // Boring.
-            baseGameSongIDs.remove("spaghetti"); // I'm removing this out of spite for how many DAMN TIMES it has appeared. No game, I do NOT want SPAGHETTI (feat. j-hope of BTS) (Clean ver.) 4 days IN A ROW!
-            var dailies:Array<String> = [];
-            for (i in 0...FunkBucks.dailySongCount)
-            {
-                var songID:String = baseGameSongIDs[FlxG.random.int(0, baseGameSongIDs.length - 1)];
-                var songVariations:Array<String> = SongRegistry.instance.fetchEntry(songID).variations;
-                songVariations = songVariations.filter(function(variationID:String):Bool
-                {
-                    return Constants.DEFAULT_VARIATION_LIST.contains(variationID) || supportedModdedVariations.contains(variationID);
-                });
-                dailies.push(songID + "-" + songVariations[FlxG.random.int(0, songVariations.length - 1)]);
-                // Only one variation per song, thanks!
-                baseGameSongIDs.remove(songID);
-            }
-            FunkBucks.save.dailyDate = currentDate;
-            FunkBucks.setDailies(dailies);
-            return dailies;
-        }
-        else
-        {
-            // The default empty array should never get returned, but I'll keep it here just in case.
-            if (FunkBucks.save.dailies == null) FunkBucks.save.dailies = new Array();
-            return FunkBucks.save.dailies;
-        }
+        FunkBucks.checkForNewDay();
+        // The default empty array should never get returned, but I'll keep it here just in case.
+        if (FunkBucks.save.dailies == null) FunkBucks.save.dailies = new Array();
+        return FunkBucks.save.dailies;
     }
 
     public static function addClaimedMilestone(milestone:String):Void
@@ -547,6 +545,7 @@ class FunkBucks extends Module
             switch (claimedRewards[i])
             {
                 case "cardboardbox03", "smallgiftbox03": discount -= 0.05;
+                case "fancycoffret03", "shimmeringpouch03": discount -= 0.025;
             }
         }
         return discount;
@@ -586,6 +585,54 @@ class FunkBucks extends Module
         FunkBucks.flushSave();
     }
 
+    /**
+     * Check if the current local time has rolled over to the next day (or previous, fucking time traveller >_>)
+     * If so, set all daily things in the mod to new values / reset them.
+     */
+    public static function checkForNewDay():Void
+    {
+        if (FunkBucks.save.dailyDate == null) FunkBucks.save.dailyDate = -1;
+        var dailyDateNum:Int = FunkBucks.save.dailyDate;
+        var date:Date = Date.now();
+        var currentDate:Int = date.getDate();
+
+        if (dailyDateNum != currentDate)
+        {
+            /**
+             * Daily Songs
+             */
+            final supportedModdedVariations:Array<String> = FunkBucks.getSupportedModdedVariations();
+            var baseGameSongIDs:Array<String> = SongRegistry.instance.listBaseGameEntryIds();
+            baseGameSongIDs.remove("test"); // Test isn't easily available. (Does it even work properly? No.)
+            baseGameSongIDs.remove("tutorial"); // Boring.
+            // baseGameSongIDs.remove("spaghetti"); // Fine, you get to go.
+            var dailySongs:Array<String> = [];
+            for (i in 0...FunkBucks.dailySongCount)
+            {
+                var songID:String = baseGameSongIDs[FlxG.random.int(0, baseGameSongIDs.length - 1)];
+                var songVariations:Array<String> = SongRegistry.instance.fetchEntry(songID).variations;
+                songVariations = songVariations.filter(function(variationID:String):Bool
+                {
+                    return Constants.DEFAULT_VARIATION_LIST.contains(variationID) || supportedModdedVariations.contains(variationID);
+                });
+                dailySongs.push(songID + "-" + songVariations[FlxG.random.int(0, songVariations.length - 1)]);
+                // Only one variation per song, thanks!
+                baseGameSongIDs.remove(songID);
+            }
+            FunkBucks.setDailies(dailySongs);
+
+            /**
+             * Clover Coin Event
+             */
+            if (FunkBucks.hasObtainedPin("clovercoin"))
+            {
+
+            }
+
+            FunkBucks.save.dailyDate = currentDate;
+        }
+    }
+
     public static function flushSave():Void
     {
         Save.instance.setModOptions("keoiki.funkbucks", FunkBucks.save);
@@ -610,9 +657,11 @@ class FunkBucks extends Module
             /**
             * An array of the current remaining dailies.
             * The date of the last daily. Works based on local time.
+            * Number of dailies completed.
             */
             dailies: new Array(),
             dailyDate: 0,
+            dailiesCompleted: 0,
 
             // An array of the previous 5 songs played, used for penalizing repeated songs.
             previousSongs: new Array(),
@@ -652,7 +701,10 @@ class FunkBucks extends Module
             events: new StringMap(),
 
             // The current modifier format. Either "multiplier" or "percentage".
-            modifierText: "percentage"
+            modifierText: "percentage",
+
+            // Whether to show meaner or nicer dialogue.
+            dialogueFlavor: "mean"
         }
     }
 
@@ -669,6 +721,22 @@ class FunkBucks extends Module
     static function getSupportedModdedVariations():Array<String>
     {
         return ["remnants", "bfremnants", "gooey", "spookymod", "reimu", "qt", "hundrec"];
+    }
+
+    /**
+     * Can you believe it, workschedules in MY funkin mod?
+     * @return Name of the shopkeeper at work.
+     */
+    static function getShopkeeper():String
+    {
+        var date:Date = Date.now();
+        var day:Int = date.getDay();
+        var hour:Int = date.getHours();
+        if (day == 6 || day == 0 || (day == 5 && hour >= 18) || (day == 1 && hour < 12))
+        {
+            return "april";
+        }
+        return "ophelia";
     }
 
     function onUpdate(event:UpdateScriptEvent):Void
@@ -735,13 +803,6 @@ class FunkBucks extends Module
                 // ZIPUtil.zipModFiles(FlxG.keys.pressed.M);
             // }
         }
-    }
-
-    function onSongStart(event)
-    {
-        // trace(FlxG.sound.music.length);
-        // trace(Math.ceil((6000 * 500) / (1020000 * 0.01) / 4 * 1.0 * 1.2 * 1.3));
-        // trace(Math.ceil((Highscore.tallies.totalNotes * 500) / (FlxG.sound.music.length / 100) / 4 * 1.0 * 1.2 * 1.3));
     }
 
     override function onStateChangeEnd(event:StateChangeScriptEvent):Void
@@ -839,6 +900,7 @@ class FunkBucks extends Module
             }
             else #end if (currentDailies.contains(currentSongOrWeek))
             {
+                if (FunkBucks.save.dailiesCompleted == null) FunkBucks.save.dailiesCompleted = -0;
                 if (FlxG.random.bool(0.5))
                 {
                     jewelsToAward = 2;
@@ -851,6 +913,7 @@ class FunkBucks extends Module
                 resultTextColor = "00FF00";
                 awardNormalCompletionJewel = FlxG.random.bool((Math.pow(FunkBucks.getBlueJewelPity(), 2) / 1000) * 6);
                 currentDailies.remove(currentSongOrWeek);
+                FunkBucks.save.dailiesCompleted++;
                 FunkBucks.setDailies(currentDailies);
                 trace("Daily Bonus +50%! Remaining dailies: " + currentDailies);
             }
@@ -881,7 +944,7 @@ class FunkBucks extends Module
             {
                 jewelsToAward++;
                 FunkBucks.save.blueJewelPity = 0;
-                PoinltessPins.flushSave();
+                FunkBucks.flushSave();
             }
             
             bucksToAward = Math.ceil(bucksToAward);

@@ -103,7 +103,7 @@ class TimedCoinsManager extends Module
 
         if (TimedCoinsManager.eventMusic == null)
         {
-            TimedCoinsManager.eventMusic = FunkinSound.load(Paths.music("coinEvent/coinEvent"), 1.0, true, false, false, true);
+            TimedCoinsManager.eventMusic = FunkinSound.load(Paths.music("girlfriendsRingtone/girlfriendsRingtone"), 1.0, true, false, false, true);
         }
         TimedCoinsManager.eventMusic.play();
 

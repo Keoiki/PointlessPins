@@ -28,7 +28,7 @@
     },
     {
         "id": "fancycoffret",
-        "name": "<c=2BFF31>Fancy Coffret</c>",
+        "name": "<c=2A4DFF>Fancy Coffret</c>",
         "description": "Finally something that looks nice.\nSay goodbye to those Commons!",
         "revealTime": 26,
         "chances": [
@@ -43,7 +43,7 @@
     },
     {
         "id": "smallgiftbox",
-        "name": "<c=2A4DFF>Shimmering Pouch</c>",
+        "name": "<c=A426FF>Shimmering Pouch</c>",
         "description": "\"<c=67B1D8>Hey, what?! This isn't a box!</c>\"\nRegardless, it still holds pins within,\nquite rare ones at that.",
         "revealTime": 26,
         "chances": [

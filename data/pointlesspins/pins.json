@@ -61,7 +61,6 @@
             { "id": "arrow-right", "name": "Right Arrow" },
             { "id": "rank-great", "name": "Great Rank", "description": "The \"silver\" of the ranks.", "special": true, "lockedText": "Complete any song with a certain rank." },
             { "id": "smallgiftbox", "name": "Small Giftbox", "description": "Did you notice the FunkBuck badge inside it?", "special": true, "lockedText": "This pin is unlockable from the Rewards." },
-            { "id": "fancycoffret", "name": "Fancy Coffret", "special": true, "lockedText": "This pin is unlockable from the Rewards." },
             { "id": "haxeflixel", "name": "HaxeFlixel", "description": "Not to be confused with \"Flixel\"." },
             { "id": "gooey", "name": "Gooey", "source": "#MOD# Gooey Mix" },
             { "id": "flora", "name": "Flora", "source": "#MOD# Gooey Mix" },
@@ -71,7 +70,9 @@
             { "id": "girlfriend-amongus-week2", "name": "Girlfriend (MIRA HQ)", "source": "#MOD# VS. Impostor" },
             { "id": "green-amongus-week2", "name": "Green", "description": "No fun allowed, even on New Task Day.", "source": "#MOD# VS. Impostor" },
             { "id": "strawberry-celeste", "name": "Strawberry", "description": "Can you collect all 175 (or even 202) of them?", "source": "#GAME# Celeste" },
-            { "id": "secretcoin-gd", "name": "Secret Coin", "description": "Never enough with you...", "source": "#GAME# Geometry Dash" }
+            { "id": "secretcoin-gd", "name": "Secret Coin", "description": "Never enough with you...", "source": "#GAME# Geometry Dash" },
+            { "id": "fireice-adofai", "name": "Fire and Ice", "description": "Try not to break their equilibrium.", "source": "#GAME# A Dance of Fire and Ice" },
+            { "id": "hatkid-ahit", "name": "Hat Kid", "description": "Has anyone seen her lost Time Pieces?", "source": "#GAME# A Hat in Time" }
         ]
     },
     "Rare": {
@@ -81,13 +82,14 @@
         [
             { "id": "nessie-funkinnews", "name": "Nessie", "source": "#INTERNET# \"Funkin News\" Twitter" },
             { "id": "ophelia", "name": "Ophelia", "description": "You'll stop annoying her now, right?", "special": true, "lockedText": "It wouldn't be smart to annoy <c=67B1D8>her.</c>" },
+            { "id": "april", "name": "April", "description": "Cares little for <c=67B1D8>Ophelia's</c> rules.", "special": true, "lockedText": "#APRIL_PURCHASE#" },
             { "id": "funkbuck", "name": "FunkBuck", "description": "Your local currency!", "special": true, "lockedText": "This pin is unlockable from the Rewards." },
             { "id": "clovercoin", "name": "Clover Coin", "description": "Despite the clover, these don't bring you good luck.", "special": true, "lockedText": "Push a <c=2BFF31>green button</c> and win." },
             { "id": "haxeui", "name": "HaxeUI", "description": "It either doesn't work or doesn't work." },
             { "id": "pushpin", "name": "Pin", "description": "No no, wrong type of pin!" },
             { "id": "difficultystar", "name": "Blue Flamed Star", "description": "That looks really difficult!" },
             { "id": "rank-excellent", "name": "Excellent Rank", "description": "It pains to get a single Bad and getting this rank.", "special": true, "lockedText": "Complete any song with a certain rank." },
-            { "id": "glimmeringpouch", "name": "Glimmering Pouch", "special": true, "lockedText": "This pin is unlockable from the Rewards." },
+            { "id": "fancycoffret", "name": "Fancy Coffret", "special": true, "lockedText": "This pin is unlockable from the Rewards." },
             { "id": "qt", "name": "QT", "source": "#MOD# QT: Rewired" },
             { "id": "sky-redux", "name": "Sky", "source": "#MOD# Heartbreak Havoc" },
             { "id": "sky", "name": "Sky", "description": "No no, wrong type of sky!" },
@@ -104,11 +106,14 @@
         "color": "A426FF",
         "pins":
         [
-            { "id": "melodystone", "name": "Melody Stone", "description": "Rare, Blue, and Sparkly! Ophelia loves these.", "special": true, "lockedText": "This pin is unlockable from the Rewards." },
+            { "id": "melodystone", "name": "Melody Stone", "description": "Rare, Blue, and Sparkly! <c=67B1D8>Ophelia</c> loves these.", "special": true, "lockedText": "This pin is unlockable from the Rewards." },
+            { "id": "ophelia-business", "name": "Ophelia", "description": "Very strict with her rules. (Except on <c=EA8645>April</c>)", "special": true, "lockedText": "#APRIL_PURCHASE#" },
             { "id": "pessy", "name": "Pessy", "source": "#MOD# Psych Engine" },
             { "id": "kb", "name": "KB", "source": "#MOD# QT: Rewired" },
             { "id": "polymod", "name": "Polymod", "description": "Polymore!" },
+            { "id": "funkbuck-pixel", "name": "FunkBuck (Pixel)", "description": "Your pixelated currency!", "special": true, "lockedText": "This pin is unlockable from the Rewards.", "pixel": true, "scale": 6 },
             { "id": "rank-perfect", "name": "Perfect Rank", "description": "Now go for the golden one!", "special": true, "lockedText": "Complete any song with a certain rank." },
+            { "id": "glimmeringpouch", "name": "Glimmering Pouch", "special": true, "lockedText": "This pin is unlockable from the Rewards." },
             { "id": "detective-amongus", "name": "Detective", "description": "Trying to figure out who the Impostor is...", "source": "#MOD# VS. Impostor" },
             { "id": "blake-amongus", "name": "Blake Imposter", "description": "Imposter is just his surname.", "source": "#MOD# VS. Impostor" },
             { "id": "falsethorn-corruption", "name": "FalseThorn", "description": "It's not real... it's not real...", "source": "#MOD# Friday Night Funkin': Corruption" },
@@ -124,7 +129,8 @@
             { "id": "whitty", "name": "Whitty", "source": "#MOD# Vs. Whitty" },
             { "id": "hex", "name": "Hex", "source": "#MOD# Vs. Hex" },
             { "id": "harvester-corruption", "name": "The Harvester", "description": "The Harvester harvests the harvest... I mean souls.", "source": "#MOD# Friday Night Funkin': Corruption" },
-            { "id": "rank-goldperfect", "name": "Golden Perfect Rank", "description": "Did you know this rank grants an extra +50% FunkBucks? <s=0.75><c=FFB51C>Well now you do.</c></s>", "special": true, "lockedText": "Complete any song with a certain rank." }
+            { "id": "rank-goldperfect", "name": "Golden Perfect Rank", "description": "Did you know this rank grants an extra +50% FunkBucks? <s=0.75><c=FFB51C>Well now you do.</c></s>", "special": true, "lockedText": "Complete any song with a certain rank." },
+            { "id": "flowery-deltarune", "name": "Flowery", "description": "Heh, how'd you like my jarona?", "source": "#GAME# DELTARUNE" }
         ]
     },
     "Mythic": {
@@ -148,6 +154,7 @@
         [
             { "id": "spaghetti", "name": "Spaghetti", "description": "This isn't a hotspot, sorry!", "special": true, "lockedText": "Complete a certain song." },
             { "id": "rank-loss", "name": "Loss Rank", "description": "Wow, you suck.", "special": true, "lockedText": "Complete any song with a certain rank." },
+            { "id": "shockedcat", "name": "Shocked Cat", "description": "https://www.youtube.com/watch?v=VuYmOeiScv4&t=380s", "special": true, "lockedText": "???" },
             { "id": "tuntematon", "name": " ", "description": "<a=0.05>She got what she deserved.</a>", "special": true, "lockedText": "<a=0.05>Nightmares manifest.</a>", "scale": 0.0, "noCount": true }
         ]
     }

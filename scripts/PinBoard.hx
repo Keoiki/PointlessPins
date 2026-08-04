@@ -10,6 +10,7 @@ import flixel.tweens.FlxEase;
 import flixel.tweens.FlxTween;
 import flixel.util.FlxSort;
 import funkbucks.objects.PinSprite;
+import funkbucks.shaders.ImposePatternShader;
 import funkin.audio.FunkinSound;
 import funkin.graphics.FunkinCamera;
 import funkin.graphics.FunkinSprite;
@@ -22,6 +23,8 @@ import funkin.util.TouchUtil;
 
 class PinBoard extends MusicBeatSubState
 {   
+    static var rememberedPin:Array<Int> = [];
+
     var PINS_PER_ROW:Int = 16;
     var PIN_X_START:Int = 140;
     var PIN_X_RANGE:Int = 2200;
@@ -46,7 +49,7 @@ class PinBoard extends MusicBeatSubState
     var cameraFollowPoint:FlxObject;
 
     var cursor:FunkinSprite;
-    var pins = [];
+    var pins:Array<PinSprite> = [];
     var pinNameBox:FunkinSprite;
     var pinName:BAlphabet;
     var pinDescription:BAlphabet;
@@ -151,6 +154,7 @@ class PinBoard extends MusicBeatSubState
                 pin.artist = pinData.artist;
                 pin.source = pinData.source;
                 pin.special = pinData.special ?? false;
+                pin.pixel = pinData.pixel ?? false;
                 pin.lockedText = pinData.lockedText ?? (pin.special ? "This pin has a special unlock condition." : "This pin can be unlocked from a box.");
                 pin.setupPin(pinData.id, pinData.name, pinData.description, pinData.scale);
                 add(pin);
@@ -185,6 +189,12 @@ class PinBoard extends MusicBeatSubState
         pinNameBox.alpha = 0.80;
         pinNameBox.screenCenter(0x01);
         add(pinNameBox);
+
+        var __shader:ImposePatternShader = new ImposePatternShader();
+        __shader.setBlend(0);
+        __shader.setValues([pinNameBox.width, pinNameBox.height], Assets.getBitmapData(Paths.image("pointlesspins/dialogue/pattern-diamonds")),
+            0xFF0C0C0C, 5.0, [-0.05, -0.1], 0.5);
+        pinNameBox.shader = __shader;
 
         pinName = new BAlphabet(FlxG.width / 2, pinNameBox.y + 40, "");
         pinName.scale.set(0.55, 0.55);
@@ -249,7 +259,7 @@ class PinBoard extends MusicBeatSubState
         cursor.y = pinMidpoint.y - cursor.height / 2;
 
         FlxG.touches.swipeThreshold.set(100, 100);
-        coolBackButton = new FunkinBackButton(FlxG.width - 220, FlxG.height / 2, 0xFFFFFFFF, goBack, 1.0, true);
+        coolBackButton = new FunkinBackButton(FlxG.width - 220, 100, 0xFFFFFFFF, goBack, 1.0, true);
         coolBackButton.y -= coolBackButton.height / 2;
         #if !mobile
         coolBackButton.visible = FunkBucks.isMouseActive;
@@ -262,6 +272,23 @@ class PinBoard extends MusicBeatSubState
 
         refresh();
 
+        if (PinBoard.rememberedPin.length > 0)
+        {
+            cursorX = PinBoard.rememberedPin[0];
+            cursorY = PinBoard.rememberedPin[1];
+
+            var availablePin = pins.filter(function(pin) {
+                return pin.position[0] == cursorX && pin.position[1] == cursorY;
+            })[0];
+
+            pinMidpoint = availablePin.getGraphicMidpoint(pinMidpoint);
+            cursor.x = pinMidpoint.x - cursor.width / 2;
+            cursor.y = pinMidpoint.y - cursor.height / 2;
+            cameraFollowPoint.setPosition(cursor.x, cursor.y + 75);
+
+            camera.snapToTarget();
+        }
+
         super.create();
     }
 
@@ -271,6 +298,8 @@ class PinBoard extends MusicBeatSubState
         {
             goBack();
         }
+
+        pinNameBox.shader.update(elapsed);
 
         handleControls(elapsed);
         handleTouchControls();
@@ -284,6 +313,7 @@ class PinBoard extends MusicBeatSubState
 
     function goBack():Void
     {
+        PinBoard.rememberedPin = [cursorX, cursorY];
         close();
     }
 

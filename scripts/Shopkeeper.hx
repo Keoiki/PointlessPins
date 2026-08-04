@@ -3,19 +3,22 @@ package funkbucks;
 import funkin.graphics.FunkinSprite;
 using StringTools;
 
-class Ophelia extends FunkinSprite
+class Shopkeeper extends FunkinSprite
 {
     static var annoyance:Int = 0;
     var canAnnoy:Bool = true;
     var animationsWithVariations:Array<String> = ["Idle", "Talk"];
     var suffix:String = "";
+    var name:String;
     static var caught:Bool = false;
 
-    override function new(x:Float, y:Float):Void
+    override function new(x:Float, y:Float, ?name:String):Void
     {
-        super(x, y, "shop/ophelia", {
+        super(x, y, 'shop/$name', {
             applyStageMatrix: true
         });
+
+        this.name = name ?? "ophelia";
         playAnimation("Idle", true);
 
         animation.onFinish.add((name:String) ->
@@ -25,11 +28,20 @@ class Ophelia extends FunkinSprite
                 playAnimation("Idle", true);
             }
         });
+
+        if (name == "april")
+        {
+            x -= 10;
+            y -= 5;
+            canAnnoy = false;
+            Shopkeeper.caught = false;
+            Shopkeeper.annoyance = 0;
+        }
     }
 
     function playAnimation(name:String, looped:Bool = false, forced:Bool = false):Void
     {
-        if (Ophelia.caught)
+        if (Shopkeeper.caught)
         {
             animation.play("OutCold", true);
             return;
@@ -40,7 +52,7 @@ class Ophelia extends FunkinSprite
         {
             var nameToUse:String = name;
 
-            if (anger > 0 || Ophelia.annoyance > 50)
+            if (anger > 0 || Shopkeeper.annoyance > 50)
             {
                 nameToUse += "Annoyed";
             }

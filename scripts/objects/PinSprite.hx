@@ -13,17 +13,19 @@ class PinSprite extends FunkinSprite
     public var rarity:String = "Unknown";
     public var artist:String = "Keoiki";
     public var source(default, set):String = "Unknown";
-    public var lockedText:String = "Unknown";
+    public var pixel:Bool;
+    public var lockedText(default, set):String = "Unknown";
     public var special:Bool = false;
     public var isUnlocked:Bool = false;
     public var isUnknown:Bool = false;
     public var unlockCount:Int = 0;
     public var rotationTween:FlxTween = null;
 
+    final tagRegex:EReg = new EReg('#([a-zA-Z0-9_-]+)#', "g");
+
     function set_source(value:String):String
     {
-        var regex:EReg = new EReg('#([a-zA-Z]+)#', "g");
-        value = regex.map(value, (e) ->
+        value = tagRegex.map(value, (e) ->
         {
             switch (e.matched(1).toLowerCase())
             {
@@ -36,6 +38,29 @@ class PinSprite extends FunkinSprite
 
         source = value;
         return source;
+    }
+
+    function set_lockedText(value:String):String
+    {
+        value = tagRegex.map(value, (e) ->
+        {
+            switch (e.matched(1).toLowerCase())
+            {
+                case "april_purchase":
+                    if (FunkBucks.getEvent("hasMetApril") == 1)
+                    {
+                        return "Can be purchased from <c=EA8645>April</c>.";
+                    }
+                    else
+                    {
+                        return "???";
+                    }
+                default: return "<color=FF0000>!Unknown Source Type!</color>";
+            }
+        });
+
+        lockedText = value;
+        return lockedText;
     }
 
     public function new(x:Float, y:Float)
@@ -101,6 +126,7 @@ class PinSprite extends FunkinSprite
                 }
             });
         }
+        antialiasing = !pixel;
 
         // if (unlockCount >= 15) { }
     }

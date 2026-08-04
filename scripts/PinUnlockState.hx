@@ -14,7 +14,7 @@ import funkin.util.TouchUtil;
 
 class PinUnlockState extends MusicBeatSubState
 {
-    var pinData;
+    var pinData:PinData;
     var canClose:Bool = false;
     var closeTimer:Float = 0.0;
     var sparkles:FlxEmitter;
@@ -48,6 +48,7 @@ class PinUnlockState extends MusicBeatSubState
 
         var pin:PinSprite = new PinSprite(FlxG.width / 2, 400);
         pin.isUnlocked = true;
+        pin.pixel = pinData.pixel ?? false;
         pin.setupPin(pinData.id, pinData.name, pinData.description, 0.2, 1, true);
         add(pin);
 
@@ -70,7 +71,7 @@ class PinUnlockState extends MusicBeatSubState
         sparkles.start();
 
         var unlockMsgText:String = "";
-        if (debug || FunkBucks.setObtainedPin(pinData.id))
+        if (FunkBucks.debug_pins || debug || FunkBucks.setObtainedPin(pinData.id))
         // if (true) // For testing, also doesn't mark a pin as unlocked since the function above is never called.
         {
             unlockMsgText = "<b>You got a <c=00FF00>NEW</c> pin!</b>";

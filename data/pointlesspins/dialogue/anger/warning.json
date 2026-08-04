@@ -1,0 +1,10 @@
+{
+    "dialogue":
+    [
+        {
+            "text": "Could you stop asking...<d=0.5/> nothing?",
+            "speaker": "Ophelia",
+            "canSkip": false
+        }
+    ]
+}

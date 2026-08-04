@@ -1,0 +1,40 @@
+{
+    "dialogue":
+    [
+        {
+            "text": "FunkBucks is the main currency here.",
+            "speaker": "Ophelia",
+            "canSkip": false
+        },
+        {
+            "text": "However there isn't much to spend them on aside currently from the Boxes.",
+            "speaker": "Ophelia",
+            "canSkip": false
+        },
+        {
+            "text": "You can earn FunkBucks by completing Songs and Weeks.",
+            "speaker": "Ophelia",
+            "canSkip": false
+        },
+        {
+            "text": "Beward though, your 5 most recently completed Songs or Weeks are added to a penalty list.",
+            "speaker": "Ophelia",
+            "canSkip": false
+        },
+        {
+            "text": "The more times that a Song or Week is on there,<d=0.25/> the less FunkBucks you'll earn for completing it again.",
+            "speaker": "Ophelia",
+            "canSkip": false
+        },
+        {
+            "text": "The penalty is displayed at the Bottom-Left (in Freeplay) or Bottom-Right (in Story Mode).",
+            "speaker": "Ophelia",
+            "canSkip": false
+        },
+        {
+            "text": "So try to play a variety of Songs and Weeks, alright?.",
+            "speaker": "Ophelia",
+            "canSkip": false
+        }
+    ]
+}

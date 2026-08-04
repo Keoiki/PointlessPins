@@ -109,7 +109,7 @@ class BoxSubMenu extends MusicBeatSubState
         boxHitbox = new FlxObject(leftArrowHitbox.x + leftArrowHitbox.width, leftArrowHitbox.y, rightArrowHitbox.x - leftArrowHitbox.x - leftArrowHitbox.width, leftArrowHitbox.height);
         add(boxHitbox);
 
-        coolBackButton = new FunkinBackButton(FlxG.width - 220, FlxG.height / 2, 0xFFFFFFFF, goBack, 1.0, true);
+        coolBackButton = new FunkinBackButton(FlxG.width - 220, FlxG.height - 105, 0xFFFFFFFF, goBack, 1.0, true);
         coolBackButton.y -= coolBackButton.height / 2;
         #if !mobile
         coolBackButton.visible = FunkBucks.isMouseActive;

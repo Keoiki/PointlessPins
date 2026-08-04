@@ -1,0 +1,8 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TextureAtlas imagePath="end-icons.png">
+	<!-- Created with Adobe Animate version 22.0.0.93 -->
+	<!-- http://www.adobe.com/products/animate.html -->
+	<SubTexture name="dialogue-end-icons0000" x="0" y="0" width="25" height="25"/>
+	<SubTexture name="dialogue-end-icons0001" x="27" y="0" width="25" height="25"/>
+	<SubTexture name="dialogue-end-icons0002" x="0" y="27" width="25" height="22" frameX="0" frameY="-2" frameWidth="25" frameHeight="25"/>
+</TextureAtlas>

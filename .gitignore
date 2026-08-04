@@ -2,6 +2,6 @@ astc-images/
 fla/
 fla-public/RECOVER_*
 scripts/old/
-shaders/
+shaders/unused/
+scripts/shaders/unused/
 shared/images/
-ZIPUtil*

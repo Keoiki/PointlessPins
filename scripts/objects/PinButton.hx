@@ -3,12 +3,15 @@ package funkbucks.objects;
 import balphabet.BAlphabet;
 import flixel.addons.display.FlxSliceSprite;
 import flixel.math.FlxRect;
+import funkbucks.shaders.RGBSwap;
 import funkin.group.FunkinGroup;
 
 class PinButton extends FunkinGroup
 {
     public var button:FlxSliceSprite;
     public var text:BAlphabet;
+    public var buttonShader:RGBSwap;
+    public var buttonColor:PinButtonColor;
 
     public var isActive(default, set):Bool = true;
 
@@ -28,14 +31,19 @@ class PinButton extends FunkinGroup
         return value;
     }
 
-    public function new(x:Float, y:Float, w:Float, h:Float, text:String):Void
+    public function new(x:Float, y:Float, w:Float, h:Float, text:String, ?color:PinButtonColor = PinButtonColor.BROWN):Void
     {
         super(x, y);
 
-        button = new FlxSliceSprite(Assets.getBitmapData("images/pinbutton.png"), FlxRect.get(31, 31, 69, 69), w, h);
+        buttonColor = color;
+
+        button = new FlxSliceSprite(Assets.getBitmapData("images/pinbuttonrgb.png"), FlxRect.get(31, 31, 69, 69), w, h);
         button.zIndex = this.zIndex;
         button.scrollFactor.set();
         add(button);
+
+        buttonShader = new RGBSwap();
+        button.shader = buttonShader;
 
         text = new BAlphabet(0, 0, text);
         text.alignment = "center";
@@ -51,11 +59,46 @@ class PinButton extends FunkinGroup
     {
         if (isSelected)
         {
-            button.color = isActive ? 0xFF7E7EFF : 0xFF22227B;
+            buttonShader.setColorsArray(buttonColor[isActive ? 1 : 3]);
         }
         else
         {
-            button.color = isActive ? 0xFFFFFFFF : 0xFF3F3F3F;
+            buttonShader.setColorsArray(buttonColor[isActive ? 0 : 2]);
         }
     }
+}
+
+/**
+ * This class holds preset colors to use with buttons.
+ * Active, Active (selected), Inactive, Inactive (selected)
+ */
+class PinButtonColor
+{
+    public static var BROWN:Array<Array<FlxColor>> = [
+        [0xFF9D322C, 0xFF872324, 0xFF611320],
+        [0xFF611320, 0xFF510D25, 0xFF3B0A29],
+        [0xFF361E26, 0xFF2D1322, 0xFF000000],
+        [0xFF1C0A15, 0xFF0D040A, 0xFF000000]
+    ];
+
+    public static var BLUE_OPHELIA:Array<Array<FlxColor>> = [
+        [0xFF606FA2, 0xFF264967, 0xFF111B39],
+        [0xFF611320, 0xFF510D25, 0xFF3B0A29],
+        [0xFF361E26, 0xFF2D1322, 0xFF000000],
+        [0xFF1C0A15, 0xFF0D040A, 0xFF000000]
+    ];
+
+    public static var BLUE_STONE:Array<Array<FlxColor>> = [
+        [0xFF32A8E7, 0xFF1C56A5, 0xFF000000],
+        [0xFF611320, 0xFF510D25, 0xFF3B0A29],
+        [0xFF361E26, 0xFF2D1322, 0xFF000000],
+        [0xFF1C0A15, 0xFF0D040A, 0xFF000000]
+    ];
+
+    public static var ORANGE_APRIL:Array<Array<FlxColor>> = [
+        [0xFFD9471C, 0xFFB21D0B, 0xFF770003],
+        [0xFF611320, 0xFF510D25, 0xFF3B0A29],
+        [0xFF361E26, 0xFF2D1322, 0xFF000000],
+        [0xFF1C0A15, 0xFF0D040A, 0xFF000000]
+    ];
 }

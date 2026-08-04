@@ -17,6 +17,20 @@ class PinOptions extends Module
             FunkBucks.save.modifierText = "percentage";
             FunkBucks.flushSave();
         }
+        
+        if (FunkBucks.save.dialogueFlavor == null)
+        {
+            // Change default "dialogueFlavor" setting depending on the player's current settings.
+            #if mobile
+            FunkBucks.save.dialogueFlavor = "nice";
+            #else
+            if (!Preferences.naughtyness || Constants.CENSOR_EXPLETIVES)
+            {
+                FunkBucks.save.dialogueFlavor = "nice";
+            }
+            #end
+            FunkBucks.flushSave();
+        }
     }
 
     public function onStateChangeEnd(event:StateChangeScriptEvent):Void
@@ -39,6 +53,24 @@ class PinOptions extends Module
                     default: "Percentage";
                 }
             );
+
+            #if !mobile
+            preferences.createPrefItemEnum(
+                "Dialogue Flavor",
+                "Changes how mean dialogue from the shopkeepers is.\n(\"Naughtyness\" being OFF overrides this.)",
+                ["Meaner" => "mean", "Nicer" => "nice"],
+                function(key:String, value:String):Void
+                {
+                    FunkBucks.save.dialogueFlavor = value;
+                    FunkBucks.flushSave();
+                },
+                switch (FunkBucks.save.dialogueFlavor)
+                {
+                    case "nice": "Nicer";
+                    default: "Meaner";
+                }
+            );
+            #end
         }
         super.onStateChangeEnd(event);
     }
