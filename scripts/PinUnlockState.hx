@@ -72,7 +72,6 @@ class PinUnlockState extends MusicBeatSubState
 
         var unlockMsgText:String = "";
         if (FunkBucks.debug_pins || debug || FunkBucks.setObtainedPin(pinData.id))
-        // if (true) // For testing, also doesn't mark a pin as unlocked since the function above is never called.
         {
             unlockMsgText = "<b>You got a <c=00FF00>NEW</c> pin!</b>";
         }

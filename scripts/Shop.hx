@@ -20,6 +20,7 @@ import funkbucks.objects.PinDialogue;
 import funkbucks.objects.shop.Clock;
 import funkbucks.objects.shop.DailyBoard;
 import funkbucks.objects.shop.RewardShelf;
+import funkbucks.shaders.ImposePatternShader;
 import funkin.audio.FunkinSound;
 import funkin.graphics.FunkinCamera;
 import funkin.graphics.FunkinSprite;
@@ -40,11 +41,13 @@ class Shop extends MusicBeatState
     var spriteNudge:Float = (1600 - FlxG.width) / 2;
     public var disallowInputs:Bool = false;
     public var cameraFollowPoint:FlxObject;
+    public var cameraFollowPointMarker:FunkinSprite;
     var justGainedFocus:Bool = false;
     public var subToSub:Bool = false;
 
     public var talkingToOphelia:Bool = false;
     public var isShopkeeperGone:Bool = false;
+    var extendBounds:Bool = false;
     var cannotDoText:BAlphabet;
 
     var buckSound:FunkinSound;
@@ -105,7 +108,7 @@ class Shop extends MusicBeatState
     {
         Shop.instance = this;
 
-        if (!FunkBucks.hasObtainedPin("shockedcat") && FlxG.random.bool(0.01))
+        if (!FunkBucks.hasObtainedPin("shockedcat") && FlxG.random.bool(0.05))
         {
             FunkBucks.pinUnlockQueue.push("shockedcat");
         }
@@ -124,12 +127,20 @@ class Shop extends MusicBeatState
         add(cameraFollowPoint);
         camera.follow(cameraFollowPoint, null, 0.05);
 
-        var skName:String = FunkBucks.getShopkeeper();
+        cameraFollowPointMarker = new FunkinSprite(800 - spriteNudge, 300).makeSolidColor(5, 5, 0xFF00FF00);
+        cameraFollowPointMarker.zIndex = 9999999;
+        // add(cameraFollowPointMarker);
+
+        final skName:String = FunkBucks.getShopkeeper();
 
         if (FlxG.random.bool(1) && !Shopkeeper.caught && skName == "ophelia")
         {
             // Ophelia forgor to show up
             isShopkeeperGone = true;
+            if (FlxG.random.bool(10))
+            {
+                extendBounds = true;
+            }
         }
 
         if (TimedCoinsManager.running || isShopkeeperGone || Shopkeeper.caught)
@@ -344,13 +355,11 @@ class Shop extends MusicBeatState
 
         counterItems.push(iconPins);
         counterItems.push(iconBoxes);
-        // counterItems.push(iconConverse);
         counterItems.push(iconRewards);
         counterItems.push(lablePins);
         counterItems.push(lableBoxes);
         counterItems.push(lableConverse);
         counterItems.push(lableRewards);
-        // counterItems.push(rewardsSparkles);
 
         #if !mobile
         keycapPins = new KeyCap(lablePins.x - 45, 570, "1", false);
@@ -385,20 +394,17 @@ class Shop extends MusicBeatState
         funkBucksText = new BAlphabet(FlxG.width - 20, 25, '<b>${FunkBucks.getFunkCoins()}</b> ${FBIcon.Buck}');
         funkBucksText.scale.set(0.65, 0.65);
         funkBucksText.alignment = "right";
-        // funkBucksText.setScrollFactor(0, 0);
         add(funkBucksText);
 
         blueJewelsText = new BAlphabet(FlxG.width - 20, funkBucksText.y + 70, '<b><c=82E9FF>${FunkBucks.getBlueJewels()}</c></b> ${FBIcon.Jewel}');
         blueJewelsText.alignment = "right";
         blueJewelsText.scale.set(0.65, 0.65);
-        // blueJewelsText.setScrollFactor(0, 0);
         add(blueJewelsText);
 
         cannotDoText = new BAlphabet(FlxG.width / 2, FlxG.height - 100, "<b><c=FF0000>You cannot do that right now.</c></b>");
         cannotDoText.alignment = "center";
         cannotDoText.scale.set(0.5, 0.5);
         cannotDoText.alpha = 0.0001;
-        // cannotDoText.setScrollFactor(0, 0);
         add(cannotDoText);
 
         coolBackButton = new FunkinBackButton(FlxG.width - 220, FlxG.height - 200, 0xFFFFFFFF, goBack, 0.5);
@@ -458,8 +464,28 @@ class Shop extends MusicBeatState
 
         persistentUpdate = true;
 
-        camera.minScrollX = wall.x - 100;
-        camera.maxScrollX = wall.x + wall.width + 100;
+        final leftXLimit:Float = extendBounds ? 5000 : 100;
+        final rightXLimit:Float = extendBounds ? 100000 : 100;
+
+        if (extendBounds)
+        {
+            constructOldShop();
+        }
+
+        var bound001:FunkinSprite = new FunkinSprite(10000, wall.y).makeSolidColor(3, wall.height, 0xFFFF0000);
+        bound001.zIndex = 88888888;
+        // add(bound001);
+
+        var bound002:FunkinSprite = new FunkinSprite(30000, wall.y).makeSolidColor(3, wall.height, 0xFFFF0000);
+        bound002.zIndex = 88888888;
+        // add(bound002);
+
+        var bound002:FunkinSprite = new FunkinSprite(50000, wall.y).makeSolidColor(3, wall.height, 0xFFFF0000);
+        bound002.zIndex = 88888888;
+        // add(bound002);
+
+        camera.minScrollX = wall.x - leftXLimit;
+        camera.maxScrollX = wall.x + wall.width + rightXLimit;
         camera.minScrollY = wall.y;
         camera.maxScrollY = counter.y + counter.height - 25;
 
@@ -497,6 +523,28 @@ class Shop extends MusicBeatState
 
         handleCameraMovement();
         // checkIfAnnoyedShopkeeper();
+
+        if (cameraFollowPointMarker != null)
+        {
+            cameraFollowPointMarker.x = cameraFollowPoint.x - 2;
+            cameraFollowPointMarker.y = cameraFollowPoint.y - 2;
+        }
+
+        if (extendBounds && cameraFollowPoint.x >= 10000)
+        {
+            final targetUIAlpha:Float = 1.0 - (1.0 * (cameraFollowPoint.x - 10000) / 20000);
+            funkBucksText.alpha = targetUIAlpha;
+            blueJewelsText.alpha = targetUIAlpha;
+            final targetDarkness:Float = 0.85 + (0.15 * (cameraFollowPoint.x - 10000) / 20000);
+            lighting.alpha = targetDarkness;
+            camera.minScrollY = wall.y + 360;
+            coolBackButton.enabled = false;
+            coolBackButton.visible = false;
+        }
+        else
+        {
+            camera.minScrollY = wall.y;
+        }
 
         justGainedFocus = false;
 
@@ -576,7 +624,7 @@ class Shop extends MusicBeatState
 
         if (FlxG.keys.justPressed.THREE || (TouchUtil.pressAction(shopkeeperHitbox) && !FunkBucks.isMouseTooFast && !TouchUtil.overlaps(coolBackButton, cameraHUD)))
         {
-            if (isShopkeeperGone || Shopkeeper.caught || FunkBucks.getOpheliaAnger() > 0 || TimedCoinsManager.running)
+            if (isShopkeeperGone || Shopkeeper.caught || TimedCoinsManager.running)
             {
                 FlxTween.completeTweensOf(cannotDoText);
                 FlxTween.tween(cannotDoText, { alpha: 1 }, 2, { ease: FlxEase.cubeOut, type: 16 });
@@ -712,6 +760,7 @@ class Shop extends MusicBeatState
                 var pinchRatio:Float = pinchDistance / currentPinchDistance;
                 camera.zoom = previousZoom * pinchRatio;
                 camera.zoom = FlxMath.bound(camera.zoom, 0.7, 2);
+                FlxTween.cancelTweensOf(camera);
                 // trace(pinchDistance, currentPinchDistance, pinchRatio);
                 return;
             }
@@ -775,6 +824,7 @@ class Shop extends MusicBeatState
         if (FlxG.mouse.wheel != 0)
         {
             camera.zoom = FlxMath.bound(camera.zoom + 0.1 * FlxG.mouse.wheel, 0.7, 2);
+            FlxTween.cancelTweensOf(camera);
         }
 
         // Let's not go Mach 3 while at 500 FPS, ok?
@@ -1211,6 +1261,7 @@ class Shop extends MusicBeatState
     override function onFocus():Void
     {
         justGainedFocus = true;
+        super.onFocus();
     }
 
     override function openSubState(state):Void
@@ -1245,5 +1296,62 @@ class Shop extends MusicBeatState
         if (dialog != null) remove(dialog);
         camera.bgColor = 0xFF000000;
         super.destroy();
+    }
+
+    function constructOldShop():Void
+    {
+        final offsetDueToScrollFactor:Float = 7500;
+        final offsetDueToScrollFactor2:Float = 5000;
+
+        var old_wall:FunkinSprite = new FunkinSprite(49300 - offsetDueToScrollFactor, -220).loadTexture("shop/old/wall");
+        old_wall.zIndex = -1000;
+        old_wall.scrollFactor.set(0.85, 0.85);
+        add(old_wall);
+
+        var old_dailyboard:FunkinSprite = new FunkinSprite(50300 - offsetDueToScrollFactor, 0).loadTexture("shop/old/dailyboard");
+        old_dailyboard.zIndex = -998;
+        old_dailyboard.scrollFactor.set(0.85, 0.85);
+        add(old_dailyboard);
+
+        var old_counter:FunkinSprite = new FunkinSprite(49550, 510).loadTexture("shop/old/counter");
+        old_counter.zIndex = 500;
+        old_counter.scrollFactor.set(1, 1);
+        old_counter.scale.set(1.5, 1.0);
+        add(old_counter);
+
+        var old_fbStack1:FunkinSprite = new FunkinSprite(51100, 446).loadTexture("shop/old/funkbuckstack");
+        old_fbStack1.zIndex = 490;
+        add(old_fbStack1);
+
+        var old_fbStack2:FunkinSprite = new FunkinSprite(52050, 446).loadTexture("shop/old/funkbuckstack");
+        old_fbStack2.zIndex = 490;
+        old_fbStack2.flipX = true;
+        add(old_fbStack2);
+
+        var old_fbStack3:FunkinSprite = new FunkinSprite(49500, 446).loadTexture("shop/old/funkbuckstack");
+        old_fbStack3.zIndex = 490;
+        add(old_fbStack3);
+
+        var old_randomBox1:FunkinSprite = new FunkinSprite(51600 + offsetDueToScrollFactor2, 700).loadTexture("shop/old/randombox01");
+        old_randomBox1.zIndex = 1100;
+        old_randomBox1.scrollFactor.set(1.1, 1.0);
+        add(old_randomBox1);
+
+        var old_randomBox2:FunkinSprite = new FunkinSprite(49700 + offsetDueToScrollFactor2, 740).loadTexture("shop/old/randombox01");
+        old_randomBox2.zIndex = 1100;
+        old_randomBox2.scrollFactor.set(1.1, 1.0);
+        add(old_randomBox2);
+
+        var old_randomBox3:FunkinSprite = new FunkinSprite(52070, 350).loadTexture("shop/old/randombox01");
+        old_randomBox3.zIndex = 480;
+        add(old_randomBox3);
+
+        var old_iconPins:FunkinSprite = new FunkinSprite(49900, 350).loadTexture("shop/iconpins");
+        old_iconPins.zIndex = 490;
+        add(old_iconPins);
+
+        var old_iconBoxes:FunkinSprite = new FunkinSprite(50440, 376).loadTexture("shop/iconboxes");
+        old_iconBoxes.zIndex = 490;
+        add(old_iconBoxes);
     }
 }

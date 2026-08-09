@@ -61,7 +61,7 @@ class RewardsSubMenu extends MusicBeatSubState
                 "2" => {id: "melodystone02", requirement: 3, type: RewardType.Pin, reward: "melodystone"},
                 "3" => {id: "melodystone03", requirement: 5, type: RewardType.Box, reward: "fancycoffret|10"},
                 "4" => {id: "melodystone04", requirement: 10, type: RewardType.FunkBuck, reward: 10000},
-                // "5" => {id: "melodystone05", requirement: 15, type: RewardType.Pin, reward: "funkbuck"},
+                "5" => {id: "melodystone05", requirement: 15, type: RewardType.Box, reward: "shimmeringpouch|10"},
                 "6" => {id: "melodystone06", requirement: 20, type: RewardType.FunkBuck, reward: 20000}
             ]
         },
@@ -734,7 +734,7 @@ class RewardItem extends ScriptedFlxSpriteGroup
             }
             case RewardType.Song:
             {
-                trace("SONG reward type is not implemented");
+                throw "SONG reward type is not implemented";
             }
             case RewardType.DiscountBox:
             {

@@ -26,7 +26,6 @@ class FunkBucksModifierLable extends Module
 
     var bonusPercentage:Float = 0.0;
 
-    // @:isVar
     var isEndlessOn(get, default):Bool = false;
 
     function get_isEndlessOn():Bool

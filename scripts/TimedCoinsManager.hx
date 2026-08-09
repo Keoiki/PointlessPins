@@ -133,7 +133,7 @@ class TimedCoinsManager extends Module
         {
             if (FunkBucks.hasObtainedPin("clovercoin"))
             {
-                // 200 Funkbuck
+                // 500 Funkbuck
             }
             else
             {

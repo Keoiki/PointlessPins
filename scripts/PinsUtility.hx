@@ -12,19 +12,4 @@ class PinUtil
             return target;
         }
     }
-
-    // dont use it, im bad at math
-    // public function wrapAroundAndContinue(target:Int, min:Int, max:Int, amount:Int):Int
-    // {
-        // var leftover = 0;
-        // var value = target + amount;
-        // if (value < min) {
-            // leftover = min + value;
-            // value = leftover;
-        // } else if (value > max) {
-            // leftover = value - max;
-            // value = min + leftover;
-        // }
-        // return value;
-    // }
 }

@@ -32,7 +32,7 @@ class PinSprite extends FunkinSprite
                 case "mod": return FBIcon.Modded;
                 case "internet": return FBIcon.Internet;
                 case "game": return FBIcon.Game;
-                default: return "<color=FF0000>!Unknown Source Type!</color>";
+                default: return "<color=FF0000>!Unknown Source Tag!</color>";
             }
         });
 
@@ -46,16 +46,8 @@ class PinSprite extends FunkinSprite
         {
             switch (e.matched(1).toLowerCase())
             {
-                case "april_purchase":
-                    if (FunkBucks.getEvent("hasMetApril") == 1)
-                    {
-                        return "Can be purchased from <c=EA8645>April</c>.";
-                    }
-                    else
-                    {
-                        return "???";
-                    }
-                default: return "<color=FF0000>!Unknown Source Type!</color>";
+                case "april_purchase": return FunkBucks.getEvent("hasMetApril") == 1 ? "Can be purchased from <c=EA8645>April</c>." : "???";
+                default: return "<color=FF0000>!Unknown Locked Tag!</color>";
             }
         });
 

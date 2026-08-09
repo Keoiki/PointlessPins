@@ -66,7 +66,6 @@ class BoxSubMenu extends MusicBeatSubState
         }
 
         boxName = new BAlphabet(30, 25, "");
-        // boxName.alignment = "center";
         boxName.scale.set(0.7, 0.7);
         add(boxName);
 
@@ -80,7 +79,6 @@ class BoxSubMenu extends MusicBeatSubState
         add(boxDescription);
 
         boxOdds = new BAlphabet(30, boxPrice.y, "");
-        // boxOdds.alignment = "right";
         boxOdds.scale.set(0.3, 0.3);
         add(boxOdds);
 

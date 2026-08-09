@@ -87,7 +87,7 @@ class PinDialogue extends FunkinGroup
     var arrowLeftHitbox:FlxObject;
     var arrowRight:FunkinSprite;
     var arrowRightHitbox:FlxObject;
-    var responseText:BAlphabet;
+    public var responseText:BAlphabet;
     var responseHitbox:FlxObject;
     var responseDots:Array<FunkinSprite> = [];
 
@@ -285,6 +285,11 @@ class PinDialogue extends FunkinGroup
         {
             if (currentDialogue.response != null)
             {
+                if (!dialogueText.finishedText)
+                {
+                    dialogueText.finish();
+                    onSkipLine.dispatch(dialogueIndex);
+                }
                 showResponses();
             }
             else
@@ -442,22 +447,6 @@ class PinDialogue extends FunkinGroup
 
     public function changeResponse(change:Int = 0)
     {
-        if (change < 0 && responseIndex != 0)
-        {
-			// FlxTween.completeTweensOf(arrowLeft);
-			// FlxTween.completeTweensOf(arrowLeft.localScale);
-			// FlxTween.tween(arrowLeft, { localX: arrowLeft.localX - 30 }, 0.4, { ease: FlxEase.backOut, type: 16 });
-			// FlxTween.tween(arrowLeft.localScale, { y: 0.5 }, 0.4, { ease: FlxEase.backOut, type: 16 });
-        }
-        else if (change > 0 && responseIndex != currentDialogue.response.options.length - 1)
-        {
-			// FlxTween.completeTweensOf(arrowRight);
-			// FlxTween.completeTweensOf(arrowRight.localScale);
-			// FlxTween.tween(arrowRight, { localX: arrowRight.localX + 30 }, 0.4, { ease: FlxEase.backOut, type: 16 });
-			// FlxTween.tween(arrowRight.localScale, { y: 0.5 }, 0.4, { ease: FlxEase.backOut, type: 16 });
-        }
-
-        final prevIndex:Int = responseIndex;
         responseIndex += change;
         responseIndex = FlxMath.bound(responseIndex, 0, currentDialogue.response.options.length - 1);
 

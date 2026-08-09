@@ -70,7 +70,7 @@ class FunkBucks extends Module
     public static final dailySongCount:Int = 5;
     public static final skipTalking:Array<Int> = [33, 44, 46, 63];
 
-    static var save;
+    public static var save;
 
 	public static var pinData:PinData;
     public static var boxData:BoxData;
@@ -79,24 +79,29 @@ class FunkBucks extends Module
 
     /**
      * Set this value to determine how to show the pins on the Pin Board.
+     * 
      * Null is default behavior. False shows them as locked and True shows them as unlocked.
+     * 
      * A red * indicates if this is on.
      */
     public static var debug_pins:Null<Bool> = true;
 
     /**
      * Set this value to True to test opening boxes.
+     * 
      * Boxes opened with this enabled:
      * - don't cost anything,
      * - don't count towards your opened total,
      * - don't take away from your free boxes count,
      * - and the pins unlocked do not actually unlock but rather show up as NEW no matter what.
+     * 
      * A red * indicates if this is on.
      */
     public static var debug_boxes:Bool = false;
 
     /**
      * Add pin IDs to this array when you want to show unlocked pins the next time the player enters the shop.
+     * 
      * Remember that the PinUnlockState marks pins as unlocked inside itself, so be sure you want the player to have that pin!
      */
     public static var pinUnlockQueue:Array<String> = [];
@@ -106,7 +111,7 @@ class FunkBucks extends Module
      */
     public static final aprilPinOrder:Array<Array<Dynamic>> = [
         ["april", 2], 
-        ["", 4],
+        ["funkbuck-pixel", 4],
         ["ophelia-business", 10]
     ];
 
@@ -136,14 +141,6 @@ class FunkBucks extends Module
             #end
             FunkBucks.flushSave();
         }
-        // var defaultSaveValues = FunkBucks.getDefaultSaveValues();
-        // for (field in ReflectUtil.fields(defaultSaveValues))
-        // {
-            // if (ReflectUtil.getField(FunkBucks.save, field) == null)
-            // {
-                // ReflectUtil.setField(FunkBucks.save, field, ReflectUtil.getField(defaultSaveValues, field));
-            // }
-        // }
 
         loadPinData();
 
@@ -165,11 +162,6 @@ class FunkBucks extends Module
         {
             trace(err);
             ModStore.register("funkbucksOutdated", false);
-            // #if mobile
-            // throw "Local mod version could not be found!\nThe message I put here for desktop users might be too long for mobile users.\nI can't be bothered to test that, maybe the text box is scrollable?\nJust change the mod ID back, man, so you can get notified of updates again."
-            // #else
-            // throw "Local mod version could not be found!\nWhy did you change the mod ID?\nI mean, it couldn't have been an accident, 0.8.4 changed how mod IDs work.\nThey aren't based off of the folder names anymore unless you don't provide an id the the metadata.\nYou had to manually go into the metadata file, and change the \"id\" field to something else.\nDo you NOT want to be notified when a new update drops?\nOkay.\nAre you still reading this?\nYou want me to keep going? Probably not.\nNow go change the mod ID back and continue opening those boxes!\n\n\nAlso, if the reason why you are getting this message is because someone told you that changing the mod ID does something cool,\nyou and that person better watch your backs.";
-            // #end
             return;
         }
 
@@ -223,11 +215,15 @@ class FunkBucks extends Module
         // ModStore.remove("funkbucksOutdated");
         // ModStore.remove("funkbucksNewVersion");
         // ModStore.remove("funkbucksNewVersionInfo");
+        // ModStore.remove("funkbucksShownOutdate");
         // ModStore.register("funkbucksOutdated", true);
         // ModStore.register("funkbucksNewVersion", "2.1.0");
         // ModStore.register("funkbucksNewVersionInfo", "- Removed Hundrec.");
     }
 
+    /**
+     * load the pin and box data graaahhh
+     */
     function loadPinData():Void
     {
         FunkBucks.pinData = SerializerUtil.fromJSON(Assets.getText("data/pointlesspins/pins.json"));
@@ -240,6 +236,11 @@ class FunkBucks extends Module
         FunkBucks.boxData.sort(orderByOrder);
     }
 
+    /**
+     * Gets a pin's data by its ID.
+     * @param pinID The pin's ID.
+     * @return **(PinData)** The pin's data, rarity included.
+     */
     public static function getPinByID(pinID:String):PinData
     {
         for (rarity in ReflectUtil.getAnonymousFieldsOf(FunkBucks.pinData))
@@ -256,6 +257,9 @@ class FunkBucks extends Module
         return null;
     }
 
+    /**
+     * @return How many unique pins have been unlocked.
+     */
     public static function getUnlockedPinsCount():Int
     {
         var count:Int = 0;
@@ -272,6 +276,12 @@ class FunkBucks extends Module
         return count;
     }
     
+    /**
+     * Gets all pins of a given rarity.
+     * @param rarity The rarity name.
+     * @param includeSpecials Should the return include special pins.
+     * @return Array<String>
+     */
     public static function getAllPinIDsOfRarity(rarity:String, includeSpecials:Bool = false):Array<String>
     {
         var pinIDs:Array<String> = [];
@@ -347,6 +357,10 @@ class FunkBucks extends Module
         return FunkBucks.save.blueJewelPity;
     }
 
+    /**
+     * BOXES 
+     */
+
     public static function addOpenedBox(boxID:String):Void
     {
         var boxesMap = getOpenedBoxCounts();
@@ -365,6 +379,10 @@ class FunkBucks extends Module
     {
         return getOpenedBoxCounts().get(boxID) ?? 0;
     }
+
+    /**
+     * FREE BOXES
+     */
 
     public static function addFreeBox(boxID:String, amount:Int):Void
     {
@@ -385,6 +403,21 @@ class FunkBucks extends Module
         return getFreeBoxCounts().get(boxID) ?? 0;
     }
 
+    /**
+     * PINS
+     * All of the stuff related to pins.
+     */
+
+    /**
+     * Set a pin as being obtained.
+     * 
+     * Will return early if pin ID wasn't found.
+     * 
+     * Will also return early if pin is special and has already been obtained.
+     * 
+     * @param pinID The pin ID.
+     * @return **(Bool)** Whether or not the pin was a brand new one or not.
+     */
     public static function setObtainedPin(pinID:String):Bool
     {
         if (getPinByID(pinID) == null)
@@ -422,6 +455,12 @@ class FunkBucks extends Module
         return getObtainedPins().get(pinID) ?? 0;
     }
 
+    /**
+     * PREVIOUS SONGS
+     * Keeps track of the 5 previous songs or weeks you've played.
+     * Used for penalizing repeated plays.
+     */
+
     public static function setPrevSongs(songs:Array<String>):Void
     {
         FunkBucks.save.previousSongs = songs;
@@ -434,6 +473,14 @@ class FunkBucks extends Module
         return FunkBucks.save.previousSongs;
     }
 
+    /**
+     * OPHELIA'S ANGER
+     * If you annoy Ophelia too much, she'll mad at you, raising prices by 20%.
+     * You can keep doing this to increase box prices even more.
+     * 
+     * Anger drops by 1 every 4 hours.
+     */
+    
     public static function addOpheliaAnger(anger:Int, addToTotal:Bool = true):Void
     {
         if (FunkBucks.save.opheliaAnger == null) FunkBucks.save.opheliaAnger = 0;
@@ -499,6 +546,7 @@ class FunkBucks extends Module
      * 
      * (Daily song selection has been moved to `checkForNewDay()`)
      */
+    
     public static function setDailies(dailies:Array<String>):Void
     {
         FunkBucks.save.dailies = dailies;
@@ -512,6 +560,11 @@ class FunkBucks extends Module
         if (FunkBucks.save.dailies == null) FunkBucks.save.dailies = new Array();
         return FunkBucks.save.dailies;
     }
+
+    /**
+     * MILESTONES
+     * or rather, Rewards.
+     */
 
     public static function addClaimedMilestone(milestone:String):Void
     {
@@ -567,6 +620,10 @@ class FunkBucks extends Module
         return bonusMultiplier;
     }
 
+    /**
+     * EVENTS
+     */
+
     public static function getEvent(event:String):Int
     {
         return FunkBucks.getEvents().get(event) ?? 0;
@@ -580,7 +637,7 @@ class FunkBucks extends Module
 
     public static function setEvent(event:String, value:Int):Void
     {
-        var _events = FunkBucks.getEvents();
+        var _events:StringMap<String, Int> = FunkBucks.getEvents();
         _events.set(event, value);
         FunkBucks.save.events = _events;
         FunkBucks.flushSave();
@@ -642,7 +699,7 @@ class FunkBucks extends Module
     /**
      * Returns a new save object with default values.
      */
-    public static function getDefaultSaveValues():Void
+    static function getDefaultSaveValues():Void
     {
         return
         {
@@ -728,7 +785,7 @@ class FunkBucks extends Module
      * Can you believe it, workschedules in MY funkin mod?
      * @return Name of the shopkeeper at work.
      */
-    static function getShopkeeper():String
+    public static function getShopkeeper():String
     {
         var date:Date = Date.now();
         var day:Int = date.getDay();
@@ -1040,6 +1097,8 @@ class FBIcon
     static final OpheliaMad:String = "&#xE010;";
     static final Star:String = "&#xE011;";
     static final Clover:String = "&#xE012;";
+    static final Ophelia:String = "&#xE013;";
+    static final April:String = "&#xE014;";
     
     static final Common:String = "&#xE020;";
     static final Uncommon:String = "&#xE021;";

@@ -18,7 +18,6 @@ class TimedCoinsHUD extends FunkinGroup
 
         background = new FunkinSprite(0, 0);
         background.frames = FlxG.bitmap.create(450, 350, 0xFF000000, true, 'timedEventBackground').imageFrame;
-        // background.localAlpha = 0.8;
         background.localX = -100;
         background.localY = -90;
         background.scrollFactor.set(0, 0);
