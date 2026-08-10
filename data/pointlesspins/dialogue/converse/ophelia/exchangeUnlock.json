@@ -2,19 +2,20 @@
     "dialogue": 
     [
         {
-            "text": "Did you not listen?!",
+            "text": "Exchange?",
             "speaker": "Ophelia",
             "canSkip": false
         },
         {
-            "text": "I warned you,<d=0.25/> but you didn't take the hint.",
+            "text": "Ooh I see,<d=0.5/> you've found one of <c=82E9FF>those</c>.",
             "speaker": "Ophelia",
             "canSkip": false
         },
         {
-            "text": "Have fun with the <c=FF7F7F>marked up prices</c>.",
+            "text": "Sure,<d=0.5/> why not.",
             "speaker": "Ophelia",
-            "canSkip": false
+            "canSkip": false,
+            "delayLine": true
         }
     ]
 }
