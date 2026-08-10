@@ -31,14 +31,14 @@
             { "id": "rank-good", "name": "Good Rank", "description": "Remember when BF's animation for this rank played for everything?", "special": true, "lockedText": "Complete any song with a certain rank." },
             { "id": "cardboardbox", "name": "Cardboard Box", "description": "The cheapest of them all.", "special": true, "lockedText": "This pin is unlockable from the Rewards." },
             { "id": "haxe", "name": "Haxe", "description": "The backbone of this game." },
-            { "id": "boyfriend-amongus-week1", "name": "Boyfriend (Polus)", "source": "#MOD# VS. Impostor" },
-            { "id": "girlfriend-amongus-week1", "name": "Girlfriend (Polus)", "source": "#MOD# VS. Impostor" },
-            { "id": "red-amongus-week1", "name": "Red", "description": "Way to draw attention to yourself, huh?", "source": "#MOD# VS. Impostor" },
-            { "id": "salty-ssn", "name": "Salty", "source": "#MOD# Salty's Sunday Night" },
-            { "id": "itsumi-ssn", "name": "Itsumi", "source": "#MOD# Salty's Sunday Night" },
-            { "id": "connor-ssn", "name": "Connor", "source": "#MOD# Salty's Sunday Night" },
-            { "id": "henry-stickmin", "name": "Henry Stickmin", "description": "Just trying to get some cash.", "source": "#GAME# The Henry Stickmin Collection" },
-            { "id": "ellie-rose", "name": "Ellie Rose", "description": "Also trying to get some cash.", "source": "#GAME# The Henry Stickmin Collection" }
+            { "id": "boyfriend-amongus-week1", "name": "Boyfriend (Polus)", "source": "VS. Impostor #MOD#" },
+            { "id": "girlfriend-amongus-week1", "name": "Girlfriend (Polus)", "source": "VS. Impostor #MOD#" },
+            { "id": "red-amongus-week1", "name": "Red", "description": "Way to draw attention to yourself, huh?", "source": "VS. Impostor #MOD#" },
+            { "id": "salty-ssn", "name": "Salty", "source": "Salty's Sunday Night #MOD#" },
+            { "id": "itsumi-ssn", "name": "Itsumi", "source": "Salty's Sunday Night #MOD#" },
+            { "id": "connor-ssn", "name": "Connor", "source": "Salty's Sunday Night #MOD#" },
+            { "id": "henry-stickmin", "name": "Henry Stickmin", "description": "Just trying to get some cash.", "source": "The Henry Stickmin Collection #GAME#" },
+            { "id": "ellie-rose", "name": "Ellie Rose", "description": "Also trying to get some cash.", "source": "The Henry Stickmin Collection #GAME#" }
         ]
     },
     "Uncommon": {
@@ -52,8 +52,8 @@
             { "id": "pico-christmas", "name": "Pico (Christmas)" },
             { "id": "nene-christmas", "name": "Nene (Christmas)" },
             { "id": "santa", "name": "Mall Santa" },
-            { "id": "pico-picoschool", "name": "Pico (Original)", "source": "#GAME# Pico's School", "scale": 0.47 },
-            { "id": "boyfriend-picoschool", "name": "Boyfriend (\"Original\")", "source": "#GAME# Pico's School: Love Conquers All", "scale": 0.47 },
+            { "id": "pico-picoschool", "name": "Pico (Original)", "source": "Pico's School #GAME#", "scale": 0.47 },
+            { "id": "boyfriend-picoschool", "name": "Boyfriend (\"Original\")", "source": "Pico's School: Love Conquers All #GAME#", "scale": 0.47 },
             { "id": "songcapsule", "name": "Song Capsule" },
             { "id": "arrow-left", "name": "Left Arrow" },
             { "id": "arrow-down", "name": "Down Arrow" },
@@ -62,17 +62,16 @@
             { "id": "rank-great", "name": "Great Rank", "description": "The \"silver\" of the ranks.", "special": true, "lockedText": "Complete any song with a certain rank." },
             { "id": "smallgiftbox", "name": "Small Giftbox", "description": "Did you notice the FunkBuck badge inside it?", "special": true, "lockedText": "This pin is unlockable from the Rewards." },
             { "id": "haxeflixel", "name": "HaxeFlixel", "description": "Not to be confused with \"Flixel\"." },
-            { "id": "gooey", "name": "Gooey", "source": "#MOD# Gooey Mix" },
-            { "id": "flora", "name": "Flora", "source": "#MOD# Gooey Mix" },
-            { "id": "opheebop-blob-ssn", "name": "Opheebop", "source": "#MOD# Salty's Sunday Night" },
-            { "id": "glitch-ssn", "name": "Glitch", "source": "#MOD# Salty's Sunday Night" },
-            { "id": "boyfriend-amongus-week2", "name": "Boyfriend (MIRA HQ)", "source": "#MOD# VS. Impostor" },
-            { "id": "girlfriend-amongus-week2", "name": "Girlfriend (MIRA HQ)", "source": "#MOD# VS. Impostor" },
-            { "id": "green-amongus-week2", "name": "Green", "description": "No fun allowed, even on New Task Day.", "source": "#MOD# VS. Impostor" },
-            { "id": "strawberry-celeste", "name": "Strawberry", "description": "Can you collect all 175 (or even 202) of them?", "source": "#GAME# Celeste" },
-            { "id": "secretcoin-gd", "name": "Secret Coin", "description": "Never enough with you...", "source": "#GAME# Geometry Dash" },
-            { "id": "fireice-adofai", "name": "Fire and Ice", "description": "Try not to break their equilibrium.", "source": "#GAME# A Dance of Fire and Ice" },
-            { "id": "hatkid-ahit", "name": "Hat Kid", "description": "Has anyone seen her lost Time Pieces?", "source": "#GAME# A Hat in Time" }
+            { "id": "gooey", "name": "Gooey", "source": "Gooey Mix #MOD#" },
+            { "id": "flora", "name": "Flora", "source": "Gooey Mix #MOD#" },
+            { "id": "opheebop-blob-ssn", "name": "Opheebop", "source": "Salty's Sunday Night #MOD#" },
+            { "id": "glitch-ssn", "name": "Glitch", "source": "Salty's Sunday Night #MOD#" },
+            { "id": "boyfriend-amongus-week2", "name": "Boyfriend (MIRA HQ)", "source": "VS. Impostor #MOD#" },
+            { "id": "girlfriend-amongus-week2", "name": "Girlfriend (MIRA HQ)", "source": "VS. Impostor #MOD#" },
+            { "id": "green-amongus-week2", "name": "Green", "description": "No fun allowed, even on New Task Day.", "source": "VS. Impostor #MOD#" },
+            { "id": "strawberry-celeste", "name": "Strawberry", "description": "Can you collect all 175 (or even 202) of them?", "source": "Celeste #GAME#" },
+            { "id": "secretcoin-gd", "name": "Secret Coin", "description": "Never enough with you...", "source": "Geometry Dash #GAME#" },
+            { "id": "fireice-adofai", "name": "Fire and Ice", "description": "Try not to break their equilibrium.", "source": "A Dance of Fire and Ice #GAME#" }
         ]
     },
     "Rare": {
@@ -80,7 +79,7 @@
         "color": "2A4DFF",
         "pins":
         [
-            { "id": "nessie-funkinnews", "name": "Nessie", "source": "#INTERNET# \"Funkin News\" Twitter" },
+            { "id": "nessie-funkinnews", "name": "Nessie", "source": "\"Funkin News\" Twitter #INTERNET#" },
             { "id": "ophelia", "name": "Ophelia", "description": "You'll stop annoying her now, right?", "special": true, "lockedText": "It wouldn't be smart to annoy <c=67B1D8>her.</c>" },
             { "id": "april", "name": "April", "description": "Cares little for <c=67B1D8>Ophelia's</c> rules.", "special": true, "lockedText": "#APRIL_PURCHASE#" },
             { "id": "funkbuck", "name": "FunkBuck", "description": "Your local currency!", "special": true, "lockedText": "This pin is unlockable from the Rewards." },
@@ -90,15 +89,16 @@
             { "id": "difficultystar", "name": "Blue Flamed Star", "description": "That looks really difficult!" },
             { "id": "rank-excellent", "name": "Excellent Rank", "description": "It pains to get a single Bad and getting this rank.", "special": true, "lockedText": "Complete any song with a certain rank." },
             { "id": "fancycoffret", "name": "Fancy Coffret", "special": true, "lockedText": "This pin is unlockable from the Rewards." },
-            { "id": "qt", "name": "QT", "source": "#MOD# QT: Rewired" },
-            { "id": "sky-redux", "name": "Sky", "source": "#MOD# Heartbreak Havoc" },
+            { "id": "qt", "name": "QT", "source": "QT: Rewired #MOD#" },
+            { "id": "sky-redux", "name": "Sky", "source": "Heartbreak Havoc #MOD#" },
             { "id": "sky", "name": "Sky", "description": "No no, wrong type of sky!" },
-            { "id": "opheebop-ssn", "name": "Opheebop", "description": "Freedom!", "source": "#MOD# Salty's Sunday Night" },
-            { "id": "powers-amongus", "name": "Powers", "description": "Cue the sax solo!", "source": "#MOD# VS. Impostor" },
-            { "id": "torrent-fnts", "name": "Torrent", "source": "#MOD# Friday Night Troubleshootin'" },
-            { "id": "nitro-fnts", "name": "Nitro", "source": "#MOD# Friday Night Troubleshootin'" },
-            { "id": "norbert-weekly", "name": "Norbert B. Newsman", "source": "#MOD# FNF Weekly" },
-            { "id": "trebron-weekly", "name": "Trebron B. Newsman", "source": "#MOD# FNF Weekly" }
+            { "id": "opheebop-ssn", "name": "Opheebop", "description": "Freedom!", "source": "Salty's Sunday Night #MOD#" },
+            { "id": "powers-amongus", "name": "Powers", "description": "Cue the sax solo!", "source": "VS. Impostor #MOD#" },
+            { "id": "torrent-fnts", "name": "Torrent", "source": "Friday Night Troubleshootin' #MOD#" },
+            { "id": "nitro-fnts", "name": "Nitro", "source": "Friday Night Troubleshootin' #MOD#" },
+            { "id": "norbert-weekly", "name": "Norbert B. Newsman", "source": "FNF Weekly #MOD#" },
+            { "id": "trebron-weekly", "name": "Trebron B. Newsman", "source": "FNF Weekly #MOD#" },
+            { "id": "hatkid-ahit", "name": "Hat Kid", "description": "Has anyone seen her lost Time Pieces?", "source": "A Hat in Time #GAME#" }
         ]
     },
     "Epic": {
@@ -108,16 +108,17 @@
         [
             { "id": "melodystone", "name": "Melody Stone", "description": "Rare, Blue, and Sparkly! <c=67B1D8>Ophelia</c> loves these.", "special": true, "lockedText": "This pin is unlockable from the Rewards." },
             { "id": "ophelia-business", "name": "Ophelia", "description": "Very strict with her rules. (Except on <c=EA8645>April</c>)", "special": true, "lockedText": "#APRIL_PURCHASE#" },
-            { "id": "pessy", "name": "Pessy", "source": "#MOD# Psych Engine" },
-            { "id": "kb", "name": "KB", "source": "#MOD# QT: Rewired" },
+            { "id": "pessy", "name": "Pessy", "source": "Psych Engine #MOD#" },
+            { "id": "kb", "name": "KB", "source": "QT: Rewired #MOD#" },
             { "id": "polymod", "name": "Polymod", "description": "Polymore!" },
             { "id": "funkbuck-pixel", "name": "FunkBuck (Pixel)", "description": "Your pixelated currency!", "special": true, "lockedText": "This pin is unlockable from the Rewards.", "pixel": true, "scale": 6 },
             { "id": "rank-perfect", "name": "Perfect Rank", "description": "Now go for the golden one!", "special": true, "lockedText": "Complete any song with a certain rank." },
             { "id": "glimmeringpouch", "name": "Glimmering Pouch", "special": true, "lockedText": "This pin is unlockable from the Rewards." },
-            { "id": "detective-amongus", "name": "Detective", "description": "Trying to figure out who the Impostor is...", "source": "#MOD# VS. Impostor" },
-            { "id": "blake-amongus", "name": "Blake Imposter", "description": "Imposter is just his surname.", "source": "#MOD# VS. Impostor" },
-            { "id": "falsethorn-corruption", "name": "FalseThorn", "description": "It's not real... it's not real...", "source": "#MOD# Friday Night Funkin': Corruption" },
-            { "id": "nikku-hotline", "name": "Nikku", "source": "#MOD# Hotline 024" }
+            { "id": "detective-amongus", "name": "Detective", "description": "Trying to figure out who the Impostor is...", "source": "VS. Impostor #MOD#" },
+            { "id": "blake-amongus", "name": "Blake Imposter", "description": "Imposter is just his surname.", "source": "VS. Impostor #MOD#" },
+            { "id": "falsethorn-corruption", "name": "FalseThorn", "description": "It's not real... it's not real...", "source": "Friday Night Funkin': Corruption #MOD#" },
+            { "id": "nikku-hotline", "name": "Nikku", "source": "Hotline 024 #MOD#" },
+            { "id": "violastro-vv", "name": "Violastro", "description": "Despite how it may seem, his \"glasses\" are actually his eyes.", "source": "Vibrant Venture #GAME#" }
         ]
     },
     "Legendary": {
@@ -126,11 +127,11 @@
         "pins":
         [
             { "id": "hundrec", "name": "Hundrec", "description": "\"This is Hundrec, Production Manager for The Funkin' Crew.\"" },
-            { "id": "whitty", "name": "Whitty", "source": "#MOD# Vs. Whitty" },
-            { "id": "hex", "name": "Hex", "source": "#MOD# Vs. Hex" },
-            { "id": "harvester-corruption", "name": "The Harvester", "description": "The Harvester harvests the harvest... I mean souls.", "source": "#MOD# Friday Night Funkin': Corruption" },
+            { "id": "whitty", "name": "Whitty", "source": "Vs. Whitty #MOD#" },
+            { "id": "hex", "name": "Hex", "source": "Vs. Hex #MOD#" },
+            { "id": "harvester-corruption", "name": "The Harvester", "description": "The Harvester harvests the harvest... I mean souls.", "source": "Friday Night Funkin': Corruption #MOD#" },
             { "id": "rank-goldperfect", "name": "Golden Perfect Rank", "description": "Did you know this rank grants an extra +50% FunkBucks? <s=0.75><c=FFB51C>Well now you do.</c></s>", "special": true, "lockedText": "Complete any song with a certain rank." },
-            { "id": "flowery-deltarune", "name": "Flowery", "description": "Heh, how'd you like my jarona?", "source": "#GAME# DELTARUNE" }
+            { "id": "flowery-deltarune", "name": "Flowery", "description": "Heh, how'd you like my jarona?", "source": "DELTARUNE #GAME#" }
         ]
     },
     "Mythic": {
