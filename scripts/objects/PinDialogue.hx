@@ -22,7 +22,8 @@ import funkin.util.TouchUtil;
 typedef PinDialogueFile =
 {
     dialogue:Array<PinDialogueLine>,
-    ?response:PinDialogueResponses
+    ?response:PinDialogueResponses,
+    ?canSkipOnRepeat:Bool // Is dialogue skipable on repeat reads? (optional, default: false)
 }
 
 typedef PinDialogueLine =
@@ -32,6 +33,7 @@ typedef PinDialogueLine =
     ?speed:Float, // The speed of the text typing. (optional, default: 0.05)
     ?letterStep:Int, // The amount of letters to display each writing step. (optional, default: 1)
     ?canSkip:Bool, // Whether the line can be skipped. (optional, default: true)
+    ?cantSkipOnRepeat:Bool, // Whether the line can be skipped on repeat, in case you NEED to make a line unskipable. (optional, default: false)
     ?instantComplete:Bool, // Whether to instantly complete the line. Ignored if the line is delayed. (optional, default: false)
     ?delayLine:Bool, // Whether to delay the line. The line will not start until it's manually triggered. (optional, default: false)
     ?hideDuringDelay:Bool, // If delayed, should the dialogue UI be hidden? (optional, default: false)
@@ -63,6 +65,7 @@ typedef PinDialogueResponses =
 class PinDialogue extends FunkinGroup
 {
     public var currentDialogue:PinDialogueFile;
+    public var dialogueLine:PinDialogueLine;
 
     public var dialogueID:String = "";
     public var dialogueIndex:Int = -1;
@@ -279,7 +282,6 @@ class PinDialogue extends FunkinGroup
 
     public function doNextLine():Void
     {
-        var dialogueLine:PinDialogueLine = null;
         dialogueIndex++;
         if (dialogueIndex >= currentDialogue.dialogue.length)
         {
@@ -338,7 +340,7 @@ class PinDialogue extends FunkinGroup
         dialogueText.text = dialogueLine.text;
         dialogueText.speed = dialogueLine.speed;
         dialogueText.letterStep = dialogueLine.letterStep;
-        canSkip = dialogueLine.canSkip;
+        canSkip = checkForSkippingDialogue();
 
         this.x = FlxG.width / 2 - dialogueBoxBG.width / 2 + dialogueLine.xPos;
         this.y = dialogueLine.yPos;
@@ -370,6 +372,24 @@ class PinDialogue extends FunkinGroup
         updateChildren();
     }
 
+    /**
+     * I could've made dialogue skipping universally not possible on first reads, and universally possible on repeats.
+     * 
+     * but fuck it, I like doing it this way
+     */
+    function checkForSkippingDialogue():Bool
+    {
+        if (FunkBucks.hasSeenDialogue(dialogueID))
+        {
+            if (dialogueLine.cantSkipOnRepeat ?? false) return false;
+            return (currentDialogue.canSkipOnRepeat ?? false) || dialogueLine.canSkip;
+        }
+        else
+        {
+            return dialogueLine.canSkip;
+        }
+    }
+
     public function startFromDelay():Void
     {
         if (!isDelayed) return;
@@ -377,10 +397,15 @@ class PinDialogue extends FunkinGroup
         if (delayHidden) this.visible = true;
         dialogueText.localVisible = true;
         dialogueText.start();
+        if (dialogueLine.instantComplete)
+        {
+            dialogueText.finish();
+        }
     }
 
     public function endDialogue():Void
     {
+        FunkBucks.addSeenDialogue(dialogueID);
         isResponding = false;
         onCompleteDialogue.dispatch();
         hasEnded = true;

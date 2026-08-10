@@ -1,0 +1,52 @@
+{
+    "dialogue":
+    [
+        {
+            "text": "What?",
+            "speaker": "Ophelia",
+            "canSkip": false
+        },
+        {
+            "text": "<c=EA8645>April</c> SOLD you WHAT pin?!",
+            "speaker": "Ophelia",
+            "canSkip": false
+        },
+        {
+            "text": "...",
+            "speaker": "Ophelia",
+            "canSkip": false
+        },
+        {
+            "text": "I have my reasons for keeping her around,\ndespite all the rules she breaks...",
+            "speaker": "Ophelia",
+            "canSkip": false,
+            "delayLine": true,
+            "hideDuringDelay": true
+        },
+        {
+            "text": "But it gets to a point.",
+            "speaker": "Ophelia",
+            "canSkip": false
+        },
+        {
+            "text": "",
+            "speaker": "Ophelia",
+            "canSkip": false
+        },
+        {
+            "text": "Huh, no, you can keep the pin.",
+            "speaker": "Ophelia",
+            "canSkip": false
+        },
+        {
+            "text": "I will be asking her for the\nMelody Stones though.",
+            "speaker": "Ophelia",
+            "canSkip": false
+        },
+        {
+            "text": "<i><a=0.5>(At least it wasn't for FunkBucks...)</a><i/>",
+            "speaker": "Ophelia",
+            "canSkip": false
+        }
+    ]
+}

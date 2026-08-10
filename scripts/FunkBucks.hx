@@ -643,6 +643,32 @@ class FunkBucks extends Module
         FunkBucks.flushSave();
     }
 
+    public static function addSeenDialogue(dialogID:String)
+    {
+        var _seenDialogues:Array<String> = FunkBucks.getSeenDialogues();
+        if (!_seenDialogues.contains(dialogID))
+        {
+            _seenDialogues.push(dialogID);
+            FunkBucks.save.seenDialogue = _seenDialogues;
+            FunkBucks.flushSave();
+        }
+        else
+        {
+            trace('User has already seen dialogue: \'$dialogID\'!');
+        }
+    }
+
+    public static function getSeenDialogue():Array<String>
+    {
+        if (FunkBucks.save.seenDialogue == null) FunkBucks.save.seenDialogue = new Array();
+        return FunkBucks.save.seenDialogue;
+    }
+
+    public static function hasSeenDialogue(dialogID:String):Bool
+    {
+        return FunkBucks.getSeenDialogues().contains(dialogID);
+    }
+
     /**
      * Check if the current local time has rolled over to the next day (or previous, fucking time traveller >_>)
      * If so, set all daily things in the mod to new values / reset them.
@@ -762,7 +788,10 @@ class FunkBucks extends Module
             modifierText: "percentage",
 
             // Whether to show meaner or nicer dialogue.
-            dialogueFlavor: "mean"
+            dialogueFlavor: "mean",
+
+            // An array of all the dialogue IDs that have been seen.
+            seenDialogue: new Array()
         }
     }
 
