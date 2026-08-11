@@ -1,6 +1,8 @@
 package funkbucks.objects;
 
+import flixel.addons.display.FlxRuntimeShader;
 import flixel.tweens.FlxTween;
+import flixel.util.FlxColor;
 import funkin.graphics.FunkinSprite;
 
 class PinSprite extends FunkinSprite
@@ -120,7 +122,7 @@ class PinSprite extends FunkinSprite
         }
         antialiasing = !pixel;
 
-        // if (unlockCount >= 15) { }
+        pinSpecificSetup();
     }
 
     override function update(elapsed:Float):Void
@@ -128,5 +130,46 @@ class PinSprite extends FunkinSprite
         if (pID == 'tuntematon') visible = false;
 
         super.update(elapsed);
+    }
+
+    /**
+     * When script merging works again properly, other modders can add their own crap to do with pins here.
+     * Be it effects or text changes, whatever.
+     */
+    function pinSpecificSetup():Void
+    {
+        switch (pID)
+        {
+            case "pinhead":
+            {
+                // replace the shader reference to the actual shader within 0.9, for the time being it's copied over to make this as accurate as possible
+                var replaceColor:FlxRuntimeShader = new FlxRuntimeShader(Assets.getText(Paths.frag("replaceColor")));
+                replaceColor.setFloatArray('uTargetColor', [0, 1, 0.04]);
+                replaceColor.setFloat('uThreshold', 0.12);
+                final hue:Float = Math.random() * 360;
+                final sat:Float = (75 + Math.random() * 5) / 240;
+                final lum:Float = (80 + Math.random() * 79) / 240;
+                final color:FlxColor = FlxColor.fromHSL(hue, sat, lum);
+                replaceColor.setFloatArray('uReplaceColor', [((color >> 16) & 0xff) / 255.0, ((color >> 8) & 0xff) / 255.0, ((color) & 0xff) / 255.0]);
+                super.shader = replaceColor;
+
+                if (!Preferences.naughtyness)
+                {
+                    description = 'are you ${getCensor(7)} kidding me';
+                }
+            }
+            default: // Nothing
+        }
+    }
+
+    function getCensor(length:Int):Void
+    {
+        final censorChars:Array<String> = ["#", "!", "$", "@", "&", "*", "?"];
+        var censor = "";
+        for (i in 0...length)
+        {
+            censor += censorChars[FlxG.random.int(0, censorChars.length - 1)];
+        }
+        return censor;
     }
 }

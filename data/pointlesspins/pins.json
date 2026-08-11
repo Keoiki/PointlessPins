@@ -86,6 +86,7 @@
             { "id": "clovercoin", "name": "Clover Coin", "description": "Despite the clover, these don't bring you good luck.", "special": true, "lockedText": "Push a <c=2BFF31>green button</c> and win." },
             { "id": "haxeui", "name": "HaxeUI", "description": "It either doesn't work or doesn't work." },
             { "id": "pushpin", "name": "Pin", "description": "No no, wrong type of pin!" },
+            { "id": "pinhead", "name": "Pinhead", "description": "are you fucking kidding me" },
             { "id": "difficultystar", "name": "Blue Flamed Star", "description": "That looks really difficult!" },
             { "id": "rank-excellent", "name": "Excellent Rank", "description": "It pains to get a single Bad and getting this rank.", "special": true, "lockedText": "Complete any song with a certain rank." },
             { "id": "fancycoffret", "name": "Fancy Coffret", "special": true, "lockedText": "This pin is unlockable from the Rewards." },
