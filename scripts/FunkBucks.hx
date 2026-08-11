@@ -658,7 +658,7 @@ class FunkBucks extends Module
         }
     }
 
-    public static function getSeenDialogue():Array<String>
+    public static function getSeenDialogues():Array<String>
     {
         if (FunkBucks.save.seenDialogue == null) FunkBucks.save.seenDialogue = new Array();
         return FunkBucks.save.seenDialogue;
