@@ -112,7 +112,7 @@
             { "id": "pessy", "name": "Pessy", "source": "Psych Engine #MOD#" },
             { "id": "kb", "name": "KB", "source": "QT: Rewired #MOD#" },
             { "id": "polymod", "name": "Polymod", "description": "Polymore!" },
-            { "id": "funkbuck-pixel", "name": "FunkBuck (Pixel)", "description": "Your pixelated currency!", "special": true, "lockedText": "This pin is unlockable from the Rewards.", "pixel": true, "scale": 6 },
+            { "id": "funkbuck-pixel", "name": "FunkBuck (Pixel)", "description": "Your pixelated currency!", "special": true, "lockedText": "This pin is unlockable from the Rewards.", "pixel": true, "scale": 5 },
             { "id": "rank-perfect", "name": "Perfect Rank", "description": "Now go for the golden one!", "special": true, "lockedText": "Complete any song with a certain rank." },
             { "id": "glimmeringpouch", "name": "Glimmering Pouch", "special": true, "lockedText": "This pin is unlockable from the Rewards." },
             { "id": "detective-amongus", "name": "Detective", "description": "Trying to figure out who the Impostor is...", "source": "VS. Impostor #MOD#" },
@@ -141,7 +141,8 @@
         "pins":
         [
             { "id": "weekend1kid", "name": "Leashed Kid" },
-            { "id": "true", "name": "True...", "description": "The Funkin' Contributors told me to add this one." }
+            { "id": "true", "name": "True...", "description": "The Funkin' Contributors told me to add this one." },
+            { "id": "charon-adofai", "name": "Charon", "description": "\"If I need to I will reincarnate and let <c=FACD70>samsara</c> burn!\" · . ° (≥O≤) ° . ·\n<a=0.75><s=0.75><i><c=FC727C>REINCARNA✝ION!! Idol Graduation</c> - <c=7773FC>Cosmic Radio 2024</c></i></s></a>", "source": "A Dance of Fire and Ice #GAME#" }
         ]
     },
     "Divine": {

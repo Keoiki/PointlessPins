@@ -4,18 +4,18 @@
 	<!-- http://www.adobe.com/products/animate.html -->
 	<SubTexture name="spin0000" x="0" y="0" width="80" height="80"/>
 	<SubTexture name="spin0001" x="0" y="0" width="80" height="80"/>
-	<SubTexture name="spin0002" x="83" y="0" width="76" height="80" frameX="-2" frameY="0" frameWidth="80" frameHeight="80"/>
-	<SubTexture name="spin0003" x="83" y="0" width="76" height="80" frameX="-2" frameY="0" frameWidth="80" frameHeight="80"/>
-	<SubTexture name="spin0004" x="241" y="0" width="68" height="80" frameX="-6" frameY="0" frameWidth="80" frameHeight="80"/>
-	<SubTexture name="spin0005" x="241" y="0" width="68" height="80" frameX="-6" frameY="0" frameWidth="80" frameHeight="80"/>
-	<SubTexture name="spin0006" x="381" y="0" width="58" height="80" frameX="-11" frameY="0" frameWidth="80" frameHeight="80"/>
-	<SubTexture name="spin0007" x="381" y="0" width="58" height="80" frameX="-11" frameY="0" frameWidth="80" frameHeight="80"/>
-	<SubTexture name="spin0008" x="503" y="0" width="33" height="80" frameX="-24" frameY="0" frameWidth="80" frameHeight="80"/>
-	<SubTexture name="spin0009" x="503" y="0" width="33" height="80" frameX="-24" frameY="0" frameWidth="80" frameHeight="80"/>
-	<SubTexture name="spin0010" x="442" y="0" width="58" height="80" frameX="-11" frameY="0" frameWidth="80" frameHeight="80"/>
-	<SubTexture name="spin0011" x="442" y="0" width="58" height="80" frameX="-11" frameY="0" frameWidth="80" frameHeight="80"/>
-	<SubTexture name="spin0012" x="312" y="0" width="66" height="80" frameX="-7" frameY="0" frameWidth="80" frameHeight="80"/>
-	<SubTexture name="spin0013" x="312" y="0" width="66" height="80" frameX="-7" frameY="0" frameWidth="80" frameHeight="80"/>
-	<SubTexture name="spin0014" x="162" y="0" width="76" height="80" frameX="-2" frameY="0" frameWidth="80" frameHeight="80"/>
-	<SubTexture name="spin0015" x="162" y="0" width="76" height="80" frameX="-2" frameY="0" frameWidth="80" frameHeight="80"/>
+	<SubTexture name="spin0002" x="0" y="0" width="80" height="80"/>
+	<SubTexture name="spin0003" x="82" y="0" width="76" height="80" frameX="-2" frameY="0" frameWidth="80" frameHeight="80"/>
+	<SubTexture name="spin0004" x="82" y="0" width="76" height="80" frameX="-2" frameY="0" frameWidth="80" frameHeight="80"/>
+	<SubTexture name="spin0005" x="238" y="0" width="68" height="80" frameX="-6" frameY="0" frameWidth="80" frameHeight="80"/>
+	<SubTexture name="spin0006" x="238" y="0" width="68" height="80" frameX="-6" frameY="0" frameWidth="80" frameHeight="80"/>
+	<SubTexture name="spin0007" x="376" y="0" width="58" height="80" frameX="-11" frameY="0" frameWidth="80" frameHeight="80"/>
+	<SubTexture name="spin0008" x="496" y="0" width="33" height="80" frameX="-24" frameY="0" frameWidth="80" frameHeight="80"/>
+	<SubTexture name="spin0009" x="496" y="0" width="33" height="80" frameX="-24" frameY="0" frameWidth="80" frameHeight="80"/>
+	<SubTexture name="spin0010" x="436" y="0" width="58" height="80" frameX="-11" frameY="0" frameWidth="80" frameHeight="80"/>
+	<SubTexture name="spin0011" x="308" y="0" width="66" height="80" frameX="-7" frameY="0" frameWidth="80" frameHeight="80"/>
+	<SubTexture name="spin0012" x="308" y="0" width="66" height="80" frameX="-7" frameY="0" frameWidth="80" frameHeight="80"/>
+	<SubTexture name="spin0013" x="160" y="0" width="76" height="80" frameX="-2" frameY="0" frameWidth="80" frameHeight="80"/>
+	<SubTexture name="spin0014" x="160" y="0" width="76" height="80" frameX="-2" frameY="0" frameWidth="80" frameHeight="80"/>
+	<SubTexture name="spin0015" x="160" y="0" width="76" height="80" frameX="-2" frameY="0" frameWidth="80" frameHeight="80"/>
 </TextureAtlas>

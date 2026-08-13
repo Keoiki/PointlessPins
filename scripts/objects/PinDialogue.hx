@@ -39,7 +39,7 @@ typedef PinDialogueLine =
     ?hideDuringDelay:Bool, // If delayed, should the dialogue UI be hidden? (optional, default: false)
     ?boxData:PinDialogueTextbox, // Data for the dialogue box. (optional)
     ?boxPreset:String, // The name of the dialogue box preset to use, instead of manually specifying the box data each time you change it. (optional, default: ophelia)
-    ?xPos:Float, // The X position of the dialogue, position is relative to the center of the screen and box width. (optional, default: 0)
+    ?xPos:String, // The X position of the dialogue, as a preset name (left, right, or center), unlike yPos. (optional, default: center)
     ?yPos:Float // The Y position of the dialogue. (optional, default: 32)
 }
 
@@ -313,7 +313,7 @@ class PinDialogue extends FunkinGroup
         dialogueLine.instantComplete ??= false;
         dialogueLine.delayLine ??= false;
         dialogueLine.hideDuringDelay ??= false;
-        dialogueLine.xPos ??= 0;
+        dialogueLine.xPos ??= "center";
         dialogueLine.yPos ??= 32;
         dialogueLine.boxData ??= null;
 
@@ -342,7 +342,12 @@ class PinDialogue extends FunkinGroup
         dialogueText.letterStep = dialogueLine.letterStep;
         canSkip = checkForSkippingDialogue();
 
-        this.x = FlxG.width / 2 - dialogueBoxBG.width / 2 + dialogueLine.xPos;
+        this.x = switch (xPos.toLowerCase())
+        {
+            case "left": return 64;
+            case "right": return FlxG.width - 64 - dialogueBoxBG.width;
+            default: return FlxG.width / 2 - dialogueBoxBG.width / 2;
+        }
         this.y = dialogueLine.yPos;
         this.visible = true;
 
