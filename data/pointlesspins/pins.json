@@ -132,7 +132,7 @@
             { "id": "hex", "name": "Hex", "source": "Vs. Hex #MOD#" },
             { "id": "harvester-corruption", "name": "The Harvester", "description": "The Harvester harvests the harvest... I mean souls.", "source": "Friday Night Funkin': Corruption #MOD#" },
             { "id": "rank-goldperfect", "name": "Golden Perfect Rank", "description": "Did you know this rank grants an extra +50% FunkBucks? <s=0.75><c=FFB51C>Well now you do.</c></s>", "special": true, "lockedText": "Complete any song with a certain rank." },
-            { "id": "flowery-deltarune", "name": "Flowery", "description": "Heh, how'd you like my jarona?", "source": "DELTARUNE #GAME#" }
+            { "id": "flowery-deltarune", "name": "Flowery", "description": "\"Heh, how'd you like my jarona?\"", "source": "DELTARUNE #GAME#" }
         ]
     },
     "Mythic": {
