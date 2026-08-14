@@ -342,11 +342,11 @@ class PinDialogue extends FunkinGroup
         dialogueText.letterStep = dialogueLine.letterStep;
         canSkip = checkForSkippingDialogue();
 
-        this.x = switch (xPos.toLowerCase())
+        this.x = switch (dialogueLine.xPos.toLowerCase())
         {
-            case "left": return 64;
-            case "right": return FlxG.width - 64 - dialogueBoxBG.width;
-            default: return FlxG.width / 2 - dialogueBoxBG.width / 2;
+            case "left": 64;
+            case "right": FlxG.width - 64 - dialogueBoxBG.width;
+            default: FlxG.width / 2 - dialogueBoxBG.width / 2;
         }
         this.y = dialogueLine.yPos;
         this.visible = true;

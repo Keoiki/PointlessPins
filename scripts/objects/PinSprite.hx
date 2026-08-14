@@ -4,6 +4,8 @@ import flixel.addons.display.FlxRuntimeShader;
 import flixel.tweens.FlxTween;
 import flixel.util.FlxColor;
 import funkin.graphics.FunkinSprite;
+import openfl.filters.BitmapFilter;
+import openfl.filters.DropShadowFilter;
 
 class PinSprite extends FunkinSprite
 {
@@ -22,6 +24,8 @@ class PinSprite extends FunkinSprite
     public var isUnknown:Bool = false;
     public var unlockCount:Int = 0;
     public var rotationTween:FlxTween = null;
+
+    var dropshadowFilter:Array<BitmapFilter> = [new DropShadowFilter(12, 90, 0xFF000000, 1, 48, 48, 1, 1, false, false, false)];
 
     final tagRegex:EReg = new EReg('#([a-zA-Z0-9_-]+)#', "g");
 
@@ -121,6 +125,17 @@ class PinSprite extends FunkinSprite
             });
         }
         antialiasing = !pixel;
+
+        /**
+         * Issues with this:
+         * - Rotation on the pin board no longer happens from the middle of the sprite, and
+         * - it's absolutely fucked on Pixel pins.
+         */
+        // if (FlxG.state.subState == "PolymodScriptClass<funkbucks.PinBoard>")
+        // {
+            // filters = dropshadowFilter;
+            // updateHitbox();
+        // }
 
         pinSpecificSetup();
     }
