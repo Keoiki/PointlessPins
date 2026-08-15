@@ -5,7 +5,7 @@
 - Added a new character: April.
     - Ophelia has decided to take weekends "off", putting April to be the shopkeeper in her place.
     - She'd rather not be here.
-    - Designated lazy person of the company.
+    - Designated "lazy person" of the company.
 - Added 71 new pins:
     - 13 Common
     - 19 Uncommon
