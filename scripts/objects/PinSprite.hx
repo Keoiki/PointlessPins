@@ -101,6 +101,7 @@ class PinSprite extends FunkinSprite
             x -= width / 2;
             y -= height / 2;
             alpha = alphaDest;
+            applyShadowFilter();
         }
         else
         {
@@ -116,6 +117,7 @@ class PinSprite extends FunkinSprite
                 updateHitbox();
                 x -= width / 2;
                 y -= height / 2;
+                applyShadowFilter();
 
                 if (fadeTween != null)
                 {
@@ -126,17 +128,6 @@ class PinSprite extends FunkinSprite
         }
         antialiasing = !pixel;
 
-        /**
-         * Issues with this:
-         * - Rotation on the pin board no longer happens from the middle of the sprite, and
-         * - it's absolutely fucked on Pixel pins.
-         */
-        // if (FlxG.state.subState == "PolymodScriptClass<funkbucks.PinBoard>")
-        // {
-            // filters = dropshadowFilter;
-            // updateHitbox();
-        // }
-
         pinSpecificSetup();
     }
 
@@ -145,6 +136,23 @@ class PinSprite extends FunkinSprite
         if (pID == 'tuntematon') visible = false;
 
         super.update(elapsed);
+    }
+
+    function applyShadowFilter():Void
+    {
+        /**
+         * Issues with this:
+         * - Rotation on the pin board no longer happens from the middle of the sprite, and
+         * - it's absolutely fucked on Pixel pins.
+         */
+
+        return;
+        
+        if (FlxG.state.subState == "PolymodScriptClass<funkbucks.PinBoard>")
+        {
+            filters = dropshadowFilter;
+            updateHitbox();
+        }
     }
 
     /**
