@@ -19,14 +19,14 @@ import funkin.group.FunkinGroup;
 import funkin.util.SerializerUtil;
 import funkin.util.TouchUtil;
 
-typedef PinDialogueFile =
+typedef FBDialogueFile =
 {
-    dialogue:Array<PinDialogueLine>,
-    ?response:PinDialogueResponses,
+    dialogue:Array<FBDialogueLine>,
+    ?response:FBDialogueResponses,
     ?canSkipOnRepeat:Bool // Is dialogue skipable on repeat reads? (optional, default: false)
 }
 
-typedef PinDialogueLine =
+typedef FBDialogueLine =
 {
     text:String, // The text to be displayed.
     ?speaker:String, // The name of the speaker. The text and box extension will be hidden if omitted. (optional)
@@ -37,13 +37,13 @@ typedef PinDialogueLine =
     ?instantComplete:Bool, // Whether to instantly complete the line. Ignored if the line is delayed. (optional, default: false)
     ?delayLine:Bool, // Whether to delay the line. The line will not start until it's manually triggered. (optional, default: false)
     ?hideDuringDelay:Bool, // If delayed, should the dialogue UI be hidden? (optional, default: false)
-    ?boxData:PinDialogueTextbox, // Data for the dialogue box. (optional)
+    ?boxData:FBDialogueTextbox, // Data for the dialogue box. (optional)
     ?boxPreset:String, // The name of the dialogue box preset to use, instead of manually specifying the box data each time you change it. (optional, default: ophelia)
     ?xPos:String, // The X position of the dialogue, as a preset name (left, right, or center), unlike yPos. (optional, default: center)
     ?yPos:Float // The Y position of the dialogue. (optional, default: 32)
 }
 
-typedef PinDialogueTextbox = 
+typedef FBDialogueTextbox =
 {
     ?shape:String, // The dialogue box shape. (optional, default: "round")
     ?shapeColor:String, // The color of the dialogue box shape. (optional, default: "FFFFFF")
@@ -56,16 +56,15 @@ typedef PinDialogueTextbox =
     ?patternBlend:Float // Whether to use the multiply blend on the pattern or not. (optional, default: 1 (true))
 }
 
-typedef PinDialogueResponses =
+typedef FBDialogueResponses =
 {
-    options:Array<Array<String>>, // The options to be displayed.
-    ?boxY:Float // The Y level of the response box, relative to the main box. (optional, default: 500)
+    options:Array<Array<String>> // The options to be displayed. In pairs of [TEXT, ID].
 }
 
-class PinDialogue extends FunkinGroup
+class Dialogue extends FunkinGroup
 {
-    public var currentDialogue:PinDialogueFile;
-    public var dialogueLine:PinDialogueLine;
+    public var currentDialogue:FBDialogueFile;
+    public var dialogueLine:FBDialogueLine;
 
     public var dialogueID:String = "";
     public var dialogueIndex:Int = -1;
@@ -94,11 +93,13 @@ class PinDialogue extends FunkinGroup
     var responseHitbox:FlxObject;
     var responseDots:Array<FunkinSprite> = [];
 
-    public function new(dialogueID:String, ?dialogueObject:PinDialogueFile):Void
+    public function new(dialogueID:String, ?dialogueObject:FBDialogueFile):Void
     {
         super();
 
         loadDialogue(dialogueID, dialogueObject);
+
+        patternShader = new ImposePatternShader();
 
         dialogueBoxBG = new FunkinSprite(0, 0).loadTexture("pointlesspins/dialogue/dialogue-round-bg");
         this.add(dialogueBoxBG);
@@ -110,10 +111,6 @@ class PinDialogue extends FunkinGroup
         dialogueBox.color = 0xFF264967;
         this.add(dialogueBox);
 
-        patternShader = new ImposePatternShader();
-        // patternShader.setValues([dialogueBox.width, dialogueBox.height], Assets.getBitmapData(Paths.image("pointlesspins/dialogue/pattern-diamonds-alt")), 0xFF67B1D8, null, null, null);
-        // dialogueBox.shader = patternShader;
-
         dialogueText = new BAlphabetTyped(0, 0, "");
         dialogueText.localX = dialogueBoxBG.width / 2;
         dialogueText.localY = 48;
@@ -122,10 +119,6 @@ class PinDialogue extends FunkinGroup
         this.add(dialogueText);
 
         speakerBox = new FunkinSprite(0, 0);
-        // speakerBox.localX = 24;
-        // speakerBox.localY = -16;
-        // speakerBox.frames = FlxG.bitmap.create(1, 16, 0xBF000000, false, 'pinDialogueSpeakerBox').imageFrame;
-        // speakerBox.origin.x = 0;
         this.add(speakerBox);
 
         speakerName = new BAlphabet(0, 0, "");
@@ -140,13 +133,10 @@ class PinDialogue extends FunkinGroup
         advanceIcon.animation.addByPrefix("endIcons", "dialogue-end-icons", 0, false);
         advanceIcon.animation.play("endIcons");
         advanceIcon.localScale.set(0.8, 0.8);
-        // advanceIcon.localVisible = false;
         this.add(advanceIcon);
 
         if (currentDialogue.response != null)
         {
-            // trace(currentDialogue.response.options);
-
             arrowLeftHitbox = new FlxObject(0, 0, 200, 200);
             this.add(arrowLeftHitbox);
 
@@ -416,7 +406,7 @@ class PinDialogue extends FunkinGroup
         hasEnded = true;
     }
 
-    public function loadDialogue(id:String, ?obj:PinDialogueFile):Void
+    public function loadDialogue(id:String, ?obj:FBDialogueFile):Void
     {
         dialogueID = id;
         if (obj != null)
@@ -497,7 +487,7 @@ class PinDialogue extends FunkinGroup
     var prevShapeColor:String;
     var prevTextColor:String;
 
-    function updateDialogueBox(data:PinDialogueTextbox):Void
+    function updateDialogueBox(data:FBDialogueTextbox):Void
     {
         final basePath:String = "pointlesspins/dialogue/";
 
@@ -577,7 +567,7 @@ class PinDialogue extends FunkinGroup
         }
     }
 
-    function dialogueBoxPatternPreset(name:String):PinDialogueTextbox
+    function dialogueBoxPatternPreset(name:String):FBDialogueTextbox
     {
         return switch (name)
         {

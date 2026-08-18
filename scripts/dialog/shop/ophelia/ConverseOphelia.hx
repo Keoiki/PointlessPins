@@ -29,7 +29,7 @@ class ConverseOphelia extends DialogBase
             shop.remove(shop.dialog);
         }
 
-        final dialogue:PinDialogueFile =
+        final dialogue:FBDialogueFile =
         {
             dialogue:
             [
@@ -44,7 +44,7 @@ class ConverseOphelia extends DialogBase
             }
         };
 
-        var dialog:PinDialogue = new PinDialogue("converseOphelia", dialogue);
+        var dialog:Dialogue = new Dialogue("converseOphelia", dialogue);
         dialog.cameras = [shop.cameraHUD];
 
         dialog.dialogueText.letterCallback = (code) ->
@@ -143,7 +143,7 @@ class ConverseOphelia extends DialogBase
 
         shop.shopkeeper.suffix = "Confused";
 
-        var dialog:PinDialogue = new PinDialogue("anger/warning");
+        var dialog:Dialogue = new Dialogue("anger/warning");
         dialog.cameras = [shop.cameraHUD];
 
         dialog.dialogueText.letterCallback = (code) ->

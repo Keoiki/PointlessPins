@@ -27,7 +27,7 @@ class RealJob extends DialogBase
             shop.remove(shop.dialog);
         }
 
-        var dialog:PinDialogue = new PinDialogue("converse/ophelia/realJob");
+        var dialog:Dialogue = new Dialogue("converse/ophelia/realJob");
         dialog.cameras = [shop.cameraHUD];
 
         shop.shopkeeper.suffix = "Annoyed";

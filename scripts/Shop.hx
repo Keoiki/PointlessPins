@@ -16,7 +16,7 @@ import funkbucks.dialog.shop.OpheliaPin;
 import funkbucks.dialog.shop.ophelia.ConverseOphelia;
 import funkbucks.dialog.shop.ophelia.RealJob;
 import funkbucks.objects.KeyCap;
-import funkbucks.objects.PinDialogue;
+import funkbucks.objects.Dialogue;
 import funkbucks.objects.shop.Clock;
 import funkbucks.objects.shop.DailyBoard;
 import funkbucks.objects.shop.RewardShelf;
@@ -53,7 +53,7 @@ class Shop extends MusicBeatState
     var buckSound:FunkinSound;
 
     // Dialogue
-    public var dialog:PinDialogue;
+    public var dialog:Dialogue;
 
     // Shop
     var shopkeeperHitbox:FlxObject;
@@ -912,7 +912,7 @@ class Shop extends MusicBeatState
                 if (Shopkeeper.annoyance == 75 && FunkBucks.getOpheliaAnger() == 0)
                 {
                     if (dialog != null) remove(dialog);
-                    dialog = new PinDialogue("anger/warning");
+                    dialog = new Dialogue("anger/warning");
                     add(dialog);
                     dialog.cameras = [cameraHUD];
                     shopkeeper.canAnnoy = false;
@@ -969,7 +969,7 @@ class Shop extends MusicBeatState
     function opheliaAngerDialogue(variant:String):Void
     {
         if (dialog != null) remove(dialog);
-        dialog = new PinDialogue("anger/" + variant);
+        dialog = new Dialogue("anger/" + variant);
         add(dialog);
         dialog.cameras = [cameraHUD];
 
@@ -1001,7 +1001,7 @@ class Shop extends MusicBeatState
     function ebgquwwghobehjovbefogbeqir():Void
     {
         if (dialog != null) remove(dialog);
-        dialog = new PinDialogue("secret/nightmare");
+        dialog = new Dialogue("secret/nightmare");
         add(dialog);
         dialog.cameras = [cameraHUD];
 
@@ -1082,7 +1082,7 @@ class Shop extends MusicBeatState
     function cloverCoinButtonIntro():Void
     {
         if (dialog != null) remove(dialog);
-        dialog = new PinDialogue('cloverButton');
+        dialog = new Dialogue('cloverButton');
         add(dialog);
         dialog.cameras = [cameraHUD];
 

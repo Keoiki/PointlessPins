@@ -27,7 +27,7 @@ class OpheliaPin extends DialogBase
             shop.remove(shop.dialog);
         }
 
-        var dialog:PinDialogue = new PinDialogue("opheliaPin");
+        var dialog:Dialogue = new Dialogue("opheliaPin");
         dialog.cameras = [shop.cameraHUD];
 
         dialog.dialogueText.letterCallback = (code) ->
@@ -90,7 +90,7 @@ class OpheliaPin extends DialogBase
             shop.remove(shop.dialog);
         }
 
-        final dialogue:PinDialogueFile =
+        final dialogue:FBDialogueFile =
         {
             dialogue:
             [
@@ -104,7 +104,7 @@ class OpheliaPin extends DialogBase
 
         shop.shopkeeper.playAnimation('IdleAnnoyed', true, false);
 
-        var dialog:PinDialogue = new PinDialogue("opheliaPin-noResponse", dialogue);
+        var dialog:Dialogue = new Dialogue("opheliaPin-noResponse", dialogue);
         dialog.cameras = [shop.cameraHUD];
 
         dialog.onCompleteDialogue.add(() ->
