@@ -377,7 +377,7 @@ class PinBoard extends MusicBeatSubState
                 if (!availablePin.special)
                 {
                     pinUnlockCount.alpha = 1;
-                    pinUnlockCount.text = 'Unlocked ${availablePin.unlockCount} time${availablePin.unlockCount == 1 ? "" : "s"}';
+                    pinUnlockCount.text = 'Unlocked ${availablePin.unlockCount} time${(availablePin.unlockCount == 1 ? "" : "s")}';
                 }
                 else
                 {

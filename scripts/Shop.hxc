@@ -247,7 +247,7 @@ class Shop extends MusicBeatState
         keycapBoxes.zIndex = 514;
         add(keycapBoxes);
 
-        lableExchange = new BAlphabet(1200 - spriteNudge, 520, "<b><c=404040>Exchange\n<s=0.5>(Coming Soon)</s></c></b>");
+        lableExchange = new BAlphabet(1200 - spriteNudge, 520, "<b><c=404040>Converse\n<s=0.5>(Coming Soon)</s></c></b>");
         lableExchange.alignment = "center";
         lableExchange.setScale(0.65);
         lableExchange.zIndex = 516;
@@ -337,14 +337,26 @@ class Shop extends MusicBeatState
 
         if (ModStore.get("pinsIsOutdated") && ModStore.get("pinsHasShownOutdate") == null)
         {
-            var alert:BAlphabet = new BAlphabet(30, 30, '<c=00FF00><b>Version ${ModStore.get("pinsOnlineVersion")} is available!</b></c>');
-            alert.setScale(0.4);
+            var alert:BAlphabet = new BAlphabet(30, 30, "");
+            alert.lineHeight = 60;
+            alert.text = '<c=FFB51C><b>New version is available:</c> <c=00FF00>${ModStore.get("pinsOnlineVersion")}</c>\n<s=0.75>${ModStore.get("pinsOnlineVersionInfo")}</s></b>';
+            alert.scale.set(0.4, 0.4);
             alert.zIndex = 100000;
             add(alert);
             alert.cameras = [cameraHUD];
-            new FlxTimer().start(8, (_:FlxTimer) -> {
+
+            var alertBG:FunkinSprite = new FunkinSprite(0, 0).makeSolidColor(alert.width + 60, alert.height + 60, 0xFF000000);
+            alertBG.zIndex = 99999;
+            alertBG.alpha = 0.5;
+            alertBG.cameras = [cameraHUD];
+            add(alertBG);
+
+            new FlxTimer().start(14, (_:FlxTimer) ->
+            {
                 FlxTween.tween(alert, { alpha: 0 }, 2, { ease: FlxEase.quintOut });
+                FlxTween.tween(alertBG, { alpha: 0 }, 2, { ease: FlxEase.quintOut });
             });
+
             ModStore.register("pinsHasShownOutdate", true);
         }
 

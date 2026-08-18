@@ -1,3 +1,25 @@
+## [1.3.0] - 18/08/2026
+
+### Added
+
+- Added 11 new pins:
+    - 3 Commons
+    - 5 Uncommons
+    - 2 Rares
+    - 1 Epic
+
+### Changed
+
+- Updated the "New Update Available" popup to have the ability to show summarised patch notes.
+- Changed "Exchange" to "Converse".
+- Changed both of the boxes' chances to match their chances in 2.0.
+    - Mythics will be removed from Small Giftboxes in 2.0.
+- Raised both boxes' costs by 5 FunkBucks.
+
+### Fixed
+
+- Fixes for FNF 0.8.6.
+
 ## [1.2.0] - 04/06/2026
 
 ### Added

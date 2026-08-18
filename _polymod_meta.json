@@ -12,13 +12,13 @@
   ],
   "dependencies":
   {
-    "keoiki.betteralphabet": ">=2.0.0 <3.0.0"
+    "keoiki.betteralphabet": ">=2.0.1"
   },
   "optionalDependencies":
   {
-    "keoiki.endlessmode": ">=2.0.0 <3.0.0"
+    "keoiki.endlessmode": ">=2.0.0"
   },
-  "api_version": "0.8.4",
-  "mod_version": "1.2.0",
+  "api_version": "0.8.6",
+  "mod_version": "1.3.0",
   "license": "Apache-2.0"
 }

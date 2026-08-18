@@ -25,7 +25,10 @@
             { "id": "spraycan", "name": "Spraycan" },
             { "id": "knife", "name": "Knife" },
             { "id": "bulletcasing", "name": "Bullet Casing" },
-            { "id": "bundleofcash", "name": "Bundle of Cash" }
+            { "id": "bundleofcash", "name": "Bundle of Cash" },
+            { "id": "musicdisk", "name": "Music Disk" },
+            { "id": "apple", "name": "Apple", "description": "Who the hell gives apples as a christmas present?!" },
+            { "id": "haxe", "name": "Haxe", "description": "The backbone of this game." }
         ]
     },
     "Uncommon": {
@@ -39,7 +42,12 @@
             { "id": "pico-christmas", "name": "Pico (Christmas)" },
             { "id": "nene-christmas", "name": "Nene (Christmas)" },
             { "id": "santa", "name": "Mall Santa" },
-            { "id": "pico-picoschool", "name": "Pico (Original)", "source": "from: \"Pico's School\"", "scale": 0.47 }
+            { "id": "pico-picoschool", "name": "Pico (Original)", "source": "from: \"Pico's School\"", "scale": 0.47 },
+            { "id": "arrow-left", "name": "Left Arrow" },
+            { "id": "arrow-down", "name": "Down Arrow" },
+            { "id": "arrow-up", "name": "Up Arrow" },
+            { "id": "arrow-right", "name": "Right Arrow" },
+            { "id": "haxeflixel", "name": "HaxeFlixel", "description": "Not to be confused with \"Flixel\"." }
         ]
     },
     "Rare": {
@@ -48,13 +56,18 @@
         "pins":
         [
             { "id": "nessie-funkinnews", "name": "Nessie", "source": "from: \"Funkin News\" Twitter" },
-            { "id": "ophelia", "name": "Ophelia", "description": "You'll stop annoying her now, right?" , "special": true, "lockedText": "It wouldn't be smart to annoy <c=67B1D8>her.</c>"}
+            { "id": "ophelia", "name": "Ophelia", "description": "You'll stop annoying her now, right?" , "special": true, "lockedText": "It wouldn't be smart to annoy <c=67B1D8>her.</c>"},
+            { "id": "haxeui", "name": "HaxeUI", "description": "It either doesn't work or doesn't work." },
+            { "id": "pushpin", "name": "Pin", "description": "No no, wrong type of pin!" }
         ]
     },
     "Epic": {
         "order": 3,
         "color": "A426FF",
-        "pins": [ ]
+        "pins":
+        [
+            { "id": "polymod", "name": "Polymod", "description": "Polymore!" }
+        ]
     },
     "Legendary": {
         "order": 4,

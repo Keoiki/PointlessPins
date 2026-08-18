@@ -89,6 +89,8 @@ class PointlessPins extends Module
     {
         var modVersion:String = null;
         var onlineVersion:String = "0.0.0";
+        var onlineVersionInfo:String = "";
+
         try
         {
             modVersion = PolymodHandler.modFileSystem.getMetadataById("keoiki.funkbucks", "script_runtime").modVersion.version.join(".");
@@ -96,27 +98,65 @@ class PointlessPins extends Module
         catch (err:Dynamic)
         {
             trace(err);
-            ModStore.register("pinsIsOutdated", false);
-            throw "Local mod version could not be found!\nWhy did you change the mod ID in the meta file?";
-            return;
+            modVersion = "1.3.0";
+            // ModStore.register("pinsIsOutdated", false);
+            // return;
         }
+
         var request:URLRequest = new URLRequest("https://raw.githubusercontent.com/Keoiki/PointlessPins/main/version.txt");
         var loader:URLLoader = new URLLoader();
         loader.dataFormat = "text";
-        var loadSuccessful = () -> {
-            onlineVersion = loader.data;
+
+        var loadSuccessful = () ->
+        {
+            var versionData:Null<String> = Std.string(loader.data);
+
+            if (versionData == null)
+            {
+                ModStore.register("pinsIsOutdated", false);
+                ModStore.register("pinsOnlineVersion", onlineVersion);
+                ModStore.register("pinsOnlineVersionInfo", onlineVersionInfo);
+                trace("Somehow got no version data despite the request being successful?");
+            }
+
+            if (versionData.indexOf("|||") != -1)
+            {
+                var versionInfo:Array<String> = versionData.split("|||");
+                onlineVersion = versionInfo[0];
+                onlineVersionInfo = versionInfo[1];
+            }
+            else
+            {
+                onlineVersion = versionData;
+            }
+
             ModStore.register("pinsIsOutdated", VersionUtil.validateVersionStr(onlineVersion, ">" + modVersion));
             ModStore.register("pinsOnlineVersion", onlineVersion);
+            ModStore.register("pinsOnlineVersionInfo", onlineVersionInfo);
         }
-        var loadFailed = () -> {
+
+        var loadFailed = () ->
+        {
             ModStore.register("pinsIsOutdated", false);
             ModStore.register("pinsOnlineVersion", onlineVersion);
+            ModStore.register("pinsOnlineVersionInfo", onlineVersionInfo);
             trace("Failed to load online version!");
         }
+
         loader.addEventListener("complete", loadSuccessful);
         loader.addEventListener("ioError", loadFailed);
         loader.addEventListener("securityError", loadFailed);
         loader.load(request);
+
+        // Testing stuff.
+
+        // ModStore.remove("pinsIsOutdated");
+        // ModStore.remove("pinsOnlineVersion");
+        // ModStore.remove("pinsOnlineVersionInfo");
+        // ModStore.remove("pinsHasShownOutdate");
+        // ModStore.register("pinsIsOutdated", true);
+        // ModStore.register("pinsOnlineVersion", "1.69.0");
+        // ModStore.register("pinsOnlineVersionInfo", "- Removed Hundrec.\n- Added things outside the screen which you can't see :P\n- Fixed deez nuts.");
     }
 
     function loadPinData():Void
