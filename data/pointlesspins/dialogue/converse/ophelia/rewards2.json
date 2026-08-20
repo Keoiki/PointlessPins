@@ -1,0 +1,27 @@
+{
+    "canSkipOnRepeat": true,
+    "dialogue": 
+    [
+        {
+            "text": "You can tell I'm not exactly <S>pleased</S> to give these out.",
+            "speaker": "Ophelia",
+            "canSkip": false,
+            "speed": 0.075
+        },
+        {
+            "text": "I was pressured to have these rewards.",
+            "speaker": "Ophelia",
+            "canSkip": false
+        },
+        {
+            "text": "Frankly,<d=0.25/> the last thing I'd want is to\ngive out free things.",
+            "speaker": "Ophelia",
+            "canSkip": false
+        },
+        {
+            "text": "Well,<d=1/> better to keep those unknowns away.",
+            "speaker": "Ophelia",
+            "canSkip": false
+        }
+    ]
+}

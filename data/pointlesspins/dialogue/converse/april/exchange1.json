@@ -1,0 +1,29 @@
+{
+    "canSkipOnRepeat": true,
+    "dialogue": 
+    [
+        {
+            "text": "Alright,<d=0.25/> first up!",
+            "speaker": "April",
+            "canSkip": false
+        },
+        {
+            "text": "Would be wrong not to give a pin of myself.",
+            "speaker": "April",
+            "canSkip": false
+        },
+        {
+            "text": "I'll give it for 2 of them &#xE001; gems.",
+            "speaker": "April",
+            "canSkip": false
+        }
+    ],
+    "response":
+    {
+        "options":
+        [
+            ["Sure.", "yes"],
+            ["Nuh uh!", "no"]
+        ]
+    }
+}

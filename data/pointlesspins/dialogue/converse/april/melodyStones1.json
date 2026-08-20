@@ -1,0 +1,21 @@
+{
+    "canSkipOnRepeat": true,
+    "dialogue": 
+    [
+        {
+            "text": "Blue jewels...",
+            "speaker": "April",
+            "canSkip": false
+        },
+        {
+            "text": "They're pretty, sure, it'd be cooler if they were green though.",
+            "speaker": "April",
+            "canSkip": false
+        },
+        {
+            "text": "Them being blue is probs why Ophelia loves them so much.",
+            "speaker": "April",
+            "canSkip": false
+        }
+    ]
+}

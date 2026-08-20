@@ -1,0 +1,22 @@
+{
+    "canSkipOnRepeat": true,
+    "dialogue": 
+    [
+        {
+            "text": "Oh boy...",
+            "speaker": "April",
+            "canSkip": false
+        },
+        {
+            "text": "I wouldn' wanna be that person to sing for over an hour and a half straigh'.",
+            "speaker": "April",
+            "canSkip": false
+        },
+        {
+            "text": ".<d=0.25/>.<d=0.25/>.<d=0.25/><i>someone did?!</i>",
+            "speaker": "April",
+            "canSkip": false,
+            "speed": 0.025
+        }
+    ]
+}

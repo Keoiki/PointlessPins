@@ -8,7 +8,7 @@
             "canSkip": false
         },
         {
-            "text": "Completed daily songs will add an additional 50% to the FunkBucks you earn.",
+            "text": "Completed daily songs will grant an additional 50% FunkBucks.",
             "speaker": "Ophelia",
             "canSkip": false
         },
@@ -18,7 +18,7 @@
             "canSkip": false
         },
         {
-            "text": "We don't offer similar bonuses for Weeks, but maybe later!",
+            "text": "We don't offer similar bonuses for Weeks,<d=0.25/> but maybe later!",
             "speaker": "Ophelia",
             "canSkip": false
         }

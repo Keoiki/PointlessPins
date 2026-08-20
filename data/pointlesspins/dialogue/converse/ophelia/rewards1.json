@@ -3,27 +3,27 @@
     "dialogue": 
     [
         {
-            "text": "They're kind of rare, you know?",
+            "text": "Behind me you can find the Rewards shelf.",
             "speaker": "Ophelia",
             "canSkip": false
         },
         {
-            "text": "I think you're able to find them by completing\nsongs,<d=0.25/> but the chances aren't great.",
+            "text": "There are various categories of thing you can do to earn bonuses.",
             "speaker": "Ophelia",
             "canSkip": false
         },
         {
-            "text": "Or you could just get some from the Rewards.",
+            "text": "Collecting FunkBucks, opening boxes,\nopening <i>specific</i> boxes, etc.",
             "speaker": "Ophelia",
             "canSkip": false
         },
         {
-            "text": "I'll be happy to take them from you though!",
+            "text": "The rewards can range from FunkBucks, to pins, to <S>free</S> boxes.",
             "speaker": "Ophelia",
             "canSkip": false
         },
         {
-            "text": "...for a <i>fair</i> compensation,<d=0.5/> of course.",
+            "text": "You can even find <S>box discounts</S> and boosts to\nhow much FunkBucks you earn on completions.",
             "speaker": "Ophelia",
             "canSkip": false
         }

@@ -51,7 +51,7 @@ class ConverseOphelia extends DialogBase
         {
             if (FunkBucks.skipTalking.contains(code)) return;
             if (!shouldTalk) return;
-            if (playSound) FunkinSound.playOnce(Paths.sound("chartingSounds/keyboard" + FlxG.random.int(1, 3)), 1.0);
+            if (playSound) FunkinSound.playOnce(Paths.sound(dialogueSound + FlxG.random.int(dialogueSoundRange[0], dialogueSoundRange[1])), 1.0);
             if (playAnim) shop.shopkeeper.playAnimation('Talk', false, false);
         }
 
@@ -125,11 +125,18 @@ class ConverseOphelia extends DialogBase
         }
 
         options.push(['${FBIcon.Buck} FunkBucks', 'funkbucks']);
-        options.push(['${FBIcon.Jewel} Melody Stones', 'melodyStones']);
+        if (FunkBucks.getBlueJewels() > 0 || FunkBucks.getBlueJewelsLifetime() > 0)
+        {
+            options.push(['${FBIcon.Jewel} Melody Stones', 'melodyStones']);
+        }
         options.push(['Pins', 'pins']);
         options.push(['Boxes', 'boxes']);
         options.push(['Rewards', 'rewards']);
-        options.push(['Daily Songs', 'dailysongs']);
+        options.push(['Daily Songs', 'dailySongs']);
+
+        #if keoiki.endlessmode
+        options.push(['<c=00BBFF>∞</c> Endless Mode <c=00BBFF>∞</c>', 'endlessMode']);
+        #end
 
         return options;
     }

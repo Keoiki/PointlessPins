@@ -3,7 +3,7 @@
     "dialogue": 
     [
         {
-            "text": "Exchange?<d=1/> Exchange <i>wh<o=8,0/>at</i> exactly?",
+            "text": "Exchange?<d=1/> Exchange <i>what</i> exactly?",
             "speaker": "Ophelia",
             "canSkip": false
         },

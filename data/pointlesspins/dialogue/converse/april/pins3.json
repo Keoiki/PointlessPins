@@ -1,0 +1,31 @@
+{
+    "canSkipOnRepeat": true,
+    "dialogue": 
+    [
+        {
+            "text": "I read an old document I found once,\nsaid that originally the pins were meant to be stickers.",
+            "speaker": "April",
+            "canSkip": false
+        },
+        {
+            "text": "Bunch of research stuff, mostly uninteresting stuff.",
+            "speaker": "April",
+            "canSkip": false
+        },
+        {
+            "text": "There was never any mention of WHY they were changed to pins.",
+            "speaker": "April",
+            "canSkip": false
+        },
+        {
+            "text": "The docs suddenly started referring to them as pins\nwithout any reason.",
+            "speaker": "April",
+            "canSkip": false
+        },
+        {
+            "text": "Am sure it means nothing tho'.",
+            "speaker": "April",
+            "canSkip": false
+        }
+    ]
+}

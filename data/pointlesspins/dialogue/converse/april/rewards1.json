@@ -1,0 +1,26 @@
+{
+    "canSkipOnRepeat": true,
+    "dialogue": 
+    [
+        {
+            "text": "Those're my idea.",
+            "speaker": "April",
+            "canSkip": false
+        },
+        {
+            "text": "Ophelia <i>really</i> didn't wanna make 'em.",
+            "speaker": "April",
+            "canSkip": false
+        },
+        {
+            "text": "One morning she said she'd do 'em.",
+            "speaker": "April",
+            "canSkip": false
+        },
+        {
+            "text": "Damn near looked as if she was visited by a ghost.",
+            "speaker": "April",
+            "canSkip": false
+        }
+    ]
+}

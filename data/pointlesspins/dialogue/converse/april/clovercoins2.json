@@ -1,0 +1,36 @@
+{
+    "canSkipOnRepeat": true,
+    "dialogue": 
+    [
+        {
+            "text": "I like clovers.",
+            "speaker": "April",
+            "canSkip": false
+        },
+        {
+            "text": "Green,<d=0.25/> heart shaped petals.",
+            "speaker": "April",
+            "canSkip": false
+        },
+        {
+            "text": "About them coins though...",
+            "speaker": "April",
+            "canSkip": false
+        },
+        {
+            "text": "I don't know how they do.<d=0.25/>.<d=0.25/>.<d=0.25/> <i>that.</i>",
+            "speaker": "April",
+            "canSkip": false
+        },
+        {
+            "text": "You know,<d=0.25/> go across those,<d=0.25/> 'menus'????",
+            "speaker": "April",
+            "canSkip": false
+        },
+        {
+            "text": "Surely you'll figure it.",
+            "speaker": "April",
+            "canSkip": false
+        }
+    ]
+}

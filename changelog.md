@@ -5,13 +5,13 @@
 - Added a new character: April.
     - Ophelia has decided to take weekends "off", putting April to be the shopkeeper in her place.
     - She'd rather not be here.
-    - Designated "lazy person" of the company.
-- Added 71 new pins:
-    - 13 Common
-    - 19 Uncommon
-    - 18 Rare
-    - 13 Epic
+- Added 62 new pins:
+    - 10 Common
+    - 14 Uncommon
+    - 12 Rare
+    - 12 Epic
     - 6 Legendary
+    - 1 Mythic
     - 2 Special
 - Added the "Fancy Coffret" box, which costs 200 FunkBucks to open.
 - Added the "Shimmering Pouch" box, which costs 600 FunkBucks to open.
@@ -44,9 +44,6 @@
     - Spooky Kids (Spooky Mix)
     - QT (QT Rewired, futureproof)
     - Hundrec (Hundrec Mix, futureproof)
-- Added alternate nicer dialogue, meant to be less meaner towards the player.
-    - This is set to "nice" if "Naughtyness" is turned off or if playing on mobile for the first time after this update.
-    - An option to toggle this appears on PC.
 
 ### Changed
 
@@ -64,6 +61,14 @@
 - Redesigned dialogue boxes to be cooler.
 - Ophelia's annoyance now persists after exiting and re-entering the Shop.
 - Tweaked Ophelia's design, again.
+- For every 12 loops in Endless Mode, the FunkBuck gain % raises by 25%, capping at 125% after the 48th loop.
+    - When the pause menu states Loop #49, you're at max percentage.
+    - For those insane enough to go over 1½ hours playing the same song, looking at you thelargelad on GameBanana.
+    - 1-12: 25%
+    - 13-24: 50%
+    - 25-36: 75%
+    - 37-48: 100%
+    - 49 and after: 125%
 
 ## [1.2.0] - 04/06/2026
 

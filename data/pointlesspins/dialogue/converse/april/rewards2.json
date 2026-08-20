@@ -1,0 +1,16 @@
+{
+    "canSkipOnRepeat": true,
+    "dialogue": 
+    [
+        {
+            "text": "When I was recommending free boxes I could feel her\nalmost having a heart attack at the \"free\".",
+            "speaker": "April",
+            "canSkip": false
+        },
+        {
+            "text": "Like yeah, don't wanna give out free stuff,\nbut that's just 'n overexagerated reaction.",
+            "speaker": "April",
+            "canSkip": false
+        }
+    ]
+}

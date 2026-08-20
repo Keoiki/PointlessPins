@@ -31,8 +31,8 @@
             { "id": "rank-good", "name": "Good Rank", "description": "Remember when BF's animation for this rank played for everything?", "special": true, "lockedText": "Complete any song with a certain rank." },
             { "id": "cardboardbox", "name": "Cardboard Box", "description": "The cheapest of them all.", "special": true, "lockedText": "This pin is unlockable from the Rewards." },
             { "id": "haxe", "name": "Haxe", "description": "The backbone of this game." },
-            { "id": "boyfriend-amongus-week1", "name": "Boyfriend (Polus)", "source": "VS. Impostor #MOD#" },
-            { "id": "girlfriend-amongus-week1", "name": "Girlfriend (Polus)", "source": "VS. Impostor #MOD#" },
+            { "id": "boyfriend-amongus-week1", "name": "Boyfriend <s=0.5>(Polus)</s>", "source": "VS. Impostor #MOD#" },
+            { "id": "girlfriend-amongus-week1", "name": "Girlfriend (<s=0.5>(Polus)</s>", "source": "VS. Impostor #MOD#" },
             { "id": "red-amongus-week1", "name": "Red", "description": "Way to draw attention to yourself, huh?", "source": "VS. Impostor #MOD#" },
             { "id": "salty-ssn", "name": "Salty", "source": "Salty's Sunday Night #MOD#" },
             { "id": "itsumi-ssn", "name": "Itsumi", "source": "Salty's Sunday Night #MOD#" },
@@ -46,14 +46,14 @@
         "color": "2BFF31",
         "pins":
         [
-            { "id": "boyfriend-christmas", "name": "Boyfriend (Christmas)" },
-            { "id": "girlfriend-christmas", "name": "Girlfriend (Christmas)", "scale": 0.48 },
-            { "id": "monster-christmas", "name": "Monster (Christmas)", "scale": 0.47 },
-            { "id": "pico-christmas", "name": "Pico (Christmas)" },
-            { "id": "nene-christmas", "name": "Nene (Christmas)" },
+            { "id": "boyfriend-christmas", "name": "Boyfriend <s=0.5>(Christmas)</s>" },
+            { "id": "girlfriend-christmas", "name": "Girlfriend <s=0.5>(Christmas)</s>", "scale": 0.48 },
+            { "id": "monster-christmas", "name": "Monster <s=0.5>(Christmas)</s>", "scale": 0.47 },
+            { "id": "pico-christmas", "name": "Pico <s=0.5>(Christmas)</s>" },
+            { "id": "nene-christmas", "name": "Nene <s=0.5>(Christmas)</s>" },
             { "id": "santa", "name": "Mall Santa" },
-            { "id": "pico-picoschool", "name": "Pico (Original)", "source": "Pico's School #GAME#", "scale": 0.47 },
-            { "id": "boyfriend-picoschool", "name": "Boyfriend (\"Original\")", "source": "Pico's School: Love Conquers All #GAME#", "scale": 0.47 },
+            { "id": "pico-picoschool", "name": "Pico <s=0.5>(Original)</s>", "source": "Pico's School #GAME#", "scale": 0.47 },
+            { "id": "boyfriend-picoschool", "name": "Boyfriend <s=0.5>(\"Original\")</s>", "source": "Pico's School: Love Conquers All #GAME#", "scale": 0.47 },
             { "id": "songcapsule", "name": "Song Capsule" },
             { "id": "arrow-left", "name": "Left Arrow" },
             { "id": "arrow-down", "name": "Down Arrow" },
@@ -66,8 +66,8 @@
             { "id": "flora", "name": "Flora", "source": "Gooey Mix #MOD#" },
             { "id": "opheebop-blob-ssn", "name": "Opheebop", "source": "Salty's Sunday Night #MOD#" },
             { "id": "glitch-ssn", "name": "Glitch", "source": "Salty's Sunday Night #MOD#" },
-            { "id": "boyfriend-amongus-week2", "name": "Boyfriend (MIRA HQ)", "source": "VS. Impostor #MOD#" },
-            { "id": "girlfriend-amongus-week2", "name": "Girlfriend (MIRA HQ)", "source": "VS. Impostor #MOD#" },
+            { "id": "boyfriend-amongus-week2", "name": "Boyfriend <s=0.5>(MIRA HQ)</s>", "source": "VS. Impostor #MOD#" },
+            { "id": "girlfriend-amongus-week2", "name": "Girlfriend <s=0.5>(MIRA HQ)</s>", "source": "VS. Impostor #MOD#" },
             { "id": "green-amongus-week2", "name": "Green", "description": "No fun allowed, even on New Task Day.", "source": "VS. Impostor #MOD#" },
             { "id": "strawberry-celeste", "name": "Strawberry", "description": "Can you collect all 175 (or even 202) of them?", "source": "Celeste #GAME#" },
             { "id": "secretcoin-gd", "name": "Secret Coin", "description": "Never enough with you...", "source": "Geometry Dash #GAME#" },
@@ -108,11 +108,11 @@
         "pins":
         [
             { "id": "melodystone", "name": "Melody Stone", "description": "Rare, Blue, and Sparkly! <c=67B1D8>Ophelia</c> loves these.", "special": true, "lockedText": "This pin is unlockable from the Rewards." },
-            { "id": "ophelia-business", "name": "Ophelia", "description": "Very strict with her rules. (Except on <c=EA8645>April</c>)", "special": true, "lockedText": "#APRIL_PURCHASE#" },
+            { "id": "ophelia-business", "name": "Ophelia <s=0.5>(Business)</s>", "description": "Very strict with her rules. (Except on <c=EA8645>April</c>)", "special": true, "lockedText": "#APRIL_PURCHASE#", "hidden": true },
             { "id": "pessy", "name": "Pessy", "source": "Psych Engine #MOD#" },
             { "id": "kb", "name": "KB", "source": "QT: Rewired #MOD#" },
             { "id": "polymod", "name": "Polymod", "description": "Polymore!" },
-            { "id": "funkbuck-pixel", "name": "FunkBuck (Pixel)", "description": "Your pixelated currency!", "special": true, "lockedText": "This pin is unlockable from the Rewards.", "pixel": true, "scale": 5 },
+            { "id": "funkbuck-pixel", "name": "Pixelated FunkBuck", "description": "Your pixelated currency!", "special": true, "lockedText": "This pin is unlockable from the Rewards.", "pixel": true, "scale": 5 },
             { "id": "rank-perfect", "name": "Perfect Rank", "description": "Now go for the golden one!", "special": true, "lockedText": "Complete any song with a certain rank." },
             { "id": "glimmeringpouch", "name": "Glimmering Pouch", "special": true, "lockedText": "This pin is unlockable from the Rewards." },
             { "id": "detective-amongus", "name": "Detective", "description": "Trying to figure out who the Impostor is...", "source": "VS. Impostor #MOD#" },
@@ -158,7 +158,7 @@
             { "id": "spaghetti", "name": "Spaghetti", "description": "This isn't a hotspot, sorry!", "special": true, "lockedText": "Complete a certain song." },
             { "id": "rank-loss", "name": "Loss Rank", "description": "Wow, you suck.", "special": true, "lockedText": "Complete any song with a certain rank." },
             { "id": "shockedcat", "name": "Shocked Cat", "description": "https://www.youtube.com/watch?v=VuYmOeiScv4&t=380s", "special": true, "lockedText": "???" },
-            { "id": "tuntematon", "name": " ", "description": "<a=0.05>She got what she deserved.</a>", "special": true, "lockedText": "<a=0.05>Nightmares manifest.</a>", "scale": 0.0, "noCount": true }
+            { "id": "tuntematon", "name": " ", "description": "<a=0.05>She got what she deserved.</a>", "special": true, "lockedText": "<a=0.05>Nightmares manifest.</a>", "scale": 0.0, "hidden": true }
         ]
     }
 }

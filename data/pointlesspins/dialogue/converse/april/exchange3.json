@@ -1,0 +1,40 @@
+{
+    "canSkipOnRepeat": true,
+    "dialogue": 
+    [
+        {
+            "text": "Right,<d=1.0/> so.",
+            "speaker": "April",
+            "canSkip": false
+        },
+        {
+            "text": "Ophelia probably will not like me selling this one.",
+            "speaker": "April",
+            "canSkip": false
+        },
+        {
+            "text": "It's not meant for the public y'know?",
+            "speaker": "April",
+            "canSkip": false
+        },
+        {
+            "text": "Eeehhhhh whateva.",
+            "speaker": "April",
+            "canSkip": false,
+            "speed": 0.02
+        },
+        {
+            "text": "I'll oughta be steep<d=0.25/> and ask for 10 &#xE001; Melody Stones though.",
+            "speaker": "April",
+            "canSkip": false
+        }
+    ],
+    "response":
+    {
+        "options":
+        [
+            ["Sure.", "yes"],
+            ["Nuh uh!", "no"]
+        ]
+    }
+}

@@ -116,6 +116,7 @@ class PinBoard extends MusicBeatSubState
         var categoryRow:Int = -1;
         var categoryOffset:Int = 0;
         var textOffset:Float = 80;
+        var hiddenOffset:Int = 0;
         for (i in 0...PIN_RARITIES.length)
         {
             if (PINS_BY_RARITY[i].length == 0) continue;
@@ -129,21 +130,28 @@ class PinBoard extends MusicBeatSubState
                 {
                     currentRow++;
                     categoryRow++;
+                    hiddenOffset = 0;
                 }
 
-                var pinX:Float = PIN_X_START + (j % PINS_PER_ROW) * PIN_X_DIFF;
+                var pinData = PINS_BY_RARITY[i][j];
+                var isPinUnlocked:Bool = unlockedPinsData.exists(pinData.id);
+                if (FunkBucks.debug_pins != null) isPinUnlocked = FunkBucks.debug_pins;
+
+                if (!isPinUnlocked && pinData.hidden ?? false)
+                {
+                    hiddenOffset++;
+                    continue;
+                }
+
+                var pinX:Float = PIN_X_START + ((j - hiddenOffset) % PINS_PER_ROW) * PIN_X_DIFF;
                 var pinY:Float = PIN_Y_START + currentRow * 150;
-                var pinColumn:Int = j % PINS_PER_ROW;
+                var pinColumn:Int = (j - hiddenOffset) % PINS_PER_ROW;
 
                 pinY += categoryOffset;
 
-                // Makes this look a bit cleaner some amount of lines down the... line.
-                var pinData = PINS_BY_RARITY[i][j];
                 var pin:PinSprite = new PinSprite(pinX, pinY);
                 pin.position = [pinColumn, currentRow];
                 pin.rarity = PIN_RARITIES[i];
-                var isPinUnlocked:Bool = unlockedPinsData.exists(pinData.id);
-                if (FunkBucks.debug_pins != null) isPinUnlocked = FunkBucks.debug_pins;
                 if (isPinUnlocked)
                 {
                     unlockedPins++;
@@ -162,7 +170,7 @@ class PinBoard extends MusicBeatSubState
 
                 pinRowLengths[currentRow]++;
 
-                if (!pinData.noCount ?? false)
+                if (!pinData.hidden ?? false)
                 {
                     pinCount++;
                     pinsInRarity++;
@@ -171,7 +179,7 @@ class PinBoard extends MusicBeatSubState
 
             var tc:String = ReflectUtil.getAnonymousField(pinJSON, PIN_RARITIES[i]).color;
             var star:String = unlockedPinsPerRarity[i] >= pinsInRarity ? '${FBIcon.Star} ' : '';
-            var rarityText = new BAlphabet(PIN_X_START - 24, textOffset, '<b>$star<c=$tc>${PIN_RARITIES[i]}</c> <s=0.5>(${(unlockedPinsPerRarity[i] ?? 0)}/$pinsInRarity)</s>${FunkBucks.debug_pins ? "<c=FF0000>*</c>" : ""}</b>');
+            var rarityText = new BAlphabet(PIN_X_START - 24, textOffset, '<b>$star<c=$tc>${PIN_RARITIES[i]}</c> <s=0.5>(${(unlockedPinsPerRarity[i] ?? 0)}/$pinsInRarity)</s>${FunkBucks.debug_pins ? " <c=FF0000>*</c>" : ""}</b>');
             rarityText.scale.set(0.8, 0.8);
             add(rarityText);
 
@@ -201,7 +209,7 @@ class PinBoard extends MusicBeatSubState
         pinName.alignment = "center";
         add(pinName);
 
-        pinDescription = new BAlphabet(FlxG.width / 2, pinName.y + 55, "", { lineHeight: 60 });
+        pinDescription = new BAlphabet(FlxG.width / 2, pinName.y + 55, "", { lineHeight: 70 });
         pinDescription.scale.set(0.4, 0.4);
         pinDescription.alignment = "center";
         add(pinDescription);

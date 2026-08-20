@@ -27,6 +27,9 @@ class DialogBase
 
     var overrideAnim:Null<String> = null;
 
+    var dialogueSound:String = "chartingSounds/keyboard";
+    var dialogueSoundRange:Array<Int> = [1, 3];
+
     /**
      * calling start() here does nothing, presumably it's calling the empty start of this class and not the overriden ones in the subclasses, Ugh 2
      * so now I have to call start() manually in the subclass constructors
@@ -62,5 +65,20 @@ class DialogBase
         shop.showMenuItems(true);
         shop.toggleDisplayBucks(true);
         shop.toggleDisplayJewels(true);
+    }
+
+    /**
+     * List of default events to call so this switch statement doesn't have to be copied to every dialog file.
+     * Call this from `dialog.onTextEvent()`.
+     * @param event Name of the event.
+     */
+    function defaultTextEvent(event:String):Void
+    {
+        switch (event)
+        {
+            case "tt": shouldTalk = !shouldTalk;
+            case "ta": playAnim = !playAnim;
+            case "ts": playSound = !playSound;
+        }
     }
 }

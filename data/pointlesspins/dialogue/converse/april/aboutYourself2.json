@@ -1,0 +1,31 @@
+{
+    "canSkipOnRepeat": true,
+    "dialogue": 
+    [
+        {
+            "text": "As much it pays well...",
+            "speaker": "April",
+            "canSkip": false
+        },
+        {
+            "text": "Get me the HELL out of customer service.",
+            "speaker": "April",
+            "canSkip": false
+        },
+        {
+            "text": "I don't really like it.",
+            "speaker": "April",
+            "canSkip": false
+        },
+        {
+            "text": "Sadly,<d=0.25/> Ophelia doesn't let just anybody operate as a shopkeep.",
+            "speaker": "April",
+            "canSkip": false
+        },
+        {
+            "text": "I'm kinda forced to be here cause of that...",
+            "speaker": "April",
+            "canSkip": false
+        }
+    ]
+}

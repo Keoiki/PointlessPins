@@ -309,7 +309,14 @@ class Dialogue extends FunkinGroup
 
         if (dialogueLine.boxData == null)
         {
-            dialogueLine.boxPreset ??= "ophelia";
+            if (dialogueLine.speaker == null)
+            {
+                dialogueLine.boxPreset ??= "ophelia";
+            }
+            else
+            {
+                dialogueLine.boxPreset ??= dialogueLine.speaker.toLowerCase();
+            }
             dialogueLine.boxData = dialogueBoxPatternPreset(dialogueLine.boxPreset);
         }
 
@@ -417,13 +424,13 @@ class Dialogue extends FunkinGroup
         {
             var filePath:String = 'data/pointlesspins/dialogue/$id.json';
             // Dialogue with "dialogueFlavor" set to "nice" will be less meaner.
-            if (!Preferences.naughtyness || FunkBucks.save.dialogueFlavor == "nice")
-            {
-                if (Assets.exists('data/pointlesspins/dialogue/$id-c.json'))
-                {
-                    filePath = 'data/pointlesspins/dialogue/$id-c.json';
-                }
-            }
+            // if (!Preferences.naughtyness || FunkBucks.save.dialogueFlavor == "nice")
+            // {
+                // if (Assets.exists('data/pointlesspins/dialogue/$id-c.json'))
+                // {
+                    // filePath = 'data/pointlesspins/dialogue/$id-c.json';
+                // }
+            // }
             currentDialogue = SerializerUtil.fromJSON(Assets.getText(filePath));
         }
         dialogueIndex = -1;

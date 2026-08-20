@@ -1,0 +1,36 @@
+{
+    "canSkipOnRepeat": true,
+    "dialogue": 
+    [
+        {
+            "text": "Me?",
+            "speaker": "April",
+            "canSkip": false
+        },
+        {
+            "text": "I don't really do that much here.",
+            "speaker": "April",
+            "canSkip": false
+        },
+        {
+            "text": "Dunno why Ophelia insists on keeping me here.",
+            "speaker": "April",
+            "canSkip": false
+        },
+        {
+            "text": "Constant arguments about policy and whatnot.",
+            "speaker": "April",
+            "canSkip": false
+        },
+        {
+            "text": "Maybe she thinks that's good?",
+            "speaker": "April",
+            "canSkip": false
+        },
+        {
+            "text": "Pays well atleast.",
+            "speaker": "April",
+            "canSkip": false
+        }
+    ]
+}

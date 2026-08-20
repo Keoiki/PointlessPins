@@ -1,0 +1,26 @@
+{
+    "canSkipOnRepeat": true,
+    "dialogue": 
+    [
+        {
+            "text": "Mm,<d=0.5/> yeah.",
+            "speaker": "April",
+            "canSkip": false
+        },
+        {
+            "text": "Those boxes that supposedly no-one knows how they work.",
+            "speaker": "April",
+            "canSkip": false
+        },
+        {
+            "text": "Except that's a big fat lie.",
+            "speaker": "April",
+            "canSkip": false
+        },
+        {
+            "text": "Ophelia,<d=0.25/> me,<d=0.25/> and a few others know how,<d=0.25/>\nbut that's a secret even I can't reveal.",
+            "speaker": "April",
+            "canSkip": false
+        }
+    ]
+}

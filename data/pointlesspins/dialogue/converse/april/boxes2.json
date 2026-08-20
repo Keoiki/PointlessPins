@@ -1,0 +1,26 @@
+{
+    "canSkipOnRepeat": true,
+    "dialogue": 
+    [
+        {
+            "text": "These things are Ophelia's creations.",
+            "speaker": "April",
+            "canSkip": false
+        },
+        {
+            "text": "I've got no clue how she got these to function in the first place.",
+            "speaker": "April",
+            "canSkip": false
+        },
+        {
+            "text": "There aren't too many these to begin with.",
+            "speaker": "April",
+            "canSkip": false
+        },
+        {
+            "text": "If anyone were to steal one of these,<d=0.25/>\nOphelia would 100 percent have their heads on a spike\nthe next morning.",
+            "speaker": "April",
+            "canSkip": false
+        }
+    ]
+}

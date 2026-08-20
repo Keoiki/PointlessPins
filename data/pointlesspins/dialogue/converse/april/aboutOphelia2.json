@@ -1,0 +1,26 @@
+{
+    "canSkipOnRepeat": true,
+    "dialogue": 
+    [
+        {
+            "text": "She tends to keep personal info minimal.",
+            "speaker": "April",
+            "canSkip": false
+        },
+        {
+            "text": "Even her age is not of public knowledge,<d=0.25/> showhow.",
+            "speaker": "April",
+            "canSkip": false
+        },
+        {
+            "text": "So you could imagine my surprise to know she's 37<d=1/>, <i>probably</i>.",
+            "speaker": "April",
+            "canSkip": false
+        },
+        {
+            "text": "Maybe I overestimated how ancient people'd look in their thirties.",
+            "speaker": "April",
+            "canSkip": false
+        }
+    ]
+}

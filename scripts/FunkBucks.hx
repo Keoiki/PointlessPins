@@ -42,7 +42,7 @@ typedef PinData = {
     ?source:String, // The source of a pin, whether it's based on a mod, or something else. (optional)
     ?special:Bool, // Whether or not a pin can only be unlocked once. Excludes them from Mystery Boxes. (optional, default: false)
     ?lockedText:String, // The text to display when a pin is locked. (optional, use when `special` is true)
-    ?noCount:Bool // Use sparringly.
+    ?hidden:Bool // Hides the pin from the board if not unlocked, and doesn't count it towards the pin total.
 }
 
 typedef BoxData = {
@@ -877,6 +877,10 @@ class FunkBucks extends Module
                 // {
                     // trace(i, Math.pow(i, 2) / 1000);
                 // }
+                // trace(0.25 + Math.min(1.0, 0.25 * (1 * (Math.floor(11 / 12)))));
+                // trace(0.25 + Math.min(1.0, 0.25 * (1 * (Math.floor(14 / 12)))));
+                // trace(0.25 + Math.min(1.0, 0.25 * (1 * (Math.floor(26 / 12)))));
+                // trace(0.25 + Math.min(1.0, 0.25 * (1 * (Math.floor(50 / 12)))));
                 trace(getDailies());
             }
 
@@ -981,9 +985,10 @@ class FunkBucks extends Module
             #if keoiki.endlessmode
             if (EndlessStatus.isEndless)
             {
-                bucksToAward *= 0.25;
+                var endlessMultiplier:Float = 0.25;
+                endlessMultiplier += Math.min(1.0, 0.25 * (1 * (Math.floor(Math.floor(EndlessStatus.currentLoopFloat) / 12))));
+                bucksToAward *= endlessMultiplier;
                 resultTextColor = "00BBFF";
-                trace("Endless Mode! Cut your earnings in 4, ha!");
             }
             else #end if (currentDailies.contains(currentSongOrWeek))
             {

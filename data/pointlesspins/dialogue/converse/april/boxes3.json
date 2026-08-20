@@ -1,0 +1,21 @@
+{
+    "canSkipOnRepeat": true,
+    "dialogue": 
+    [
+        {
+            "text": "Actually,<d=0.25/> there was a jackass one who came in once and\ndestroyed one of the boxes.",
+            "speaker": "April",
+            "canSkip": false
+        },
+        {
+            "text": "Them was hauled away quickly after.",
+            "speaker": "April",
+            "canSkip": false
+        },
+        {
+            "text": "I think Ophelia made sure that guy paid a PRETTY BIG penny for that.",
+            "speaker": "April",
+            "canSkip": false
+        }
+    ]
+}

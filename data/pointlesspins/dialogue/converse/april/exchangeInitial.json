@@ -1,0 +1,36 @@
+{
+    "canSkipOnRepeat": true,
+    "dialogue": 
+    [
+        {
+            "text": "Oh,<d=0.25/> um..",
+            "speaker": "April",
+            "canSkip": false
+        },
+        {
+            "text": "Ophelia told me to not take those from you.",
+            "speaker": "April",
+            "canSkip": false
+        },
+        {
+            "text": ".<d=0.5/>.<d=0.5/>.<d=0.5/>.<d=0.5/>.<d=0.5/> but since when I've given a damn thing about her rules?!",
+            "speaker": "April",
+            "canSkip": false
+        },
+        {
+            "text": "I know Ophelia would give you random pins for them.",
+            "speaker": "April",
+            "canSkip": false
+        },
+        {
+            "text": "So how about I give you some <i>specific</i> ones instead?",
+            "speaker": "April",
+            "canSkip": false
+        },
+        {
+            "text": "Really putting those rules of hers to the test.",
+            "speaker": "April",
+            "canSkip": false
+        }
+    ]
+}

@@ -1,0 +1,36 @@
+{
+    "canSkipOnRepeat": true,
+    "dialogue": 
+    [
+        {
+            "text": "Just so you know,<d=0.25/> that pin board over there...",
+            "speaker": "April",
+            "canSkip": false
+        },
+        {
+            "text": "Doesn't actually show all of the pins that exist.",
+            "speaker": "April",
+            "canSkip": false
+        },
+        {
+            "text": "It only shows the pins meant for the general public.",
+            "speaker": "April",
+            "canSkip": false
+        },
+        {
+            "text": "There's quite a few that aren't meant to be handed out to commoners.",
+            "speaker": "April",
+            "canSkip": false
+        },
+        {
+            "text": "Though,<d=0.25/> if you somehow get one,<d=0.25/> you can add it to the board yourself.",
+            "speaker": "April",
+            "canSkip": false
+        },
+        {
+            "text": "That'll be Ophelia's problem if you do,<d=0.25/> <W>hahaha!</W>",
+            "speaker": "April",
+            "canSkip": false
+        }
+    ]
+}

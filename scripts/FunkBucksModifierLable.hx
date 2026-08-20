@@ -57,7 +57,7 @@ class FunkBucksModifierLable extends Module
             if (isEndlessOn && canBeUpdated && addedToState)
             {
                 canBeUpdated = false;
-                modifierText.text = '\n<b><c=00BBFF>${formatModifier(0.25)} ${FBIcon.Buck} (Endless)</c></b>';
+                modifierText.text = '<s=0.75><b><c=00BBFF>Endless Mode:</s>\n${formatModifier(0.25)}-${formatModifier(1.25)} ${FBIcon.Buck}</c></b>';
                 modifierText.alpha = 1;
             }
             else if (!isEndlessOn && !canBeUpdated && addedToState)

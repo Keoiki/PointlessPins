@@ -1,0 +1,21 @@
+{
+    "canSkipOnRepeat": true,
+    "dialogue": 
+    [
+        {
+            "text": "Another one of my ideas!",
+            "speaker": "April",
+            "canSkip": false
+        },
+        {
+            "text": "Though Ophelia said that she didn't actually make them...",
+            "speaker": "April",
+            "canSkip": false
+        },
+        {
+            "text": "So who did then?",
+            "speaker": "April",
+            "canSkip": false
+        }
+    ]
+}

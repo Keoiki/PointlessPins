@@ -36,7 +36,7 @@ class RealJob extends DialogBase
         {
             if (FunkBucks.skipTalking.contains(code)) return;
             if (!shouldTalk) return;
-            if (playSound) FunkinSound.playOnce(Paths.sound("chartingSounds/keyboard" + FlxG.random.int(1, 3)), 1.0);
+            if (playSound) FunkinSound.playOnce(Paths.sound(dialogueSound + FlxG.random.int(dialogueSoundRange[0], dialogueSoundRange[1])), 1.0);
             if (playAnim) shop.shopkeeper.playAnimation('Talk', false, false);
         }
 

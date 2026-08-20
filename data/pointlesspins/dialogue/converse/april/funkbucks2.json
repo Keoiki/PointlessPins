@@ -1,0 +1,26 @@
+{
+    "canSkipOnRepeat": true,
+    "dialogue": 
+    [
+        {
+            "text": "You can't really spend FunkBucks on much.",
+            "speaker": "April",
+            "canSkip": false
+        },
+        {
+            "text": "I think the boxes are the only thing right now,\nthough Ophelia is looking into more things.",
+            "speaker": "April",
+            "canSkip": false
+        },
+        {
+            "text": "Can't help but notice it does look similar\nto another certain currency in a game I played.",
+            "speaker": "April",
+            "canSkip": false
+        },
+        {
+            "text": "What a fucking rip-off.",
+            "speaker": "April",
+            "canSkip": false
+        }
+    ]
+}

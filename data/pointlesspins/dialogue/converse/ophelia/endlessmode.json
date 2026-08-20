@@ -3,22 +3,22 @@
     "dialogue": 
     [
         {
-            "text": "The boxes are your main way of obtaining pins.",
+            "text": "Ah,<d=0.25/> Endless Mode?",
             "speaker": "Ophelia",
             "canSkip": false
         },
         {
-            "text": "Each box has set rarities it can pick to give a pin from.",
+            "text": "Yeah,<d=0.25/> we had to put some restrictions on it\nwhen it comes to FunkBuck earnings.",
             "speaker": "Ophelia",
             "canSkip": false
         },
         {
-            "text": "Said rarities and their chances are listed in the bottom-right.",
+            "text": "Or at the very least make it so you have to work for it!",
             "speaker": "Ophelia",
             "canSkip": false
         },
         {
-            "text": "From there,<d=0.25/> the pin chosen from the rarity is purely random,\nonly the rarities are weighed.",
+            "text": "The FunkBuck modifier starts at 25%,<d=0.25/> but for every\n12th loop it increases by 25%.",
             "speaker": "Ophelia",
             "canSkip": false
         },

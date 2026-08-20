@@ -1,0 +1,34 @@
+{
+    "canSkipOnRepeat": true,
+    "dialogue": 
+    [
+        {
+            "text": "Let's see...",
+            "speaker": "April",
+            "canSkip": false
+        },
+        {
+            "text": "At least someone cared enough to smoothen the edges slightly.",
+            "speaker": "April",
+            "canSkip": false
+        },
+        {
+            "text": "This one's a blockier version of one you might already have.",
+            "speaker": "April",
+            "canSkip": false
+        },
+        {
+            "text": "I'll give it for 4 of those &#xE001; gems.",
+            "speaker": "April",
+            "canSkip": false
+        }
+    ],
+    "response":
+    {
+        "options":
+        [
+            ["Sure.", "yes"],
+            ["Nuh uh!", "no"]
+        ]
+    }
+}

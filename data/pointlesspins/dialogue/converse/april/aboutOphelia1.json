@@ -1,0 +1,31 @@
+{
+    "canSkipOnRepeat": true,
+    "dialogue": 
+    [
+        {
+            "text": "So, about Ophelia?",
+            "speaker": "April",
+            "canSkip": false
+        },
+        {
+            "text": "She's actually the big boss 'round here.",
+            "speaker": "April",
+            "canSkip": false
+        },
+        {
+            "text": "She only poses as a simple shopkeeper.",
+            "speaker": "April",
+            "canSkip": false
+        },
+        {
+            "text": "Now, you might ask, why?",
+            "speaker": "April",
+            "canSkip": false
+        },
+        {
+            "text": "I don't know.",
+            "speaker": "April",
+            "canSkip": false
+        }
+    ]
+}

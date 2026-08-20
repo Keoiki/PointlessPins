@@ -1,0 +1,21 @@
+{
+    "canSkipOnRepeat": true,
+    "dialogue": 
+    [
+        {
+            "text": "I don't really get why these exist in the first place.",
+            "speaker": "April",
+            "canSkip": false
+        },
+        {
+            "text": "Like,<d=0.25/> surely they weren' made to just be pointless???",
+            "speaker": "April",
+            "canSkip": false
+        },
+        {
+            "text": "Ophelia won't tell me.",
+            "speaker": "April",
+            "canSkip": false
+        }
+    ]
+}

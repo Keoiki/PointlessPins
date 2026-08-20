@@ -1,0 +1,31 @@
+{
+    "canSkipOnRepeat": true,
+    "dialogue": 
+    [
+        {
+            "text": "I don't think she goes home ofter.",
+            "speaker": "April",
+            "canSkip": false
+        },
+        {
+            "text": "She seems to spend day and night either here,<d=0.25/>\nor in her office.",
+            "speaker": "April",
+            "canSkip": false
+        },
+        {
+            "text": "At this point,<d=0.25/> wouldn't put it past her to\nconsider her office to be her home.",
+            "speaker": "April",
+            "canSkip": false
+        },
+        {
+            "text": "Can't tell how many times I've walked in\nonly to find her cutting logs at the desk.",
+            "speaker": "April",
+            "canSkip": false
+        },
+        {
+            "text": "Yeah,<d=1/> she snores.",
+            "speaker": "April",
+            "canSkip": false
+        }
+    ]
+}

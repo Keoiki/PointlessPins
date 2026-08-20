@@ -1,0 +1,31 @@
+{
+    "canSkipOnRepeat": true,
+    "dialogue": 
+    [
+        {
+            "text": "Nah,<d=0.25/> Ophelia didn't make these ones.",
+            "speaker": "April",
+            "canSkip": false
+        },
+        {
+            "text": "I dunno how'd you put music into them.",
+            "speaker": "April",
+            "canSkip": false
+        },
+        {
+            "text": "You can sometimes hear tunes from them,<d=0.25/> that's why.",
+            "speaker": "April",
+            "canSkip": false
+        },
+        {
+            "text": "By tunes,<d=0.25/> I of course mean a random assortment of notes.",
+            "speaker": "April",
+            "canSkip": false
+        },
+        {
+            "text": "Feels like a monkeys on a typewriter type situation.",
+            "speaker": "April",
+            "canSkip": false
+        }
+    ]
+}

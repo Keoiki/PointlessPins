@@ -1,0 +1,26 @@
+{
+    "canSkipOnRepeat": true,
+    "dialogue": 
+    [
+        {
+            "text": "FunkBucks,<d=0.25/> yup.",
+            "speaker": "April",
+            "canSkip": false
+        },
+        {
+            "text": "If you thought they were also an creation of Ophelia's,<d=0.25/>\nyou'd be right.",
+            "speaker": "April",
+            "canSkip": false
+        },
+        {
+            "text": "Salary here contains both FunkBucks and actual money.\n<d=0.25/>Suprising generous know Ophelia.",
+            "speaker": "April",
+            "canSkip": false
+        },
+        {
+            "text": "You can turn in dollars for FunkBucks,<d=0.25/> not the other way 'round though.",
+            "speaker": "April",
+            "canSkip": false
+        }
+    ]
+}

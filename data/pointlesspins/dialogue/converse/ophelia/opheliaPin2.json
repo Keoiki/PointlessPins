@@ -17,14 +17,7 @@
             "canSkip": false
         },
         {
-            "text": "I have my reasons for keeping her around,\ndespite all the rules she breaks...",
-            "speaker": "Ophelia",
-            "canSkip": false,
-            "delayLine": true,
-            "hideDuringDelay": true
-        },
-        {
-            "text": "But it gets to a point.",
+            "text": "Why would there be a pin of me in a formal dress anyway<d=0.75/>.<d=0.75/>.<d=0.75/>.",
             "speaker": "Ophelia",
             "canSkip": false
         },
@@ -34,12 +27,12 @@
             "canSkip": false
         },
         {
-            "text": "Huh, no, you can keep the pin.",
+            "text": "Huh,<d=0.25/> no,<d=0.25/> you can keep the pin.",
             "speaker": "Ophelia",
             "canSkip": false
         },
         {
-            "text": "I will be asking her for the\nMelody Stones though.",
+            "text": "I will be asking her for the Melody Stones though.",
             "speaker": "Ophelia",
             "canSkip": false
         },
