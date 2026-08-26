@@ -8,17 +8,22 @@
             "canSkip": false
         },
         {
-            "text": "Even her age is not of public knowledge,<d=0.25/> showhow.",
+            "text": "Even her age is not of public knowledge,<d=0.25/> somehow.",
             "speaker": "April",
             "canSkip": false
         },
         {
-            "text": "So you could imagine my surprise to know she's 37<d=1/>, <i>probably</i>.",
+            "text": "So I was surprised to know she's 43<d=0.5/>,\nlike<d=0.25/> twice my age!",
             "speaker": "April",
             "canSkip": false
         },
         {
-            "text": "Maybe I overestimated how ancient people'd look in their thirties.",
+            "text": "Maybe I overestimated how ancient people'd look in their fourties.",
+            "speaker": "April",
+            "canSkip": false
+        },
+        {
+            "text": "Makes you wonder what other secrets she's keeping...",
             "speaker": "April",
             "canSkip": false
         }

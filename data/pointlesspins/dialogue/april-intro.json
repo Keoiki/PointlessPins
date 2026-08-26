@@ -3,13 +3,18 @@
     [
         {
             "text": "...",
-            "speaker": "April",
-            "canSkip": false
+            "canSkip": false,
+            "boxPreset": "april"
         },
         {
-            "text": "Oh, you're here.",
-            "speaker": "April",
-            "canSkip": false
+            "text": "...",
+            "canSkip": false,
+            "boxPreset": "april"
+        },
+        {
+            "text": "Oh,<d=0.25/> you're here.",
+            "canSkip": false,
+            "boxPreset": "april"
         },
         {
             "text": "Name's April.",
@@ -17,12 +22,17 @@
             "canSkip": false
         },
         {
-            "text": "Ophelia has me filling in for weekends while she goes to parties.",
+            "text": "Ophelia has decided to start taking breaks\nfrom shop duty,<d=0.25/> those being the weekends.",
             "speaker": "April",
             "canSkip": false
         },
         {
-            "text": "Nah, realistically, she's probably sleeping in her office, <i>again</i>.",
+            "text": "I'd imagine she's going to some fancy parties\nright about now.",
+            "speaker": "April",
+            "canSkip": false
+        },
+        {
+            "text": "Nah,<d=0.25/> realistically,<d=0.5/> she's probably sleeping\nin her office,<d=0.75/> <i>again</i>.",
             "speaker": "April",
             "canSkip": false
         }

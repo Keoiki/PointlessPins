@@ -8,7 +8,12 @@
             "canSkip": false
         },
         {
-            "text": "Like yeah, don't wanna give out free stuff,\nbut that's just 'n overexagerated reaction.",
+            "text": "Like yeah, don't wanna give out free stuff,\nbut that's just 'n overexaggerated reaction.",
+            "speaker": "April",
+            "canSkip": false
+        },
+        {
+            "text": "Went damn near pale when I mentioned giving out\nthose blue gems too.",
             "speaker": "April",
             "canSkip": false
         }

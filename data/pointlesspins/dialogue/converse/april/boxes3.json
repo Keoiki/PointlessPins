@@ -3,7 +3,7 @@
     "dialogue": 
     [
         {
-            "text": "Actually,<d=0.25/> there was a jackass one who came in once and\ndestroyed one of the boxes.",
+            "text": "Actually,<d=0.25/> there was a jackass one who came in once and\nmananged to destroy one of the boxes.",
             "speaker": "April",
             "canSkip": false
         },
@@ -13,7 +13,7 @@
             "canSkip": false
         },
         {
-            "text": "I think Ophelia made sure that guy paid a PRETTY BIG penny for that.",
+            "text": "Ophelia made sure that guy paid a PRETTY BIG penny for that.",
             "speaker": "April",
             "canSkip": false
         }
