@@ -32,7 +32,7 @@
             { "id": "cardboardbox", "name": "Cardboard Box", "description": "The cheapest of them all.", "special": true, "lockedText": "This pin is unlockable from the Rewards." },
             { "id": "haxe", "name": "Haxe", "description": "The backbone of this game." },
             { "id": "boyfriend-amongus-week1", "name": "Boyfriend <s=0.5>(Polus)</s>", "source": "VS. Impostor #MOD#" },
-            { "id": "girlfriend-amongus-week1", "name": "Girlfriend (<s=0.5>(Polus)</s>", "source": "VS. Impostor #MOD#" },
+            { "id": "girlfriend-amongus-week1", "name": "Girlfriend <s=0.5>(Polus)</s>", "source": "VS. Impostor #MOD#" },
             { "id": "red-amongus-week1", "name": "Red", "description": "Way to draw attention to yourself, huh?", "source": "VS. Impostor #MOD#" },
             { "id": "salty-ssn", "name": "Salty", "source": "Salty's Sunday Night #MOD#" },
             { "id": "itsumi-ssn", "name": "Itsumi", "source": "Salty's Sunday Night #MOD#" },
