@@ -93,11 +93,11 @@ class Dialogue extends FunkinGroup
     var responseHitbox:FlxObject;
     var responseDots:Array<FunkinSprite> = [];
 
-    public function new(dialogueID:String, ?dialogueObject:FBDialogueFile):Void
+    public function new(_dialogueID:String, ?dialogueObject:FBDialogueFile):Void
     {
         super();
 
-        loadDialogue(dialogueID, dialogueObject);
+        loadDialogue(_dialogueID, dialogueObject);
 
         patternShader = new ImposePatternShader();
 
@@ -221,13 +221,14 @@ class Dialogue extends FunkinGroup
     var isDelayed:Bool = false;
     var delayHidden:Bool = false;
     var isResponding:Bool = false;
+    var justStarted:Bool = true;
 
     override function update(elapsed:Float):Void
     {
         super.update(elapsed);
 
         patternShader.update(elapsed);
-        if (!hasEnded)
+        if (!hasEnded && !justStarted)
         {
             if (isDelayed && !isResponding)
             {
@@ -265,8 +266,15 @@ class Dialogue extends FunkinGroup
         }
         else
         {
-            this.kill();
-            this.destroy();
+            if (justStarted)
+            {
+                justStarted = false;
+            }
+            else
+            {
+                this.kill();
+                this.destroy();
+            }
         }
     }
 
@@ -585,6 +593,18 @@ class Dialogue extends FunkinGroup
                 textColor: "FFFFFF",
                 pattern: "diamonds-alt",
                 patternColor: "67B1D8",
+                patternAngle: 10,
+                patternDirection: [0.1, 0.03],
+                patternSpeed: 0.3,
+                patternBlend: 1
+            }
+            case "april":
+            {
+                shape: "round",
+                shapeColor: "D9471C",
+                textColor: "FFFFFF",
+                pattern: "diamonds-alt",
+                patternColor: "D9471C",
                 patternAngle: 10,
                 patternDirection: [0.1, 0.03],
                 patternSpeed: 0.3,
