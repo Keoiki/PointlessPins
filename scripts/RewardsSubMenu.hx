@@ -769,6 +769,14 @@ class RewardItem extends ScriptedFlxSpriteGroup
             {
                 case "funkbucks": reached = FunkBucks.getFunkCoinsLifetime() >= requirement;
                 case "melodystones": reached = FunkBucks.getBlueJewelsLifetime() >= requirement;
+                case "totalboxes":
+                    var count:Int = 0;
+                    for (box => opens in FunkBucks.getOpenedBoxCounts())
+                    {
+                        if (!["cardboard", "smallgiftbox", "fancycoffret", "shimmeringpouch"].contains(box)) continue;
+                        count += opens;
+                    }
+                    reached = count >= requirement;
                 default: reached = FunkBucks.getOpenedBoxCount(category) >= requirement;
             }
         }

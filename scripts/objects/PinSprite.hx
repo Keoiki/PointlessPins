@@ -1,5 +1,6 @@
 package funkbucks.objects;
 
+import EReg;
 import flixel.addons.display.FlxRuntimeShader;
 import flixel.tweens.FlxTween;
 import flixel.util.FlxColor;
@@ -133,7 +134,10 @@ class PinSprite extends FunkinSprite
 
     override function update(elapsed:Float):Void
     {
-        if (pID == 'tuntematon') visible = false;
+        if (pID == 'tuntematon') 
+        {
+            visible = false;
+        }
 
         super.update(elapsed);
     }

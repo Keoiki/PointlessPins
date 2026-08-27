@@ -179,7 +179,7 @@ class PinBoard extends MusicBeatSubState
 
             var tc:String = ReflectUtil.getAnonymousField(pinJSON, PIN_RARITIES[i]).color;
             var star:String = unlockedPinsPerRarity[i] >= pinsInRarity ? '${FBIcon.Star} ' : '';
-            var rarityText = new BAlphabet(PIN_X_START - 24, textOffset, '<b>$star<c=$tc>${PIN_RARITIES[i]}</c> <s=0.5>(${(unlockedPinsPerRarity[i] ?? 0)}/$pinsInRarity)</s>${FunkBucks.debug_pins ? " <c=FF0000>*</c>" : ""}</b>');
+            var rarityText = new BAlphabet(PIN_X_START - 24, textOffset, '<b>$star<c=$tc>${PIN_RARITIES[i]}</c> <s=0.5>(${(unlockedPinsPerRarity[i] ?? 0)}/$pinsInRarity)</s>${(FunkBucks.debug_pins ? " <c=FF0000>*</c>" : "")}</b>');
             rarityText.scale.set(0.8, 0.8);
             add(rarityText);
 
@@ -245,7 +245,7 @@ class PinBoard extends MusicBeatSubState
         pinBoard.zIndex = -1000;
 
         var star:String = unlockedPins >= pinCount ? '<s=1.5>${FBIcon.Star}</s><o=20,20/> ' : '';
-        var menuUnlockedText = new BAlphabet(PIN_X_START - 24, pinBoard.y - 50, '$star<b>Total: $unlockedPins/$pinCount${FunkBucks.debug_pins ? "<c=FF0000>*</c>" : ""}</b>');
+        var menuUnlockedText = new BAlphabet(PIN_X_START - 24, pinBoard.y - 50, '$star<b>Total: $unlockedPins/$pinCount${(FunkBucks.debug_pins ? "<c=FF0000>*</c>" : "")}</b>');
         menuUnlockedText.scale.set(0.7, 0.7);
         menuUnlockedText.zIndex = -990;
         add(menuUnlockedText);
@@ -421,7 +421,7 @@ class PinBoard extends MusicBeatSubState
                 if (!availablePin.special)
                 {
                     pinUnlockCount.alpha = 1;
-                    pinUnlockCount.text = 'Unlocked ${availablePin.unlockCount} time${availablePin.unlockCount == 1 ? "" : "s"}';
+                    pinUnlockCount.text = 'Unlocked ${availablePin.unlockCount} time${(availablePin.unlockCount == 1 ? "" : "s")}';
                 }
                 else
                 {
