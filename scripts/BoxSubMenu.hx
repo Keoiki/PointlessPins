@@ -141,6 +141,14 @@ class BoxSubMenu extends MusicBeatSubState
             changeSelection(1);
         }
 
+        if (STATE == "CONFIRMING")
+        {
+            if (TouchUtil.pressAction() && !TouchUtil.pressAction(boxHitbox, camera) && !FunkBucks.isMouseTooFast)
+            {
+                goBack();
+            }
+        }
+        
         if (controls.ACCEPT_P || (TouchUtil.pressAction(boxHitbox, camera) && !FunkBucks.isMouseTooFast))
         {
             pressedAccept();
@@ -242,7 +250,7 @@ class BoxSubMenu extends MusicBeatSubState
         boxDescription.text = box.description;
 
         var freeRolls:Int = FunkBucks.getFreeBoxCount(box.bID);
-        var boxPriceText:String = '<b>${freeRolls > 0 ? "FREE" : box.price} ${FBIcon.Buck}${FunkBucks.debug_boxes ? "<c=FF0000>*</c>" : ""}</b>\n';
+        var boxPriceText:String = '<b>${(freeRolls > 0 ? "FREE" : box.price)} ${FBIcon.Buck}${(FunkBucks.debug_boxes ? "<c=FF0000>*</c>" : "")}</b>\n';
 
         if (freeRolls > 0)
         {
