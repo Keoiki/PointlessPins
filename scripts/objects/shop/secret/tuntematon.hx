@@ -1,4 +1,4 @@
-package pointlesspins.objects;
+package pointlesspins.objects.shop.secret;
 
 import funkin.graphics.FunkinSprite;
 import funkin.util.TouchUtil;

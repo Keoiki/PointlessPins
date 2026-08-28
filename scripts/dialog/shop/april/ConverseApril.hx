@@ -1,4 +1,4 @@
-package funkbucks.dialog.shop.ophelia;
+package funkbucks.dialog.shop.april;
 
 import flixel.tweens.FlxEase;
 import flixel.tweens.FlxTween;
@@ -11,9 +11,10 @@ import funkbucks.dialog.DialogBase;
 import funkbucks.dialog.shop.OpheliaPin;
 import funkin.audio.FunkinSound;
 
-class ConverseOphelia extends DialogBase
+class ConverseApril extends DialogBase
 {
     var shop:Shop;
+    static var timesNothinged:Int = 0;
 
     override function new():Void
     {
@@ -34,8 +35,8 @@ class ConverseOphelia extends DialogBase
             dialogue:
             [
                 {
-                    text: "What do you wanna know?",
-                    speaker: "Ophelia"
+                    text: "What do you want?",
+                    speaker: "April"
                 }
             ],
             response:
@@ -44,7 +45,7 @@ class ConverseOphelia extends DialogBase
             }
         };
 
-        var dialog:Dialogue = new Dialogue("converseOphelia", dialogue);
+        var dialog:Dialogue = new Dialogue("converseApril", dialogue);
         dialog.cameras = [shop.cameraHUD];
 
         dialog.dialogueText.letterCallback = (code) ->
@@ -52,28 +53,20 @@ class ConverseOphelia extends DialogBase
             if (FunkBucks.skipTalking.contains(code)) return;
             if (!shouldTalk) return;
             if (playSound) FunkinSound.playOnce(Paths.sound(dialogueSound + FlxG.random.int(dialogueSoundRange[0], dialogueSoundRange[1])), 1.0);
-            if (playAnim) shop.shopkeeper.playAnimation('Talk', false, false);
+            if (playAnim) shop.shopkeeper.talk();
         }
 
         dialog.onDialogueResponse.add((response) ->
         {
             shop.remove(shop.dialog);
-            if (response != "close") Shopkeeper.annoyance--;
+            if (response != 'close') ConverseApril.timesNothinged = 0;
             switch (response)
             {
-                case "close":
-                    Shopkeeper.annoyance++;
-                    if (Shopkeeper.annoyance == 10)
+                case 'close':
+                    ConverseApril.timesNothinged++;
+                    if (ConverseApril.timesNothinged >= 10)
                     {
                         annoyedDialogue();
-                    }
-                    else if (Shopkeeper.annoyance == 20 && !FunkBucks.hasObtainedPin("ophelia"))
-                    {
-                        new OpheliaPin();
-                    }
-                    else if (Shopkeeper.annoyance >= 30 && Shopkeeper.annoyance % 10 == 0)
-                    {
-                        finish();
                     }
                     else
                     {
@@ -83,6 +76,7 @@ class ConverseOphelia extends DialogBase
             }
         });
 
+        shop.shopkeeper.playAnimation('Normal');
         shop.dialog = dialog;
         shop.add(dialog);
     }
@@ -93,37 +87,13 @@ class ConverseOphelia extends DialogBase
 
         options.push(['Nothing!', 'close']);
 
-        if (Tuntematon.gone && !Shopkeeper.caught)
-        {
-            options.push(['Hand behind shelf', 'ebgquwwghobehjovbefogbeqir']);
-        }
-
-        if (FunkBucks.getEvent("exchangeUnlocked") != 1)
-        {
-            if (FunkBucks.getBlueJewels() > 0 || FunkBucks.getBlueJewelsLifetime() > 0)
-            {
-                options.push(['Exchange?', 'unlockExchange']);
-            }
-            else
-            {
-                options.push(['Exchange?', 'lockedExchange']);
-            }
-        }
-        else
+        if (FunkBucks.getBlueJewels() > 0 || FunkBucks.getBlueJewelsLifetime() > 0)
         {
             options.push(['${FBIcon.Jewel} <c=82E9FF>Exchange</c>', 'openExchange']);
         }
 
-        if (FunkBucks.getOpheliaAnger() == 0)
-        {
-            options.push(['About yourself', 'aboutOphelia']);
-        }
-
-        if (FunkBucks.getEvent("hasMetApril") == 1)
-        {
-            options.push(['About <c=EA8645>April</c>', 'aboutApril']);
-        }
-
+        options.push(['About yourself', 'aboutYourself']);
+        options.push(['About <c=67B1D8>Ophelia</c>', 'aboutOphelia']);
         options.push(['${FBIcon.Buck} FunkBucks', 'funkbucks']);
 
         if (FunkBucks.getBlueJewels() > 0 || FunkBucks.getBlueJewelsLifetime() > 0)
@@ -134,7 +104,7 @@ class ConverseOphelia extends DialogBase
         options.push(['Pins', 'pins']);
         options.push(['Boxes', 'boxes']);
         options.push(['Rewards', 'rewards']);
-        options.push(['Daily Songs', 'dailySongs']);
+        options.push(['${FBIcon.Clover} Clover Coins', 'cloverCoins']);
 
         #if keoiki.endlessmode
         options.push(['<c=00BBFF>∞</c> Endless Mode <c=00BBFF>∞</c>', 'endlessMode']);
@@ -150,9 +120,7 @@ class ConverseOphelia extends DialogBase
             shop.remove(shop.dialog);
         }
 
-        shop.shopkeeper.suffix = "Confused";
-
-        var dialog:Dialogue = new Dialogue("anger/warning");
+        var dialog:Dialogue = new Dialogue("converse/april/annoyed");
         dialog.cameras = [shop.cameraHUD];
 
         dialog.dialogueText.letterCallback = (code) ->
@@ -160,13 +128,12 @@ class ConverseOphelia extends DialogBase
             if (FunkBucks.skipTalking.contains(code)) return;
             if (!shouldTalk) return;
             if (playSound) FunkinSound.playOnce(Paths.sound(dialogueSound + FlxG.random.int(dialogueSoundRange[0], dialogueSoundRange[1])), 1.0);
-            if (playAnim) shop.shopkeeper.playAnimation('Talk', false, false);
+            if (playAnim) shop.shopkeeper.talk();
         }
 
         dialog.onCompleteDialogue.add(() ->
         {
-            shop.shopkeeper.suffix = "";
-            shop.shopkeeper.playAnimation('Idle', true, false);
+            shop.shopkeeper.playAnimation('Normal');
             finish();
         });
         

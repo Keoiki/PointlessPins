@@ -359,7 +359,7 @@ class Dialogue extends FunkinGroup
         isDelayed = dialogueLine.delayLine;
         delayHidden = isDelayed && dialogueLine.hideDuringDelay;
 
-        dialogueText.localY = dialogueBox.localY + dialogueBox.height / 2 - (dialogueText.lineHeight / 2 * dialogueText.localScale.y) - (dialogueText.rows * 16);
+        dialogueText.localY = dialogueBox.localY + dialogueBox.height / 2 - ((dialogueText.lineHeight / 2 - 8) * dialogueText.localScale.y) - (dialogueText.rows * 16);
 
         advanceIcon.localVisible = false;
 

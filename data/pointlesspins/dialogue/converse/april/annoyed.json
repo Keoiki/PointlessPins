@@ -1,0 +1,11 @@
+{
+    "canSkipOnRepeat": true,
+    "dialogue": 
+    [
+        {
+            "text": "Quit wasting my time.",
+            "speaker": "April",
+            "canSkip": false
+        }
+    ]
+}

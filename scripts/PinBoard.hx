@@ -163,18 +163,15 @@ class PinBoard extends MusicBeatSubState
                 pin.source = pinData.source;
                 pin.special = pinData.special ?? false;
                 pin.pixel = pinData.pixel ?? false;
+                pin.hidden = pinData.hidden ?? false;
                 pin.lockedText = pinData.lockedText ?? (pin.special ? "This pin has a special unlock condition." : "This pin can be unlocked from a box.");
                 pin.setupPin(pinData.id, pinData.name, pinData.description, pinData.scale);
                 add(pin);
                 pins.push(pin);
 
                 pinRowLengths[currentRow]++;
-
-                if (!pinData.hidden ?? false)
-                {
-                    pinCount++;
-                    pinsInRarity++;
-                }
+                pinCount++;
+                pinsInRarity++;
             }
 
             var tc:String = ReflectUtil.getAnonymousField(pinJSON, PIN_RARITIES[i]).color;
@@ -418,16 +415,18 @@ class PinBoard extends MusicBeatSubState
 
                 pinName.text = availablePin.name;
 
+                var countText:String = "";
                 if (!availablePin.special)
                 {
-                    pinUnlockCount.alpha = 1;
-                    pinUnlockCount.text = 'Unlocked ${availablePin.unlockCount} time${(availablePin.unlockCount == 1 ? "" : "s")}';
+                    countText = 'Unlocked ${availablePin.unlockCount} time${(availablePin.unlockCount == 1 ? "" : "s")}';
                 }
                 else
                 {
-                    pinUnlockCount.alpha = 1;
-                    pinUnlockCount.text = 'One-Time Reward';
+                    countText = 'One-Time Reward';
                 }
+                if (availablePin.hidden) countText += ' (Hidden)';
+                pinUnlockCount.alpha = 1;
+                pinUnlockCount.text = countText;
                 
                 availablePin?.rotationTween?.cancel();
                 availablePin.angle = 0;

@@ -13,6 +13,8 @@ import flixel.tweens.FlxEase;
 import flixel.tweens.FlxTween;
 import flixel.util.FlxTimer;
 import funkbucks.dialog.shop.OpheliaPin;
+import funkbucks.dialog.shop.april.AprilIntro;
+import funkbucks.dialog.shop.april.ConverseApril;
 import funkbucks.dialog.shop.ophelia.ConverseOphelia;
 import funkbucks.dialog.shop.ophelia.RealJob;
 import funkbucks.objects.KeyCap;
@@ -20,6 +22,8 @@ import funkbucks.objects.Dialogue;
 import funkbucks.objects.shop.Clock;
 import funkbucks.objects.shop.DailyBoard;
 import funkbucks.objects.shop.RewardShelf;
+import funkbucks.objects.shop.secret.OpheliaPast;
+import pointlesspins.objects.shop.secret.Tuntematon;
 import funkbucks.shaders.ImposePatternShader;
 import funkin.audio.FunkinSound;
 import funkin.graphics.FunkinCamera;
@@ -131,7 +135,8 @@ class Shop extends MusicBeatState
         cameraFollowPointMarker.zIndex = 9999999;
         // add(cameraFollowPointMarker);
 
-        final skName:String = FunkBucks.getShopkeeper();
+        // final skName:String = FunkBucks.getShopkeeper();
+        final skName:String = "april";
 
         if (FlxG.random.bool(1) && !Shopkeeper.caught && skName == "ophelia")
         {
@@ -198,16 +203,18 @@ class Shop extends MusicBeatState
             add(t);
         }
 
-        lighting = new FunkinSprite(-800, -440).makeSolidColor(3000, 1600, 0xFF3C1B41);
+        // lighting = new FunkinSprite(-800, -440).makeSolidColor(3000, 1600, 0xFF3C1B41);
+        lighting = new FunkinSprite(-800, -440).makeSolidColor(3000, 1600, 0xFFFFC38B);
         lighting.zIndex = 10000;
         lighting.scrollFactor.set(0, 0);
-        lighting.blend = 9;
-        lighting.alpha = isShopkeeperGone ? 0.85 : 0;
+        lighting.blend = 14;
+        lighting.alpha = isShopkeeperGone ? 0.5 : 0;
         add(lighting);
 
-        shopkeeper = new Shopkeeper(1045 - spriteNudge, 150, "ophelia");
+        shopkeeper = new Shopkeeper(1045 - spriteNudge, 150, skName);
         shopkeeper.zIndex = 400;
         shopkeeper.scrollFactor.set(0.98, 1);
+        shopkeeper.visible = !isShopkeeperGone;
         add(shopkeeper);
 
         shopkeeperHitbox = new FlxObject(shopkeeper.x + 20, shopkeeper.y + 20, 280, 320);
@@ -494,6 +501,8 @@ class Shop extends MusicBeatState
         super.create();
     }
 
+    var forceBackButtonInactive:Bool = false;
+
     override public function update(elapsed:Float):Void
     {
         super.update(elapsed);
@@ -502,9 +511,29 @@ class Shop extends MusicBeatState
         funkBucksText.y = FlxMath.lerp(funkBucksText.y, 25, lerpval);
         blueJewelsText.y = FlxMath.lerp(blueJewelsText.y, 95, lerpval);
 
-        if (isShopkeeperGone)
+        if (cameraFollowPointMarker != null)
         {
-            shopkeeper.visible = false;
+            cameraFollowPointMarker.x = cameraFollowPoint.x - 2;
+            cameraFollowPointMarker.y = cameraFollowPoint.y - 2;
+        }
+
+        if (extendBounds)
+        {
+            if (cameraFollowPoint.x >= 10000)
+            {
+                final targetUIAlpha:Float = 1.0 - (1.0 * (cameraFollowPoint.x - 10000) / 20000);
+                funkBucksText.alpha = targetUIAlpha;
+                blueJewelsText.alpha = targetUIAlpha;
+                final targetDarkness:Float = 0.35 + Math.min(0.35, (0.35 * (cameraFollowPoint.x - 10000) / 20000));
+                lighting.alpha = targetDarkness;
+                camera.minScrollY = wall.y + 360;
+                forceBackButtonInactive = true;
+            }
+            else
+            {
+                camera.minScrollY = wall.y;
+                forceBackButtonInactive = false;
+            }
         }
 
         if (controls.BACK_P)
@@ -518,33 +547,20 @@ class Shop extends MusicBeatState
             coolBackButton.visible = false;
             return;
         }
-        coolBackButton.visible = #if mobile true; #else FunkBucks.isMouseActive; #end
-        coolBackButton.enabled = true;
 
-        handleCameraMovement();
-        // checkIfAnnoyedShopkeeper();
-
-        if (cameraFollowPointMarker != null)
+        if (forceBackButtonInactive)
         {
-            cameraFollowPointMarker.x = cameraFollowPoint.x - 2;
-            cameraFollowPointMarker.y = cameraFollowPoint.y - 2;
-        }
-
-        if (extendBounds && cameraFollowPoint.x >= 10000)
-        {
-            final targetUIAlpha:Float = 1.0 - (1.0 * (cameraFollowPoint.x - 10000) / 20000);
-            funkBucksText.alpha = targetUIAlpha;
-            blueJewelsText.alpha = targetUIAlpha;
-            final targetDarkness:Float = 0.85 + (0.15 * (cameraFollowPoint.x - 10000) / 20000);
-            lighting.alpha = targetDarkness;
-            camera.minScrollY = wall.y + 360;
             coolBackButton.enabled = false;
             coolBackButton.visible = false;
         }
         else
         {
-            camera.minScrollY = wall.y;
+            coolBackButton.visible = #if mobile true; #else FunkBucks.isMouseActive; #end
+            coolBackButton.enabled = true;
         }
+
+        handleCameraMovement();
+        // checkIfAnnoyedShopkeeper();
 
         justGainedFocus = false;
 
@@ -552,7 +568,7 @@ class Shop extends MusicBeatState
 
         if (FlxG.keys.justPressed.ONE || (TouchUtil.pressAction(iconPins) && !FunkBucks.isMouseTooFast && !TouchUtil.overlaps(coolBackButton, cameraHUD)))
         {
-            if (TimedCoinsManager.running)
+            if (TimedCoinsManager.running || (extendBounds && cameraFollowPoint.x >= 10000))
             {
                 FlxTween.completeTweensOf(cannotDoText);
                 FlxTween.tween(cannotDoText, { alpha: 1 }, 2, { ease: FlxEase.cubeOut, type: 16 });
@@ -638,6 +654,8 @@ class Shop extends MusicBeatState
                     case "ophelia":
                         new ConverseOphelia();
                     case "april":
+                        // new ConverseApril();
+                        new AprilIntro();
                     default:
                         return;
                 }
@@ -1264,7 +1282,7 @@ class Shop extends MusicBeatState
         super.onFocus();
     }
 
-    override function openSubState(state):Void
+    override function openSubState(state:FlxSubState):Void
     {
         cameraSubState.scroll.set(0, 0);
         cameraSubState.follow(null);
@@ -1300,15 +1318,15 @@ class Shop extends MusicBeatState
 
     function constructOldShop():Void
     {
-        final offsetDueToScrollFactor:Float = 7500;
+        final offsetDueToScrollFactor:Float = -7500;
         final offsetDueToScrollFactor2:Float = 5000;
 
-        var old_wall:FunkinSprite = new FunkinSprite(49300 - offsetDueToScrollFactor, -220).loadTexture("shop/old/wall");
+        var old_wall:FunkinSprite = new FunkinSprite(49300 + offsetDueToScrollFactor, -220).loadTexture("shop/old/wall");
         old_wall.zIndex = -1000;
         old_wall.scrollFactor.set(0.85, 0.85);
         add(old_wall);
 
-        var old_dailyboard:FunkinSprite = new FunkinSprite(50300 - offsetDueToScrollFactor, 0).loadTexture("shop/old/dailyboard");
+        var old_dailyboard:FunkinSprite = new FunkinSprite(50300 + offsetDueToScrollFactor, 0).loadTexture("shop/old/dailyboard");
         old_dailyboard.zIndex = -998;
         old_dailyboard.scrollFactor.set(0.85, 0.85);
         add(old_dailyboard);
@@ -1319,7 +1337,7 @@ class Shop extends MusicBeatState
         old_counter.scale.set(1.5, 1.0);
         add(old_counter);
 
-        var old_fbStack1:FunkinSprite = new FunkinSprite(51100, 446).loadTexture("shop/old/funkbuckstack");
+        var old_fbStack1:FunkinSprite = new FunkinSprite(50700, 446).loadTexture("shop/old/funkbuckstack");
         old_fbStack1.zIndex = 490;
         add(old_fbStack1);
 
@@ -1353,5 +1371,11 @@ class Shop extends MusicBeatState
         var old_iconBoxes:FunkinSprite = new FunkinSprite(50440, 376).loadTexture("shop/iconboxes");
         old_iconBoxes.zIndex = 490;
         add(old_iconBoxes);
+
+        var ophelia_of_the_past:OpheliaPast = new OpheliaPast(51050, 160);
+        ophelia_of_the_past.zIndex = 900;
+        add(ophelia_of_the_past);
+
+        cameraFollowPoint.x = 51300;
     }
 }

@@ -11,6 +11,7 @@ class Shopkeeper extends FunkinSprite
     var suffix:String = "";
     var name:String;
     static var caught:Bool = false;
+    var talkAnim:String = "";
 
     override function new(x:Float, y:Float, ?name:String):Void
     {
@@ -19,7 +20,6 @@ class Shopkeeper extends FunkinSprite
         });
 
         this.name = name ?? "ophelia";
-        playAnimation("Idle", true);
 
         animation.onFinish.add((name:String) ->
         {
@@ -29,14 +29,27 @@ class Shopkeeper extends FunkinSprite
             }
         });
 
-        if (name == "april")
+        if (name == "ophelia")
+        {
+            playAnimation("Idle", true);
+        }    
+        else if (name == "april")
         {
             x -= 10;
             y -= 5;
             canAnnoy = false;
             Shopkeeper.caught = false;
             Shopkeeper.annoyance = 0;
+            playAnimation("OnPhone", true);
         }
+
+        animation.onFinish.add((name:String) ->
+        {
+            if (name.endsWith(":Talk"))
+            {
+                playAnimation(name.split(":")[0], true);
+            } 
+        });
     }
 
     function playAnimation(name:String, looped:Bool = false, forced:Bool = false):Void
@@ -64,5 +77,21 @@ class Shopkeeper extends FunkinSprite
         }
         animation.play(name + suffix, forced);
         animation.curAnim.looped = looped;
+    }
+
+    /**
+     * Make the shopkeeper talk. This only works with April so far because only her animation names support the naming scheme below.
+     */
+    function talk():Void
+    {
+        if (talkAnim == "" || animation.curAnim.name.split(":")[0] != talkAnim)
+        {
+            talkAnim = animation.curAnim.name;
+        }
+
+        // Let's not spam the console with crap about not having an animation.
+        // if (!hasAnimation(talkAnim + ":Talk")) return;
+
+        animation.play(talkAnim + ":Talk", false);
     }
 }

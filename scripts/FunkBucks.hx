@@ -84,7 +84,7 @@ class FunkBucks extends Module
      * 
      * A red * indicates if this is on.
      */
-    public static var debug_pins:Null<Bool> = true;
+    public static var debug_pins:Null<Bool> = null;
 
     /**
      * Set this value to True to test opening boxes.
@@ -303,7 +303,6 @@ class FunkBucks extends Module
         FunkBucks.save.funkBucks = FunkBucks.getFunkCoins() + Std.int(amount);
         if (addToLifetime)
         {
-            /** Do not decrease the lifetime amount. **/
             FunkBucks.save.funkBucksLifetime = FunkBucks.getFunkCoinsLifetime() + Math.max(0, Std.int(amount));
         }
         FunkBucks.flushSave();
@@ -654,7 +653,7 @@ class FunkBucks extends Module
         }
         else
         {
-            trace('User has already seen dialogue: \'$dialogID\'!');
+            // trace('User has already seen dialogue: \'$dialogID\'!');
         }
     }
 
@@ -1046,7 +1045,7 @@ class FunkBucks extends Module
             trace(currentSongOrWeek, rank, bucksToAward, jewelsToAward, previousSongs);
             trace(awardNormalCompletionJewel, FunkBucks.getBlueJewelPity(), (Math.pow(FunkBucks.getBlueJewelPity(), 2) / 1000) * 2);
 
-            var funkBucksText = new BAlphabet(40, 50, '<b><c=$resultTextColor>${bucksToAward > 0 ? "+" : ""}$bucksToAward</c></b> ${FBIcon.Buck}');
+            var funkBucksText = new BAlphabet(40, 50, '<b><c=$resultTextColor>${(bucksToAward > 0 ? "+" : "")}$bucksToAward</c></b> ${FBIcon.Buck}');
             funkBucksText.scale.set(0.65, 0.65);
             funkBucksText.alpha = 0;
             funkBucksText.zIndex = 5000;

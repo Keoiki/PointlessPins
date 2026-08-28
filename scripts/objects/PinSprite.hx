@@ -21,6 +21,7 @@ class PinSprite extends FunkinSprite
     public var pixel:Bool;
     public var lockedText(default, set):String = "Unknown";
     public var special:Bool = false;
+    public var hidden:Bool = false;
     public var isUnlocked:Bool = false;
     public var isUnknown:Bool = false;
     public var unlockCount:Int = 0;
