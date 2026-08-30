@@ -935,7 +935,7 @@ class FunkBucks extends Module
         {
             if (PlayState.instance == null) return;
 
-            // Don't want Practice or Botplay to count as a "played song/week" but also to not any rewards!
+            // Don't want Practice or Botplay to count as a "played song/week" but also to not give any rewards!
             // also stop when in playtest results :whattheshit:
             if (PlayState.instance.isPracticeMode ||
                 PlayState.instance.isBotPlayMode ||
