@@ -935,8 +935,12 @@ class FunkBucks extends Module
         {
             if (PlayState.instance == null) return;
 
-            // :whattheshit:
-            if (PlayState.instance.isPlaytestResults) return;
+            // Don't want Practice or Botplay to count as a "played song/week" but also to not any rewards!
+            // also stop when in playtest results :whattheshit:
+            if (PlayState.instance.isPracticeMode ||
+                PlayState.instance.isBotPlayMode ||
+                PlayState.instance.isPlaytestResults)
+                return;
 
             var talliesToUse = PlayStatePlaylist.isStoryMode ? Highscore.talliesLevel : Highscore.tallies;
             var scoreToUse:Float = PlayStatePlaylist.isStoryMode ? PlayStatePlaylist.campaignScore : PlayState.instance.songScore;
@@ -1109,10 +1113,22 @@ class FunkBucks extends Module
         {
             for (pinID in wantedPinIDs)
             {
-                if (FunkBucks.hasObtainedPin(pinID)) continue;
-                FunkBucks.pinUnlockQueue.push(pinID);
+                FunkBucks.pushPinToUnlockQueue(pinID);
             }
         }
+    }
+
+    /**
+     * Helper function for adding pins to the unlock queue, ignoring already unlocked pins.
+     * 
+     * This is for, if other mods want to use the unlock queue, they don't have to check if the pin is unlocked themselves.
+     * 
+     * @param pinID The pin ID to push.
+     */
+    public static function pushPinToUnlockQueue(pinID:String):Void
+    {
+        if (FunkBucks.hasObtainedPin(pinID)) continue;
+        FunkBucks.pinUnlockQueue.push(pinID);
     }
 }
 
