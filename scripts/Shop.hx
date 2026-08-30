@@ -135,8 +135,7 @@ class Shop extends MusicBeatState
         cameraFollowPointMarker.zIndex = 9999999;
         // add(cameraFollowPointMarker);
 
-        // final skName:String = FunkBucks.getShopkeeper();
-        final skName:String = "april";
+        final skName:String = FunkBucks.getShopkeeper();
 
         if (FlxG.random.bool(1) && !Shopkeeper.caught && skName == "ophelia")
         {
@@ -654,8 +653,8 @@ class Shop extends MusicBeatState
                     case "ophelia":
                         new ConverseOphelia();
                     case "april":
-                        // new ConverseApril();
-                        new AprilIntro();
+                        new ConverseApril();
+                        // new AprilIntro();
                     default:
                         return;
                 }
@@ -880,7 +879,7 @@ class Shop extends MusicBeatState
      */
     function checkIfAnnoyedShopkeeper():Void
     {
-        if (isShopkeeperGone || !shopkeeper.canAnnoy || TimedCoinsManager.running)
+        if (isShopkeeperGone || TimedCoinsManager.running)
         {
             return;
         }
@@ -907,7 +906,6 @@ class Shop extends MusicBeatState
 
             if (shopkeeper.name == "ophelia")
             {
-                trace("ugh 2", shopkeeper.canAnnoy);
                 if (Shopkeeper.annoyance == 5)
                 {
                     new FlxTimer().start(0.5, function(_:FlxTimer)
@@ -933,7 +931,6 @@ class Shop extends MusicBeatState
                     dialog = new Dialogue("anger/warning");
                     add(dialog);
                     dialog.cameras = [cameraHUD];
-                    shopkeeper.canAnnoy = false;
 
                     dialog.dialogueText.letterCallback = (code) ->
                     {
@@ -941,11 +938,6 @@ class Shop extends MusicBeatState
                         FunkinSound.playOnce(Paths.sound("chartingSounds/keyboard" + FlxG.random.int(1, 3)), 1.0);
                         shopkeeper.playAnimation('Talk', false, false);
                     }
-
-                    dialog.onCompleteDialogue.add(() ->
-                    {
-                        shopkeeper.canAnnoy = true;
-                    });
                 }
 
                 if (Shopkeeper.annoyance % 100 == 0)

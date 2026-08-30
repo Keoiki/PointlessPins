@@ -815,6 +815,9 @@ class FunkBucks extends Module
      */
     public static function getShopkeeper():String
     {
+        // hehe
+        return "april";
+
         var date:Date = Date.now();
         var day:Int = date.getDay();
         var hour:Int = date.getHours();
