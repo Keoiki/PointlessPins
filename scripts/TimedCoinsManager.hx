@@ -111,7 +111,7 @@ class TimedCoinsManager extends Module
         TimedCoinsManager.running = true;
         TimedCoinsManager.hud.doIntro();
         TimedCoinsManager.coinsCollected = 0;
-        TimedCoinsManager.hud.counter.text = '${FBIcon.Clover}× <b><c=2BFF31>${TimedCoinsManager.coinsCollected}</c> / <c=2BFF31>8</c></b>';
+        TimedCoinsManager.hud.updateCounter(TimedCoinsManager.coinsCollected);
         TimedCoinsManager.checkForCoinsInState(FlxG.state);
     }
 
@@ -126,14 +126,23 @@ class TimedCoinsManager extends Module
     public static function registerCoin(data:String):Void
     {
         TimedCoinsManager.chosenCoinLocations.remove(data);
+        for (i in 0...TimedCoinsManager.spawnedCoins.length)
+        {
+            var coin:CloverCoin = TimedCoinsManager.spawnedCoins[i];
+            if (coin.data == data)
+            {
+                TimedCoinsManager.spawnedCoins.splice(i, 1);
+                break;
+            }
+        }
         TimedCoinsManager.coinsCollected++;
-        TimedCoinsManager.hud.counter.text = '${FBIcon.Clover}× <b><c=2BFF31>${TimedCoinsManager.coinsCollected}</c> / <c=2BFF31>8</c></b>';
+        TimedCoinsManager.hud.updateCounter(TimedCoinsManager.coinsCollected);
 
         if (TimedCoinsManager.coinsCollected >= 8)
         {
             if (FunkBucks.hasObtainedPin("clovercoin"))
             {
-                // 500 Funkbuck
+                // 1000 Funkbuck
             }
             else
             {

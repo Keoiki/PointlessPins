@@ -52,9 +52,9 @@ class TimedCoinsHUD extends FunkinGroup
         {
             var timeRemaining:String = "";
             var minutes:Int = Math.floor(TimedCoinsManager.time / 60);
-            timeRemaining += '<c=FFB51C>${minutes < 10 ? "0" + minutes : minutes}</c>:';
+            timeRemaining += '<c=FFB51C>${(minutes < 10 ? "0" + minutes : minutes)}</c>:';
             var seconds:Int = Math.floor(TimedCoinsManager.time % 60);
-            timeRemaining += '<c=FFB51C>${seconds < 10 ? "0" + seconds : seconds}</c>.';
+            timeRemaining += '<c=FFB51C>${(seconds < 10 ? "0" + seconds : seconds)}</c>.';
             timeRemaining += '<c=FFB51C>${Math.floor(TimedCoinsManager.time % 1 * 100 / 10)}</c>';
             timer.text = "<c=FFB51C><b><s=0.65>TIME</s></c>\n<m>" + timeRemaining + "</b></m>";
         }
@@ -73,5 +73,10 @@ class TimedCoinsHUD extends FunkinGroup
             i++;
         }
         FlxTween.tween(timer, { localAlpha: 1.0 }, 0.5, { ease: FlxEase.quartOut });
+    }
+
+    public function updateCounter(count:Int = 0):Void
+    {
+        counter.text = '${FBIcon.Clover}× <b><c=2BFF31>$count</c> / <c=2BFF31>8</c></b>';
     }
 }

@@ -1261,7 +1261,7 @@ class Shop extends MusicBeatState
 
     function checkForEvents():Void
     {
-        if (FunkBucks.getUnlockedPinsCount() >= 30 /*&& FunkBucks.getEvent("cloverCoinButton") == 0*/)
+        if (FunkBucks.getUnlockedPinsCount() >= 50 /*&& FunkBucks.getEvent("cloverCoinButton") == 0*/)
         {
             cloverEventButton.visible = true;
             // cloverCoinButtonIntro();

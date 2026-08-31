@@ -34,9 +34,7 @@ class CloverCoin extends FunkinSprite
             velocity.y = -300;
             FlxTween.tween(super.velocity, { y: 1500 }, 0.75, { ease: FlxEase.cubicIn });
             FlxTween.tween(super.scale, { x: 0.75, y: 0.75 }, 0.3, { ease: FlxEase.backIn });
-            FlxTween.tween(super, { alpha: 0.0 }, 0.75, { ease: FlxEase.cubicIn, onComplete: function() {
-                super.destroy();
-            }});
+            FlxTween.tween(super, { alpha: 0.0 }, 0.75, { ease: FlxEase.cubicIn });
             FunkinSound.playOnce(Paths.sound("fav"), 1.0);
             TimedCoinsManager.registerCoin(data);
         }
