@@ -1018,7 +1018,7 @@ class FunkBucks extends Module
             else
             {
                 bucksToAward *= repeatPenalty;
-                awardNormalCompletionJewel = FlxG.random.bool((Math.pow(FunkBucks.getBlueJewelPity(), 2) / 1000) * 2);
+                awardNormalCompletionJewel = FlxG.random.bool((Math.pow(FunkBucks.getBlueJewelPity(), 2) / 1000) * (PlayStatePlaylist.isStoryMode ? 6 : 2));
                 trace("Repeat penalty: " + repeatPenalty * 100 + "%");
             }
 
