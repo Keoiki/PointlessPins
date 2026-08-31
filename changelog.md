@@ -1,9 +1,9 @@
-## [2.0.0] - ??/??/2026 (hopefully August)
+## [2.0.0] - ??/??/2026 (hopefully September)
 
 ### Added
 
+- Removed Ophelia.
 - Added a new character: April.
-    - Ophelia has decided to take weekends "off", putting April to be the shopkeeper in her place.
     - She'd rather not be here.
 - Added 62 new pins:
     - 10 Common
@@ -13,30 +13,28 @@
     - 6 Legendary
     - 1 Mythic
     - 2 Special
-- Added the "Fancy Coffret" box, which costs 200 FunkBucks to open.
-- Added the "Shimmering Pouch" box, which costs 600 FunkBucks to open.
+- Added the "Fancy Coffret" box, with a cost of 200 FunkBucks.
+- Added the "Shimmering Pouch" box, with a cost of 600 FunkBucks.
 - Added Melody Stones.
     - They have a rare chance to be obtained after completing a song.
     - Your chance to obtain one increases with each song completed, up to 20% at 100 songs.
-    - They have a higher chance on Daily Songs.
+    - They have a higher chance to be obtained on Weeks and Daily Songs.
 - Added the Converse section to the Shop.
-    - In this menu you can talk to and ask Ophelia or April about various things.
+    - In this menu you can talk to and ask April about various things.
     - Some options may change at certain points, so read while you can!
-    - You can now only annoy Ophelia in this menu, since on touch controls tapping on Ophelia or April opens the menu.
 - Added the Exchange.
     - Found as an option in the Converse Menu.
     - You can exchange one Melody Stone for 1000 FunkBucks, or more to buy a Legendary or higher rarity pin you DON'T already own.
-    - April will instead offer specific pins in a set sequence, which Ophelia has explicitly told everyone to NOT do.
+    - April will instead offer specific pins in a set sequence, which she has explicitly been told to NOT do.
 - Added the Rewards section to the Shop.
-    - As much as Ophelia hates to give out free things, she's forced to.
     - You can claim extra some of the following based on your lifetime FunkBucks or Melody Stones collected, or how many of each box you've opened:
         - FunkBucks, Melody Stones, Pins, Boxes, Box Discounts, and Bonus FunkBucks Multiplier.
-        - FunkBucks, Melody Stones, and Boxes obtained from Rewards don't count towards their respective milestones.
+    - FunkBucks, Melody Stones, and Boxes obtained from Rewards don't count towards their respective milestones.
 - Added the Clover Coin timed event.
     - Collect 8 Clover Coins scattered through out the menus of the game within the time limit to win!
-    - Available once 30 pins have been collected.
+    - Available once 50 pins have been collected.
     - First successfully completed event grants a pin.
-    - Repeat events can only be tried once a day, have a stricter time limit, and grant 500 FunkBucks.
+    - Repeat events can only be tried once a day, have a stricter time limit, and grant 1000 FunkBucks.
 - Added support for several modded variations as Dailies:
     - Remnants (Funkin' Remnants)
     - Gooey (Gooey Mix)
@@ -59,8 +57,6 @@
 - Adjusted the chances of the Cardboard Boxes and Small Giftboxes.
 - Rewrote how dialogue is handled, it isn't garbage code anymore.
 - Redesigned dialogue boxes to be cooler.
-- Ophelia's annoyance now persists after exiting and re-entering the Shop.
-- Tweaked Ophelia's design, again.
 - For every 12 loops in Endless Mode, the FunkBuck gain % raises by 25%, capping at 125% after the 48th loop.
     - When the pause menu states Loop #49, you're at max percentage.
     - For those insane enough to go over 1½ hours playing the same song, looking at you thelargelad on GameBanana.
@@ -69,6 +65,28 @@
     - 25-36: 75%
     - 37-48: 100%
     - 49 and after: 125%
+    
+## [1.3.0] - 18/08/2026
+
+### Added
+
+- Added 11 new pins:
+    - 3 Commons
+    - 5 Uncommons
+    - 2 Rares
+    - 1 Epic
+
+### Changed
+
+- Updated the "New Update Available" popup to have the ability to show summarised patch notes.
+- Changed "Exchange" to "Converse".
+- Changed both of the boxes' chances to match their chances in 2.0.
+    - Mythics will be removed from Small Giftboxes in 2.0.
+- Raised both boxes' costs by 5 FunkBucks.
+
+### Fixed
+
+- Fixes for FNF 0.8.6.
 
 ## [1.2.0] - 04/06/2026
 
