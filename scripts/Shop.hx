@@ -1123,57 +1123,57 @@ class Shop extends MusicBeatState
     var passingThroughCost:Int = 0;
     public function deductFunkBucks(amount:Int):Void
     {
-        var currentFunkBucks:Int = previousFunkBucks = FunkBucks.getFunkCoins();
-        var remainingFunkBucks:Int = currentFunkBucks - amount;
-        passingThroughCost = amount;
+        // var currentFunkBucks:Int = previousFunkBucks = FunkBucks.getFunkCoins();
+        // var remainingFunkBucks:Int = currentFunkBucks - amount;
+        // passingThroughCost = amount;
 
-        buckSound.pitch = 1.0;
-        var easeToUse:FlxEase = amount >= 500 ? FlxEase.circOut : FlxEase.quartOut;
-        FlxTween.num(currentFunkBucks, remainingFunkBucks, 2.5, { ease: easeToUse, onComplete: function(_) {
-            funkBucksText.text = '<b>${Math.floor(remainingFunkBucks)}</b> ${FBIcon.Buck}';
-        }}, updateFunkBucks);
+        // buckSound.pitch = 1.0;
+        // var easeToUse:FlxEase = amount >= 500 ? FlxEase.circOut : FlxEase.quartOut;
+        // FlxTween.num(currentFunkBucks, remainingFunkBucks, 2.5, { ease: easeToUse, onComplete: function(_) {
+            // funkBucksText.text = '<b>${Math.floor(remainingFunkBucks)}</b> ${FBIcon.Buck}';
+        // }}, updateFunkBucks);
 
         FunkBucks.addFunkCoins(-amount, false);
     }
 
     public function addFunkBucks(amount:Int):Void
     {
-        var currentFunkBucks:Int = FunkBucks.getFunkCoins() + amount;
+        // var currentFunkBucks:Int = FunkBucks.getFunkCoins() + amount;
 
-        funkBucksText.text = '<b>$currentFunkBucks</b> ${FBIcon.Buck}';
-        funkBucksText.y -= 20;
-        FunkinSound.playOnce(Paths.sound("fav"), 0.35);
+        // funkBucksText.text = '<b>$currentFunkBucks</b> ${FBIcon.Buck}';
+        // funkBucksText.y -= 20;
+        // FunkinSound.playOnce(Paths.sound("fav"), 0.35);
 
-        funkBucksText.forEach((letter) -> {
-            FlxTween.color(letter, 0.5, 0xFF00FF00, 0xFFFFFFFF);
-        });
+        // funkBucksText.forEach((letter) -> {
+            // FlxTween.color(letter, 0.5, 0xFF00FF00, 0xFFFFFFFF);
+        // });
 
         FunkBucks.addFunkCoins(amount, false);
     }
 
     public function deductBlueJewel(amount:Int):Void
     {
-        var currentJewels:Int = FunkBucks.getBlueJewels();
-        var remainingJewels:Int = currentJewels - amount;
+        // var currentJewels:Int = FunkBucks.getBlueJewels();
+        // var remainingJewels:Int = currentJewels - amount;
 
-        blueJewelsText.text = '<b><c=82E9FF>$remainingJewels</c></b> ${FBIcon.Jewel}';
-        blueJewelsText.y += 20;
-        FunkinSound.playOnce(Paths.sound("bluejewel"));
+        // blueJewelsText.text = '<b><c=82E9FF>$remainingJewels</c></b> ${FBIcon.Jewel}';
+        // blueJewelsText.y += 20;
+        // FunkinSound.playOnce(Paths.sound("bluejewel"));
 
         FunkBucks.addBlueJewels(-amount, false);
     }
 
     public function addBlueJewel(amount:Int):Void
     {
-        var currentJewels:Int = FunkBucks.getBlueJewels() + amount;
+        // var currentJewels:Int = FunkBucks.getBlueJewels() + amount;
 
-        blueJewelsText.text = '<b><c=82E9FF>$currentJewels</c></b> ${FBIcon.Jewel}';
-        blueJewelsText.y -= 20;
-        FunkinSound.playOnce(Paths.sound("bluejewel"));
+        // blueJewelsText.text = '<b><c=82E9FF>$currentJewels</c></b> ${FBIcon.Jewel}';
+        // blueJewelsText.y -= 20;
+        // FunkinSound.playOnce(Paths.sound("bluejewel"));
 
-        blueJewelsText.forEach((letter) -> {
-            FlxTween.color(letter, 0.5, 0xFF00FF00, letter.curLetter.colored ? 0xFFFFFFFF : 0xFF82E9FF);
-        });
+        // blueJewelsText.forEach((letter) -> {
+            // FlxTween.color(letter, 0.5, 0xFF00FF00, letter.curLetter.colored ? 0xFFFFFFFF : 0xFF82E9FF);
+        // });
 
         FunkBucks.addBlueJewels(amount, false);
     }

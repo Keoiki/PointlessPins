@@ -5,6 +5,7 @@ import flixel.addons.display.FlxSliceSprite;
 import flixel.math.FlxRect;
 import flixel.tweens.FlxEase;
 import flixel.tweens.FlxTween;
+import funkin.audio.FunkinSound;
 import funkin.graphics.FunkinSprite;
 import funkin.group.FunkinGroup;
 
@@ -16,6 +17,10 @@ class MoneyHUD extends FunkinGroup
 
     public var currentDisplayBucks:Bool = false;
     public var currentDisplayJewels:Bool = false;
+    public var currentBGAlpha:Float = DEFAULT_BACKGROUND_ALPHA;
+
+    var buckDiffText:BAlphabet;
+    var jewelDiffText:BAlphabet;
 
     final DEFAULT_BACKGROUND_ALPHA:Float = 0.75;
 
@@ -46,6 +51,18 @@ class MoneyHUD extends FunkinGroup
         jewelText.localX = -(buckText.width - 64);
         this.add(jewelText);
 
+        buckDiffText = new BAlphabet(0, 0, "");
+        buckDiffText.alignment = "center";
+        buckDiffText.localScale.set(0.4, 0.4);
+        buckDiffText.setScrollFactor(0, 0);
+        this.add(buckDiffText);
+
+        jewelDiffText = new BAlphabet(0, 0, "");
+        jewelDiffText.alignment = "center";
+        jewelDiffText.localScale.set(0.4, 0.4);
+        jewelDiffText.setScrollFactor(0, 0);
+        this.add(jewelDiffText);
+
         background.width = buckText.width + jewelText.width - 77;
         background.localX = -background.width + 15;
 
@@ -63,6 +80,18 @@ class MoneyHUD extends FunkinGroup
             setDisplay(FlxG.keys.pressed.CONTROL, FlxG.keys.pressed.ALT);
         }
 
+        if (FlxG.keys.justPressed.F10)
+        {
+            if (FlxG.keys.pressed.CONTROL)
+            {
+                showBuckChange(FlxG.random.int(-1000, 1000));
+            }
+            else if (FlxG.keys.pressed.ALT)
+            {
+                showJewelChange(FlxG.random.int(-1000, 1000));
+            }
+        }
+
         if (background.localAlpha <= 0.01)
         {
             background.width = 1;
@@ -71,8 +100,9 @@ class MoneyHUD extends FunkinGroup
         super.update(elapsed);
     }
 
-    public function setDisplay(showBucks:Null<Bool> = false, showJewels:Null<Bool> = false, ?bgAlpha:Null<Float>):Void
+    public function setDisplay(showBucks:Null<Bool>, showJewels:Null<Bool>, ?bgAlpha:Null<Float>):Void
     {
+        trace(showBucks, showJewels, bgAlpha);
         if (showBucks != null)
         {
             currentDisplayBucks = showBucks;
@@ -114,6 +144,11 @@ class MoneyHUD extends FunkinGroup
             }
         }
 
+        // You can pass in these as null to keep their respective displays,
+        // but we need these to not be null after this point.
+        showBucks ??= currentDisplayBucks;
+        showJewels ??= currentDisplayJewels;
+
         var updateBGWidth:Bool = showBucks || showJewels;
         
         if (!showBucks && !showJewels)
@@ -127,6 +162,7 @@ class MoneyHUD extends FunkinGroup
 
         if (bgAlpha != null)
         {
+            currentBGAlpha = bgAlpha;
             FlxTween.cancelTweensOf(background.localAlpha);
             FlxTween.tween(background, { localAlpha: bgAlpha }, 1, { ease: FlxEase.cubeOut });
         }
@@ -140,5 +176,86 @@ class MoneyHUD extends FunkinGroup
                 background.localX = -background.width + 15;
             }});
         }
+    }
+
+    public function showBuckChange(diff:Float):Void
+    {
+        if (!currentDisplayBucks) return;
+
+        FlxTween.completeTweensOf(buckText);
+        FlxTween.cancelTweensOf(buckDiffText);
+
+        buckText.text = '<b>${FunkBucks.getFunkCoins()}</b> ${FBIcon.Buck}';
+        FlxTween.tween(buckText, { localY: 16 }, 0.6, { ease: FlxEase.bounceOut, type: 16 });
+        if (currentDisplayJewels) FlxTween.tween(jewelText, { localX: -(buckText.width + 20) }, 1, { ease: FlxEase.cubeOut });
+
+        var prefix:String = "";
+        var _color:String = "FFFFFF";
+        var sound:String = "";
+
+        if (diff != 0)
+        {
+            if (diff > 0)
+            {
+                prefix = "+";
+                _color = "2BFF31";
+                sound = "fav";
+            }
+            else
+            {
+                _color = "FF4C50";
+                sound = "unfav";
+            }
+        }
+
+        buckDiffText.localX = -(buckText.width / 2) - 10;
+        buckDiffText.localY = 40;
+        buckDiffText.text = '<b><c=$_color>$prefix$diff</c></b>';
+        FlxTween.tween(buckDiffText, { localY: 60 }, 4, { ease: FlxEase.circOut });
+        FlxTween.tween(buckDiffText, { localAlpha: 1 }, 0.2, { ease: FlxEase.cubeOut });
+        FlxTween.tween(buckDiffText, { localAlpha: 0 }, 1, { startDelay: 3, ease: FlxEase.cubeOut });
+        if (sound != "") FunkinSound.playOnce(Paths.sound(sound));
+
+        setDisplay(null, null, currentBGAlpha);
+    }
+
+    public function showJewelChange(diff:Float):Void
+    {
+        if (!currentDisplayJewels) return;
+
+        FlxTween.completeTweensOf(jewelText);
+        FlxTween.cancelTweensOf(jewelDiffText);
+
+        jewelText.text = '<b><c=82E9FF>${FunkBucks.getBlueJewels()}</c></b> ${FBIcon.Jewel}';
+        FlxTween.tween(jewelText, { localY: 16 }, 0.6, { ease: FlxEase.bounceOut, type: 16 });
+
+        var prefix:String = "";
+        var _color:String = "FFFFFF";
+        var sound:String = "";
+
+        if (diff != 0)
+        {
+            if (diff > 0)
+            {
+                prefix = "+";
+                _color = "2BFF31";
+                sound = "fav";
+            }
+            else
+            {
+                _color = "FF4C50";
+                sound = "unfav";
+            }
+        }
+
+        jewelDiffText.localX = jewelText.localX - (jewelText.width / 2) - 10;
+        jewelDiffText.localY = 40;
+        jewelDiffText.text = '<b><c=$_color>$prefix$diff</c></b>';
+        FlxTween.tween(jewelDiffText, { localY: 60 }, 4, { ease: FlxEase.circOut });
+        FlxTween.tween(jewelDiffText, { localAlpha: 1 }, 0.2, { ease: FlxEase.cubeOut });
+        FlxTween.tween(jewelDiffText, { localAlpha: 0 }, 1, { startDelay: 3, ease: FlxEase.cubeOut });
+        if (sound != "") FunkinSound.playOnce(Paths.sound(sound));
+
+        setDisplay(null, null, currentBGAlpha);
     }
 }

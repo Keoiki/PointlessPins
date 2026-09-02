@@ -177,6 +177,8 @@ class FunkBucks extends Module
         new FlxTimer().start(1 / 24, function(_:FlxTimer)
         {
             FunkBucks.moneyHUD.x = FlxG.width - 25;
+            FunkBucks.moneyHUD.buckDiffText.localAlpha = 0;
+            FunkBucks.moneyHUD.jewelDiffText.localAlpha = 0;
         });
     }
 
@@ -333,12 +335,15 @@ class FunkBucks extends Module
 
     public static function setFunkCoins(amount:Int, addToLifetime:Bool = true):Void
     {
+        final previousAmount:Int = FunkBucks.getFunkCoins();
         FunkBucks.save.funkBucks = FunkBucks.getFunkCoins() + Std.int(amount);
         if (addToLifetime)
         {
             FunkBucks.save.funkBucksLifetime = FunkBucks.getFunkCoinsLifetime() + Math.max(0, Std.int(amount));
         }
         FunkBucks.flushSave();
+        final diff:Int = FunkBucks.getFunkCoins() - previousAmount;
+        FunkBucks.moneyHUD?.showBuckChange(diff);
         trace("Current FunkBucks: " + FunkBucks.getFunkCoins());
         trace("Lifetime FunkBucks: " + FunkBucks.getFunkCoinsLifetime());
     }
@@ -357,12 +362,15 @@ class FunkBucks extends Module
 
     public static function addBlueJewels(amount:Int = 1, addToLifetime:Bool = true):Int
     {
+        final previousAmount:Int = FunkBucks.getBlueJewels();
         if (addToLifetime)
         {
             FunkBucks.save.blueJewelsLifetime = FunkBucks.getBlueJewelsLifetime() + amount;
         }
         FunkBucks.save.blueJewels = FunkBucks.getBlueJewels() + amount;
         FunkBucks.flushSave();
+        final diff:Int = FunkBucks.getBlueJewels() - previousAmount;
+        FunkBucks.moneyHUD?.showJewelChange(diff);
     }
 
     public static function getBlueJewels():Int

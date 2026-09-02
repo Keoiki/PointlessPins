@@ -311,13 +311,16 @@ class BoxSubMenu extends MusicBeatSubState
         unlockState.closeCallback = closeBox;
         unlockState.cameras = [camera];
 
-        new FlxTimer().start(1, function(_:FlxTimer) {
+        new FlxTimer().start(1, function(_:FlxTimer)
+        {
             FlxTween.tween(darkOverlay, { alpha: 0.33 }, 1.1 + box.revealTime / 24, { ease: FlxEase.quadInOut });
             FlxTween.tween(_parentState.camera, { zoom: 1.15 }, 1 + box.revealTime / 24, { ease: FlxEase.quadInOut });
             FlxTween.tween(camera, { zoom: 1.25 }, 1 + box.revealTime / 24, { ease: FlxEase.quadInOut });
+            FlxTween.tween(FunkBucks.moneyHUD, { alpha: 0 }, 0.5, { ease: FlxEase.quadInOut });
         });
 
-        new FlxTimer().start(2.25, function(_:FlxTimer) {
+        new FlxTimer().start(2.25, function(_:FlxTimer)
+        {
             box.animation.play("Opening");
             new FlxTimer().start(box.revealTime / 24, function(_:FlxTimer) {
                 FlxTween.tween(darkOverlay, { alpha: 0 }, 0.5, { ease: FlxEase.expoOut });
@@ -363,5 +366,6 @@ class BoxSubMenu extends MusicBeatSubState
         {
             FlxTween.tween(menuDots[i], { alpha: boxIndex == i ? 1 : 0.2 }, 0.5, { ease: FlxEase.quartOut });
         }
+        FlxTween.tween(FunkBucks.moneyHUD, { alpha: 1 }, 0.5, { ease: FlxEase.quartOut });
     }
 }
