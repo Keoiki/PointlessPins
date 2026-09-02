@@ -13,6 +13,7 @@ import flixel.util.FlxSort;
 import flixel.util.FlxTimer;
 import funkbucks.objects.KeyCap;
 import funkbucks.objects.PinSprite;
+import funkbucks.objects.ui.MoneyHUD;
 import funkin.Highscore;
 import funkin.audio.FunkinSound;
 import funkin.data.song.SongRegistry;
@@ -61,6 +62,8 @@ class FunkBucks extends Module
 {
     var menuPin:PinSprite;
     var menuPin2:PinSprite;
+
+    public static var moneyHUD:MoneyHUD;
 
     public static final penalties:Array<Float> = [1.0, 0.66, 0.33, 0.0, -0.5, -1];
     public static final penaltyColors:Array<String> = ["FFFFFF", "FFAAAA", "FF5555", "FF0000", "AA0000", "550000"];
@@ -117,9 +120,9 @@ class FunkBucks extends Module
 
     function new():Void
     {
-        super('FunkBucks', -20000000000);
+        super('FunkBucks', -2000000000);
 
-        FlxG.signals.postGameStart.addOnce(versionCheck);
+        FlxG.signals.postGameStart.addOnce(gameStartCalls);
     }
 
     function onCreate(event:ScriptEvent):Void
@@ -143,8 +146,38 @@ class FunkBucks extends Module
         }
 
         loadPinData();
+        
+        FlxG.plugins.remove(ModStore.get("FBMoneyHUDPluginInstance"));
+        ModStore.remove("FBMoneyHUDPluginInstance");
+        if (ModStore.get("FBMoneyHUDPluginInstance") == null)
+        {
+            FunkBucks.moneyHUD = new MoneyHUD(FlxG.width - 25, 25);
+            ModStore.register("FBMoneyHUDPluginInstance", FlxG.plugins.addPlugin(FunkBucks.moneyHUD));
+        }
+        else
+        {
+            FunkBucks.moneyHUD = ModStore.get("FBMoneyHUDPluginInstance");
+        }
 
         super.onCreate(event);
+    }
+
+    // Called only ONCE at the start of the game.
+    function gameStartCalls():Void
+    {
+        versionCheck();
+        FlxG.signals.gameResized.add(repositionHUD);
+    }
+
+    // Width and Height aren't actually used since those are the wrong values to use.
+    function repositionHUD(w:Int, h:Int)
+    {
+        if (FunkBucks.moneyHUD == null) return;
+
+        new FlxTimer().start(1 / 24, function(_:FlxTimer)
+        {
+            FunkBucks.moneyHUD.x = FlxG.width - 25;
+        });
     }
 
     function versionCheck():Void
@@ -900,6 +933,8 @@ class FunkBucks extends Module
 
     override function onStateChangeEnd(event:StateChangeScriptEvent):Void
     {
+        repositionHUD(0, 0);
+
         // trace(event.targetState);
         if (event.targetState is MainMenuState)
         {
@@ -913,6 +948,8 @@ class FunkBucks extends Module
             var keycap01 = new KeyCap(115, 115, "P");
             event.targetState.add(keycap01);
             #end
+
+            FunkBucks.moneyHUD.setDisplay(false, false, 0);
 
             // var aaaa:FunkinSprite = new FunkinSprite(1100, 20).makeSolidColor(70, 70, 0xFFFF00FF);
             // aaaa.scrollFactor.set(0, 0);
@@ -930,6 +967,8 @@ class FunkBucks extends Module
 
     override function onSubStateOpenEnd(event:SubStateScriptEvent):Void
     {
+        repositionHUD(0, 0);
+
         /**
          * Change this later to be on song end instead?
          * So that mods that don't use the default results can still give FunkBucks on song/week completions.
@@ -1130,8 +1169,10 @@ class FunkBucks extends Module
      */
     public static function pushPinToUnlockQueue(pinID:String):Void
     {
-        if (FunkBucks.hasObtainedPin(pinID)) continue;
-        FunkBucks.pinUnlockQueue.push(pinID);
+        if (!FunkBucks.hasObtainedPin(pinID))
+        {
+            FunkBucks.pinUnlockQueue.push(pinID);
+        }
     }
 }
 

@@ -8,6 +8,7 @@ import funkin.audio.FunkinSound;
 import funkin.data.song.SongRegistry;
 import funkin.data.story.level.LevelRegistry;
 import funkin.graphics.FunkinCamera;
+import funkin.modding.ModStore;
 import funkin.modding.module.Module;
 import funkin.ui.FullScreenScaleMode;
 import funkin.ui.charSelect.CharSelectSubState;
@@ -34,20 +35,22 @@ class TimedCoinsManager extends Module
     public function new():Void
     {
         super("FunkBucks-TimedCoinsManager", 10);
-
-        FlxG.sound.cache(Paths.music('timedEvent'));
     }
 
     public function onCreate(event:ScriptEvent):Void
     {
-        TimedCoinsManager.eventMusic?.stop();
-
-        // If this ever interferes with any other mod, sorry!
-        FlxG.plugins.removeAllByType(ReflectUtil.resolveClass("funkin.group.ScriptedFunkinSpriteGroup"));
-
-        TimedCoinsManager.hud = new TimedCoinsHUD(20, 550);
-        TimedCoinsManager.hud.angle = -7.5;
-        FlxG.plugins.addPlugin(TimedCoinsManager.hud);
+        // FlxG.plugins.remove(ModStore.get("FBTimedCoinsHUDPluginInstance"));
+        // ModStore.remove("FBTimedCoinsHUDPluginInstance");
+        if (ModStore.get("FBTimedCoinsHUDPluginInstance") == null)
+        {
+            TimedCoinsManager.hud = new TimedCoinsHUD(20, 550);
+            TimedCoinsManager.hud.angle = -7.5;
+            ModStore.register("FBTimedCoinsHUDPluginInstance", FlxG.plugins.addPlugin(TimedCoinsManager.hud));
+        }
+        else
+        {
+            TimedCoinsManager.hud = ModStore.get("FBTimedCoinsHUDPluginInstance");
+        }
 
         super.onCreate(event);
     }
@@ -55,7 +58,7 @@ class TimedCoinsManager extends Module
     public function onUpdate(event:ScriptEvent):Void
     {
         // This works?? wow.
-        TimedCoinsManager.hud.cameras = [FlxG.cameras.list[FlxG.cameras.list.length - 1]];
+        TimedCoinsManager.hud?.cameras = [FlxG.cameras.list[FlxG.cameras.list.length - 1]];
 
         if (TimedCoinsManager.running)
         {

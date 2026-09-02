@@ -1,5 +1,6 @@
 package funkbucks.dialog;
 
+import funkbucks.FunkBucks;
 import funkbucks.Shop;
 import flixel.tweens.FlxEase;
 import flixel.tweens.FlxTween;
@@ -63,8 +64,7 @@ class DialogBase
         FlxTween.tween(shop.camera, { zoom: shop.savedCamZoom }, 1, { ease: FlxEase.cubeOut });
 
         shop.showMenuItems(true);
-        shop.toggleDisplayBucks(true);
-        shop.toggleDisplayJewels(true);
+        FunkBucks.moneyHUD.setDisplay(true, true);
     }
 
     /**

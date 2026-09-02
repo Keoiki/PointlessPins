@@ -135,6 +135,8 @@ class Shop extends MusicBeatState
         cameraFollowPointMarker.zIndex = 9999999;
         // add(cameraFollowPointMarker);
 
+        FunkBucks.moneyHUD.setDisplay(true, true);
+
         final skName:String = FunkBucks.getShopkeeper();
 
         if (FlxG.random.bool(1) && !Shopkeeper.caught && skName == "ophelia")
@@ -400,11 +402,13 @@ class Shop extends MusicBeatState
         funkBucksText = new BAlphabet(FlxG.width - 20, 25, '<b>${FunkBucks.getFunkCoins()}</b> ${FBIcon.Buck}');
         funkBucksText.scale.set(0.65, 0.65);
         funkBucksText.alignment = "right";
+        funkBucksText.alpha = 0;
         add(funkBucksText);
 
         blueJewelsText = new BAlphabet(FlxG.width - 20, funkBucksText.y + 70, '<b><c=82E9FF>${FunkBucks.getBlueJewels()}</c></b> ${FBIcon.Jewel}');
         blueJewelsText.alignment = "right";
         blueJewelsText.scale.set(0.65, 0.65);
+        blueJewelsText.alpha = 0;
         add(blueJewelsText);
 
         cannotDoText = new BAlphabet(FlxG.width / 2, FlxG.height - 100, "<b><c=FF0000>You cannot do that right now.</c></b>");
@@ -583,16 +587,14 @@ class Shop extends MusicBeatState
             {
                 FlxTween.tween(coolBackButton, { alpha: 0.5 }, 1, { ease: FlxEase.cubeOut });
                 FlxTween.tween(camera, { zoom: savedCamZoom }, 1, { ease: FlxEase.cubeOut });
-                toggleDisplayBucks(true);
-                toggleDisplayJewels(true);
+                FunkBucks.moneyHUD.setDisplay(true, true);
                 FlxTween.tween(screenBlack, { alpha: 0 }, 1, { ease: FlxEase.cubeOut });
             };
             substate.cameras = [cameraSubState];
 
             FlxTween.tween(coolBackButton, { alpha: 0 }, 1, { ease: FlxEase.cubeIn });
             FlxTween.tween(camera, { zoom: 1.5 }, 1, { ease: FlxEase.cubeIn });
-            toggleDisplayBucks(false);
-            toggleDisplayJewels(false);
+            FunkBucks.moneyHUD.setDisplay(false, false, 0);
             FlxTween.tween(screenBlack, { alpha: 0.8 }, 1, { ease: FlxEase.cubeIn, onComplete: function()
             {
                 openSubState(substate);
@@ -620,7 +622,7 @@ class Shop extends MusicBeatState
             {
                 FlxTween.tween(coolBackButton, { alpha: 0.5 }, 1, { ease: FlxEase.cubeOut });
                 FlxTween.tween(camera, { zoom: savedCamZoom }, 1, { ease: FlxEase.cubeOut });
-                toggleDisplayJewels(true);
+                FunkBucks.moneyHUD.setDisplay(true, true);
                 FlxTween.tween(screenBlack, { alpha: 0 }, 1, { ease: FlxEase.cubeOut });
                 showMenuItems();
             }
@@ -628,7 +630,7 @@ class Shop extends MusicBeatState
 
             FlxTween.tween(coolBackButton, { alpha: 0 }, 1, { ease: FlxEase.cubeIn });
             FlxTween.tween(screenBlack, { alpha: 0.5 }, 1, { ease: FlxEase.cubeIn });
-            toggleDisplayJewels(false);
+            FunkBucks.moneyHUD.setDisplay(true, false, 0);
             FlxTween.tween(camera, { zoom: 0.9 }, 1, { ease: FlxEase.cubeOut, onComplete: function()
             {
                 openSubState(substate);
@@ -665,8 +667,7 @@ class Shop extends MusicBeatState
             cameraFollowPoint.setPosition(shopkeeperHitbox.x + shopkeeperHitbox.width / 2, shopkeeperHitbox.y + 115);
             savedCamZoom = camera.zoom;
             FlxTween.tween(camera, { zoom: 1.5 }, 1, { ease: FlxEase.cubeOut });
-            toggleDisplayBucks(false);
-            toggleDisplayJewels(false);
+            FunkBucks.moneyHUD.setDisplay(false, false, 0);
             coolBackButton.visible = false;
         }
 
@@ -714,32 +715,6 @@ class Shop extends MusicBeatState
     {
         if (disallowInputs) return;
         FlxG.switchState(() -> new MainMenuState());
-    }
-
-    public function toggleDisplayBucks(show:Bool = true):Void
-    {
-        FlxTween.completeTweensOf(funkBucksText);
-        if (show)
-        {
-            FlxTween.tween(funkBucksText, { alpha: 1 }, 1, { ease: FlxEase.cubeOut });
-        }
-        else
-        {
-            FlxTween.tween(funkBucksText, { alpha: 0 }, 1, { ease: FlxEase.cubeOut });
-        }
-    }
-
-    public function toggleDisplayJewels(show:Bool = true):Void
-    {
-        FlxTween.completeTweensOf(blueJewelsText);
-        if (show)
-        {
-            FlxTween.tween(blueJewelsText, { alpha: 1 }, 1, { ease: FlxEase.cubeOut });
-        }
-        else
-        {
-            FlxTween.tween(blueJewelsText, { alpha: 0 }, 1, { ease: FlxEase.cubeOut });
-        }
     }
 
     var touchPoint:Null<FlxPoint>;
