@@ -180,12 +180,13 @@ class MoneyHUD extends FunkinGroup
 
     public function showBuckChange(diff:Float):Void
     {
+        buckText.text = '<b>${FunkBucks.getFunkCoins()}</b> ${FBIcon.Buck}';
+
         if (!currentDisplayBucks) return;
 
         FlxTween.completeTweensOf(buckText);
         FlxTween.cancelTweensOf(buckDiffText);
 
-        buckText.text = '<b>${FunkBucks.getFunkCoins()}</b> ${FBIcon.Buck}';
         FlxTween.tween(buckText, { localY: 16 }, 0.6, { ease: FlxEase.bounceOut, type: 16 });
         if (currentDisplayJewels) FlxTween.tween(jewelText, { localX: -(buckText.width + 20) }, 1, { ease: FlxEase.cubeOut });
 
@@ -221,12 +222,13 @@ class MoneyHUD extends FunkinGroup
 
     public function showJewelChange(diff:Float):Void
     {
+        jewelText.text = '<b><c=82E9FF>${FunkBucks.getBlueJewels()}</c></b> ${FBIcon.Jewel}';
+
         if (!currentDisplayJewels) return;
 
         FlxTween.completeTweensOf(jewelText);
         FlxTween.cancelTweensOf(jewelDiffText);
 
-        jewelText.text = '<b><c=82E9FF>${FunkBucks.getBlueJewels()}</c></b> ${FBIcon.Jewel}';
         FlxTween.tween(jewelText, { localY: 16 }, 0.6, { ease: FlxEase.bounceOut, type: 16 });
 
         var prefix:String = "";
