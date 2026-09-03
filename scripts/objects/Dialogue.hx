@@ -213,6 +213,8 @@ class Dialogue extends FunkinGroup
 
         this.x = FlxG.width / 2 - dialogueBoxBG.width / 2;
 
+        FunkBucks.dialogueActive = true;
+
         doNextLine();
     }
 
@@ -415,9 +417,10 @@ class Dialogue extends FunkinGroup
 
     public function endDialogue():Void
     {
+        FunkBucks.dialogueActive = false;
         FunkBucks.addSeenDialogue(dialogueID);
-        isResponding = false;
         onCompleteDialogue.dispatch();
+        isResponding = false;
         hasEnded = true;
     }
 

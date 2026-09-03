@@ -47,13 +47,15 @@
 
 - The "PointlessPins" class and module name have been changed to "FunkBucks".
 - The shop itself has gone under a major visual upgrade.
+- Updated the currency display.
+    - It can now be displayed anywhere in the game, if needed.
 - The Pin Board graphics have been updated.
 - The Pin Board now remembers the last pin you scrolled over and will snap to it when re-opening the menu.
 - The text in the Box Menu has been moved around.
     - The opened box count text has been removed and the counts can now be seen in the new Rewards menu.
 - Increased the amount of daily songs from 3 to 5.
-- Increased the cost of the Cardboard Boxes from 10 to 20 FunkBucks.
-- Increased the cost of the Small Giftboxes from 25 to 50 FunkBucks.
+- Increased the cost of the Cardboard Boxes from 15 to 20 FunkBucks.
+- Increased the cost of the Small Giftboxes from 30 to 50 FunkBucks.
 - Adjusted the chances of the Cardboard Boxes and Small Giftboxes.
 - Rewrote how dialogue is handled, it isn't garbage code anymore.
 - Redesigned dialogue boxes to be cooler.

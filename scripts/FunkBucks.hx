@@ -79,6 +79,7 @@ class FunkBucks extends Module
     public static var boxData:BoxData;
     public static var isMouseActive:Bool = false;
     public static var isMouseTooFast:Bool = false;
+    public static var dialogueActive:Bool = false;
 
     /**
      * Set this value to determine how to show the pins on the Pin Board.

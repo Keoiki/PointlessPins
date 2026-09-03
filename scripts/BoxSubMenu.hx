@@ -287,7 +287,7 @@ class BoxSubMenu extends MusicBeatSubState
         if (FunkBucks.debug_boxes) return true;
         if (FunkBucks.getFunkCoins() < box.price)
         {
-            _parentState.insufficientFunkBucks();
+            FunkBucks.moneyHUD.insufficientFunds(true, false);
             return false;
         }
         return true;
@@ -299,7 +299,7 @@ class BoxSubMenu extends MusicBeatSubState
         {
             if (box.price > 0)
             {
-                _parentState.deductFunkBucks(box.price);
+                FunkBucks.addFunkCoins(-box.price, false);
                 FunkBucks.addOpenedBox(box.bID);
             }
             if (FunkBucks.getFreeBoxCount(box.bID) > 0) FunkBucks.addFreeBox(box.bID, -1);

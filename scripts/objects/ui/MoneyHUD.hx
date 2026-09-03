@@ -90,6 +90,10 @@ class MoneyHUD extends FunkinGroup
             {
                 showJewelChange(FlxG.random.int(-1000, 1000));
             }
+            else if (FlxG.keys.pressed.SHIFT)
+            {
+                insufficientFunds(true, true);
+            }
         }
 
         if (background.localAlpha <= 0.01)
@@ -163,15 +167,18 @@ class MoneyHUD extends FunkinGroup
         if (bgAlpha != null)
         {
             currentBGAlpha = bgAlpha;
-            FlxTween.cancelTweensOf(background.localAlpha);
+            FlxTween.completeTweensOf(background.localAlpha);
             FlxTween.tween(background, { localAlpha: bgAlpha }, 1, { ease: FlxEase.cubeOut });
         }
 
         if (updateBGWidth)
         {
             final desiredWidth:Float = (showBucks ? buckText.width + 30 : 0) + (showJewels ? jewelText.width + 30 : 0);
-            FlxTween.cancelTweensOf(background.width);
+            FlxTween.completeTweensOf(background);
             FlxTween.tween(background, { width: desiredWidth }, 0.95, { ease: FlxEase.cubeOut, onUpdate: () ->
+            {
+                background.localX = -background.width + 15;
+            }, onComplete: () ->
             {
                 background.localX = -background.width + 15;
             }});
@@ -241,12 +248,12 @@ class MoneyHUD extends FunkinGroup
             {
                 prefix = "+";
                 _color = "2BFF31";
-                sound = "fav";
+                sound = "bluejewel";
             }
             else
             {
                 _color = "FF4C50";
-                sound = "unfav";
+                sound = "bluejewel";
             }
         }
 
@@ -259,5 +266,33 @@ class MoneyHUD extends FunkinGroup
         if (sound != "") FunkinSound.playOnce(Paths.sound(sound));
 
         setDisplay(null, null, currentBGAlpha);
+    }
+
+    public function insufficientFunds(bucks:Bool, jewels:Bool):Void
+    {
+        // Why are you calling this when both are false?
+        if (!bucks && !jewels) return;
+
+        if (bucks && currentDisplayBucks)
+        {
+            FlxTween.completeTweensOf(buckText);
+            FlxTween.tween(buckText, { localX: buckText.localX + FlxG.random.int(-20, 20) }, 1, { ease: FlxEase.cubeOut, type: 16 });
+            buckText.forEach((letter) ->
+            {
+                FlxTween.color(letter, 0.5, 0xFFFF0000, 0xFFFFFFFF);
+            });
+        }
+
+        if (jewels && currentDisplayJewels)
+        {
+            FlxTween.completeTweensOf(jewelText);
+            FlxTween.tween(jewelText, { localX: jewelText.localX + FlxG.random.int(-20, 20) }, 1, { ease: FlxEase.cubeOut, type: 16 });
+            jewelText.forEach((letter) ->
+            {
+                FlxTween.color(letter, 0.5, 0xFFFF0000, letter.curLetter.colored ? 0xFFFFFFFF : 0xFF82E9FF);
+            });
+        }
+        
+        FunkinSound.playOnce(Paths.sound("CS_locked"), 0.5);
     }
 }

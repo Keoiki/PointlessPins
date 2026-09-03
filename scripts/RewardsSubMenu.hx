@@ -47,8 +47,7 @@ class RewardsSubMenu extends MusicBeatSubState
                 "12" => {id: "funkbucks12", requirement: 25000, type: RewardType.Pin, reward: "funkbuck"},
                 "13" => {id: "funkbucks13", requirement: 30000, type: RewardType.Jewel, reward: 3},
                 "14" => {id: "funkbucks14", requirement: 40000, type: RewardType.BonusFunkBuck, reward: 5.0},
-                "15" => {id: "funkbucks15", requirement: 50000, type: RewardType.FunkBuck, reward: 5000},
-                "16" => {id: "funkbucks16", requirement: 60000, type: RewardType.Pin, reward: "funkbuck-pixel"}
+                "15" => {id: "funkbucks15", requirement: 50000, type: RewardType.FunkBuck, reward: 5000}
             ]
         },
         "melodystones" => {
@@ -71,9 +70,9 @@ class RewardsSubMenu extends MusicBeatSubState
             requirementIcon: "total",
             order: 2,
             rewards: [
-                "1" => {id: "totalboxes00", requirement: 25, type: RewardType.Box, reward: "cardboard|5"},
-                "2" => {id: "totalboxes00", requirement: 50, type: RewardType.Box, reward: "smallgiftbox|5"},
-                "3" => {id: "totalboxes00", requirement: 100, type: RewardType.FunkBuck, reward: 1000}
+                "1" => {id: "totalboxes01", requirement: 25, type: RewardType.Box, reward: "cardboard|5"},
+                "2" => {id: "totalboxes02", requirement: 50, type: RewardType.Box, reward: "smallgiftbox|5"},
+                "3" => {id: "totalboxes03", requirement: 100, type: RewardType.FunkBuck, reward: 1000}
             ]
         },
         "cardboard" => {
@@ -529,14 +528,14 @@ class RewardsSubMenu extends MusicBeatSubState
                     {
                         case RewardType.FunkBuck:
                         {
-                            _parentState.addFunkBucks(currentItem.reward);
+                            FunkBucks.addFunkCoins(currentItem.reward, false);
                             populateItems(CATEGORY, PAGE);
                             rewardText.text = 'You got ${currentItem.reward} ${FBIcon.Buck} FunkBucks!';
                             // hasUpdatedRewardText = false;
                         }
                         case RewardType.Jewel:
                         {
-                            _parentState.addBlueJewel(currentItem.reward);
+                            FunkBucks.addBlueJewels(currentItem.reward, false);
                             populateItems(CATEGORY, PAGE);
                             rewardText.text = 'You got ${currentItem.reward} ${FBIcon.Jewel} Melody Stones!';
                             // hasUpdatedRewardText = false;
@@ -732,9 +731,9 @@ class RewardItem extends ScriptedFlxSpriteGroup
                 number.alignment = "center";
                 number.scale.set(0.4, 0.4);
             }
-            case RewardType.Song:
+            case RewardType.SongPack:
             {
-                throw "SONG reward type is not implemented";
+                throw "SONGPACK reward type is not implemented";
             }
             case RewardType.DiscountBox:
             {
@@ -834,7 +833,7 @@ enum RewardType
     Box;
     FunkBuck;
     Jewel;
-    Song;
+    SongPack;
     DiscountBox;
     BonusFunkBuck;
 }

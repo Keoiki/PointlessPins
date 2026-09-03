@@ -93,8 +93,6 @@ class Shop extends MusicBeatState
     var rewardsSparkles:FlxEmitter;
 
     // UI
-    public var funkBucksText:BAlphabet;
-    public var blueJewelsText:BAlphabet;
     public var screenBlack:FunkinSprite;
     
     var updateText:BAlphabet;
@@ -399,18 +397,6 @@ class Shop extends MusicBeatState
         screenBlack.scrollFactor.set(0, 0);
         add(screenBlack);
 
-        funkBucksText = new BAlphabet(FlxG.width - 20, 25, '<b>${FunkBucks.getFunkCoins()}</b> ${FBIcon.Buck}');
-        funkBucksText.scale.set(0.65, 0.65);
-        funkBucksText.alignment = "right";
-        funkBucksText.alpha = 0;
-        add(funkBucksText);
-
-        blueJewelsText = new BAlphabet(FlxG.width - 20, funkBucksText.y + 70, '<b><c=82E9FF>${FunkBucks.getBlueJewels()}</c></b> ${FBIcon.Jewel}');
-        blueJewelsText.alignment = "right";
-        blueJewelsText.scale.set(0.65, 0.65);
-        blueJewelsText.alpha = 0;
-        add(blueJewelsText);
-
         cannotDoText = new BAlphabet(FlxG.width / 2, FlxG.height - 100, "<b><c=FF0000>You cannot do that right now.</c></b>");
         cannotDoText.alignment = "center";
         cannotDoText.scale.set(0.5, 0.5);
@@ -443,8 +429,6 @@ class Shop extends MusicBeatState
         // add(box);
 
         screenBlack.cameras = [cameraHUD];
-        funkBucksText.cameras = [cameraHUD];
-        blueJewelsText.cameras = [cameraHUD];
         cannotDoText.cameras = [cameraHUD];
         coolBackButton.cameras = [cameraHUD];
 
@@ -511,8 +495,6 @@ class Shop extends MusicBeatState
         super.update(elapsed);
         
         var lerpval:Float = FlxMath.bound(elapsed * 9.6, 0, 1);
-        funkBucksText.y = FlxMath.lerp(funkBucksText.y, 25, lerpval);
-        blueJewelsText.y = FlxMath.lerp(blueJewelsText.y, 95, lerpval);
 
         if (cameraFollowPointMarker != null)
         {
@@ -525,8 +507,7 @@ class Shop extends MusicBeatState
             if (cameraFollowPoint.x >= 10000)
             {
                 final targetUIAlpha:Float = 1.0 - (1.0 * (cameraFollowPoint.x - 10000) / 20000);
-                funkBucksText.alpha = targetUIAlpha;
-                blueJewelsText.alpha = targetUIAlpha;
+                FunkBucks.moneyHUD.alpha = targetUIAlpha;
                 final targetDarkness:Float = 0.35 + Math.min(0.35, (0.35 * (cameraFollowPoint.x - 10000) / 20000));
                 lighting.alpha = targetDarkness;
                 camera.minScrollY = wall.y + 360;
@@ -536,6 +517,7 @@ class Shop extends MusicBeatState
             {
                 camera.minScrollY = wall.y;
                 forceBackButtonInactive = false;
+                FunkBucks.moneyHUD.alpha = 1.0;
             }
         }
 
@@ -1119,110 +1101,13 @@ class Shop extends MusicBeatState
         coolBackButton.visible = false;
     }
 
-    var previousFunkBucks:Int;
-    var passingThroughCost:Int = 0;
-    public function deductFunkBucks(amount:Int):Void
-    {
-        // var currentFunkBucks:Int = previousFunkBucks = FunkBucks.getFunkCoins();
-        // var remainingFunkBucks:Int = currentFunkBucks - amount;
-        // passingThroughCost = amount;
-
-        // buckSound.pitch = 1.0;
-        // var easeToUse:FlxEase = amount >= 500 ? FlxEase.circOut : FlxEase.quartOut;
-        // FlxTween.num(currentFunkBucks, remainingFunkBucks, 2.5, { ease: easeToUse, onComplete: function(_) {
-            // funkBucksText.text = '<b>${Math.floor(remainingFunkBucks)}</b> ${FBIcon.Buck}';
-        // }}, updateFunkBucks);
-
-        FunkBucks.addFunkCoins(-amount, false);
-    }
-
-    public function addFunkBucks(amount:Int):Void
-    {
-        // var currentFunkBucks:Int = FunkBucks.getFunkCoins() + amount;
-
-        // funkBucksText.text = '<b>$currentFunkBucks</b> ${FBIcon.Buck}';
-        // funkBucksText.y -= 20;
-        // FunkinSound.playOnce(Paths.sound("fav"), 0.35);
-
-        // funkBucksText.forEach((letter) -> {
-            // FlxTween.color(letter, 0.5, 0xFF00FF00, 0xFFFFFFFF);
-        // });
-
-        FunkBucks.addFunkCoins(amount, false);
-    }
-
-    public function deductBlueJewel(amount:Int):Void
-    {
-        // var currentJewels:Int = FunkBucks.getBlueJewels();
-        // var remainingJewels:Int = currentJewels - amount;
-
-        // blueJewelsText.text = '<b><c=82E9FF>$remainingJewels</c></b> ${FBIcon.Jewel}';
-        // blueJewelsText.y += 20;
-        // FunkinSound.playOnce(Paths.sound("bluejewel"));
-
-        FunkBucks.addBlueJewels(-amount, false);
-    }
-
-    public function addBlueJewel(amount:Int):Void
-    {
-        // var currentJewels:Int = FunkBucks.getBlueJewels() + amount;
-
-        // blueJewelsText.text = '<b><c=82E9FF>$currentJewels</c></b> ${FBIcon.Jewel}';
-        // blueJewelsText.y -= 20;
-        // FunkinSound.playOnce(Paths.sound("bluejewel"));
-
-        // blueJewelsText.forEach((letter) -> {
-            // FlxTween.color(letter, 0.5, 0xFF00FF00, letter.curLetter.colored ? 0xFFFFFFFF : 0xFF82E9FF);
-        // });
-
-        FunkBucks.addBlueJewels(amount, false);
-    }
-
-    final soundThresholds:Array<Int> = [100, 500, 1000, 2500];
-    function updateFunkBucks(value:Float):Void
-    {
-        if (previousFunkBucks != Math.floor(value))
-        {
-            var mod:Int = 0;
-            for (index => value in soundThresholds)
-            {
-                if (passingThroughCost >= value)
-                {
-                    mod = index + 1;
-                }
-            }
-            funkBucksText.text = '<b>${Math.floor(value)}</b> ${FBIcon.Buck}';
-            funkBucksText.y += 5;
-            if (Math.abs(Math.floor(value) % (mod + 1)) == 0) FunkinSound.playOnce(Paths.sound("fav"), 0.35);
-        }
-        previousFunkBucks = Math.floor(value);
-    }
-
-    function insufficientFunkBucks():Void
-    {
-        funkBucksText.y += 20;
-        funkBucksText.forEach((letter) -> {
-            FlxTween.color(letter, 0.5, 0xFFFF0000, 0xFFFFFFFF);
-        });
-        FunkinSound.playOnce(Paths.sound("CS_locked"), 0.5);
-    }
-
-    function insufficientBlueJewels():Void
-    {
-        blueJewelsText.y += 20;
-        blueJewelsText.forEach((letter) -> {
-            FlxTween.color(letter, 0.5, 0xFFFF0000, letter.curLetter.colored ? 0xFFFFFFFF : 0xFF82E9FF);
-        });
-        FunkinSound.playOnce(Paths.sound("CS_locked"), 0.5);
-    }
-
     function unlockPinsInQueue():Void
     {
         disallowInputs = true;
         var nextPin:String = FunkBucks.pinUnlockQueue.shift();
         if (nextPin != null)
         {
-            trace("Unlocking pin: " + nextPin);
+            trace("Unlocking next pin in queue: " + nextPin);
             var substate = new PinUnlockState(FunkBucks.getPinByID(nextPin));
             substate.cameras = [cameraSubState];
             openSubState(substate);
