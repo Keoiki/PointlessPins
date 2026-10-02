@@ -274,7 +274,7 @@ class BoxSubMenu extends MusicBeatSubState
         var boxOddsText = "";
         for (i in 0...box.chances.length)
         {
-            var rarityColor:String = ReflectUtil.getAnonymousField(FunkBucks.pinData, box.chances[i][0]).color;
+            var rarityColor:String = ReflectUtil.getAnonymousField(FunkBucks.pinData, box.chances[i][0])?.color ?? "FFFFFF";
             boxOddsText += '<c=$rarityColor>${box.chances[i][0]}</c>: ${FlxMath.roundDecimal(box.chances[i][1] / box.totalWeight * 100, 2)}%';
             if (i < box.chances.length - 1) boxOddsText += "\n";
         }
