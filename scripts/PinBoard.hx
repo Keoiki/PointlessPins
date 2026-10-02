@@ -43,6 +43,7 @@ class PinBoard extends MusicBeatSubState
 
     var cursorX:Float = 0;
     var cursorY:Float = 0;
+    var selectedPin:PinSprite;
     var pinMidpoint:FlxPoint = null;
 
     var subCamHUD:FunkinCamera;
@@ -282,16 +283,20 @@ class PinBoard extends MusicBeatSubState
             cursorX = PinBoard.rememberedPin[0];
             cursorY = PinBoard.rememberedPin[1];
 
-            var availablePin = pins.filter(function(pin) {
+            selectedPin = pins.filter(function(pin) {
                 return pin.position[0] == cursorX && pin.position[1] == cursorY;
             })[0];
 
-            pinMidpoint = availablePin.getGraphicMidpoint(pinMidpoint);
+            pinMidpoint = selectedPin.getGraphicMidpoint(pinMidpoint);
             cursor.x = pinMidpoint.x - cursor.width / 2;
             cursor.y = pinMidpoint.y - cursor.height / 2;
             cameraFollowPoint.setPosition(cursor.x, cursor.y + 75);
 
             camera.snapToTarget();
+        }
+        else
+        {
+            selectedPin = pins[0];
         }
 
         super.create();
@@ -328,6 +333,7 @@ class PinBoard extends MusicBeatSubState
 
         var prevCurX:Int = cursorX;
         var prevCurY:Int = cursorY;
+        var yChange:Int = 0;
 
         if (#if mobile SwipeUtil.swipeLeft #else controls.UI_LEFT_P || (FlxG.mouse.justMovedRight && FlxG.mouse.pressed) #end)
         {
@@ -339,31 +345,39 @@ class PinBoard extends MusicBeatSubState
         }
         if (#if mobile SwipeUtil.swipeUp #else controls.UI_UP_P || (FlxG.mouse.justMovedDown && FlxG.mouse.pressed) || (FlxG.mouse.wheel >= 1) #end)
         {
-            cursorY--;
+            yChange = -1;
         }
         if (#if mobile SwipeUtil.swipeDown #else controls.UI_DOWN_P || (FlxG.mouse.justMovedUp && FlxG.mouse.pressed) || (FlxG.mouse.wheel <= -1) #end)
         {
-            cursorY++;
+            yChange = 1;
         }
         if (controls.ACCEPT_P)
         {
             trace("Pin selected.");
         }
 
-        if (cursorY < 0) cursorY = pinRows - 1;
-        if (cursorY > pinRows - 1) cursorY = 0;
         if (cursorX < 0) cursorX = pinRowLengths[cursorY] - 1;
-        if (cursorX > pinRowLengths[cursorY] - 1) cursorX = prevCurY == cursorY ? 0 : (pinRowLengths[cursorY] - 1);
+        if (cursorX > pinRowLengths[cursorY] - 1) cursorX = 0;
+        if (yChange != 0)
+        {
+            cursorY += yChange;
+            while (pinRowLengths[cursorY] - 1 < cursorX)
+            {
+                cursorY += yChange;
+                if (cursorY < 0) cursorY = pinRows - 1;
+                if (cursorY > pinRows - 1) cursorY = 0;
+                if (cursorY == prevCurY) break;
+            }
+        }
 
         if (prevCurX != cursorX || prevCurY != cursorY)
         {
+            selectedPin = pins.filter(function(pin) {
+                return pin.position[0] == cursorX && pin.position[1] == cursorY;
+            })[0];
             pinMoveSound.play(true);
             hasUpdatedPinText = false;
         }
-
-        var availablePin = pins.filter(function(pin) {
-            return pin.position[0] == cursorX && pin.position[1] == cursorY;
-        })[0];
 
         if (!hasUpdatedPinText)
         {
@@ -374,7 +388,7 @@ class PinBoard extends MusicBeatSubState
             pinSource.alpha = 0;
             pinName.y = pinNameBox.y + 70;
             pinDescription.y = pinName.y + 40;
-            if (!availablePin.isUnlocked)
+            if (!selectedPin.isUnlocked)
             {
                 // pinName.y -= 20;
                 pinDescription.alpha = 1;
@@ -384,59 +398,59 @@ class PinBoard extends MusicBeatSubState
                     pinName.text = 'Not unlocked yet!';
                 }
                 
-                if (availablePin.lockedText != pinDescription.text)
+                if (selectedPin.lockedText != pinDescription.text)
                 {
-                    pinDescription.text = availablePin.lockedText;
+                    pinDescription.text = selectedPin.lockedText;
                 }
                 
                 pinName.y -= pinDescription.rows * 20;
             }
             else
             {
-                if (availablePin.description != null)
+                if (selectedPin.description != null)
                 {
-                    pinDescription.text = availablePin.description;
+                    pinDescription.text = selectedPin.description;
                     pinDescription.alpha = 1;
                     pinName.y -= pinDescription.rows * 20;
                     pinDescription.y -= pinDescription.rows * 20;
                 }
 
-                if (availablePin.artist != null)
+                if (selectedPin.artist != null)
                 {
-                    pinArtist.text = 'Created by: ${availablePin.artist}';
+                    pinArtist.text = 'Created by: ${selectedPin.artist}';
                     pinArtist.alpha = 1;
                 }
 
-                if (availablePin.source != null)
+                if (selectedPin.source != null)
                 {
-                    pinSource.text = availablePin.source;
+                    pinSource.text = selectedPin.source;
                     pinSource.alpha = 1;
                 }
 
-                pinName.text = availablePin.name;
+                pinName.text = selectedPin.name;
 
                 var countText:String = "";
-                if (!availablePin.special)
+                if (!selectedPin.special)
                 {
-                    countText = 'Unlocked ${availablePin.unlockCount} time${(availablePin.unlockCount == 1 ? "" : "s")}';
+                    countText = 'Unlocked ${selectedPin.unlockCount} time${(selectedPin.unlockCount == 1 ? "" : "s")}';
                 }
                 else
                 {
                     countText = 'One-Time Reward';
                 }
-                if (availablePin.hidden) countText += ' (Hidden)';
+                if (selectedPin.hidden) countText += ' (Hidden)';
                 pinUnlockCount.alpha = 1;
                 pinUnlockCount.text = countText;
                 
-                availablePin?.rotationTween?.cancel();
-                availablePin.angle = 0;
+                selectedPin?.rotationTween?.cancel();
+                selectedPin.angle = 0;
                 var rotationAngle:Int = FlxG.random.bool(50) ? FlxG.random.int(-30, -21) : FlxG.random.int(21, 30);
-                availablePin.rotationTween = FlxTween.tween(availablePin, { angle: rotationAngle }, 0.75, { ease: FlxEase.backOut, type: 16 });
+                selectedPin.rotationTween = FlxTween.tween(selectedPin, { angle: rotationAngle }, 0.75, { ease: FlxEase.backOut, type: 16 });
             }
             hasUpdatedPinText = true;
         }
 
-        pinMidpoint = availablePin.getGraphicMidpoint(pinMidpoint);
+        pinMidpoint = selectedPin.getGraphicMidpoint(pinMidpoint);
         var intendedCursorX:Float = pinMidpoint.x - cursor.width / 2;
         var intendedCursorY:Float = pinMidpoint.y - cursor.height / 2;
 
@@ -451,7 +465,7 @@ class PinBoard extends MusicBeatSubState
         {
             for (i in 0...pins.length)
             {
-                var pin = pins[i];
+                var pin:PinSprite = pins[i];
 
                 if (pin == null) continue;
                 if (!TouchUtil.overlaps(pin, camera)) continue;
@@ -464,6 +478,7 @@ class PinBoard extends MusicBeatSubState
                 }
                 else
                 {
+                    selectedPin = pin;
                     cursorX = pin.position[0];
                     cursorY = pin.position[1];
                     pinMoveSound.play(true);
