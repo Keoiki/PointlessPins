@@ -134,15 +134,6 @@ class FunkBucks extends Module
         if (ReflectUtil.fields(FunkBucks.save).length == 0)
         {
             FunkBucks.save = FunkBucks.getDefaultSaveValues();
-            // Change default "dialogueFlavor" setting depending on the player's current settings.
-            #if mobile
-            FunkBucks.save.dialogueFlavor = "nice";
-            #else
-            if (!Preferences.naughtyness || Constants.CENSOR_EXPLETIVES)
-            {
-                FunkBucks.save.dialogueFlavor = "nice";
-            }
-            #end
             FunkBucks.flushSave();
         }
 
@@ -828,9 +819,6 @@ class FunkBucks extends Module
             // The current modifier format. Either "multiplier" or "percentage".
             modifierText: "percentage",
 
-            // Whether to show meaner or nicer dialogue.
-            dialogueFlavor: "mean",
-
             // An array of all the dialogue IDs that have been seen.
             seenDialogue: new Array()
         }
@@ -1046,7 +1034,7 @@ class FunkBucks extends Module
             }
             else #end if (currentDailies.contains(currentSongOrWeek))
             {
-                if (FunkBucks.save.dailiesCompleted == null) FunkBucks.save.dailiesCompleted = -0;
+                if (FunkBucks.save.dailiesCompleted == null) FunkBucks.save.dailiesCompleted = 0;
                 if (FlxG.random.bool(0.5))
                 {
                     jewelsToAward = 2;
@@ -1172,7 +1160,7 @@ class FunkBucks extends Module
     /**
      * Helper function for adding pins to the unlock queue, ignoring already unlocked pins.
      * 
-     * This is for, if other mods want to use the unlock queue, they don't have to check if the pin is unlocked themselves.
+     * This is for; if other mods want to use the unlock queue, they don't have to check if the pin is already unlocked themselves.
      * 
      * @param pinID The pin ID to push.
      */
@@ -1201,6 +1189,7 @@ class FBIcon
     static final Clover:String = "&#xE012;";
     static final Ophelia:String = "&#xE013;";
     static final April:String = "&#xE014;";
+    static final NGSupporter:String = "&#xE015;";
     
     static final Common:String = "&#xE020;";
     static final Uncommon:String = "&#xE021;";

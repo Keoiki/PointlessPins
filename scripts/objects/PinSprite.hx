@@ -4,6 +4,7 @@ import EReg;
 import flixel.addons.display.FlxRuntimeShader;
 import flixel.tweens.FlxTween;
 import flixel.util.FlxColor;
+import funkin.api.newgrounds.NewgroundsClient;
 import funkin.graphics.FunkinSprite;
 import openfl.filters.BitmapFilter;
 import openfl.filters.DropShadowFilter;
@@ -110,7 +111,7 @@ class PinSprite extends FunkinSprite
             var fadeTween:Null<FlxTween> = null;
             fadeTween = FlxTween.tween(super, { alpha: 0 }, 0.25);
 
-            Assets.loadBitmapData(fileToLoad).onComplete(function(bitmapData)
+            Assets.loadBitmapData(fileToLoad).onComplete(function(bitmapData:BitmapData)
             {
                 if (!exists) return;
 
@@ -184,6 +185,20 @@ class PinSprite extends FunkinSprite
                 if (!Preferences.naughtyness)
                 {
                     description = 'are you ${getCensor(7)} kidding me';
+                }
+            }
+            case "hundrec":
+            {
+                if (NewgroundsClient.isLoggedIn() && NewgroundsClient.user != null)
+                {
+                    if (NewgroundsClient.user.supporter)
+                    {
+                        description = '"Hey <c=F27E2A>${NewgroundsClient.user.name}</c> ${FBIcon.NGSupporter}, This is Hundrec, Production Manager for The Funkin\' Crew."';
+                    }
+                    else
+                    {
+                        description = '"Hey ${NewgroundsClient.user.name}, This is Hundrec, Production Manager for The Funkin\' Crew."';
+                    }
                 }
             }
             default: // Nothing

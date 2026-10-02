@@ -106,7 +106,6 @@ class MoneyHUD extends FunkinGroup
 
     public function setDisplay(showBucks:Null<Bool>, showJewels:Null<Bool>, ?bgAlpha:Null<Float>):Void
     {
-        trace(showBucks, showJewels, bgAlpha);
         if (showBucks != null)
         {
             currentDisplayBucks = showBucks;

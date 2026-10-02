@@ -69,7 +69,7 @@ class Shop extends MusicBeatState
     public var clock:Clock;
     public var dailyBoard:DailyBoard;
     public var rewardShelf:RewardShelf;
-    public var cloverEventButton:FunkinSprite;
+    // public var cloverEventButton:FunkinSprite;
 
     var counterItems = [];
     public var skcItem1:FunkinSprite;
@@ -188,11 +188,11 @@ class Shop extends MusicBeatState
         clock.zIndex = -993;
         add(clock);
 
-        cloverEventButton = new FunkinSprite(2055 - spriteNudge, -250).makeSolidColor(150, 150, 0xFF00FF00);
-        cloverEventButton.scrollFactor.set(0.85, 0.85);
-        cloverEventButton.zIndex = -990;
-        cloverEventButton.visible = FunkBucks.getUnlockedPinsCount() >= 30;
-        add(cloverEventButton);
+        // cloverEventButton = new FunkinSprite(2055 - spriteNudge, -250).makeSolidColor(150, 150, 0xFF00FF00);
+        // cloverEventButton.scrollFactor.set(0.85, 0.85);
+        // cloverEventButton.zIndex = -990;
+        // cloverEventButton.visible = FunkBucks.getUnlockedPinsCount() >= 30;
+        // add(cloverEventButton);
 
         if (!FunkBucks.hasObtainedPin("tuntematon") && FunkBucks.getUnlockedPinsCount() >= 75 && FlxG.random.bool(0.1) && !Tuntematon.gone && !Shopkeeper.caught)
         {
@@ -352,12 +352,12 @@ class Shop extends MusicBeatState
         rewardsSparkles.alpha.set(0.3, 0.9, 0.0, 0.0);
         rewardsSparkles.angle.set(-180, 180, -180, 180);
         rewardsSparkles.ignoreAngularVelocity = true;
-        rewardsSparkles.lifespan.set(10, 15);
+        rewardsSparkles.lifespan.set(3, 7);
         rewardsSparkles.blend = 0;
         rewardsSparkles.zIndex = 502;
         add(rewardsSparkles);
         rewardsSparkles.focusOn(iconRewards);
-        rewardsSparkles.start(false, 0.45);
+        rewardsSparkles.start(false, 0.25);
 
         counterItems.push(iconPins);
         counterItems.push(iconBoxes);
@@ -670,7 +670,7 @@ class Shop extends MusicBeatState
             rewardShelf.toggleItems();
             savedCamZoom = camera.zoom;
             
-            rewardsSparkles.kill();
+            rewardsSparkles.emitting = false;
 
             var substate = new RewardsSubMenu();
             substate.closeCallback = function()
@@ -680,8 +680,7 @@ class Shop extends MusicBeatState
                 FlxTween.tween(camera, { zoom: savedCamZoom }, 1, { ease: FlxEase.cubeOut });
                 showMenuItems();
                 rewardShelf.toggleItems(true);
-                rewardsSparkles.revive();
-                rewardsSparkles.start(false, 0.45);
+                rewardsSparkles.emitting = true;
             }
             substate.cameras = [cameraSubState];
 
@@ -1121,11 +1120,10 @@ class Shop extends MusicBeatState
 
     function checkForEvents():Void
     {
-        if (FunkBucks.getUnlockedPinsCount() >= 50 /*&& FunkBucks.getEvent("cloverCoinButton") == 0*/)
-        {
-            cloverEventButton.visible = true;
-            // cloverCoinButtonIntro();
-        }
+        // if (FunkBucks.getUnlockedPinsCount() >= 50 && FunkBucks.getEvent("cloverCoinButton") == 0)
+        // {
+            // cloverEventButton.visible = true;
+        // }
     }
 
     override function onFocus():Void
