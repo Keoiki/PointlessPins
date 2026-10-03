@@ -32,6 +32,7 @@ import funkin.util.ReflectUtil;
 import funkin.util.SerializerUtil;
 import funkin.util.TouchUtil;
 import funkin.util.VersionUtil;
+import lime.app.Application;
 using StringTools;
 
 typedef PinData = {
@@ -124,6 +125,15 @@ class FunkBucks extends Module
         super('FunkBucks', -2000000000);
 
         FlxG.signals.postGameStart.addOnce(gameStartCalls);
+
+        Application.current.onExit.add((exitCode:Int) ->
+        {
+            for (pin in FunkBucks.pinUnlockQueue)
+            {
+                trace('Game closing! Setting "$pin" to be unlocked!');
+                FunkBucks.setObtainedPin(pin);
+            }
+        }, true, 1000000);
     }
 
     function onCreate(event:ScriptEvent):Void
@@ -1170,6 +1180,15 @@ class FunkBucks extends Module
         {
             FunkBucks.pinUnlockQueue.push(pinID);
         }
+    }
+
+    /**
+     * Alias to `pushPinToUnlockQueue(pinID)` because I typed it wrong in the tutorial file once.
+     * @param pinID 
+     */
+    public static function addPinToUnlockQueue(pinID:String):Void
+    {
+        FunkBucks.pushPinToUnlockQueue(pinID);
     }
 }
 
