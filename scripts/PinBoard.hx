@@ -327,6 +327,8 @@ class PinBoard extends MusicBeatSubState
         close();
     }
 
+    var holdTimers:Array<Float> = [0, 0, 0, 0];
+
     public function handleControls(elapsed:Float):Void
     {
         if (!pinsCreated) return;
@@ -339,18 +341,42 @@ class PinBoard extends MusicBeatSubState
         {
             cursorX--;
         }
+
         if (#if mobile SwipeUtil.swipeRight #else controls.UI_RIGHT_P || (FlxG.mouse.justMovedLeft && FlxG.mouse.pressed) #end)
         {
             cursorX++;
         }
+
         if (#if mobile SwipeUtil.swipeUp #else controls.UI_UP_P || (FlxG.mouse.justMovedDown && FlxG.mouse.pressed) || (FlxG.mouse.wheel >= 1) #end)
         {
             yChange = -1;
         }
+
         if (#if mobile SwipeUtil.swipeDown #else controls.UI_DOWN_P || (FlxG.mouse.justMovedUp && FlxG.mouse.pressed) || (FlxG.mouse.wheel <= -1) #end)
         {
             yChange = 1;
         }
+
+        if (controls.UI_LEFT) holdTimers[0] += elapsed; else holdTimers[0] = 0;
+        if (controls.UI_RIGHT) holdTimers[1] += elapsed; else holdTimers[1] = 0;
+        if (controls.UI_UP) holdTimers[2] += elapsed; else holdTimers[2] = 0;
+        if (controls.UI_DOWN) holdTimers[3] += elapsed; else holdTimers[3] = 0;
+
+        for (i in 0...holdTimers.length)
+        {
+            if (holdTimers[i] > 0.4)
+            {
+                switch (i)
+                {
+                    case 0: cursorX--;
+                    case 1: cursorX++;
+                    case 2: yChange = -1;
+                    case 3: yChange = 1;
+                }
+                holdTimers[i] = 0.3;
+            }
+        }
+
         if (controls.ACCEPT_P)
         {
             trace("Pin selected.");

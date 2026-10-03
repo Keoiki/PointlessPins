@@ -46,6 +46,8 @@
     - It can now be displayed anywhere in the game, if needed.
 - The Pin Board graphics have been updated.
 - The Pin Board now remembers the last pin you scrolled over and will snap to it when re-opening the menu.
+- Pin Board vertical movement now skips over rows where there isn't a pin on the column you've moving on.
+- You can now hold down a button on the Pin Board to move quickly.
 - The text in the Box Menu has been moved around.
     - The opened box count text has been removed and the counts can now be seen in the new Rewards menu.
 - Increased the amount of daily songs from 3 to 5.
