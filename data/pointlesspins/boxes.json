@@ -24,7 +24,7 @@
             [ "Epic", 10 ]
         ],
         "cost": 50,
-        "order": 1
+        "order": 100
     },
     {
         "id": "fancycoffret",
@@ -39,7 +39,7 @@
             [ "Mythic", 1 ]
         ],
         "cost": 200,
-        "order": 2
+        "order": 200
     },
     {
         "id": "smallgiftbox",
@@ -53,7 +53,7 @@
             [ "Mythic", 5 ]
         ],
         "cost": 600,
-        "order": 3
+        "order": 300
     },
     {
         "id": "bonusreward",
@@ -62,7 +62,7 @@
         "revealTime": 26,
         "chances": [ ],
         "cost": 0,
-        "order": -1,
+        "order": -100000,
         "special": true,
         "rollsPins": true
     }

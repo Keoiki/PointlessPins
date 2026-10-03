@@ -40,7 +40,7 @@
         ]
     },
     "Uncommon": {
-        "order": 1,
+        "order": 100,
         "color": "2BFF31",
         "pins":
         [
@@ -71,7 +71,7 @@
         ]
     },
     "Rare": {
-        "order": 2,
+        "order": 200,
         "color": "2A4DFF",
         "pins":
         [
@@ -98,7 +98,7 @@
         ]
     },
     "Epic": {
-        "order": 3,
+        "order": 300,
         "color": "A426FF",
         "pins":
         [
@@ -117,7 +117,7 @@
         ]
     },
     "Legendary": {
-        "order": 4,
+        "order": 400,
         "color": "FFB51C",
         "pins":
         [
@@ -130,7 +130,7 @@
         ]
     },
     "Mythic": {
-        "order": 5,
+        "order": 500,
         "color": "FF57F7",
         "pins":
         [
@@ -140,12 +140,12 @@
         ]
     },
     "Divine": {
-        "order": 6,
+        "order": 600,
         "color": "66FFFF",
         "pins": [ ]
     },
     "Special": {
-        "order": 7,
+        "order": 700,
         "color": "FF4C50",
         "pins":
         [
