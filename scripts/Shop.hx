@@ -22,6 +22,7 @@ import funkbucks.objects.Dialogue;
 import funkbucks.objects.shop.Clock;
 import funkbucks.objects.shop.DailyBoard;
 import funkbucks.objects.shop.RewardShelf;
+import funkbucks.objects.shop.StatsSheet;
 import funkbucks.objects.shop.secret.OpheliaPast;
 import pointlesspins.objects.shop.secret.Tuntematon;
 import funkbucks.shaders.ImposePatternShader;
@@ -87,10 +88,12 @@ class Shop extends MusicBeatState
     var lableConverse:BAlphabet;
     var keycapConverse:KeyCap;
 
-    public var iconRewards:FunkinSprite;
-    var lableRewards:BAlphabet;
-    var keycapRewards:KeyCap;
+    public var iconStats:FunkinSprite;
+    var lableStats:BAlphabet;
+    var keycapStats:KeyCap;
     var rewardsSparkles:FlxEmitter;
+    var viewingStats:Bool = false;
+    var statsSheet:StatsSheet;
 
     // UI
     public var screenBlack:FunkinSprite;
@@ -141,10 +144,10 @@ class Shop extends MusicBeatState
         {
             // Ophelia forgor to show up
             isShopkeeperGone = true;
-            if (FlxG.random.bool(10))
-            {
-                extendBounds = true;
-            }
+            // if (FlxG.random.bool(10))
+            // {
+                // extendBounds = true;
+            // }
         }
 
         if (TimedCoinsManager.running || isShopkeeperGone || Shopkeeper.caught)
@@ -312,60 +315,47 @@ class Shop extends MusicBeatState
         lableBoxes.zIndex = 512;
         add(lableBoxes);
 
-        // lableConverse = new BAlphabet(1200 - spriteNudge, 520, "<b>Exchange\n<s=-0.45>ABCDEFGHIJKLMNOPQRSTUVWXYZ\nabcdefghijklmnopqrstuvwxyz.,-=?!*^+</s></b>");
         lableConverse = new BAlphabet(1200 - spriteNudge, 520, "<b>Converse</b>");
         lableConverse.scale.set(0.65, 0.65);
         lableConverse.alignment = "center";
         lableConverse.zIndex = 516;
         add(lableConverse);
 
-        // var box:FunkinSprite = new FunkinSprite(lableConverse.x - 200, lableConverse.y).makeSolidColor(400, 60 * lableConverse.scale.y, 0x7B00FF00);
-        // box.zIndex = 520;
-        // add(box);
+        iconStats = new FunkinSprite(1740 - spriteNudge, 330).loadTexture("shop/iconStats");
+        iconStats.zIndex = 493;
+        add(iconStats);
 
-        // var box:FunkinSprite = new FunkinSprite(lableConverse.x - 200, lableConverse.y + 85 * lableConverse.scale.y).makeSolidColor(400, 60 * lableConverse.scale.y, 0x7B00FF00);
-        // box.zIndex = 520;
-        // add(box);
+        lableStats = new BAlphabet(1850 - spriteNudge, 520, "<b>Stats</b>");
+        lableStats.alignment = "center";
+        lableStats.scale.set(0.65, 0.65);
+        lableStats.zIndex = 514;
+        add(lableStats);
 
-        // var box:FunkinSprite = new FunkinSprite(lableConverse.x - 200, lableConverse.y + 85 * 2 * lableConverse.scale.y).makeSolidColor(400, 60 * lableConverse.scale.y, 0x7B00FF00);
-        // box.zIndex = 520;
-        // add(box);
-
-        iconRewards = new FunkinSprite(1740 - spriteNudge, 330).loadTexture("shop/iconrewards");
-        iconRewards.zIndex = 493;
-        add(iconRewards);
-
-        lableRewards = new BAlphabet(1850 - spriteNudge, 520, "<b>Rewards</b>");
-        lableRewards.alignment = "center";
-        lableRewards.scale.set(0.65, 0.65);
-        lableRewards.zIndex = 514;
-        add(lableRewards);
-
-        rewardsSparkles = new FlxEmitter(1740 - spriteNudge, 330);
-        rewardsSparkles.setSize(150, 150);
-        rewardsSparkles.loadParticles(Paths.image("pinsparkle"), 30, 0);
-        rewardsSparkles.acceleration.set(1, 1, -1, -3, 5, 5, -5, -10);
-        rewardsSparkles.scale.set(0.1, null, 0.3, null, 0.0, null, 0.1, null);
-        rewardsSparkles.keepScaleRatio = true;
-        rewardsSparkles.color.set(0xFFFFFFFF, 0xFFFFFF00);
-        rewardsSparkles.speed.set(0, -1, 0, 0);
-        rewardsSparkles.alpha.set(0.3, 0.9, 0.0, 0.0);
-        rewardsSparkles.angle.set(-180, 180, -180, 180);
-        rewardsSparkles.ignoreAngularVelocity = true;
-        rewardsSparkles.lifespan.set(3, 7);
-        rewardsSparkles.blend = 0;
-        rewardsSparkles.zIndex = 502;
-        add(rewardsSparkles);
-        rewardsSparkles.focusOn(iconRewards);
-        rewardsSparkles.start(false, 0.25);
+        // rewardsSparkles = new FlxEmitter(1740 - spriteNudge, 330);
+        // rewardsSparkles.setSize(150, 150);
+        // rewardsSparkles.loadParticles(Paths.image("pinsparkle"), 30, 0);
+        // rewardsSparkles.acceleration.set(1, 1, -1, -3, 5, 5, -5, -10);
+        // rewardsSparkles.scale.set(0.1, null, 0.3, null, 0.0, null, 0.1, null);
+        // rewardsSparkles.keepScaleRatio = true;
+        // rewardsSparkles.color.set(0xFFFFFFFF, 0xFFFFFF00);
+        // rewardsSparkles.speed.set(0, -1, 0, 0);
+        // rewardsSparkles.alpha.set(0.3, 0.9, 0.0, 0.0);
+        // rewardsSparkles.angle.set(-180, 180, -180, 180);
+        // rewardsSparkles.ignoreAngularVelocity = true;
+        // rewardsSparkles.lifespan.set(3, 7);
+        // rewardsSparkles.blend = 0;
+        // rewardsSparkles.zIndex = 502;
+        // add(rewardsSparkles);
+        // rewardsSparkles.focusOn(iconStats);
+        // rewardsSparkles.start(false, 0.25);
 
         counterItems.push(iconPins);
         counterItems.push(iconBoxes);
-        counterItems.push(iconRewards);
+        counterItems.push(iconStats);
         counterItems.push(lablePins);
         counterItems.push(lableBoxes);
         counterItems.push(lableConverse);
-        counterItems.push(lableRewards);
+        counterItems.push(lableStats);
 
         #if !mobile
         keycapPins = new KeyCap(lablePins.x - 33, 570, "1", null, false);
@@ -380,14 +370,14 @@ class Shop extends MusicBeatState
         keycapConverse.zIndex = 518;
         add(keycapConverse);
 
-        keycapRewards = new KeyCap(lableRewards.x - 33, 570, "4", null, false);
-        keycapRewards.zIndex = 520;
-        add(keycapRewards);
+        keycapStats = new KeyCap(lableStats.x - 33, 570, "4", null, false);
+        keycapStats.zIndex = 520;
+        add(keycapStats);
 
         counterItems.push(keycapPins);
         counterItems.push(keycapBoxes);
-        counterItems.push(keycapRewards);
         counterItems.push(keycapConverse);
+        counterItems.push(keycapStats);
         #end
         
         // UI
@@ -395,12 +385,14 @@ class Shop extends MusicBeatState
         screenBlack = new FunkinSprite(-2, -2).makeSolidColor(FlxG.width + 4, FlxG.height + 4, 0xFF000000);
         screenBlack.alpha = 0.0;
         screenBlack.scrollFactor.set(0, 0);
+        screenBlack.cameras = [cameraHUD];
         add(screenBlack);
 
         cannotDoText = new BAlphabet(FlxG.width / 2, FlxG.height - 100, "<b><c=FF0000>You cannot do that right now.</c></b>");
         cannotDoText.alignment = "center";
         cannotDoText.scale.set(0.5, 0.5);
         cannotDoText.alpha = 0.0001;
+        cannotDoText.cameras = [cameraHUD];
         add(cannotDoText);
 
         coolBackButton = new FunkinBackButton(FlxG.width - 220, FlxG.height - 200, 0xFFFFFFFF, goBack, 0.5);
@@ -408,29 +400,12 @@ class Shop extends MusicBeatState
         coolBackButton.visible = FunkBucks.isMouseActive;
         FlxMouseEvent.add(coolBackButton, coolBackButton.playHoldAnim, coolBackButton.playConfirmAnim);
         #end
+        coolBackButton.cameras = [cameraHUD];
         add(coolBackButton);
 
-        // var box:FunkinSprite = new FunkinSprite(0, 0).makeSolidColor(1600, 60, 0xFFFFFFFF);
-        // box.cameras = [cameraHUD];
-        // add(box);
-
-        // var test = new BAlphabet(FlxG.width / 2, 0, "<b>Aa<s=0.9>Bb</s><s=0.8>Cc</s><s=0.7>Dd</s><s=0.6>Ee</s><s=0.5>Ff</s><s=0.4>Gg</s><s=0.3>Hh</s><s=0.2>Ii</s><s=0.1>Jj</s></b>");
-        // test.scale.set(0.75, 0.75);
-        // test.alignment = "center";
-        // add(test);
-        // test.cameras = [cameraHUD];
-
-        // var box:FunkinSprite = new FunkinSprite(FlxG.width / 2, 0).makeSolidColor(800, 60 * test.scale.y, 0x7B00FF00);
-        // box.cameras = [cameraHUD];
-        // add(box);
-
-        // var box:FunkinSprite = new FunkinSprite(FlxG.width / 2 - 200, 0).makeSolidColor(200, 60 * test.scale.y, 0x7BFF0000);
-        // box.cameras = [cameraHUD];
-        // add(box);
-
-        screenBlack.cameras = [cameraHUD];
-        cannotDoText.cameras = [cameraHUD];
-        coolBackButton.cameras = [cameraHUD];
+        statsSheet = new StatsSheet(FlxG.width / 2 - 370, 1000);
+        statsSheet.cameras = [cameraHUD];
+        add(statsSheet);
 
         if (ModStore.get("funkbucksOutdated") && ModStore.get("funkbucksShownOutdate") == null)
         {
@@ -458,7 +433,7 @@ class Shop extends MusicBeatState
 
         persistentUpdate = true;
 
-        final leftXLimit:Float = extendBounds ? 5000 : 100;
+        final leftXLimit:Float = 3000;
         final rightXLimit:Float = extendBounds ? 100000 : 100;
 
         if (extendBounds)
@@ -526,7 +501,7 @@ class Shop extends MusicBeatState
             goBack();
         }
 
-        if (disallowInputs)
+        if (disallowInputs && !viewingStats)
         {
             coolBackButton.enabled = false;
             coolBackButton.visible = false;
@@ -543,6 +518,8 @@ class Shop extends MusicBeatState
             coolBackButton.visible = #if mobile true; #else FunkBucks.isMouseActive; #end
             coolBackButton.enabled = true;
         }
+
+        if (viewingStats) return;
 
         handleCameraMovement();
         // checkIfAnnoyedShopkeeper();
@@ -655,7 +632,7 @@ class Shop extends MusicBeatState
 
         // Rewards
 
-        if (FlxG.keys.justPressed.FOUR || (TouchUtil.pressAction(iconRewards) && !FunkBucks.isMouseTooFast && !TouchUtil.overlaps(coolBackButton, cameraHUD)))
+        if (FlxG.keys.justPressed.FOUR || (TouchUtil.pressAction(iconStats) && !FunkBucks.isMouseTooFast && !TouchUtil.overlaps(coolBackButton, cameraHUD)))
         {
             if (isShopkeeperGone || Shopkeeper.caught || TimedCoinsManager.running)
             {
@@ -664,36 +641,47 @@ class Shop extends MusicBeatState
                 return;
             }
 
+            viewingStats = true;
             disallowInputs = true;
-            cameraFollowPoint.setPosition(rewardShelf.x + rewardShelf.shelf.width / 1.35 - 2.5, 240);
-            showMenuItems(false);
-            rewardShelf.toggleItems();
-            savedCamZoom = camera.zoom;
+            // cameraFollowPoint.setPosition(rewardShelf.x + rewardShelf.shelf.width / 1.35 - 2.5, 240);
+            // showMenuItems(false);
+
+            FlxTween.tween(statsSheet, { y: 200 }, 1, { ease: FlxEase.cubeOut });
+
+            // rewardShelf.toggleItems();
+            // savedCamZoom = camera.zoom;
             
-            rewardsSparkles.emitting = false;
+            // rewardsSparkles.emitting = false;
 
-            var substate = new RewardsSubMenu();
-            substate.closeCallback = function()
-            {
-                shopkeeper.playAnimation("Idle", true, true);
-                FlxTween.tween(coolBackButton, { alpha: 0.5 }, 1, { ease: FlxEase.cubeOut });
-                FlxTween.tween(camera, { zoom: savedCamZoom }, 1, { ease: FlxEase.cubeOut });
-                showMenuItems();
-                rewardShelf.toggleItems(true);
-                rewardsSparkles.emitting = true;
-            }
-            substate.cameras = [cameraSubState];
+            // var substate = new RewardsSubMenu();
+            // substate.closeCallback = function()
+            // {
+                // shopkeeper.playAnimation("Idle", true, true);
+                // FlxTween.tween(coolBackButton, { alpha: 0.5 }, 1, { ease: FlxEase.cubeOut });
+                // FlxTween.tween(camera, { zoom: savedCamZoom }, 1, { ease: FlxEase.cubeOut });
+                // showMenuItems();
+                // rewardShelf.toggleItems(true);
+                // rewardsSparkles.emitting = true;
+            // }
+            // substate.cameras = [cameraSubState];
 
-            FlxTween.tween(coolBackButton, { alpha: 0 }, 1, { ease: FlxEase.cubeIn });
-            FlxTween.tween(camera, { zoom: 1.2 }, 1, { ease: FlxEase.cubeOut, onComplete: function()
-            {
-                openSubState(substate);
-            }});
+            // FlxTween.tween(coolBackButton, { alpha: 0 }, 1, { ease: FlxEase.cubeIn });
+            // FlxTween.tween(camera, { zoom: 1.2 }, 1, { ease: FlxEase.cubeOut, onComplete: function()
+            // {
+                // openSubState(substate);
+            // }});
         }
     }
 
     function goBack():Void
     {
+        if (viewingStats)
+        {
+            FlxTween.tween(statsSheet, { y: 1000 }, 1, { ease: FlxEase.cubeOut });
+            viewingStats = false;
+            disallowInputs = false;
+            return;
+        }
         if (disallowInputs) return;
         FlxG.switchState(() -> new MainMenuState());
     }

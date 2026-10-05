@@ -1,4 +1,15 @@
-## [2.0.0] - ??/??/2026 (hopefully September)
+## [3.0.0] - ??/??/20??
+
+### Added
+
+- Added the Awards section to the Shop.
+    - You can claim extra some of the following based on your lifetime FunkBucks or Melody Stones collected, or how many of each box you've opened:
+        - FunkBucks, Melody Stones, Pins, Boxes, Box Discounts, and Bonus FunkBucks Multiplier.
+    - FunkBucks, Melody Stones, and Boxes obtained from Rewards don't count towards their respective milestones.
+
+
+
+## [2.0.0] - ??/??/2026
 
 ### Added
 
@@ -24,12 +35,12 @@
     - Some options may change at certain points, so read while you can!
 - Added the Exchange.
     - Found as an option in the Converse Menu.
-    - You can exchange one Melody Stone for 1000 FunkBucks, or more to buy a Legendary or higher rarity pin you DON'T already own.
-    - April will instead offer specific pins in a set sequence, which she has explicitly been told to NOT do.
-- Added the Rewards section to the Shop.
-    - You can claim extra some of the following based on your lifetime FunkBucks or Melody Stones collected, or how many of each box you've opened:
-        - FunkBucks, Melody Stones, Pins, Boxes, Box Discounts, and Bonus FunkBucks Multiplier.
-    - FunkBucks, Melody Stones, and Boxes obtained from Rewards don't count towards their respective milestones.
+    - April will offer specific pins in a set sequence, which she has explicitly been told to NOT do.
+- Added the Stats sheet.
+    - Shows you how many:
+        - FunkBucks and Melody Stones you've earned,
+        - How many of each Box you've opened,
+        - and how many Daily Songs you've completed.
 - Added support for several modded variations as Dailies:
     - Remnants (Funkin' Remnants)
     - Gooey (Gooey Mix)
@@ -44,10 +55,14 @@
 - The shop itself has gone under a major visual upgrade.
 - Updated the currency display.
     - It can now be displayed anywhere in the game, if needed.
-- The Pin Board graphics have been updated.
-- The Pin Board now remembers the last pin you scrolled over and will snap to it when re-opening the menu.
-- Pin Board vertical movement now skips over rows where there isn't a pin on the column you've moving on.
-- You can now hold down a button on the Pin Board to move quickly.
+- Complete Pin Board overhaul:
+    - The Pin Board graphics have been updated.
+    - The Pin details have been replaced by a Rarity quickswap bar.
+    - Pin details are no longer displayed outright, when you've hovered over a pin, tap it or press the ACCEPT button to view the pin's details.
+        - This was done to reduce lag due to the text updates.
+    - The Pin Board now remembers the last pin you scrolled over and will snap to it when re-opening the menu.
+    - Pin Board vertical scrolling movement now skips over rows where there isn't a pin on the column you've moving on.
+    - You can now hold down a button on the Pin Board to move quickly.
 - The text in the Box Menu has been moved around.
     - The opened box count text has been removed and the counts can now be seen in the new Rewards menu.
 - Increased the amount of daily songs from 3 to 5.
@@ -64,7 +79,9 @@
     - 25-36: 75%
     - 37-48: 100%
     - 49 and after: 125%
-    
+
+
+
 ## [1.3.0] - 18/08/2026
 
 ### Added
@@ -87,6 +104,8 @@
 
 - Fixes for FNF 0.8.6.
 
+
+
 ## [1.2.0] - 04/06/2026
 
 ### Added
@@ -99,6 +118,8 @@
 - The box purchase confirmation is more clearly indicated.
 - The FunkBuck text in the Results now shows up faster and follows the coloring scheme used for the Modifier lable.
 
+
+
 ## [1.1.2] - 26/03/2026
 
 ### Changed
@@ -107,11 +128,15 @@
 - Changed **Better Alphabet** version requirement to **2.0.0 or higher**.
 - Changed the "Help" option to "Exchange".
 
+
+
 ## [1.1.1] - 26/02/2026
 
 ### Fixed
 
 - Fixed a crash when closing Freeplay on a song that requires scrolling to show its full name.
+
+
 
 ## [1.1.0] - 25/02/2026
 
@@ -132,6 +157,8 @@
 
 - Fixed "PinData" throwing errors when accessing the save's fields. :obese_cat:
 
+
+
 ## [1.0.1] - 25/02/2026
 
 ### Fixed
@@ -140,6 +167,8 @@
 - Force visibility on the back button on Mobile, HOPEFULLY fixing them not appearing sometimes, apparently.
 - Fixed the Pins menu throwing an error when trying to load the board background file, due to filename case sensitivity on some platforms.
 - Fixed immediately annoying Ophelia when closing the Boxes menu if the back button was overlaying her.
+
+
 
 ## [1.0.0] - 25/02/2026
 

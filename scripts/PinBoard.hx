@@ -239,28 +239,24 @@ class PinBoard extends MusicBeatSubState
         pinPreviewBlack.alpha = 0.0;
         add(pinPreviewBlack);
 
-        pinName = new BAlphabet(FlxG.width / 2, 40, "", { lineHeight: 60 });
+        pinName = new BAlphabet(FlxG.width / 2, 40, "", { lineHeight: 60, alignment: "center" });
         pinName.scale.set(0.7, 0.7);
-        pinName.alignment = "center";
         add(pinName);
 
-        pinDescription = new BAlphabet(FlxG.width / 2, 555, "", { lineHeight: 70 });
+        pinDescription = new BAlphabet(FlxG.width / 2, 555, "", { lineHeight: 70, alignment: "center" });
         pinDescription.scale.set(0.5, 0.5);
-        pinDescription.alignment = "center";
         add(pinDescription);
 
-        pinArtist = new BAlphabet(FlxG.width - 25, FlxG.height - 50, "");
+        pinArtist = new BAlphabet(FlxG.width - 25, FlxG.height - 50, "", { alignment: "right" });
         pinArtist.scale.set(0.5, 0.5);
-        pinArtist.alignment = "right";
         add(pinArtist);
 
         pinUnlockCount = new BAlphabet(25, FlxG.height - 50, "");
         pinUnlockCount.scale.set(0.5, 0.5);
         add(pinUnlockCount);
 
-        pinSource = new BAlphabet(FlxG.width / 2, pinName.y + 60, "");
+        pinSource = new BAlphabet(FlxG.width / 2, pinName.y + 60, "", { alignment: "center" });
         pinSource.scale.set(0.3, 0.3);
-        pinSource.alignment = "center";
         add(pinSource);
 
         previewPin = new PinSprite(FlxG.width / 2, FlxG.height / 2);
@@ -334,7 +330,7 @@ class PinBoard extends MusicBeatSubState
             pinMidpoint = selectedPin.getGraphicMidpoint(pinMidpoint);
             cursor.x = pinMidpoint.x - cursor.width / 2;
             cursor.y = pinMidpoint.y - cursor.height / 2;
-            cameraFollowPoint.setPosition(cursor.x, cursor.y + 75);
+            cameraFollowPoint.setPosition(cursor.x, cursor.y + 100);
 
             camera.snapToTarget();
         }
@@ -484,7 +480,7 @@ class PinBoard extends MusicBeatSubState
 
         cursor.x = MathUtil.smoothLerpPrecision(cursor.x, intendedCursorX, elapsed, 0.5);
         cursor.y = MathUtil.smoothLerpPrecision(cursor.y, intendedCursorY, elapsed, 0.5);
-        cameraFollowPoint.setPosition(cursor.x, cursor.y + 75);
+        cameraFollowPoint.setPosition(cursor.x, cursor.y + 100);
     }
 
     function handleTouchControls():Void
@@ -593,7 +589,7 @@ class PinBoard extends MusicBeatSubState
         {
             FlxTween.completeTweensOf(obj);
         }
-        rarityIcons.noControl = true;
+        rarityIcons.noControl = false;
         isViewingPin = false;
         selectedPin.zIndex = 50;
         // It's possible to select another pin before the zIndex is reset, so we save the object blah blah blah
