@@ -21,10 +21,10 @@ Valid pin fields are:
     * MOD
     * INTERNET
     * GAME
-  * All tags are enclosed in "#" (such as `#MOD#`) and are lowercased for the tag checking.
+  * All tags are enclosed in "#" (such as `#MOD#`) and are lowercased in the code for the tag checking.
 * `special`: Used to make a pin a single-time unlock. Also makes it unobtainable from Boxes. You must create an unlock condition yourself. `Optional.`
 * `lockedText`: Used to show a different text when hovered over in the Pin Board while the Pin is still locked. `Optional, but heavily recommended if special is true.`
-* `hidden`: Used to completely hide a Pin from the board until it's unlocked. It also isn't counted for in the Rarity and Total numbers while locked. `Optional.`
+* `hidden`: Used to completely hide a Pin from the board until it's unlocked. It also isn't counted for in the Rarity and Total counts while locked. `Optional.`
 
 ## Unlocking custom Pins
 
@@ -56,3 +56,5 @@ Adding a new rarity is just another json merge. You must give it an order, so it
 ```
 The order value for all default rarities is at every 100, with Common at `0` and Special at `700`.
 If a rarity has no pins it won't show up on the Pin Board. (Like with `Divine` currently.)
+
+Creating an icon for your new rarity in `images/pinboard/` is also recommended with the name `rarity-YourRarity`. If it doesn't exist the `Common` rarity's icon will be used instead.

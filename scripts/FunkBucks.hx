@@ -952,7 +952,7 @@ class FunkBucks extends Module
             event.targetState.add(menuPin);
 
             #if !mobile
-            var keycap01 = new KeyCap(115, 115, "P");
+            var keycap01 = new KeyCap(125, 125, "P");
             event.targetState.add(keycap01);
             #end
 
@@ -1199,16 +1199,18 @@ class FBIcon
 {
     static final Buck:String = "&#xE000;";
     static final Jewel:String = "&#xE001;";
-    static final Erect:String = "&#xE002;";
-    static final Boyfriend:String = "&#xE003;";
-    static final Pico:String = "&#xE004;";
+    static final Clover:String = "&#xE002;";
+    static final Ticket:String = "&#xE003;";
+    static final OpheliaMad:String = "&#xE004;";
+    static final Star:String = "&#xE005;";
+    static final Ophelia:String = "&#xE006;";
+    static final April:String = "&#xE007;";
+    static final Rose:String = "&#xE008;";
+    static final NGSupporter:String = "&#xE009;";
 
-    static final OpheliaMad:String = "&#xE010;";
-    static final Star:String = "&#xE011;";
-    static final Clover:String = "&#xE012;";
-    static final Ophelia:String = "&#xE013;";
-    static final April:String = "&#xE014;";
-    static final NGSupporter:String = "&#xE015;";
+    static final Erect:String = "&#xE010;";
+    static final Boyfriend:String = "&#xE011;";
+    static final Pico:String = "&#xE012;";
     
     static final Common:String = "&#xE020;";
     static final Uncommon:String = "&#xE021;";

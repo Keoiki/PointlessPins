@@ -193,11 +193,11 @@ class PinSprite extends FunkinSprite
                 {
                     if (NewgroundsClient.user.supporter)
                     {
-                        description = '"Hey <c=F27E2A>${NewgroundsClient.user.name}</c> ${FBIcon.NGSupporter}, This is Hundrec, Production Manager for The Funkin\' Crew."';
+                        description = '"Hey <c=F27E2A>${NewgroundsClient.user.name}</c> ${FBIcon.NGSupporter},\nThis is Hundrec, Production Manager for The Funkin\' Crew."';
                     }
                     else
                     {
-                        description = '"Hey ${NewgroundsClient.user.name}, This is Hundrec, Production Manager for The Funkin\' Crew."';
+                        description = '"Hey ${NewgroundsClient.user.name},\nThis is Hundrec, Production Manager for The Funkin\' Crew."';
                     }
                 }
             }

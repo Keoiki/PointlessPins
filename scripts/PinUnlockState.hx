@@ -18,6 +18,10 @@ class PinUnlockState extends MusicBeatSubState
     var canClose:Bool = false;
     var closeTimer:Float = 0.0;
     var sparkles:FlxEmitter;
+    var glow1:FunkinSprite;
+    var glow2:FunkinSprite;
+    var glow1spin:Float = 0;
+    var glow2spin:Float = 0;
     public var debug:Bool = false;
 
     override function new(_pinData, _time:Float = 1.0):Void
@@ -40,11 +44,31 @@ class PinUnlockState extends MusicBeatSubState
             trace("Pin " + pinData.name + " was given no rarity!");
             pinData.rarity = "Unknown";
         }
+
         var rarityColor:String = pinData.rarity == "Unknown" ? "7F7F7F" : ReflectUtil.getAnonymousField(FunkBucks.pinData, pinData.rarity).color;
+
+        glow1spin = FlxG.random.bool(50) ? FlxG.random.float(-2, -0.2) : FlxG.random.float(0.2, 2);
+        glow2spin = FlxG.random.float(0.2, 2) * (glow1spin < 0 ? 1 : -1);
 
         var darkOverlay:FunkinSprite = new FunkinSprite(-64, -64).makeSolidColor(FlxG.width + 128, FlxG.height + 128, 0xFF000000);
         darkOverlay.alpha = 0;
         add(darkOverlay);
+
+        glow1 = new FunkinSprite(FlxG.width / 2, 400).loadTexture("pinunlockglow");
+        glow1.x -= glow1.width / 2;
+        glow1.y -= glow1.height / 2;
+        glow1.alpha = 0;
+        glow1.color = Std.parseInt('0xFF$rarityColor');
+        glow1.blend = 0;
+        add(glow1);
+
+        glow2 = new FunkinSprite(FlxG.width / 2, 400).loadTexture("pinunlockglowsmall");
+        glow2.x -= glow2.width / 2;
+        glow2.y -= glow2.height / 2;
+        glow2.alpha = 0;
+        glow2.color = Std.parseInt('0xFF$rarityColor');
+        glow2.blend = 0;
+        add(glow2);
 
         var pin:PinSprite = new PinSprite(FlxG.width / 2, 400);
         pin.isUnlocked = true;
@@ -92,6 +116,7 @@ class PinUnlockState extends MusicBeatSubState
         unlockMessage.alignment = "center";
         unlockMessage.scale.set(0.55, 0.55);
         add(unlockMessage);
+
         var unlockedPinName:BAlphabet = new BAlphabet(FlxG.width / 2, 475, '<b><s=0.75><c=$rarityColor>${pinData.rarity}</c></s>\n${pinData.name}</b>');
         unlockedPinName.alignment = "center";
         unlockedPinName.scale.set(0.75, 0.75);
@@ -109,6 +134,8 @@ class PinUnlockState extends MusicBeatSubState
         FunkinSound.playOnce(Paths.sound("tickleFight"));
         FlxTween.tween(darkOverlay, { alpha: 0.85 }, 0.5, { ease: FlxEase.cubeOut });
         FlxTween.tween(pin, { y: pin.y - 150 }, 0.8, { ease: FlxEase.quintOut });
+        FlxTween.tween(glow1, { y: glow1.y - 150, alpha: 1.0 }, 0.8, { ease: FlxEase.quintOut });
+        FlxTween.tween(glow2, { y: glow2.y - 150, alpha: 1.0 }, 0.8, { ease: FlxEase.quintOut });
         FlxTween.tween(pin.scale, { x: targetScale, y: targetScale }, 1.0, { ease: FlxEase.backOut });
         new FlxTimer().start(closeTimer, function(_:FlxTimer) {
             canClose = true;
@@ -119,6 +146,9 @@ class PinUnlockState extends MusicBeatSubState
 
     override function update(elapsed:Float):Void
     {
+        glow1.angle += glow1spin;
+        glow2.angle += glow2spin;
+
         if (canClose && ((controls.ACCEPT_P || controls.BACK_P) || TouchUtil.pressAction()))
         {
             close();

@@ -1,11 +1,16 @@
 char=57344 offsetY=8 colored=true
 char=57345 offsetY=10 colored=true
-char=57346 offsetY=4 colored=true
-char=57347 offsetY=4 colored=true
-char=57348 offsetY=4 colored=true
-char=57360 offsetY=12 colored=true
-char=57361 offsetY=-2 colored=true
-char=57362 offsetY=8 colored=true
+char=57346 offsetY=8 colored=true
+char=57347 colored=true
+char=57348 offsetY=12 colored=true
+char=57349 offsetY=-2 colored=true
+char=57350 offsetY=12 colored=true
+char=57351 offsetY=8 colored=true
+char=57352 offsetY=10 colored=true
+char=57353 offsetY=12 colored=true
+char=57360 offsetY=4 colored=true
+char=57361 offsetY=4 colored=true
+char=57362 offsetY=4 colored=true
 char=57376 offsetY=8 colored=true
 char=57377 offsetY=8 colored=true
 char=57378 offsetY=8 colored=true

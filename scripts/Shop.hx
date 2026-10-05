@@ -368,19 +368,19 @@ class Shop extends MusicBeatState
         counterItems.push(lableRewards);
 
         #if !mobile
-        keycapPins = new KeyCap(lablePins.x - 45, 570, "1", false);
+        keycapPins = new KeyCap(lablePins.x - 33, 570, "1", null, false);
         keycapPins.zIndex = 512;
         add(keycapPins);
 
-        keycapBoxes = new KeyCap(lableBoxes.x - 45, 570, "2", false);
+        keycapBoxes = new KeyCap(lableBoxes.x - 33, 570, "2", null, false);
         keycapBoxes.zIndex = 514;
         add(keycapBoxes);
 
-        keycapConverse = new KeyCap(lableConverse.x - 45, 570, "3", false);
+        keycapConverse = new KeyCap(lableConverse.x - 33, 570, "3", null, false);
         keycapConverse.zIndex = 518;
         add(keycapConverse);
 
-        keycapRewards = new KeyCap(lableRewards.x - 45, 570, "4", false);
+        keycapRewards = new KeyCap(lableRewards.x - 33, 570, "4", null, false);
         keycapRewards.zIndex = 520;
         add(keycapRewards);
 
