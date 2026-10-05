@@ -95,7 +95,7 @@ class PinUnlockState extends MusicBeatSubState
         sparkles.start();
 
         var unlockMsgText:String = "";
-        if (FunkBucks.debug_pins || debug || FunkBucks.setObtainedPin(pinData.id))
+        if (FunkBucks.debug_pins != null || debug || FunkBucks.setObtainedPin(pinData.id))
         {
             unlockMsgText = "<b>You got a <c=00FF00>NEW</c> pin!</b>";
         }

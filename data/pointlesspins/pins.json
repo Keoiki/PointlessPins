@@ -29,7 +29,7 @@
             { "id": "musicdisk", "name": "Music Disk" },
             { "id": "apple", "name": "Apple", "description": "Who the hell gives apples as a christmas present?!" },
             { "id": "rank-good", "name": "Good Rank", "description": "Remember when BF's animation for this rank played for everything?", "special": true, "lockedText": "Complete any song with a certain rank." },
-            { "id": "cardboardbox", "name": "Cardboard Box", "description": "The cheapest of them all.", "special": true, "lockedText": "This pin is unlockable from the Rewards." },
+            { "id": "cardboardbox", "name": "Cardboard Box", "description": "The cheapest of them all.", "special": true, "lockedText": "Open a total of 100 Cardboard Boxes." },
             { "id": "haxe", "name": "Haxe", "description": "The backbone of this game." },
             { "id": "red-amongus-week1", "name": "Red", "description": "Way to draw attention to yourself, huh?", "source": "VS. Impostor #MOD#" },
             { "id": "salty-ssn", "name": "Salty", "source": "Salty's Sunday Night #MOD#" },
@@ -58,7 +58,7 @@
             { "id": "arrow-up", "name": "Up Arrow" },
             { "id": "arrow-right", "name": "Right Arrow" },
             { "id": "rank-great", "name": "Great Rank", "description": "The \"silver\" of the ranks.", "special": true, "lockedText": "Complete any song with a certain rank." },
-            { "id": "smallgiftbox", "name": "Small Giftbox", "description": "Did you notice the FunkBuck badge inside it?", "special": true, "lockedText": "This pin is unlockable from the Rewards." },
+            { "id": "smallgiftbox", "name": "Small Giftbox", "description": "Did you notice the FunkBuck badge inside it?", "special": true, "lockedText": "Open a total of 75 Small Giftboxes." },
             { "id": "haxeflixel", "name": "HaxeFlixel", "description": "Not to be confused with \"Flixel\"." },
             { "id": "gooey", "name": "Gooey", "source": "Gooey Mix #MOD#", "scale": 0.46 },
             { "id": "flora", "name": "Flora", "source": "Gooey Mix #MOD#" },
@@ -78,13 +78,13 @@
             { "id": "nessie-funkinnews", "name": "Nessie", "source": "\"Funkin News\" Twitter #INTERNET#" },
             { "id": "ophelia", "name": "Ophelia", "description": "You'll stop annoying her now, right?", "special": true, "lockedText": "It wouldn't be smart to annoy <c=67B1D8>her.</c>" },
             { "id": "april", "name": "April", "description": "Cares little for <c=67B1D8>Ophelia's</c> rules.", "special": true, "lockedText": "#APRIL_PURCHASE#" },
-            { "id": "funkbuck", "name": "FunkBuck", "description": "Your local currency!", "special": true, "lockedText": "This pin is unlockable from the Rewards." },
+            { "id": "funkbuck", "name": "FunkBuck", "description": "Your local currency!", "special": true, "lockedText": "Earn a total of 25000 FunkBucks." },
             { "id": "haxeui", "name": "HaxeUI", "description": "It either doesn't work or doesn't work." },
             { "id": "pushpin", "name": "Pin", "description": "No no, wrong type of pin!" },
             { "id": "pinhead", "name": "Pinhead", "description": "are you fucking kidding me" },
             { "id": "difficultystar", "name": "Blue Flamed Star", "description": "That looks really difficult!" },
             { "id": "rank-excellent", "name": "Excellent Rank", "description": "It pains to get a single Bad and getting this rank.", "special": true, "lockedText": "Complete any song with a certain rank." },
-            { "id": "fancycoffret", "name": "Fancy Coffret", "special": true, "lockedText": "This pin is unlockable from the Rewards." },
+            { "id": "fancycoffret", "name": "Fancy Coffret", "special": true, "lockedText": "Open a total of 50 Fancy Coffrets." },
             { "id": "qt", "name": "QT", "source": "QT: Rewired #MOD#" },
             { "id": "sky-redux", "name": "Sky", "source": "Heartbreak Havoc #MOD#" },
             { "id": "sky", "name": "Sky", "description": "No no, wrong type of sky!" },
@@ -102,14 +102,14 @@
         "color": "A426FF",
         "pins":
         [
-            { "id": "melodystone", "name": "Melody Stone", "description": "Rare, Blue, and Sparkly! <c=67B1D8>Ophelia</c> loves these.", "special": true, "lockedText": "This pin is unlockable from the Rewards." },
+            { "id": "melodystone", "name": "Melody Stone", "description": "Rare, Blue, and Sparkly! <c=67B1D8>Ophelia</c> loves these.", "special": true, "lockedText": "Earn a total of 5 Melody Stones." },
             { "id": "ophelia-business", "name": "Ophelia <s=0.5>(Business)</s>", "description": "Very strict with her rules. (Except on <c=EA8645>April</c>)", "special": true, "lockedText": "#APRIL_PURCHASE#", "hidden": true },
             { "id": "pessy", "name": "Pessy", "source": "Psych Engine #MOD#" },
             { "id": "kb", "name": "KB", "source": "QT: Rewired #MOD#" },
             { "id": "polymod", "name": "Polymod", "description": "Polymore!" },
-            { "id": "funkbuck-pixel", "name": "Pixelated FunkBuck", "description": "Your pixelated currency!", "special": true, "lockedText": "This pin is unlockable from the Rewards.", "pixel": true, "scale": 5 },
+            { "id": "funkbuck-pixel", "name": "Pixelated FunkBuck", "description": "Your pixelated currency!", "special": true, "lockedText": "#APRIL_PURCHASE#", "pixel": true, "scale": 5 },
             { "id": "rank-perfect", "name": "Perfect Rank", "description": "Now go for the golden one!", "special": true, "lockedText": "Complete any song with a certain rank." },
-            { "id": "glimmeringpouch", "name": "Glimmering Pouch", "special": true, "lockedText": "This pin is unlockable from the Rewards." },
+            { "id": "glimmeringpouch", "name": "Glimmering Pouch", "special": true, "lockedText": "Open a total of 100 Glimmering Pouches." },
             { "id": "detective-amongus", "name": "Detective", "description": "Trying to figure out who the Impostor is...", "source": "VS. Impostor #MOD#" },
             { "id": "blake-amongus", "name": "Blake Imposter", "description": "Imposter is just his surname.", "source": "VS. Impostor #MOD#" },
             { "id": "falsethorn-corruption", "name": "FalseThorn", "description": "It's not real... it's not real...", "source": "Friday Night Funkin': Corruption #MOD#" },
@@ -151,8 +151,8 @@
         [
             { "id": "spaghetti", "name": "Spaghetti", "description": "This isn't a hotspot, sorry!", "special": true, "lockedText": "Complete a certain song." },
             { "id": "rank-loss", "name": "Loss Rank", "description": "Wow, you suck.", "special": true, "lockedText": "Complete any song with a certain rank." },
-            { "id": "shockedcat", "name": "Shocked Cat", "description": "https://www.youtube.com/watch?v=VuYmOeiScv4&t=380s", "special": true, "lockedText": "???" },
-            { "id": "tuntematon", "name": " ", "description": "<a=0.05>She got what she deserved.</a>", "special": true, "lockedText": "<a=0.05>Nightmares manifest.</a>", "scale": 0.0, "hidden": true }
+            { "id": "shockedcat", "name": "Shocked Cat", "description": "https://www.youtube.com/watch?v=VuYmOeiScv4&t=380s", "special": true, "lockedText": "Get surprised!" },
+            { "id": "tuntematon", "name": " ", "description": "<a=0.05>She got what she deserved.</a>", "special": true, "lockedText": "<a=0.05>Nightmares manifest.</a>", "hidden": true }
         ]
     }
 }

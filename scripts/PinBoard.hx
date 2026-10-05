@@ -542,12 +542,13 @@ class PinBoard extends MusicBeatSubState
         selectedPin.visible = false;
         previewPin.visible = true;
         previewPin.setPosition(selectedPin.getScreenPosition().x + selectedPin.width / 2, selectedPin.getScreenPosition().y + selectedPin.height / 2);
+        previewPin.lockedText = selectedPin.lockedText;
         previewPin.pixel = selectedPin.pixel;
         previewPin.isUnlocked = selectedPin.isUnlocked;
         previewPin.isUnknown = !selectedPin.isUnlocked;
         var name:String = previewPin.isUnknown ? "???" : selectedPin.name;
         var description:String = previewPin.isUnknown ? selectedPin.lockedText : selectedPin.description;
-        previewPin.setupPin(selectedPin.pID, name, description, selectedPin.scaleOverride, 1.0, true);
+        previewPin.setupPin(selectedPin.pID, name, selectedPin.description, selectedPin.scaleOverride, 1.0, true);
         previewPin.shader = selectedPin.shader;
         previewPin.visible = true;
         for (obj in [cursor, menuFooter, rarityIcons])
@@ -560,7 +561,7 @@ class PinBoard extends MusicBeatSubState
 
         var rarityColor:String = selectedPin.rarity == "Unknown" ? "7F7F7F" : ReflectUtil.getAnonymousField(FunkBucks.pinData, selectedPin.rarity).color;
         pinName.text = '${previewPin.name}\n\n<s=0.75><c=$rarityColor>${selectedPin.rarity}</c></s>';
-        pinDescription.text = previewPin.description ?? "";
+        pinDescription.text = previewPin.isUnknown ? previewPin.lockedText : previewPin.description ?? "";
         pinArtist.text = selectedPin.artist != null ? 'Created by: ${selectedPin.artist}' : "";
         pinSource.text = selectedPin.source ?? "";
 

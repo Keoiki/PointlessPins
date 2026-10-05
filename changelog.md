@@ -25,7 +25,7 @@
     - 1 Mythic
     - 2 Special
 - Added the "Fancy Coffret" box, with a cost of 200 FunkBucks.
-- Added the "Shimmering Pouch" box, with a cost of 600 FunkBucks.
+- Added the "Glimmering Pouch" box, with a cost of 600 FunkBucks.
 - Added Melody Stones.
     - They have a rare chance to be obtained after completing a song.
     - Your chance to obtain one increases with each song completed, up to 20% at 100 songs.

@@ -113,10 +113,13 @@ class Shop extends MusicBeatState
     {
         Shop.instance = this;
 
-        if (!FunkBucks.hasObtainedPin("shockedcat") && FlxG.random.bool(0.05))
-        {
-            FunkBucks.pinUnlockQueue.push("shockedcat");
-        }
+        if (FlxG.random.bool(0.05)) FunkBucks.pushPinToUnlockQueue("shockedcat");
+        if (FunkBucks.getFunkCoinsLifetime() >= 25000) FunkBucks.pushPinToUnlockQueue("funkbuck");
+        if (FunkBucks.getBlueJewelsLifetime() >= 5) FunkBucks.pushPinToUnlockQueue("melodystone");
+        if (FunkBucks.getOpenedBoxCount("cardboard") >= 100) FunkBucks.pushPinToUnlockQueue("cardboardbox");
+        if (FunkBucks.getOpenedBoxCount("smallgiftbox") >= 75) FunkBucks.pushPinToUnlockQueue("smallgiftbox");
+        if (FunkBucks.getOpenedBoxCount("fancycoffret") >= 50) FunkBucks.pushPinToUnlockQueue("fancycoffret");
+        if (FunkBucks.getOpenedBoxCount("glimmeringpouch") >= 40) FunkBucks.pushPinToUnlockQueue("glimmeringpouch");
 
         camera.bgColor = 0xFF616182;
 
@@ -321,7 +324,7 @@ class Shop extends MusicBeatState
         lableConverse.zIndex = 516;
         add(lableConverse);
 
-        iconStats = new FunkinSprite(1740 - spriteNudge, 330).loadTexture("shop/iconStats");
+        iconStats = new FunkinSprite(1775 - spriteNudge, 279).loadTexture("shop/iconstats");
         iconStats.zIndex = 493;
         add(iconStats);
 

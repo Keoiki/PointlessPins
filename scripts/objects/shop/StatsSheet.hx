@@ -23,7 +23,7 @@ ${FBIcon.CardboardBox} Total Boxes opened:
 ${FBIcon.CardboardBox} Total Cardboard Boxes opened:
 ${FBIcon.SmallGiftbox} Total Small Giftboxes opened:
 ${FBIcon.FancyCoffret} Total Fancy Coffrets opened:
-${FBIcon.ShimmeringPouch} Total Shimmering Pouches opened:
+${FBIcon.GlimmeringPouch} Total Glimmering Pouches opened:
 ${FBIcon.Buck} Total Daily Songs completed:', { baseColor: "2D2E48" });
         statNames.zIndex = 1;
         statNames.localScale.set(0.5, 0.5);
@@ -31,11 +31,11 @@ ${FBIcon.Buck} Total Daily Songs completed:', { baseColor: "2D2E48" });
 
         var statCounts:BAlphabet = new BAlphabet(0, 0, '${FunkBucks.getFunkCoinsLifetime()}
 ${FunkBucks.getBlueJewelsLifetime()}
-${FunkBucks.getOpenedBoxCount("cardboard") + FunkBucks.getOpenedBoxCount("smallgiftbox") + FunkBucks.getOpenedBoxCount("fancycoffret") + FunkBucks.getOpenedBoxCount("shimmeringpouch")}
+${FunkBucks.getOpenedBoxCount("cardboard") + FunkBucks.getOpenedBoxCount("smallgiftbox") + FunkBucks.getOpenedBoxCount("fancycoffret") + FunkBucks.getOpenedBoxCount("glimmeringpouch")}
 ${FunkBucks.getOpenedBoxCount("cardboard")}
 ${FunkBucks.getOpenedBoxCount("smallgiftbox")}
 ${FunkBucks.getOpenedBoxCount("fancycoffret")}
-${FunkBucks.getOpenedBoxCount("shimmeringpouch")}
+${FunkBucks.getOpenedBoxCount("glimmeringpouch")}
 ${FunkBucks.save.dailiesCompleted}', { baseColor: "2D2E48", alignment: "right" });
         statCounts.zIndex = 2;
         statCounts.localX = 700;
