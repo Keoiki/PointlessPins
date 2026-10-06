@@ -8,6 +8,8 @@ char=57350 offsetY=12 colored=true
 char=57351 offsetY=8 colored=true
 char=57352 offsetY=10 colored=true
 char=57353 offsetY=12 colored=true
+char=57354 offsetY=7 colored=true
+char=57355 offsetY=7 colored=true
 char=57360 offsetY=4 colored=true
 char=57361 offsetY=4 colored=true
 char=57362 offsetY=4 colored=true
@@ -19,6 +21,11 @@ char=57380 offsetY=8 colored=true
 char=57381 offsetY=8 colored=true
 char=57382 offsetY=8 colored=true
 char=57383 offsetY=8 colored=true
+char=57392 offsetY=10 colored=true
+char=57393 offsetY=2 colored=true
+char=57394 offsetY=14 colored=true
+char=57395 offsetY=5 colored=true
+char=57396 offsetY=14 colored=true
 char=57456 offsetY=3 colored=true
 char=57457 offsetY=8 colored=true
 char=57458 offsetY=2 colored=true

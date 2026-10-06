@@ -72,6 +72,8 @@ class Shop extends MusicBeatState
     public var rewardShelf:RewardShelf;
     // public var cloverEventButton:FunkinSprite;
 
+    public var elevator:FunkinSprite;
+
     var counterItems = [];
     public var skcItem1:FunkinSprite;
     public var skcItem2:FunkinSprite;
@@ -359,6 +361,11 @@ class Shop extends MusicBeatState
         counterItems.push(lableBoxes);
         counterItems.push(lableConverse);
         counterItems.push(lableStats);
+
+        elevator = new FunkinSprite(-2800 - spriteNudge, -50).loadTexture("shop/elevator");
+        elevator.scrollFactor.set(0.85, 1.0);
+        elevator.zIndex = 500;
+        add(elevator);
 
         #if !mobile
         keycapPins = new KeyCap(lablePins.x - 33, 570, "1", null, false);
@@ -681,6 +688,27 @@ class Shop extends MusicBeatState
             // {
                 // openSubState(substate);
             // }});
+        }
+
+        if (TouchUtil.pressAction(elevator) && !FunkBucks.isMouseTooFast && !TouchUtil.overlaps(coolBackButton, cameraHUD))
+        {
+            if (isShopkeeperGone || Shopkeeper.caught || TimedCoinsManager.running)
+            {
+                FlxTween.completeTweensOf(cannotDoText);
+                FlxTween.tween(cannotDoText, { alpha: 1 }, 2, { ease: FlxEase.cubeOut, type: 16 });
+                return;
+            }
+
+            disallowInputs = true;
+            var substate = new ElevatorMenu();
+            substate.closeCallback = function()
+            {
+                FlxTween.tween(coolBackButton, { alpha: 0.5 }, 1, { ease: FlxEase.cubeOut });
+            }
+            substate.cameras = [cameraSubState];
+            openSubState(substate);
+
+            FlxTween.tween(coolBackButton, { alpha: 0 }, 1, { ease: FlxEase.cubeIn });
         }
     }
 

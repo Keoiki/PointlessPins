@@ -19,12 +19,12 @@ class StatsSheet extends FunkinGroup
 
         var statNames:BAlphabet = new BAlphabet(0, 0, '${FBIcon.Buck} FunkBucks earned:
 ${FBIcon.Jewel} Melody Stones earned:
-${FBIcon.CardboardBox} Total Boxes opened:
+${FBIcon.Boxes} Total Boxes opened:
 ${FBIcon.CardboardBox} Cardboard Boxes opened:
 ${FBIcon.SmallGiftbox} Small Giftboxes opened:
 ${FBIcon.FancyCoffret} Fancy Coffrets opened:
 ${FBIcon.GlimmeringPouch} Glimmering Pouches opened:
-${FBIcon.Buck} Daily Songs completed:', { baseColor: "2D2E48" });
+${FBIcon.Calendar} Daily Songs completed:', { baseColor: "2D2E48" });
         statNames.zIndex = 1;
         statNames.localScale.set(0.5, 0.5);
         this.add(statNames);

@@ -1207,6 +1207,8 @@ class FBIcon
     static final April:String = "&#xE007;";
     static final Rose:String = "&#xE008;";
     static final NGSupporter:String = "&#xE009;";
+    static final Lock:String = "&#xE00A;";
+    static final Calendar:String = "&#xE00B;";
 
     static final Erect:String = "&#xE010;";
     static final Boyfriend:String = "&#xE011;";
@@ -1221,10 +1223,11 @@ class FBIcon
     static final Divine:String = "&#xE026;";
     static final Special:String = "&#xE027;";
     
-    static final CardboardBox:String = "&#xE030;";
-    static final SmallGiftbox:String = "&#xE031;";
-    static final FancyCoffret:String = "&#xE032;";
-    static final ShimmeringPouch:String = "&#xE033;";
+    static final Boxes:String = "&#xE030;";
+    static final CardboardBox:String = "&#xE031;";
+    static final SmallGiftbox:String = "&#xE032;";
+    static final FancyCoffret:String = "&#xE033;";
+    static final GlimmeringPouch:String = "&#xE034;";
 
     static final Modded:String = "&#xE070;";
     static final Internet:String = "&#xE071;";
