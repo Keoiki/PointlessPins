@@ -1,0 +1,26 @@
+{
+    "canSkipOnRepeat": true,
+    "dialogue": 
+    [
+        {
+            "text": "Those're my idea.",
+            "speaker": "April",
+            "canSkip": false
+        },
+        {
+            "text": "Too bad Ophelia bailed out on\nmaking them available last second.",
+            "speaker": "April",
+            "canSkip": false
+        },
+        {
+            "text": "Think she said that that shelf is haunted?",
+            "speaker": "April",
+            "canSkip": false
+        },
+        {
+            "text": "I don't believe that...",
+            "speaker": "April",
+            "canSkip": false
+        }
+    ]
+}

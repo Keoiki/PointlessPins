@@ -3,22 +3,22 @@
     "dialogue": 
     [
         {
-            "text": "Those're my idea.",
+            "text": "That's supposed to be a placeholder.",
             "speaker": "April",
             "canSkip": false
         },
         {
-            "text": "Ophelia <i>really</i> didn't wanna make 'em.",
+            "text": "I'll probably throw that paper out once the Awards are finished.",
             "speaker": "April",
             "canSkip": false
         },
         {
-            "text": "But,<d=0.25/> one morning she said she'd do 'em.",
+            "text": "And by I,<d=0.5/> I mean Ophelia.",
             "speaker": "April",
             "canSkip": false
         },
         {
-            "text": "Damn near looked as if she was visited by a ghost.",
+            "text": "She wouldn't let this shit fly otherwise.",
             "speaker": "April",
             "canSkip": false
         }

@@ -1,0 +1,16 @@
+{
+    "canSkipOnRepeat": true,
+    "dialogue": 
+    [
+        {
+            "text": "We didn't have enough time to move\nthe shelf away though.",
+            "speaker": "April",
+            "canSkip": false
+        },
+        {
+            "text": "I think Ophelia will be back as soon as the awards\nare finished and that shelf is gone.",
+            "speaker": "April",
+            "canSkip": false
+        }
+    ]
+}
