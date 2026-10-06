@@ -522,7 +522,15 @@ class Shop extends MusicBeatState
             coolBackButton.enabled = true;
         }
 
-        if (viewingStats) return;
+        if (viewingStats)
+        {
+            coolBackButton.instant = true;
+            return;
+        }
+        else
+        {
+            coolBackButton.instant = false;
+        }
 
         handleCameraMovement();
         // checkIfAnnoyedShopkeeper();
@@ -680,7 +688,7 @@ class Shop extends MusicBeatState
     {
         if (viewingStats)
         {
-            FlxTween.tween(statsSheet, { y: 1000 }, 1, { ease: FlxEase.cubeOut });
+            FlxTween.tween(statsSheet, { y: 1000 }, 1, { ease: FlxEase.cubeIn });
             viewingStats = false;
             disallowInputs = false;
             return;

@@ -60,11 +60,11 @@
             { "id": "rank-great", "name": "Great Rank", "description": "The \"silver\" of the ranks.", "special": true, "lockedText": "Complete any song with a certain rank." },
             { "id": "smallgiftbox", "name": "Small Giftbox", "description": "Did you notice the FunkBuck badge inside it?", "special": true, "lockedText": "Open a total of 75 Small Giftboxes." },
             { "id": "haxeflixel", "name": "HaxeFlixel", "description": "Not to be confused with \"Flixel\"." },
-            { "id": "gooey", "name": "Gooey", "source": "Gooey Mix #MOD#", "scale": 0.46 },
+            { "id": "gooey", "name": "Gooey", "source": "Gooey Mix #MOD#", "scale": 0.48 },
             { "id": "flora", "name": "Flora", "source": "Gooey Mix #MOD#" },
+            { "id": "green-amongus-week2", "name": "Green", "description": "No fun allowed, even on New Task Day.", "source": "VS. Impostor #MOD#" },
             { "id": "opheebop-blob-ssn", "name": "Opheebop", "source": "Salty's Sunday Night #MOD#" },
             { "id": "glitch-ssn", "name": "Glitch", "source": "Salty's Sunday Night #MOD#" },
-            { "id": "green-amongus-week2", "name": "Green", "description": "No fun allowed, even on New Task Day.", "source": "VS. Impostor #MOD#" },
             { "id": "strawberry-celeste", "name": "Strawberry", "description": "Can you collect all 175 (or even 202) of them?", "source": "Celeste #GAME#" },
             { "id": "secretcoin-gd", "name": "Secret Coin", "description": "Never enough with you...", "source": "Geometry Dash #GAME#" },
             { "id": "fireice-adofai", "name": "Fire and Ice", "description": "Try not to break their equilibrium.", "source": "A Dance of Fire and Ice #GAME#" }

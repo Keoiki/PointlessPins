@@ -17,14 +17,14 @@ class StatsSheet extends FunkinGroup
         statsPaper.localY = -60;
         this.add(statsPaper);
 
-        var statNames:BAlphabet = new BAlphabet(0, 0, '${FBIcon.Buck} Total FunkBucks earned:
-${FBIcon.Jewel} Total Melody Stones earned:
+        var statNames:BAlphabet = new BAlphabet(0, 0, '${FBIcon.Buck} FunkBucks earned:
+${FBIcon.Jewel} Melody Stones earned:
 ${FBIcon.CardboardBox} Total Boxes opened:
-${FBIcon.CardboardBox} Total Cardboard Boxes opened:
-${FBIcon.SmallGiftbox} Total Small Giftboxes opened:
-${FBIcon.FancyCoffret} Total Fancy Coffrets opened:
-${FBIcon.GlimmeringPouch} Total Glimmering Pouches opened:
-${FBIcon.Buck} Total Daily Songs completed:', { baseColor: "2D2E48" });
+${FBIcon.CardboardBox} Cardboard Boxes opened:
+${FBIcon.SmallGiftbox} Small Giftboxes opened:
+${FBIcon.FancyCoffret} Fancy Coffrets opened:
+${FBIcon.GlimmeringPouch} Glimmering Pouches opened:
+${FBIcon.Buck} Daily Songs completed:', { baseColor: "2D2E48" });
         statNames.zIndex = 1;
         statNames.localScale.set(0.5, 0.5);
         this.add(statNames);
