@@ -143,7 +143,7 @@ class TimedCoinsManager extends Module
 
         if (TimedCoinsManager.coinsCollected >= 8)
         {
-            if (FunkBucks.hasObtainedPin("clovercoin"))
+            if (FunkBucks.hasPin("clovercoin"))
             {
                 // 1000 Funkbuck
             }

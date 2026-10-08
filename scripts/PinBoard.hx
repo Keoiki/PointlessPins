@@ -132,7 +132,7 @@ class PinBoard extends MusicBeatSubState
         cursor = new FunkinSprite(60, 140).loadTexture("cursor");
         add(cursor);
 
-        unlockedPinsData = FunkBucks.getObtainedPins();
+        unlockedPinsData = FunkBucks.getUnlockedPins();
         // trace(unlockedPinsData);
 
         var currentRow:Int = -1;

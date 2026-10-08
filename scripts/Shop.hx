@@ -202,7 +202,7 @@ class Shop extends MusicBeatState
         // cloverEventButton.visible = FunkBucks.getUnlockedPinsCount() >= 30;
         // add(cloverEventButton);
 
-        if (!FunkBucks.hasObtainedPin("tuntematon") && FunkBucks.getUnlockedPinsCount() >= 75 && FlxG.random.bool(0.1) && !Tuntematon.gone && !Shopkeeper.caught)
+        if (!FunkBucks.hasPin("tuntematon") && FunkBucks.getUnlockedPinsCount() >= 75 && FlxG.random.bool(0.1) && !Tuntematon.gone && !Shopkeeper.caught)
         {
             var t:Tuntematon = new Tuntematon(1350 - spriteNudge + rewardShelf.shelf.width, 80);
             t.zIndex = -979;
@@ -1054,7 +1054,7 @@ class Shop extends MusicBeatState
 
                 FlxTween.tween(lighting, { alpha: 1.0 }, 5.4, { ease: FlxEase.cubeIn });
                 FlxTween.tween(t3, { x: shopkeeper.x + shopkeeper.width / 2 + 100 }, 0.50, { startDelay: 5.0, ease: FlxEase.expoIn, onComplete: function() {
-                    // FunkBucks.setObtainedPin("tuntematon");
+                    // FunkBucks.setPin("tuntematon");
                     Shopkeeper.caught = true;
                     screenBlack.alpha = 1.0;
                     t2.alpha = 0.0;
@@ -1134,7 +1134,7 @@ class Shop extends MusicBeatState
         if (nextPin != null)
         {
             trace("Unlocking next pin in queue: " + nextPin);
-            var substate = new PinUnlockState(FunkBucks.getPinByID(nextPin));
+            var substate = new PinUnlockState(FunkBucks.fetchPinByID(nextPin));
             substate.cameras = [cameraSubState];
             openSubState(substate);
         }

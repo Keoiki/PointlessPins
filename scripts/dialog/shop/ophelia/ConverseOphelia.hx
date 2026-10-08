@@ -67,7 +67,7 @@ class ConverseOphelia extends DialogBase
                     {
                         annoyedDialogue();
                     }
-                    else if (Shopkeeper.annoyance == 20 && !FunkBucks.hasObtainedPin("ophelia"))
+                    else if (Shopkeeper.annoyance == 20 && !FunkBucks.hasPin("ophelia"))
                     {
                         new OpheliaPin();
                     }

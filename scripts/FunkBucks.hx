@@ -131,7 +131,7 @@ class FunkBucks extends Module
             for (pin in FunkBucks.pinUnlockQueue)
             {
                 trace('Game closing! Setting "$pin" to be unlocked!');
-                FunkBucks.setObtainedPin(pin);
+                FunkBucks.setPin(pin);
             }
         }, true, 1000000);
     }
@@ -276,9 +276,9 @@ class FunkBucks extends Module
     /**
      * Gets a pin's data by its ID.
      * @param pinID The pin's ID.
-     * @return **(PinData)** The pin's data, rarity included.
+     * @return The pin's data, rarity included.
      */
-    public static function getPinByID(pinID:String):PinData
+    public static function fetchPinByID(pinID:String):PinData
     {
         for (rarity in ReflectUtil.getAnonymousFieldsOf(FunkBucks.pinData))
         {
@@ -304,7 +304,7 @@ class FunkBucks extends Module
         {
             for (pin in ReflectUtil.getAnonymousField(FunkBucks.pinData, rarity).pins)
             {
-                if (FunkBucks.hasObtainedPin(pin.id))
+                if (FunkBucks.hasPin(pin.id))
                 {
                     count++;
                 }
@@ -317,9 +317,9 @@ class FunkBucks extends Module
      * Gets all pins of a given rarity.
      * @param rarity The rarity name.
      * @param includeSpecials Should the return include special pins.
-     * @return Array<String>
+     * @return Array of pin IDs.
      */
-    public static function getAllPinIDsOfRarity(rarity:String, includeSpecials:Bool = false):Array<String>
+    public static function fetchAllPinsByRarity(rarity:String, includeSpecials:Bool = false):Array<String>
     {
         var pinIDs:Array<String> = [];
         for (pin in ReflectUtil.getAnonymousField(FunkBucks.pinData, rarity).pins)
@@ -451,50 +451,65 @@ class FunkBucks extends Module
      */
 
     /**
-     * Set a pin as being obtained.
+     * Set a pin as being unlocked, or to add 1 to a pin's unlock count.
      * 
-     * Will return early if pin ID wasn't found.
-     * 
-     * Will also return early if pin is special and has already been obtained.
+     * Will return early if:
+     * - the pin ID wasn't found,
+     * - or the pin is `special` and has already been unlocked.
      * 
      * @param pinID The pin ID.
-     * @return **(Bool)** Whether or not the pin was a brand new one or not.
+     * @return Whether or not the pin was a brand new one or not.
      */
-    public static function setObtainedPin(pinID:String):Bool
+    public static function setPin(pinID:String):Bool
     {
-        if (getPinByID(pinID) == null)
+        if (fetchPinByID(pinID) == null)
         {
             trace('Could not find pin $pinID! Was the name misspelled?');
             return false;
         }
-        var isNewPin:Bool = !hasObtainedPin(pinID);
-        var isPinSpecial:Bool = getPinByID(pinID)?.special ?? false;
+        var isNewPin:Bool = !hasPin(pinID);
+        var isPinSpecial:Bool = fetchPinByID(pinID)?.special ?? false;
         if (!isNewPin && isPinSpecial)
         {
             trace("Pin is special and has already been unlocked!");
             return false;
         }
-        var pinsMap = getObtainedPins();
+        var pinsMap = getUnlockedPins();
         pinsMap.set(pinID, isNewPin ? 1 : pinsMap.get(pinID) + 1);
         FunkBucks.save.obtainedPins = pinsMap;
         FunkBucks.flushSave();
         return isNewPin;
     }
 
-    public static function hasObtainedPin(pinID:String):Bool
+
+    /**
+     * Check to see if the player has obtained a pin or not.
+     * @param pinID The pin ID to check.
+     * @return Bool
+     */
+    public static function hasPin(pinID:String):Bool
     {
-        return getObtainedPins().exists(pinID) ? getObtainedPins().get(pinID) > 0 : false;
+        return getUnlockedPins().exists(pinID) ? getUnlockedPins().get(pinID) > 0 : false;
     }
 
-    public static function getObtainedPins():StringMap<String, Int>
+    /**
+     * Get the unlock count of a pin.
+     * @param pinID The pin ID to check.
+     * @return The unlock count. Returns 0 for unobtained pins.
+     */
+    public static function getPin(pinID:String):Int
+    {
+        return getUnlockedPins().get(pinID) ?? 0;
+    }
+
+    /**
+     * Get a map of all the pins that the player has unlocked along with their unlock counts.
+     * @return Map (PinID -> UnlockCount)
+     */
+    public static function getUnlockedPins():StringMap<String, Int>
     {
         if (FunkBucks.save.obtainedPins == null) FunkBucks.save.obtainedPins = new StringMap();
         return FunkBucks.save.obtainedPins;
-    }
-
-    public static function getObtainedPin(pinID:String):Int
-    {
-        return getObtainedPins().get(pinID) ?? 0;
     }
 
     /**
@@ -578,7 +593,7 @@ class FunkBucks extends Module
 
     /**
      * DAILIES
-     * Each day, 3 songs are randomly picked that will have a +50% FunkBuck modifier on them.
+     * Each day, 5 songs are randomly picked that will have a +50% FunkBuck modifier on them.
      * The +50% modifier will override any negative modifiers, however the song will still be added to the list of previous songs.
      * The following are not eligible for daily bonuses:
      * 
@@ -589,12 +604,20 @@ class FunkBucks extends Module
      * (Daily song selection has been moved to `checkForNewDay()`)
      */
     
+    /**
+     * Set the daily songs to an array of song IDs.
+     * @param dailies An array of song IDs.
+     */
     public static function setDailies(dailies:Array<String>):Void
     {
         FunkBucks.save.dailies = dailies;
         FunkBucks.flushSave();
     }
 
+    /**
+     * Get the current daily song listing.
+     * @return An array of song IDs.
+     */
     public static function getDailies():Array<String>
     {
         FunkBucks.checkForNewDay();
@@ -606,77 +629,73 @@ class FunkBucks extends Module
     /**
      * MILESTONES
      * or rather, Rewards.
+     * ...or rather, Awards.
      */
 
-    public static function addClaimedMilestone(milestone:String):Void
-    {
-        var _obtainedMilestones:Array<String> = FunkBucks.getClaimedMilestones();
-        if (_obtainedMilestones.contains(milestone))
-        {
-            trace("User already obtained milestone: " + milestone);
-            return;
-        }
-        _obtainedMilestones.push(milestone);
-        FunkBucks.save.obtainedMilestones = _obtainedMilestones;
-        FunkBucks.flushSave();
-    }
+    // public static function addClaimedMilestone(milestone:String):Void
+    // {
+        // var _obtainedMilestones:Array<String> = FunkBucks.getClaimedMilestones();
+        // if (_obtainedMilestones.contains(milestone))
+        // {
+            // trace("User already obtained milestone: " + milestone);
+            // return;
+        // }
+        // _obtainedMilestones.push(milestone);
+        // FunkBucks.save.obtainedMilestones = _obtainedMilestones;
+        // FunkBucks.flushSave();
+    // }
 
-    public static function hasClaimedMilestone(milestone:String):Bool
-    {
-        return FunkBucks.getClaimedMilestones().contains(milestone);
-    }
+    // public static function hasClaimedMilestone(milestone:String):Bool
+    // {
+        // return FunkBucks.getClaimedMilestones().contains(milestone);
+    // }
 
-    public static function getClaimedMilestones():Array<String>
-    {
-        if (FunkBucks.save.obtainedMilestones == null) FunkBucks.save.obtainedMilestones = new Array();
-        return FunkBucks.save.obtainedMilestones;
-    }
+    // public static function getClaimedMilestones():Array<String>
+    // {
+        // if (FunkBucks.save.obtainedMilestones == null) FunkBucks.save.obtainedMilestones = new Array();
+        // return FunkBucks.save.obtainedMilestones;
+    // }
 
     public static function getBoxDiscount():Float
     {
-        var discount:Float = 1.0;
-        var claimedRewards:Array<String> = FunkBucks.getClaimedMilestones();
-        for (i in 0...claimedRewards.length)
-        {
-            switch (claimedRewards[i])
-            {
-                case "cardboardbox03", "smallgiftbox03": discount -= 0.05;
-                case "fancycoffret03", "shimmeringpouch03": discount -= 0.025;
-            }
-        }
-        return discount;
+        return 1.0;
     }
 
     public static function getFunkCoinBonus():Float
     {
-        var bonusMultiplier:Float = 1.0;
-        var claimedRewards:Array<String> = FunkBucks.getClaimedMilestones();
-        for (i in 0...claimedRewards.length)
-        {
-            switch (claimedRewards[i])
-            {
-                case "funkbucks07", "funkbucks11": bonusMultiplier += 0.025;
-                case "funkbucks14": bonusMultiplier += 0.05;
-            }
-        }
-        return bonusMultiplier;
+        return 1.0;
     }
 
     /**
      * EVENTS
      */
 
+    /**
+     * Get an event's status. 0 indicates default state or that it hasn't happened/started yet.
+     * Other values indicate various things and are different depending on the event.
+     * @param event The Event ID.
+     * @return The event status.
+     */
     public static function getEvent(event:String):Int
     {
         return FunkBucks.getEvents().get(event) ?? 0;
     }
 
+    /**
+     * Get a map of all registered events.
+     * @return Map (EventID -> Status)
+     */
     static function getEvents():StringMap<String, Int>
     {
         if (FunkBucks.save.events == null) FunkBucks.save.events = new StringMap();
         return FunkBucks.save.events;
     }
 
+    /**
+     * Set an event's status to the input value.
+     * @param event Event ID.
+     * @param value Event Status.
+     */
     public static function setEvent(event:String, value:Int):Void
     {
         var _events:StringMap<String, Int> = FunkBucks.getEvents();
@@ -685,6 +704,10 @@ class FunkBucks extends Module
         FunkBucks.flushSave();
     }
 
+    /**
+     * Register that a specific dialogue has been seen.
+     * @param dialogID 
+     */
     public static function addSeenDialogue(dialogID:String)
     {
         var _seenDialogues:Array<String> = FunkBucks.getSeenDialogues();
@@ -700,12 +723,21 @@ class FunkBucks extends Module
         }
     }
 
+    /**
+     * Get an array of the seen dialogues.
+     * @return Array<String>
+     */
     public static function getSeenDialogues():Array<String>
     {
         if (FunkBucks.save.seenDialogue == null) FunkBucks.save.seenDialogue = new Array();
         return FunkBucks.save.seenDialogue;
     }
 
+    /**
+     * Check to see if the player has seen a specific piece of dialogue.
+     * @param dialogID 
+     * @return Bool
+     */
     public static function hasSeenDialogue(dialogID:String):Bool
     {
         return FunkBucks.getSeenDialogues().contains(dialogID);
@@ -750,7 +782,7 @@ class FunkBucks extends Module
             /**
              * Clover Coin Event
              */
-            if (FunkBucks.hasObtainedPin("clovercoin"))
+            if (FunkBucks.hasPin("clovercoin"))
             {
 
             }
@@ -818,7 +850,7 @@ class FunkBucks extends Module
             opheliaAngerTime: -1,
             
             // An array of all Reward IDs that have been collected.
-            obtainedMilestones: new Array(),
+            // obtainedMilestones: new Array(),
 
             /**
              * Map of all event IDs that have been registered.
@@ -1176,7 +1208,7 @@ class FunkBucks extends Module
      */
     public static function pushPinToUnlockQueue(pinID:String):Void
     {
-        if (!FunkBucks.hasObtainedPin(pinID))
+        if (!FunkBucks.hasPin(pinID))
         {
             FunkBucks.pinUnlockQueue.push(pinID);
         }

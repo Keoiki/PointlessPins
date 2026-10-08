@@ -95,7 +95,7 @@ class PinUnlockState extends MusicBeatSubState
         sparkles.start();
 
         var unlockMsgText:String = "";
-        if (FunkBucks.debug_pins != null || debug || FunkBucks.setObtainedPin(pinData.id))
+        if (FunkBucks.debug_pins != null || debug || FunkBucks.setPin(pinData.id))
         {
             unlockMsgText = "<b>You got a <c=00FF00>NEW</c> pin!</b>";
         }
@@ -107,7 +107,7 @@ class PinUnlockState extends MusicBeatSubState
             }
             else
             {
-                var duplicatePinCount:Int = FunkBucks.getObtainedPins().get(pinData.id);
+                var duplicatePinCount:Int = FunkBucks.getUnlockedPins().get(pinData.id);
                 unlockMsgText = '<b>You got a <c=434253>duplicate ($duplicatePinCount)</c> pin!</b>';
             }
         }

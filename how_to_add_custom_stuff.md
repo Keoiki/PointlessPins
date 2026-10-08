@@ -35,13 +35,13 @@ Now you have to come up with an unlock method, be it completing a song or someth
 Do note that:
 * `pushPinToUnlockQueue` checks if the pin is already unlocked and if so, skips over it.
 * The queue is automatically unlocked when exiting the game without any popups.
-  * If you think players might close the game before entering the Shop again, use `FunkBucks.setObtainedPin(pinID)` to instantly unlock a pin, without showing any popup.
+  * If you think players might close the game before entering the Shop again, use `FunkBucks.setPin(pinID)` to instantly unlock a pin, without showing any popup.
   * If you do want to show a pin is unlocked immediately, you can create an Unlock State and open it immediately:
 ```haxe
 // ... be mindful of where you open it though as it may interfere with other game functions.
 import funkbucks.PinUnlockState;
 // ...
-var substate = new PinUnlockState(FunkBucks.getPinByID("pinID"));
+var substate = new PinUnlockState(FunkBucks.fetchPinByID("pinID"));
 openSubState(substate);
 ```
 
