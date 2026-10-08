@@ -24,10 +24,14 @@ class PinUnlockState extends MusicBeatSubState
     var glow2spin:Float = 0;
     public var debug:Bool = false;
 
-    override function new(_pinData, _time:Float = 1.0):Void
+    /**
+     * @param pinID The pin ID.
+     * @param time The time before the state can be closed.
+     */
+    override function new(pinID, time:Float = 1.0):Void
     {
-        this.pinData = _pinData;
-        this.closeTimer = _time;
+        this.pinData = FunkBucks.fetchPinByID(pinID);
+        this.closeTimer = time;
         super();
     }
 
@@ -35,17 +39,11 @@ class PinUnlockState extends MusicBeatSubState
     {
         if (pinData == null)
         {
-            trace("PinUnlockState was given no PinData!");
+            trace("PinUnlockState could not find the pin's PinData!");
             close();
         }
 
-        if (pinData.rarity == null)
-        {   
-            trace("Pin " + pinData.name + " was given no rarity!");
-            pinData.rarity = "Unknown";
-        }
-
-        var rarityColor:String = pinData.rarity == "Unknown" ? "7F7F7F" : ReflectUtil.getAnonymousField(FunkBucks.pinData, pinData.rarity).color;
+        var rarityColor:String = ReflectUtil.getAnonymousField(FunkBucks.pinData, pinData.rarity).color;
 
         glow1spin = FlxG.random.bool(50) ? FlxG.random.float(-2, -0.2) : FlxG.random.float(0.2, 2);
         glow2spin = FlxG.random.float(0.2, 2) * (glow1spin < 0 ? 1 : -1);

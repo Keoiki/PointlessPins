@@ -115,7 +115,7 @@ class BoxSprite extends FunkinSprite
 
     public function rollRandomPin():PinData {}
 
-    public function rollRandomRarityPin():PinData
+    public function rollRandomRarityPin():String
     {
         var rarities:Array<String> = getRarities();
         var odds:Array<Int> = getOdds();
@@ -124,14 +124,15 @@ class BoxSprite extends FunkinSprite
         var rarityPins = ReflectUtil.getAnonymousField(pinData, resultingRarity).pins;
 
         // Remove pins intended as one-time rewards.
-        rarityPins = rarityPins.filter(function(pin):Bool {
+        rarityPins = rarityPins.filter(function(pin):Bool
+        {
             var special = pin.special ?? false;
             return !special;
         });
 
         var randomPin = rarityPins[FlxG.random.int(0, rarityPins.length - 1)];
-        randomPin.rarity = resultingRarity;
-        return randomPin;
+        // randomPin.rarity = resultingRarity;
+        return randomPin.id;
     }
 
     function getRarities():Array<String>

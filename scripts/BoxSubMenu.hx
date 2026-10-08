@@ -305,7 +305,7 @@ class BoxSubMenu extends MusicBeatSubState
             if (FunkBucks.getFreeBoxCount(box.bID) > 0) FunkBucks.addFreeBox(box.bID, -1);
         }
         
-        var randomPin:PinData = box.rollRandomRarityPin();
+        var randomPin:String = box.rollRandomRarityPin();
         var unlockState:PinUnlockState = new PinUnlockState(randomPin);
         if (FunkBucks.debug_boxes) unlockState.debug = true;
         unlockState.closeCallback = closeBox;

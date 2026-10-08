@@ -549,7 +549,7 @@ class RewardsSubMenu extends MusicBeatSubState
                         }
                         case RewardType.Pin:
                         {
-                            var unlockState:PinUnlockState = new PinUnlockState(FunkBucks.fetchPinByID(currentItem.reward));
+                            var unlockState:PinUnlockState = new PinUnlockState(currentItem.reward);
                             unlockState.cameras = [camera];
                             unlockState.closeCallback = () -> {
                                 populateItems(CATEGORY, PAGE);

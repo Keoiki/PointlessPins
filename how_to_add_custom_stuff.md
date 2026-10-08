@@ -41,7 +41,7 @@ Do note that:
 // ... be mindful of where you open it though as it may interfere with other game functions.
 import funkbucks.PinUnlockState;
 // ...
-var substate = new PinUnlockState(FunkBucks.fetchPinByID("pinID"));
+var substate = new PinUnlockState("pinID");
 openSubState(substate);
 ```
 

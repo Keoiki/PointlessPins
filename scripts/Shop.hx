@@ -1134,7 +1134,7 @@ class Shop extends MusicBeatState
         if (nextPin != null)
         {
             trace("Unlocking next pin in queue: " + nextPin);
-            var substate = new PinUnlockState(FunkBucks.fetchPinByID(nextPin));
+            var substate = new PinUnlockState(nextPin);
             substate.cameras = [cameraSubState];
             openSubState(substate);
         }

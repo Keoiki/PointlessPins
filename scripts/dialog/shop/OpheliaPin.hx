@@ -64,7 +64,7 @@ class OpheliaPin extends DialogBase
         shop.shopkeeper.playAnimation("PickingPin", false, true);
         FlxTween.tween(shop.cameraFollowPoint, { x: shop.cameraFollowPoint.x - 50, y: shop.cameraFollowPoint.y + 25 }, 2, { ease: FlxEase.cubeOut });
 
-        var substate = new PinUnlockState(FunkBucks.fetchPinByID("ophelia"));
+        var substate = new PinUnlockState("ophelia");
         substate.cameras = [shop.cameraSubState];
         substate.closeCallback = finish;
 
