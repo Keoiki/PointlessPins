@@ -12,7 +12,6 @@ import flixel.math.FlxPoint;
 import flixel.tweens.FlxEase;
 import flixel.tweens.FlxTween;
 import flixel.util.FlxTimer;
-import funkbucks.dialog.shop.OpheliaPin;
 import funkbucks.dialog.shop.april.AprilIntro;
 import funkbucks.dialog.shop.april.ConverseApril;
 import funkbucks.dialog.shop.ophelia.ConverseOphelia;
@@ -541,8 +540,6 @@ class Shop extends MusicBeatState
         }
 
         handleCameraMovement();
-        // checkIfAnnoyedShopkeeper();
-
         justGainedFocus = false;
 
         // Pins
@@ -649,7 +646,7 @@ class Shop extends MusicBeatState
             coolBackButton.visible = false;
         }
 
-        // Rewards
+        // Stats
 
         if (FlxG.keys.justPressed.FOUR || (TouchUtil.pressAction(iconStats) && !FunkBucks.isMouseTooFast && !TouchUtil.overlaps(coolBackButton, cameraHUD)))
         {
@@ -662,34 +659,11 @@ class Shop extends MusicBeatState
 
             viewingStats = true;
             disallowInputs = true;
-            // cameraFollowPoint.setPosition(rewardShelf.x + rewardShelf.shelf.width / 1.35 - 2.5, 240);
-            // showMenuItems(false);
 
             FlxTween.tween(statsSheet, { y: 200 }, 1, { ease: FlxEase.cubeOut });
-
-            // rewardShelf.toggleItems();
-            // savedCamZoom = camera.zoom;
-            
-            // rewardsSparkles.emitting = false;
-
-            // var substate = new RewardsSubMenu();
-            // substate.closeCallback = function()
-            // {
-                // shopkeeper.playAnimation("Idle", true, true);
-                // FlxTween.tween(coolBackButton, { alpha: 0.5 }, 1, { ease: FlxEase.cubeOut });
-                // FlxTween.tween(camera, { zoom: savedCamZoom }, 1, { ease: FlxEase.cubeOut });
-                // showMenuItems();
-                // rewardShelf.toggleItems(true);
-                // rewardsSparkles.emitting = true;
-            // }
-            // substate.cameras = [cameraSubState];
-
-            // FlxTween.tween(coolBackButton, { alpha: 0 }, 1, { ease: FlxEase.cubeIn });
-            // FlxTween.tween(camera, { zoom: 1.2 }, 1, { ease: FlxEase.cubeOut, onComplete: function()
-            // {
-                // openSubState(substate);
-            // }});
         }
+
+        // Elevator
 
         if (TouchUtil.pressAction(elevator) && !FunkBucks.isMouseTooFast && !TouchUtil.overlaps(coolBackButton, cameraHUD))
         {
@@ -854,278 +828,6 @@ class Shop extends MusicBeatState
         {
             FlxTween.tween(item, { alpha: targetAlpha }, 1, { ease: FlxEase.cubeIn });
         }
-    }
-
-    /**
-     * (Ophelia) 50 taps: Ophelia gives a Pin of herself.
-     * (Ophelia) 75 taps: Warning.
-     * (Ophelia) Every 100 taps: +1 to her anger count.
-     */
-    function checkIfAnnoyedShopkeeper():Void
-    {
-        if (isShopkeeperGone || TimedCoinsManager.running)
-        {
-            return;
-        }
-
-        // The shopkeeper's sprite extends behind the counter, we don't wanna count pressing in that area as well.
-        if (TouchUtil.pressAction(shopkeeperHitbox, camera) && !TouchUtil.overlaps(coolBackButton, cameraHUD) && !FunkBucks.isMouseTooFast)
-        {
-            if (Tuntematon.gone && !Shopkeeper.caught)
-            {
-                Shopkeeper.annoyance = 0;
-                disallowInputs = true;
-                ebgquwwghobehjovbefogbeqir();
-                return;
-            }
-            else if (Shopkeeper.caught)
-            {
-                FlxTween.completeTweensOf(cannotDoText);
-                FlxTween.tween(cannotDoText, { alpha: 1 }, 2, { ease: FlxEase.cubeOut, type: 16 });
-                return;
-            }
-
-            Shopkeeper.annoyance++;
-            trace("Boop! " + Shopkeeper.annoyance);
-
-            if (shopkeeper.name == "ophelia")
-            {
-                if (Shopkeeper.annoyance == 5)
-                {
-                    new FlxTimer().start(0.5, function(_:FlxTimer)
-                    {
-                        new OpheliaPin();
-                    });
-
-                    disallowInputs = true;
-                    showMenuItems(false);
-                    cameraFollowPoint.setPosition(shopkeeperHitbox.x + shopkeeperHitbox.width / 2, shopkeeperHitbox.y + 115);
-                    savedCamZoom = camera.zoom;
-                    FlxTween.tween(camera, { zoom: 1.5 }, 1, { ease: FlxEase.cubeOut });
-                    toggleDisplayBucks(false);
-                    FlxTween.tween(blueJewelsText, { alpha: 0 }, 1, { ease: FlxEase.cubeOut });
-                    coolBackButton.visible = false;
-                    trace("Enough booping!");
-                    return;
-                }
-
-                if (Shopkeeper.annoyance == 75 && FunkBucks.getOpheliaAnger() == 0)
-                {
-                    if (dialog != null) remove(dialog);
-                    dialog = new Dialogue("anger/warning");
-                    add(dialog);
-                    dialog.cameras = [cameraHUD];
-
-                    dialog.dialogueText.letterCallback = (code) ->
-                    {
-                        if (FunkBucks.skipTalking.contains(code)) return;
-                        FunkinSound.playOnce(Paths.sound("chartingSounds/keyboard" + FlxG.random.int(1, 3)), 1.0);
-                        shopkeeper.playAnimation('Talk', false, false);
-                    }
-                }
-
-                if (Shopkeeper.annoyance % 100 == 0)
-                {
-                    if (FunkBucks.getOpheliaAnger() == 0)
-                    {
-                        // FunkBucks.save.opheliaAngerTime = Date.now().getTime();
-                    }
-                    disallowInputs = true;
-                    if (FunkBucks.getOpheliaAngerTotal() > 0)
-                    {
-                        if (FunkBucks.getOpheliaAnger() > 5)
-                        {
-                            opheliaAngerDialogue("repeat3");
-                        }
-                        else if (FunkBucks.getOpheliaAnger() > 0)
-                        {
-                            opheliaAngerDialogue("repeat2");
-                        }
-                        else
-                        {
-                            opheliaAngerDialogue("repeat");
-                        }
-                    }
-                    else
-                    {
-                        opheliaAngerDialogue("initial");
-                    }
-                    // FunkBucks.addOpheliaAnger(1);
-                    trace("FUCK YOU!!!!");
-                    return;
-                }
-            }
-
-            shopkeeper.playAnimation("GetTappedOn1", false, true);
-        }
-    }
-
-    function opheliaAngerDialogue(variant:String):Void
-    {
-        if (dialog != null) remove(dialog);
-        dialog = new Dialogue("anger/" + variant);
-        add(dialog);
-        dialog.cameras = [cameraHUD];
-
-        dialog.dialogueText.letterCallback = (code) ->
-        {
-            if (FunkBucks.skipTalking.contains(code)) return;
-            FunkinSound.playOnce(Paths.sound("chartingSounds/keyboard" + FlxG.random.int(1, 3)), 1.0);
-            shopkeeper.playAnimation('Talk', false, false);
-        }
-
-        dialog.onCompleteDialogue.add(() ->
-        {
-            disallowInputs = false;
-            showMenuItems(true);
-            FlxTween.tween(camera, { zoom: savedCamZoom }, 1, { ease: FlxEase.cubeOut });
-            FlxTween.tween(funkBucksText, { alpha: 1 }, 1, { ease: FlxEase.cubeOut });
-            FlxTween.tween(blueJewelsText, { alpha: 1 }, 1, { ease: FlxEase.cubeOut });
-        });
-        
-        showMenuItems(false);
-        cameraFollowPoint.setPosition(shopkeeperHitbox.x + shopkeeperHitbox.width / 2, shopkeeperHitbox.y + 100);
-        savedCamZoom = camera.zoom;
-        FlxTween.tween(camera, { zoom: 1.35 }, 1, { ease: FlxEase.cubeOut });
-        FlxTween.tween(funkBucksText, { alpha: 0 }, 1, { ease: FlxEase.cubeOut });
-        FlxTween.tween(blueJewelsText, { alpha: 0 }, 1, { ease: FlxEase.cubeOut });
-        coolBackButton.visible = false;
-    }
-
-    function ebgquwwghobehjovbefogbeqir():Void
-    {
-        if (dialog != null) remove(dialog);
-        dialog = new Dialogue("secret/nightmare");
-        add(dialog);
-        dialog.cameras = [cameraHUD];
-
-        dialog.dialogueText.letterCallback = (code) ->
-        {
-            if (dialog.dialogueIndex == 3 || dialog.dialogueIndex == 4 || dialog.dialogueIndex == 7) return;
-            if (FunkBucks.skipTalking.contains(code)) return;
-            FunkinSound.playOnce(Paths.sound("chartingSounds/keyboard" + FlxG.random.int(1, 3)), 1.0);
-            shopkeeper.playAnimation('Talk', false, false);
-        }
-
-        dialog.onNextLine.add((dialogueIndex, dialogueText) ->
-        {
-            switch (dialogueIndex)
-            {
-                case 1: shopkeeper.suffix = "Confused";
-                case 3: FlxG.sound.music.stop(); shopkeeper.suffix = ""; shopkeeper.playAnimation("Idle", true, true);
-                case 5: shopkeeper.suffix = "Confused";
-                case 8: shopkeeper.suffix = "Annoyed";
-            }
-        });
-
-        dialog.onCompleteDialogue.add(() ->
-        {
-            shopkeeper.suffix = "";
-            shopkeeper.playAnimation("LookAtShelf");
-            FlxTween.tween(cameraFollowPoint, { x: cameraFollowPoint.x + 200 }, 0.5, { ease: FlxEase.cubeOut });
-
-            // new FlxTimer().start(3.0, function(_:FlxTimer) {
-                // remove(dailyBoard);
-            // });
-
-            // new FlxTimer().start(4.0, function(_:FlxTimer) {
-                // rewardShelf.removeItems();
-            // });
-
-            // new FlxTimer().start(9.5, function(_:FlxTimer) {
-                // remove(rewardShelf);
-            // });
-
-            new FlxTimer().start(10.0, function(_:FlxTimer) {
-                var t2:Tuntematon = new Tuntematon(FlxG.width - 110, 320);
-                t2.animation.play("grab", true, true);
-                t2.scrollFactor.set();
-                t2.cameras = [cameraHUD];
-                t2.scale.set(1.5, 1.5);
-                add(t2);
-
-                var staticSound:FunkinSound = FunkinSound.load(Paths.sound("static loop"), 0, true, false, true, false);
-                staticSound.volume = 0.0;
-                staticSound.fadeOut(6.0, 0.1);
-
-                var t3:FunkinSprite = new FunkinSprite(2000 - spriteNudge, 230).loadTexture("shop/t");
-                t3.zIndex = 390;
-                add(t3);
-                refresh();
-
-                FlxTween.tween(lighting, { alpha: 1.0 }, 5.4, { ease: FlxEase.cubeIn });
-                FlxTween.tween(t3, { x: shopkeeper.x + shopkeeper.width / 2 + 100 }, 0.50, { startDelay: 5.0, ease: FlxEase.expoIn, onComplete: function() {
-                    // FunkBucks.setPin("tuntematon");
-                    Shopkeeper.caught = true;
-                    screenBlack.alpha = 1.0;
-                    t2.alpha = 0.0;
-                    FlxTransitionableState.skipNextTransIn = true;
-                    FlxG.switchState(() -> new MainMenuState());
-                }});
-            });
-        });
-        
-        showMenuItems(false);
-        cameraFollowPoint.setPosition(shopkeeperHitbox.x + shopkeeperHitbox.width / 2, shopkeeperHitbox.y + 115);
-        FlxTween.tween(camera, { zoom: 1.5 }, 1, { ease: FlxEase.cubeOut });
-        FlxTween.tween(funkBucksText, { alpha: 0 }, 1, { ease: FlxEase.cubeOut });
-        FlxTween.tween(blueJewelsText, { alpha: 0 }, 1, { ease: FlxEase.cubeOut });
-        coolBackButton.visible = false;
-    }
-
-    function cloverCoinButtonIntro():Void
-    {
-        if (dialog != null) remove(dialog);
-        dialog = new Dialogue('cloverButton');
-        add(dialog);
-        dialog.cameras = [cameraHUD];
-
-        dialog.dialogueText.letterCallback = (code) ->
-        {
-            if (FunkBucks.skipTalking.contains(code)) return;
-            FunkinSound.playOnce(Paths.sound("chartingSounds/keyboard" + FlxG.random.int(1, 3)), 1.0);
-            shopkeeper.playAnimation('Talk', false, false);
-        }
-
-        dialog.onNextLine.add((dialogueIndex, dialogueText) ->
-        {
-            switch (dialogueIndex)
-            {
-                case 2:
-                    shopkeeper.suffix = "Confused";
-                    cameraFollowPoint.setPosition(2300 - spriteNudge, -200);
-                    FlxTween.tween(camera, { zoom: 2 }, 1, { ease: FlxEase.cubeOut, onComplete: function() {
-                        dialog.startFromDelay();
-                    }});
-                case 4:
-                    cameraFollowPoint.setPosition(shopkeeperHitbox.x + shopkeeperHitbox.width / 2, shopkeeperHitbox.y + 100);
-                    FlxTween.tween(camera, { zoom: 1.35 }, 1, { ease: FlxEase.cubeOut, onComplete: function() {
-                        dialog.startFromDelay();
-                    }});
-                case 5: shopkeeper.suffix = "Annoyed";
-                case 6: shopkeeper.suffix = "";
-            }
-        });
-
-        dialog.onCompleteDialogue.add(() ->
-        {
-            shopkeeper.suffix = "";
-            disallowInputs = false;
-            showMenuItems(true);
-            FlxTween.tween(camera, { zoom: savedCamZoom }, 1, { ease: FlxEase.cubeOut });
-            FlxTween.tween(funkBucksText, { alpha: 1 }, 1, { ease: FlxEase.cubeOut });
-            FlxTween.tween(blueJewelsText, { alpha: 1 }, 1, { ease: FlxEase.cubeOut });
-            // FunkBucks.setEvent("cloverCoinButton", 1);
-        });
-        
-        disallowInputs = true;
-        showMenuItems(false);
-        cameraFollowPoint.setPosition(shopkeeperHitbox.x + shopkeeperHitbox.width / 2, shopkeeperHitbox.y + 100);
-        savedCamZoom = camera.zoom;
-        FlxTween.tween(camera, { zoom: 1.35 }, 1, { ease: FlxEase.cubeOut });
-        FlxTween.tween(funkBucksText, { alpha: 0 }, 1, { ease: FlxEase.cubeOut });
-        FlxTween.tween(blueJewelsText, { alpha: 0 }, 1, { ease: FlxEase.cubeOut });
-        coolBackButton.visible = false;
     }
 
     function unlockPinsInQueue():Void
