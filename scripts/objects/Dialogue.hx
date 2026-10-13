@@ -2,7 +2,7 @@ package funkbucks.objects;
 
 import balphabet.BAlphabet;
 import balphabet.BAlphabetTyped;
-import flixel.FlxObject;
+import flixel.FlxSprite;
 import flixel.math.FlxMath;
 import flixel.tweens.FlxEase;
 import flixel.tweens.FlxTween;
@@ -137,10 +137,10 @@ class Dialogue extends FunkinGroup
 
         if (currentDialogue.response != null)
         {
-            arrowLeftHitbox = new FlxObject(0, 0, 200, 200);
+            arrowLeftHitbox = new FlxSprite(0, 0).makeGraphic(200, 200, 0x00FF0000);
             this.add(arrowLeftHitbox);
 
-            arrowRightHitbox = new FlxObject(FlxG.width - 128, 0, 200, 200);
+            arrowRightHitbox = new FlxSprite(dialogueBoxBG.width - 200, 0).makeGraphic(200, 200, 0x000000FF);
             this.add(arrowRightHitbox);
 
             arrowLeft = new FunkinSprite(0, 0).loadTexture("shop/boxarrow");
@@ -167,7 +167,7 @@ class Dialogue extends FunkinGroup
             responseText.localVisible = false;
             this.add(responseText);
 
-            responseHitbox = new FlxObject(0, 0, 400, 200);
+            responseHitbox = new FlxSprite(200, 0).makeGraphic(400, 200, 0x0000FF00);
             this.add(responseHitbox);
 
             final count:Int = currentDialogue.response.options.length;
@@ -461,21 +461,17 @@ class Dialogue extends FunkinGroup
         speakerName.localVisible = false;
         advanceIcon.localVisible = false;
 
-        arrowLeftHitbox.setSize(dialogueBox.height, dialogueBox.height);
-        arrowLeftHitbox.setPosition(this.x + 10, this.y + 10);
-        arrowLeft.localX = dialogueBox.localX + arrowLeftHitbox.width / 2 - arrowLeft.width / 2;
-        arrowLeft.localY = dialogueBox.localY + arrowLeftHitbox.height / 2 - arrowLeft.height / 2;
+        arrowLeft.localX = dialogueBoxBG.localX + arrowLeftHitbox.width / 2 - arrowLeft.width / 2;
+        arrowLeft.localY = dialogueBoxBG.localY + arrowLeftHitbox.height / 2 - arrowLeft.height / 2;
         arrowLeft.localVisible = true;
 
-        arrowRightHitbox.setSize(dialogueBox.height, dialogueBox.height);
-        arrowRightHitbox.setPosition(this.x + dialogueBox.width - 10 - arrowRightHitbox.width, this.y + 10);
-        arrowRight.localX = dialogueBox.localX + dialogueBox.width - arrowRightHitbox.width / 2 - arrowRight.width / 2;
-        arrowRight.localY = dialogueBox.localY + arrowRightHitbox.height / 2 - arrowRight.height / 2;
+        arrowRightHitbox.localX = dialogueBoxBG.width - arrowRightHitbox.width;
+        arrowRight.localX = dialogueBoxBG.localX + dialogueBoxBG.width - arrowRightHitbox.width / 2 - arrowRight.width / 2;
+        arrowRight.localY = dialogueBoxBG.localY + arrowRightHitbox.height / 2 - arrowRight.height / 2;
         arrowRight.localVisible = true;
 
+        responseHitbox.localX = arrowLeftHitbox.localX + arrowLeftHitbox.width;
         responseText.localVisible = true;
-        responseHitbox.setSize(dialogueBox.width - arrowLeftHitbox.width - arrowRightHitbox.width, dialogueBox.height);
-        responseHitbox.setPosition(arrowLeftHitbox.x + arrowLeftHitbox.width, arrowLeftHitbox.y);
 
         for (i in 0...responseDots.length)
         {
@@ -594,7 +590,7 @@ class Dialogue extends FunkinGroup
                 shape: "round",
                 shapeColor: "264967",
                 textColor: "FFFFFF",
-                pattern: "diamonds-alt",
+                pattern: "diamonds",
                 patternColor: "67B1D8",
                 patternAngle: 10,
                 patternDirection: [0.1, 0.03],
@@ -606,11 +602,11 @@ class Dialogue extends FunkinGroup
                 shape: "round",
                 shapeColor: "D9471C",
                 textColor: "FFFFFF",
-                pattern: "diamonds-alt",
-                patternColor: "D9471C",
-                patternAngle: 10,
-                patternDirection: [0.1, 0.03],
-                patternSpeed: 0.3,
+                pattern: "clovers",
+                patternColor: "EA8645",
+                patternAngle: 22.5,
+                patternDirection: [0.04, -0.02],
+                patternSpeed: 1.0,
                 patternBlend: 1
             }
             default:

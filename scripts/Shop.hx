@@ -66,6 +66,7 @@ class Shop extends MusicBeatState
 
     public var wall:FunkinSprite;
     public var lighting:FunkinSprite;
+    public var counter:FunkinSprite;
 
     public var clock:Clock;
     public var dailyBoard:DailyBoard;
