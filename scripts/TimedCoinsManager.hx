@@ -1,24 +1,15 @@
 package funkbucks;
 
-import balphabet.BAlphabet;
-import flixel.tweens.FlxEase;
-import flixel.tweens.FlxTween;
 import funkbucks.objects.ui.TimedCoinsHUD;
 import funkin.audio.FunkinSound;
 import funkin.data.song.SongRegistry;
 import funkin.data.story.level.LevelRegistry;
-import funkin.graphics.FunkinCamera;
 import funkin.modding.ModStore;
 import funkin.modding.module.Module;
-import funkin.ui.FullScreenScaleMode;
 import funkin.ui.charSelect.CharSelectSubState;
 import funkin.ui.freeplay.FreeplayState;
 import funkin.ui.mainmenu.MainMenuState;
 import funkin.ui.story.StoryMenuState;
-import funkin.util.ReflectUtil;
-import openfl.display.Bitmap;
-import openfl.display.BitmapData;
-import openfl.display.Sprite;
 using StringTools;
 
 class TimedCoinsManager extends Module

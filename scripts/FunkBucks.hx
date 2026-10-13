@@ -2,7 +2,6 @@ package funkbucks;
 
 import Date;
 import balphabet.BAlphabet;
-import balphabet.BAlphabetTyped;
 import haxe.ds.StringMap;
 import openfl.net.URLLoader;
 import openfl.net.URLRequest;

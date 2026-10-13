@@ -2,7 +2,6 @@ package funkbucks.objects.shop;
 
 import funkin.graphics.FunkinSprite;
 import funkin.group.FunkinGroup;
-import flixel.tweens.FlxEase;
 import flixel.tweens.FlxTween;
 import flixel.util.FlxTimer;
 

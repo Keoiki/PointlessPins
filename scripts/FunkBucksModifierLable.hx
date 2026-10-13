@@ -5,7 +5,6 @@ import flixel.math.FlxMath;
 import flixel.tweens.FlxEase;
 import flixel.tweens.FlxTween;
 import funkin.modding.module.Module;
-import funkin.modding.module.ModuleHandler;
 import funkin.play.PlayState;
 import funkin.ui.charSelect.CharSelectSubState;
 import funkin.ui.freeplay.FreeplayState;

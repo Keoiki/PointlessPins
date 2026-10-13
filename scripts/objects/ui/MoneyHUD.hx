@@ -6,7 +6,6 @@ import flixel.math.FlxRect;
 import flixel.tweens.FlxEase;
 import flixel.tweens.FlxTween;
 import funkin.audio.FunkinSound;
-import funkin.graphics.FunkinSprite;
 import funkin.group.FunkinGroup;
 
 class MoneyHUD extends FunkinGroup
