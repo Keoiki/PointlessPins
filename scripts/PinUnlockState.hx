@@ -28,7 +28,7 @@ class PinUnlockState extends MusicBeatSubState
      * @param pinID The pin ID.
      * @param time The time before the state can be closed.
      */
-    override function new(pinID, time:Float = 1.0):Void
+    override function new(pinID:String, time:Float = 1.0):Void
     {
         this.pinData = FunkBucks.fetchPinByID(pinID);
         this.closeTimer = time;
@@ -135,7 +135,9 @@ class PinUnlockState extends MusicBeatSubState
         FlxTween.tween(glow1, { y: glow1.y - 150, alpha: 1.0 }, 0.8, { ease: FlxEase.quintOut });
         FlxTween.tween(glow2, { y: glow2.y - 150, alpha: 1.0 }, 0.8, { ease: FlxEase.quintOut });
         FlxTween.tween(pin.scale, { x: targetScale, y: targetScale }, 1.0, { ease: FlxEase.backOut });
-        new FlxTimer().start(closeTimer, function(_:FlxTimer) {
+        
+        new FlxTimer().start(closeTimer, function(_:FlxTimer)
+        {
             canClose = true;
         });
 

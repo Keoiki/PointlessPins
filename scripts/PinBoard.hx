@@ -519,7 +519,7 @@ class PinBoard extends MusicBeatSubState
 
     function quickSwitchRarity(change:Int = 0):Void
     {
-        var newRarityIndex:Int = PinUtil.wrapAround(PIN_RARITIES.indexOf(currentRarity) + change, 0, PIN_RARITIES.length - 1);
+        var newRarityIndex:Int = FBUtil.wrapAround(PIN_RARITIES.indexOf(currentRarity) + change, 0, PIN_RARITIES.length - 1);
         currentRarity = PIN_RARITIES[newRarityIndex];
         selectedPin = pins.filter(function(pin) {
             return pin.rarity == currentRarity;

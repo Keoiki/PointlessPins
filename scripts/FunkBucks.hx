@@ -35,7 +35,8 @@ import funkin.util.VersionUtil;
 import lime.app.Application;
 using StringTools;
 
-typedef PinData = {
+typedef PinData =
+{
     id:String, // The ID of a pin.
     name:String, // The visible name of a pin.
     ?description:String, // The description of a pin. (optional)
@@ -47,7 +48,8 @@ typedef PinData = {
     ?hidden:Bool // Hides the pin from the board if not unlocked, and doesn't count it towards the pin total.
 }
 
-typedef BoxData = {
+typedef BoxData =
+{
     id:String,
     name:String,
     description:String,

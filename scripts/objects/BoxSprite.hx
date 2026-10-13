@@ -2,7 +2,7 @@ package funkbucks.objects;
 
 import flixel.math.FlxMath;
 import funkbucks.FunkBucks;
-import funkbucks.PinUtil;
+import funkbucks.FBUtil;
 import funkin.graphics.FunkinSprite;
 import funkin.util.ReflectUtil;
 
@@ -43,10 +43,10 @@ class BoxSprite extends FunkinSprite
 
     public function updateBoxInfo(change:Int = 0, forceSpecial:Bool = false):Void
     {
-        boxDataIndex = PinUtil.wrapAround(boxDataIndex + change, 0, boxData.length - 1);
+        boxDataIndex = FBUtil.wrapAround(boxDataIndex + change, 0, boxData.length - 1);
         while ((boxData[boxDataIndex].special ?? false) && !forceSpecial)
         {
-            boxDataIndex = PinUtil.wrapAround(boxDataIndex + FlxMath.signOf(change), 0, boxData.length - 1);
+            boxDataIndex = FBUtil.wrapAround(boxDataIndex + FlxMath.signOf(change), 0, boxData.length - 1);
         }
 
         bID = boxData[boxDataIndex].id;

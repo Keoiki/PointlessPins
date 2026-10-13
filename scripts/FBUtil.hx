@@ -1,6 +1,6 @@
 package funkbucks;
 
-class PinUtil
+class FBUtil
 {
 	/**
 	 * Wrap a number around if it goes below the minimum or above the maximum. Useful for looping menu navigation.
@@ -56,5 +56,16 @@ class PinUtil
         {
             return current + change;
         }
+    }
+
+    public static function getCensor(length:Int):String
+    {
+        final censorChars:Array<String> = ["#", "!", "$", "@", "&", "*", "?"];
+        var censor = "";
+        for (i in 0...length)
+        {
+            censor += censorChars[FlxG.random.int(0, censorChars.length - 1)];
+        }
+        return censor;
     }
 }

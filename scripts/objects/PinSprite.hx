@@ -4,6 +4,7 @@ import EReg;
 import flixel.addons.display.FlxRuntimeShader;
 import flixel.tweens.FlxTween;
 import flixel.util.FlxColor;
+import funkbucks.FBUtil;
 import funkin.api.newgrounds.NewgroundsClient;
 import funkin.graphics.FunkinSprite;
 import openfl.filters.BitmapFilter;
@@ -184,7 +185,7 @@ class PinSprite extends FunkinSprite
 
                 if (!Preferences.naughtyness)
                 {
-                    description = 'are you ${getCensor(7)} kidding me';
+                    description = 'are you ${FBUtil.getCensor(7)} kidding me';
                 }
             }
             case "hundrec":
@@ -203,16 +204,5 @@ class PinSprite extends FunkinSprite
             }
             default: // Nothing
         }
-    }
-
-    function getCensor(length:Int):Void
-    {
-        final censorChars:Array<String> = ["#", "!", "$", "@", "&", "*", "?"];
-        var censor = "";
-        for (i in 0...length)
-        {
-            censor += censorChars[FlxG.random.int(0, censorChars.length - 1)];
-        }
-        return censor;
     }
 }

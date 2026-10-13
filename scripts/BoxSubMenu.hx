@@ -202,7 +202,7 @@ class BoxSubMenu extends MusicBeatSubState
     {
         if (STATE != "CHOOSING") return;
 
-        boxIndex = PinUtil.wrapAround(boxIndex + change, 0, boxCount - 1);
+        boxIndex = FBUtil.wrapAround(boxIndex + change, 0, boxCount - 1);
 
         for (i in 0...menuDots.length)
         {

@@ -3,11 +3,11 @@ package funkbucks;
 import funkin.modding.module.Module;
 import funkin.ui.options.OptionsState;
 
-class PinOptions extends Module
+class FBOptions extends Module
 {
     public function new():Void
     {
-        super("PPOptions", -200000, { state: OptionsState });
+        super("FBOptions", -200000, { state: OptionsState });
     }
 
     public function onCreate(event:ScriptEvent):Void
@@ -18,19 +18,19 @@ class PinOptions extends Module
             FunkBucks.flushSave();
         }
         
-        if (FunkBucks.save.dialogueFlavor == null)
-        {
+        // if (FunkBucks.save.dialogueFlavor == null)
+        // {
             // Change default "dialogueFlavor" setting depending on the player's current settings.
-            #if mobile
+            // #if mobile
             // FunkBucks.save.dialogueFlavor = "nice";
-            #else
+            // #else
             // if (!Preferences.naughtyness || Constants.CENSOR_EXPLETIVES)
             // {
                 // FunkBucks.save.dialogueFlavor = "nice";
             // }
-            #end
+            // #end
             // FunkBucks.flushSave();
-        }
+        // }
     }
 
     public function onStateChangeEnd(event:StateChangeScriptEvent):Void
@@ -54,7 +54,7 @@ class PinOptions extends Module
                 }
             );
 
-            #if !mobile
+            // #if !mobile
             // preferences.createPrefItemEnum(
                 // "Dialogue Flavor",
                 // "Changes how mean dialogue from the shopkeepers is.\n(\"Naughtyness\" being OFF overrides this.)",
@@ -70,7 +70,7 @@ class PinOptions extends Module
                     // default: "Meaner";
                 // }
             // );
-            #end
+            // #end
         }
         super.onStateChangeEnd(event);
     }
