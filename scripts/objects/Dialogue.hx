@@ -210,8 +210,6 @@ class Dialogue extends FunkinGroup
         this.x = FlxG.width / 2 - dialogueBoxBG.width / 2;
 
         FunkBucks.dialogueActive = true;
-
-        doNextLine();
     }
 
     var hasEnded:Bool = false;
@@ -267,6 +265,7 @@ class Dialogue extends FunkinGroup
             if (justStarted)
             {
                 justStarted = false;
+                doNextLine();
             }
             else
             {
@@ -357,11 +356,11 @@ class Dialogue extends FunkinGroup
         isDelayed = dialogueLine.delayLine;
         delayHidden = isDelayed && dialogueLine.hideDuringDelay;
 
-        dialogueText.localY = dialogueBox.localY + dialogueBox.height / 2 - ((dialogueText.lineHeight / 2 - 8) * dialogueText.localScale.y) - (dialogueText.rows * 16);
+        dialogueText.localY = dialogueBox.localY + dialogueBox.height / 2 - ((dialogueText.lineHeight / 2 - 8) * dialogueText.localScale.y) - (dialogueText.rows * 18);
 
         advanceIcon.localVisible = false;
 
-        onNextLine.dispatch(dialogueIndex, dialogueText);
+        onNextLine.dispatch(dialogueIndex, dialogueText.text);
 
         if (!isDelayed)
         {
