@@ -27,6 +27,7 @@ import funkin.play.scoring.Scoring;
 import funkin.play.scoring.ScoringRank;
 import funkin.save.Save;
 import funkin.ui.mainmenu.MainMenuState;
+import funkin.ui.title.TitleState;
 import funkin.util.ReflectUtil;
 import funkin.util.SerializerUtil;
 import funkin.util.TouchUtil;
@@ -1000,6 +1001,11 @@ class FunkBucks extends Module
             // test.setScrollFactor(0, 0);
             // event.targetState.add(test);
             // test.start();
+        }
+
+        if (event.targetState is TitleState)
+        {
+            FunkBucks.moneyHUD.setDisplay(false, false, 0);
         }
 
         super.onStateChangeEnd(event);
