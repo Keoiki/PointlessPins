@@ -20,9 +20,18 @@ class DailyBoard extends FunkinGroup
 
     function createBoard():Void
     {
+        var boardShadow:FunkinSprite = new FunkinSprite(0, 0).loadTexture("shop/dailyboard");
+        boardShadow.localY = 10;
+        boardShadow.localScale.set(0.95, 1.0);
+        boardShadow.scrollFactor.set(0.85, 0.85);
+        boardShadow.zIndex = -1;
+        boardShadow.setColorTransform(0, 0, 0, 1, 0, 51, 102, -128.5);
+        boardShadow.blend = 11;
+        this.add(boardShadow);
+
         board = new FunkinSprite(0, 0).loadTexture("shop/dailyboard");
-        board.zIndex = 1;
         board.scrollFactor.set(0.85, 0.85);
+        board.zIndex = 1;
         this.add(board);
 
         dailies = new BAlphabet(0, 0, formatDailySongs());

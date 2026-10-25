@@ -267,7 +267,8 @@ class Shop extends MusicBeatState
             lamp.scrollFactor.set(1.1, 1.0);
             add(lamp);
             lamp.scale.set(0.8, 0.8);
-            lamp.anim.play(isShopkeeperGone ? "off" : "on");
+            // Somehow this has to be the other way around, a chance for the lamp to be on, not off. fuck everything man
+            if (FlxG.random.bool(95)) lamp.animation.play("on");
         }
 
         iconPins = new FunkinSprite(-400 - spriteNudge, 330).loadTexture("shop/iconpins");
@@ -413,7 +414,7 @@ class Shop extends MusicBeatState
 
         persistentUpdate = true;
 
-        final leftXLimit:Float = 3000;
+        final leftXLimit:Float = 100; // 3000
         final rightXLimit:Float = extendBounds ? 100000 : 100;
 
         if (extendBounds)

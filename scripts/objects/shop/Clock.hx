@@ -18,6 +18,15 @@ class Clock extends FunkinGroup
 
     function createClock()
     {
+        var clockShadow:FunkinSprite = new FunkinSprite(0, 0).loadTexture("shop/clock");
+        clockShadow.localY = 10;
+        clockShadow.localScale.set(0.925, 1.0);
+        clockShadow.scrollFactor.set(0.85, 0.85);
+        clockShadow.zIndex = -1;
+        clockShadow.setColorTransform(0, 0, 0, 1, 0, 0, 0, -(255 * 0.75));
+        clockShadow.blend = 9;
+        this.add(clockShadow);
+
         clock = new FunkinSprite(0, 0).loadTexture("shop/clock");
         clock.zIndex = 1;
         clock.scrollFactor.set(0.85, 0.85);
