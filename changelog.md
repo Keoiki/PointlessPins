@@ -9,18 +9,16 @@
 
 
 
-## [2.0.0] - ??/10/2026
+## [2.0.0] - ??/??/2026
 
 ### Added
 
-- Removed Ophelia.
 - Added a new character: April.
-    - She'd rather not be here.
-- Added 62 new pins:
-    - 10 Common
-    - 14 Uncommon
-    - 12 Rare
-    - 12 Epic
+- Added 59 new pins:
+    - 9 Common
+    - 12 Uncommon
+    - 16 Rare
+    - 13 Epic
     - 6 Legendary
     - 1 Mythic
     - 2 Special
@@ -64,7 +62,7 @@
     - Pin Board vertical scrolling movement now skips over rows where there isn't a pin on the column you've moving on.
     - You can now hold down a button on the Pin Board to move quickly.
 - The text in the Box Menu has been moved around.
-    - The opened box count text has been removed and the counts can now be seen in the new Rewards menu.
+    - The opened box count text has been removed and the counts can now be seen in the Stats menu.
 - Increased the amount of daily songs from 3 to 5.
 - Increased the cost of the Cardboard Boxes from 15 to 20 FunkBucks.
 - Increased the cost of the Small Giftboxes from 30 to 50 FunkBucks.
@@ -79,6 +77,10 @@
     - 25-36: 75%
     - 37-48: 100%
     - 49 and after: 125%
+
+### Removals
+
+- Removed Ophelia.
 
 
 

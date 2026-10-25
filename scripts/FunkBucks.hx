@@ -1010,11 +1010,6 @@ class FunkBucks extends Module
             // test.start();
         }
 
-        if (event.targetState is TitleState)
-        {
-            FunkBucks.moneyHUD.setDisplay(false, false, 0);
-        }
-
         super.onStateChangeEnd(event);
     }
 
@@ -1251,7 +1246,7 @@ class FBIcon
     static final Star:String = "&#xE005;";
     static final Ophelia:String = "&#xE006;";
     static final April:String = "&#xE007;";
-    static final Rose:String = "&#xE008;";
+    static final Reyna:String = "&#xE008;";
     static final NGSupporter:String = "&#xE009;";
     static final Lock:String = "&#xE00A;";
     static final Calendar:String = "&#xE00B;";

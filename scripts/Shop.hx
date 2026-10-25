@@ -19,7 +19,6 @@ import funkbucks.objects.shop.Clock;
 import funkbucks.objects.shop.DailyBoard;
 import funkbucks.objects.shop.RewardShelf;
 import funkbucks.objects.shop.StatsSheet;
-import funkbucks.objects.shop.secret.OpheliaPast;
 import pointlesspins.objects.shop.secret.Tuntematon;
 import funkin.audio.FunkinSound;
 import funkin.graphics.FunkinCamera;
@@ -946,11 +945,5 @@ class Shop extends MusicBeatState
         var old_iconBoxes:FunkinSprite = new FunkinSprite(50440, 376).loadTexture("shop/iconboxes");
         old_iconBoxes.zIndex = 490;
         add(old_iconBoxes);
-
-        var ophelia_of_the_past:OpheliaPast = new OpheliaPast(51050, 160);
-        ophelia_of_the_past.zIndex = 900;
-        add(ophelia_of_the_past);
-
-        cameraFollowPoint.x = 51300;
     }
 }

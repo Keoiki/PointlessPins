@@ -56,7 +56,7 @@ class PinSprite extends FunkinSprite
         {
             switch (e.matched(1).toLowerCase())
             {
-                case "april_purchase": return FunkBucks.getEvent("hasMetApril") == 1 ? "Can be purchased from <c=EA8645>April</c>." : "???";
+                case "april_purchase": return FunkBucks.getEvent("aprilExchangeStarted") == 1 ? "Can be purchased from <c=EA8645>April</c>." : "???";
                 default: return "<color=FF0000>!Unknown Locked Tag!</color>";
             }
         });
@@ -200,6 +200,27 @@ class PinSprite extends FunkinSprite
                     {
                         description = '"Hey ${NewgroundsClient.user.name},\nThis is Hundrec, Production Manager for The Funkin\' Crew."';
                     }
+                }
+            }
+            case 'newgrounds':
+            {
+                if (NewgroundsClient.isLoggedIn() && NewgroundsClient.user != null)
+                {
+                    if (NewgroundsClient.user.supporter)
+                    {
+                        description = 'Going strong since 1995!\nThanks for being a supporter, <c=F27E2A>${NewgroundsClient.user.name}</c> ${FBIcon.NGSupporter}';
+                    }
+                    else
+                    {
+                        description = 'Going strong since 1995!';
+                    }
+                }
+            }
+            case 'smoothjazz-mdk': 
+            {
+                if (FlxG.random.bool(5))
+                {
+                    description = 'WUBSTEP IS DEAD!';
                 }
             }
             default: // Nothing

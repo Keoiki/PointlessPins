@@ -1,3 +1,4 @@
+/*
 package funkbucks.characters;
 
 import funkin.play.character.AnimateAtlasCharacter;
@@ -12,3 +13,4 @@ class OpheliaCharacter extends AnimateAtlasCharacter
     // There was stuff here before, and now there isn't.
     // And I can't be bothered to delete the file.
 }
+*/

@@ -32,11 +32,12 @@
             { "id": "cardboardbox", "name": "Cardboard Box", "description": "The cheapest of them all.", "special": true, "lockedText": "Open a total of 100 Cardboard Boxes." },
             { "id": "haxe", "name": "Haxe", "description": "The backbone of this game." },
             { "id": "red-amongus-week1", "name": "Red", "description": "Way to draw attention to yourself, huh?", "source": "VS. Impostor #MOD#" },
+            { "id": "henry-stickmin", "name": "Henry Stickmin", "description": "Just trying to get some cash.", "source": "The Henry Stickmin Collection #GAME#" },
+            { "id": "ellie-rose", "name": "Ellie Rose", "description": "Also trying to get some cash.", "source": "The Henry Stickmin Collection #GAME#" },
             { "id": "salty-ssn", "name": "Salty", "source": "Salty's Sunday Night #MOD#" },
             { "id": "itsumi-ssn", "name": "Itsumi", "source": "Salty's Sunday Night #MOD#" },
             { "id": "connor-ssn", "name": "Connor", "source": "Salty's Sunday Night #MOD#" },
-            { "id": "henry-stickmin", "name": "Henry Stickmin", "description": "Just trying to get some cash.", "source": "The Henry Stickmin Collection #GAME#" },
-            { "id": "ellie-rose", "name": "Ellie Rose", "description": "Also trying to get some cash.", "source": "The Henry Stickmin Collection #GAME#" }
+            { "id": "baba-biy", "name": "Baba", "description": "<c=EB3C6D>Baba</c> Is <c=67A444>Pin</c>", "source": "<c=EB3C6D>Baba</c> Is <c=EB3C6D>You</c> #GAME#" }
         ]
     },
     "Uncommon": {
@@ -67,7 +68,7 @@
             { "id": "glitch-ssn", "name": "Glitch", "source": "Salty's Sunday Night #MOD#" },
             { "id": "strawberry-celeste", "name": "Strawberry", "description": "Can you collect all 175 (or even 202) of them?", "source": "Celeste #GAME#" },
             { "id": "secretcoin-gd", "name": "Secret Coin", "description": "Never enough with you...", "source": "Geometry Dash #GAME#" },
-            { "id": "fireice-adofai", "name": "Fire and Ice", "description": "Try not to break their equilibrium.", "source": "A Dance of Fire and Ice #GAME#" }
+            { "id": "fireice-adofai", "name": "Fire and Ice", "description": "Try not to break their equilibrium.", "source": "A Dance of <c=F76243>Fire</c> and <c=5CAADC>Ice</c> #GAME#" }
         ]
     },
     "Rare": {
@@ -76,7 +77,7 @@
         "pins":
         [
             { "id": "nessie-funkinnews", "name": "Nessie", "source": "\"Funkin News\" Twitter #INTERNET#" },
-            { "id": "ophelia", "name": "Ophelia", "description": "You'll stop annoying her now, right?", "special": true, "lockedText": "It wouldn't be smart to annoy <c=67B1D8>her.</c>" },
+            { "id": "ophelia", "name": "Ophelia", "description": "You'll stop annoying her now, right?", "special": true, "lockedText": "It wouldn't be smart to annoy <c=67B1D8>her.</c>", "hidden": true },
             { "id": "april", "name": "April", "description": "Cares little for <c=67B1D8>Ophelia's</c> rules.", "special": true, "lockedText": "#APRIL_PURCHASE#" },
             { "id": "funkbuck", "name": "FunkBuck", "description": "Your local currency!", "special": true, "lockedText": "Earn a total of 25000 FunkBucks." },
             { "id": "haxeui", "name": "HaxeUI", "description": "It either doesn't work or doesn't work." },
@@ -104,15 +105,17 @@
         [
             { "id": "melodystone", "name": "Melody Stone", "description": "Rare, Blue, and Sparkly! <c=67B1D8>Ophelia</c> loves these.", "special": true, "lockedText": "Earn a total of 5 Melody Stones." },
             { "id": "ophelia-business", "name": "Ophelia <s=0.5>(Business)</s>", "description": "Very strict with her rules. (Except on <c=EA8645>April</c>)", "special": true, "lockedText": "#APRIL_PURCHASE#", "hidden": true },
-            { "id": "pessy", "name": "Pessy", "source": "Psych Engine #MOD#" },
-            { "id": "kb", "name": "KB", "source": "QT: Rewired #MOD#" },
             { "id": "polymod", "name": "Polymod", "description": "Polymore!" },
             { "id": "funkbuck-pixel", "name": "Pixelated FunkBuck", "description": "Your pixelated currency!", "special": true, "lockedText": "#APRIL_PURCHASE#", "pixel": true, "scale": 5 },
             { "id": "rank-perfect", "name": "Perfect Rank", "description": "Now go for the golden one!", "special": true, "lockedText": "Complete any song with a certain rank." },
-            { "id": "glimmeringpouch", "name": "Glimmering Pouch", "special": true, "lockedText": "Open a total of 100 Glimmering Pouches." },
+            { "id": "glimmeringpouch", "name": "Glimmering Pouch", "special": true, "lockedText": "Open a total of 40 Glimmering Pouches." },
+            { "id": "psychic-mindgames", "name": "Psychic", "source": "Mind Games #MOD#" },
+            { "id": "pessy", "name": "Pessy", "source": "Psych Engine #MOD#" },
+            { "id": "kb", "name": "KB", "source": "QT: Rewired #MOD#" },
             { "id": "detective-amongus", "name": "Detective", "description": "Trying to figure out who the Impostor is...", "source": "VS. Impostor #MOD#" },
             { "id": "blake-amongus", "name": "Blake Imposter", "description": "Imposter is just his surname.", "source": "VS. Impostor #MOD#" },
             { "id": "falsethorn-corruption", "name": "FalseThorn", "description": "It's not real... it's not real...", "source": "Friday Night Funkin': Corruption #MOD#" },
+            { "id": "smoothjazz-mdk", "name": "Smooth Jazz", "description": "Jazz so good it's criminal.", "source": "MDK #INTERNET#" },
             { "id": "violastro-vv", "name": "Violastro", "description": "Despite how it may seem, his \"glasses\" are actually his eyes.", "source": "Vibrant Venture #GAME#" }
         ]
     },
@@ -136,7 +139,7 @@
         [
             { "id": "weekend1kid", "name": "Leashed Kid" },
             { "id": "true", "name": "True...", "description": "The Funkin' Contributors told me to add this one." },
-            { "id": "charon-adofai", "name": "Charon", "description": "\"If I need to I will reincarnate and let <c=FACD70>samsara</c> burn!\" · . ° (≥O≤) ° . ·\n<a=0.75><s=0.75><i><c=FC727C>REINCARNA✝ION!! Idol Graduation</c> - <c=7773FC>Cosmic Radio 2024</c></i></s></a>", "source": "A Dance of Fire and Ice #GAME#" }
+            { "id": "charon-adofai", "name": "Charon", "description": "\"If I need to I will reincarnate and let <c=FACD70>samsara</c> burn!\" · . ° (≥O≤) ° . ·\n<a=0.75><s=0.75><i><c=FC727C>REINCARNA✝ION!! Idol Graduation</c> - <c=7773FC>Cosmic Radio 2024</c></i></s></a>", "source": "A Dance of <c=F76243>Fire</c> and <c=5CAADC>Ice</c> #GAME#" }
         ]
     },
     "Divine": {
@@ -151,8 +154,9 @@
         [
             { "id": "spaghetti", "name": "Spaghetti", "description": "This isn't a hotspot, sorry!", "special": true, "lockedText": "Complete a certain song." },
             { "id": "rank-loss", "name": "Loss Rank", "description": "Wow, you suck.", "special": true, "lockedText": "Complete any song with a certain rank." },
+            { "id": "newgrounds", "name": "Newgrounds", "special": true, "lockedText": "Log-in to Friday Night Funkin' with Newgrounds." },
             { "id": "shockedcat", "name": "Shocked Cat", "description": "https://www.youtube.com/watch?v=VuYmOeiScv4&t=380s", "special": true, "lockedText": "Get surprised!" },
-            { "id": "tuntematon", "name": " ", "description": "<a=0.05>She got what she deserved.</a>", "special": true, "lockedText": "<a=0.05>Nightmares manifest.</a>", "hidden": true }
+            { "id": "tuntematon", "name": " ", "special": true, "hidden": true }
         ]
     }
 }
