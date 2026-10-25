@@ -17,7 +17,6 @@ import funkbucks.objects.KeyCap;
 import funkbucks.objects.Dialogue;
 import funkbucks.objects.shop.Clock;
 import funkbucks.objects.shop.DailyBoard;
-import funkbucks.objects.shop.RewardShelf;
 import funkbucks.objects.shop.StatsSheet;
 import pointlesspins.objects.shop.secret.Tuntematon;
 import funkin.audio.FunkinSound;
@@ -48,8 +47,6 @@ class Shop extends MusicBeatState
     var extendBounds:Bool = false;
     var cannotDoText:BAlphabet;
 
-    var buckSound:FunkinSound;
-
     // Dialogue
     public var dialog:Dialogue;
 
@@ -63,7 +60,6 @@ class Shop extends MusicBeatState
 
     public var clock:Clock;
     public var dailyBoard:DailyBoard;
-    public var rewardShelf:RewardShelf;
     // public var cloverEventButton:FunkinSprite;
 
     public var elevator:FunkinSprite;
@@ -142,7 +138,7 @@ class Shop extends MusicBeatState
         if (FlxG.random.bool(1) && !Shopkeeper.caught && skName == "ophelia")
         {
             // Ophelia forgor to show up
-            isShopkeeperGone = true;
+            // isShopkeeperGone = true;
             // if (FlxG.random.bool(10))
             // {
                 // extendBounds = true;
@@ -164,13 +160,6 @@ class Shop extends MusicBeatState
             });
         }
 
-        buckSound = new FunkinSound();
-        buckSound.loadEmbedded(Paths.sound("fav"));
-        buckSound.volume = 0.35;
-
-        FlxG.sound.defaultSoundGroup.add(buckSound);
-        FlxG.sound.list.add(buckSound);
-
         // Shop
 
         wall = new FunkinSprite(-950 - spriteNudge, -400).loadTexture("shop/wall");
@@ -182,10 +171,6 @@ class Shop extends MusicBeatState
         dailyBoard.zIndex = -998;
         add(dailyBoard);
 
-        rewardShelf = new RewardShelf(1350 - spriteNudge, -35);
-        rewardShelf.zIndex = -995;
-        add(rewardShelf);
-
         clock = new Clock(1168 - spriteNudge, -200);
         clock.zIndex = -993;
         add(clock);
@@ -195,14 +180,6 @@ class Shop extends MusicBeatState
         // cloverEventButton.zIndex = -990;
         // cloverEventButton.visible = FunkBucks.getUnlockedPinsCount() >= 30;
         // add(cloverEventButton);
-
-        if (!FunkBucks.hasPin("tuntematon") && FunkBucks.getUnlockedPinsCount() >= 75 && FlxG.random.bool(0.1) && !Tuntematon.gone && !Shopkeeper.caught)
-        {
-            var t:Tuntematon = new Tuntematon(1350 - spriteNudge + rewardShelf.shelf.width, 80);
-            t.zIndex = -979;
-            t.scrollFactor.set(0.85, 0.85);
-            add(t);
-        }
 
         // lighting = new FunkinSprite(-800, -440).makeSolidColor(3000, 1600, 0xFF3C1B41);
         lighting = new FunkinSprite(-800, -440).makeSolidColor(3000, 1600, 0xFFFFC38B);
@@ -269,7 +246,6 @@ class Shop extends MusicBeatState
         if (Shopkeeper.caught)
         {
             remove(dailyBoard);
-            remove(rewardShelf);
             remove(fbStack1);
             remove(fbStack2);
             remove(fbStack3);
