@@ -293,4 +293,16 @@ class MoneyHUD extends FunkinGroup
         
         FunkinSound.playOnce(Paths.sound("CS_locked"), 0.5);
     }
+
+    /**
+     * Use when state changes are about to happen, to make sure the HUD appears proper, easily testable by going from the Shop to Title State really quick.
+     **/
+    public function quickFinishTweens():Void
+    {
+        FlxTween.completeTweensOf(background);
+        FlxTween.completeTweensOf(buckText);
+        FlxTween.completeTweensOf(jewelText);
+        FlxTween.completeTweensOf(buckDiffText);
+        FlxTween.completeTweensOf(jewelDiffText);
+    }
 }

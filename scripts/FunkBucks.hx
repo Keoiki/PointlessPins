@@ -923,7 +923,7 @@ class FunkBucks extends Module
 
         if (FlxG.keys.justPressed.L)
         {
-            TimedCoinsManager.startEvent(90);
+            // TimedCoinsManager.startEvent(90);
         }
 
         if (FlxG.keys.justPressed.FIVE)
@@ -970,6 +970,13 @@ class FunkBucks extends Module
                 // ZIPUtil.zipModFiles(FlxG.keys.pressed.M);
             // }
         }
+    }
+
+    override function onStateChangeBegin(event:StateChangeScriptEvent):Void
+    {
+        FunkBucks.moneyHUD.quickFinishTweens();
+
+        super.onStateChangeBegin(event);
     }
 
     override function onStateChangeEnd(event:StateChangeScriptEvent):Void
