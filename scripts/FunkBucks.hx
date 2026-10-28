@@ -629,40 +629,18 @@ class FunkBucks extends Module
     }
 
     /**
-     * MILESTONES
-     * or rather, Rewards.
-     * ...or rather, Awards.
+     * It's actually the direct multiplier. Having a 5% discount would return 0.95, not 0.05.
+     * Not properly used since Awards are delayed, oops!
      */
-
-    // public static function addClaimedMilestone(milestone:String):Void
-    // {
-        // var _obtainedMilestones:Array<String> = FunkBucks.getClaimedMilestones();
-        // if (_obtainedMilestones.contains(milestone))
-        // {
-            // trace("User already obtained milestone: " + milestone);
-            // return;
-        // }
-        // _obtainedMilestones.push(milestone);
-        // FunkBucks.save.obtainedMilestones = _obtainedMilestones;
-        // FunkBucks.flushSave();
-    // }
-
-    // public static function hasClaimedMilestone(milestone:String):Bool
-    // {
-        // return FunkBucks.getClaimedMilestones().contains(milestone);
-    // }
-
-    // public static function getClaimedMilestones():Array<String>
-    // {
-        // if (FunkBucks.save.obtainedMilestones == null) FunkBucks.save.obtainedMilestones = new Array();
-        // return FunkBucks.save.obtainedMilestones;
-    // }
-
     public static function getBoxDiscount():Float
     {
         return 1.0;
     }
 
+    /**
+     * Also the direct multiplier. Having a 5% bonus would return 1.05, not 0.05.
+     * Not properly used since Awards are delayed, oops!
+     */
     public static function getFunkCoinBonus():Float
     {
         return 1.0;

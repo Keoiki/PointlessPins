@@ -46,6 +46,11 @@
     - Spooky Kids (Spooky Mix)
     - QT (QT Rewired, futureproof)
     - Hundrec (Hundrec Mix, futureproof)
+- Added keyboard keybinds for zooming in the shop:
+    - Zoom Out: FREEPLAY - LEFT
+    - Zoom In: FREEPLAY - RIGHT
+    - Reset Zoom: UI - RESET
+        - These are based on what you've set the above keybinds to in the Controls menu.
 
 ### Changed
 

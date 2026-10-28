@@ -131,19 +131,18 @@ class Shop extends MusicBeatState
         cameraFollowPointMarker.zIndex = 9999999;
         // add(cameraFollowPointMarker);
 
-        FunkBucks.moneyHUD.setDisplay(true, true);
-
         final skName:String = FunkBucks.getShopkeeper();
 
-        if (FlxG.random.bool(1) && !Shopkeeper.caught && skName == "ophelia")
+        if (FlxG.random.bool(1))
         {
-            // Ophelia forgor to show up
-            // isShopkeeperGone = true;
-            // if (FlxG.random.bool(10))
-            // {
-                // extendBounds = true;
-            // }
+             isShopkeeperGone = true;
+             if (FlxG.random.bool(50))
+             {
+                 extendBounds = true;
+             }
         }
+
+        if (!isShopkeeperGone) FunkBucks.moneyHUD.setDisplay(true, true);
 
         if (TimedCoinsManager.running || isShopkeeperGone || Shopkeeper.caught)
         {
@@ -186,7 +185,7 @@ class Shop extends MusicBeatState
         lighting.zIndex = 10000;
         lighting.scrollFactor.set(0, 0);
         lighting.blend = 14;
-        lighting.alpha = isShopkeeperGone ? 0.5 : 0;
+        lighting.alpha = isShopkeeperGone ? 0.35 : 0;
         add(lighting);
 
         shopkeeper = new Shopkeeper(1045 - spriteNudge, 150, skName);
@@ -268,7 +267,7 @@ class Shop extends MusicBeatState
             add(lamp);
             lamp.scale.set(0.8, 0.8);
             // Somehow this has to be the other way around, a chance for the lamp to be on, not off. fuck everything man
-            if (FlxG.random.bool(95)) lamp.animation.play("on");
+            if (FlxG.random.bool(95) && !isShopkeeperGone) lamp.animation.play("on");
         }
 
         iconPins = new FunkinSprite(-400 - spriteNudge, 330).loadTexture("shop/iconpins");
@@ -587,7 +586,7 @@ class Shop extends MusicBeatState
 
         if (FlxG.keys.justPressed.THREE || (TouchUtil.pressAction(shopkeeperHitbox) && !FunkBucks.isMouseTooFast && !TouchUtil.overlaps(coolBackButton, cameraHUD)))
         {
-            if (isShopkeeperGone || Shopkeeper.caught || TimedCoinsManager.running)
+            if (isShopkeeperGone || Shopkeeper.caught || TimedCoinsManager.running || !shopkeeper.canInterract)
             {
                 FlxTween.completeTweensOf(cannotDoText);
                 FlxTween.tween(cannotDoText, { alpha: 1 }, 2, { ease: FlxEase.cubeOut, type: 16 });
@@ -621,7 +620,7 @@ class Shop extends MusicBeatState
 
         if (FlxG.keys.justPressed.FOUR || (TouchUtil.pressAction(iconStats) && !FunkBucks.isMouseTooFast && !TouchUtil.overlaps(coolBackButton, cameraHUD)))
         {
-            if (isShopkeeperGone || Shopkeeper.caught || TimedCoinsManager.running)
+            if (Shopkeeper.caught || TimedCoinsManager.running || (extendBounds && cameraFollowPoint.x >= 10000))
             {
                 FlxTween.completeTweensOf(cannotDoText);
                 FlxTween.tween(cannotDoText, { alpha: 1 }, 2, { ease: FlxEase.cubeOut, type: 16 });
@@ -769,9 +768,19 @@ class Shop extends MusicBeatState
         // Mouse Scrolling - Zoom
         if (FlxG.mouse.wheel != 0)
         {
-            camera.zoom = FlxMath.bound(camera.zoom + 0.1 * FlxG.mouse.wheel, 0.7, 2);
+            camera.zoom = camera.zoom + 0.1 * FlxG.mouse.wheel;
+        }
+
+        if (controls.RESET) camera.zoom = 1;
+        if (controls.FREEPLAY_LEFT) camera.zoom -= 0.1;
+        if (controls.FREEPLAY_RIGHT) camera.zoom += 0.1;
+
+        if (FlxG.mouse.wheel != 0 || controls.RESET || controls.FREEPLAY_LEFT || controls.FREEPLAY_RIGHT)
+        {
             FlxTween.cancelTweensOf(camera);
         }
+
+        camera.zoom = FlxMath.bound(camera.zoom, 0.7, 2);
 
         // Let's not go Mach 3 while at 500 FPS, ok?
         moveSpeed *= elapsed;

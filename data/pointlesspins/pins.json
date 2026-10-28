@@ -33,11 +33,11 @@
             { "id": "haxe", "name": "Haxe", "description": "The backbone of this game." },
             { "id": "red-amongus-week1", "name": "Red", "description": "Way to draw attention to yourself, huh?", "source": "VS. Impostor #MOD#" },
             { "id": "henry-stickmin", "name": "Henry Stickmin", "description": "Just trying to get some cash.", "source": "The Henry Stickmin Collection #GAME#" },
-            { "id": "ellie-rose", "name": "Ellie Rose", "description": "Also trying to get some cash.", "source": "The Henry Stickmin Collection #GAME#" },
             { "id": "salty-ssn", "name": "Salty", "source": "Salty's Sunday Night #MOD#" },
             { "id": "itsumi-ssn", "name": "Itsumi", "source": "Salty's Sunday Night #MOD#" },
             { "id": "connor-ssn", "name": "Connor", "source": "Salty's Sunday Night #MOD#" },
-            { "id": "baba-biy", "name": "Baba", "description": "<c=EB3C6D>Baba</c> Is <c=67A444>Pin</c>", "source": "<c=EB3C6D>Baba</c> Is <c=EB3C6D>You</c> #GAME#" }
+            { "id": "baba-biy", "name": "Baba", "description": "<c=EB3C6D>Baba</c> Is <c=67A444>Pin</c>", "source": "<c=EB3C6D>Baba</c> Is <c=EB3C6D>You</c> #GAME#" },
+            { "id": "penguin-ltf", "name": "Penguin", "description": "Eager to prove that penguins aren't flightless.", "source": "Learn to Fly #GAME#", "scale": 0.48 }
         ]
     },
     "Uncommon": {
@@ -104,7 +104,7 @@
         "pins":
         [
             { "id": "melodystone", "name": "Melody Stone", "description": "Rare, Blue, and Sparkly! <c=67B1D8>Ophelia</c> loves these.", "special": true, "lockedText": "Earn a total of 5 Melody Stones." },
-            { "id": "ophelia-business", "name": "Ophelia <s=0.5>(Business)</s>", "description": "Very strict with her rules. (Except on <c=EA8645>April</c>)", "special": true, "lockedText": "#APRIL_PURCHASE#", "hidden": true },
+            { "id": "ophelia-business", "name": "Ophelia <s=0.5>(Business)</s>", "description": "Very strict with her rules.", "special": true, "lockedText": "#APRIL_PURCHASE#", "hidden": true },
             { "id": "polymod", "name": "Polymod", "description": "Polymore!" },
             { "id": "funkbuck-pixel", "name": "Pixelated FunkBuck", "description": "Your pixelated currency!", "special": true, "lockedText": "#APRIL_PURCHASE#", "pixel": true, "scale": 5 },
             { "id": "rank-perfect", "name": "Perfect Rank", "description": "Now go for the golden one!", "special": true, "lockedText": "Complete any song with a certain rank." },
@@ -115,8 +115,8 @@
             { "id": "detective-amongus", "name": "Detective", "description": "Trying to figure out who the Impostor is...", "source": "VS. Impostor #MOD#" },
             { "id": "blake-amongus", "name": "Blake Imposter", "description": "Imposter is just his surname.", "source": "VS. Impostor #MOD#" },
             { "id": "falsethorn-corruption", "name": "FalseThorn", "description": "It's not real... it's not real...", "source": "Friday Night Funkin': Corruption #MOD#" },
-            { "id": "smoothjazz-mdk", "name": "Smooth Jazz", "description": "Jazz so good it's criminal.", "source": "MDK #INTERNET#" },
-            { "id": "violastro-vv", "name": "Violastro", "description": "Don't mistake his eyes for simple shades.\n<i>\"B<o=-10,0>we</o>he<o=-10,0/>he<o=-10,0/>!\"</i>", "source": "Vibrant Venture #GAME#" }
+            { "id": "smoothjazz-mdk", "name": "Smooth Jazz", "description": "Jazz so good(?) it's criminal.", "source": "MDK #INTERNET#" },
+            { "id": "violastro-vv", "name": "Violastro", "description": "Don't mistake his eyes for mere shades.\n<i>\"B<o=-10,0>we</o>he<o=-10,0/>he<o=-10,0/>!\"</i>", "source": "Vibrant Venture #GAME#" }
         ]
     },
     "Legendary": {
