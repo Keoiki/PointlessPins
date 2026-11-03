@@ -90,10 +90,6 @@
             { "id": "sky-redux", "name": "Sky", "source": "Heartbreak Havoc #MOD#" },
             { "id": "sky", "name": "Sky", "description": "No no, wrong type of sky!" },
             { "id": "opheebop-ssn", "name": "Opheebop", "description": "Freedom!", "source": "Salty's Sunday Night #MOD#" },
-            { "id": "torrent-fnts", "name": "Torrent", "source": "Friday Night Troubleshootin' #MOD#" },
-            { "id": "nitro-fnts", "name": "Nitro", "source": "Friday Night Troubleshootin' #MOD#" },
-            { "id": "norbert-weekly", "name": "Norbert B. Newsman", "source": "FNF Weekly #MOD#" },
-            { "id": "trebron-weekly", "name": "Trebron B. Newsman", "source": "FNF Weekly #MOD#" },
             { "id": "nikku-hotline", "name": "Nikku", "source": "Hotline 024 #MOD#" },
             { "id": "hatkid-ahit", "name": "Hat Kid", "description": "Has anyone seen her lost Time Pieces?", "source": "A Hat in Time #GAME#" }
         ]
@@ -110,13 +106,9 @@
             { "id": "rank-perfect", "name": "Perfect Rank", "description": "Now go for the golden one!", "special": true, "lockedText": "Complete any song with a certain rank." },
             { "id": "glimmeringpouch", "name": "Glimmering Pouch", "special": true, "lockedText": "Open a total of 40 Glimmering Pouches." },
             { "id": "psychic-mindgames", "name": "Psychic", "source": "Mind Games #MOD#" },
-            { "id": "pessy", "name": "Pessy", "source": "Psych Engine #MOD#" },
             { "id": "kb", "name": "KB", "source": "QT: Rewired #MOD#" },
-            { "id": "detective-amongus", "name": "Detective", "description": "Trying to figure out who the Impostor is...", "source": "VS. Impostor #MOD#" },
-            { "id": "blake-amongus", "name": "Blake Imposter", "description": "Imposter is just his surname.", "source": "VS. Impostor #MOD#" },
-            { "id": "falsethorn-corruption", "name": "FalseThorn", "description": "It's not real... it's not real...", "source": "Friday Night Funkin': Corruption #MOD#" },
             { "id": "smoothjazz-mdk", "name": "Smooth Jazz", "description": "Jazz so good(?) it's criminal.", "source": "MDK #INTERNET#" },
-            { "id": "violastro-vv", "name": "Violastro", "description": "Don't mistake his eyes for mere shades.\n<i>\"B<o=-10,0>we</o>he<o=-10,0/>he<o=-10,0/>!\"</i>", "source": "Vibrant Venture #GAME#" }
+            { "id": "violastro-vv", "name": "Violastro", "description": "Don't mistake his eyes for mere shades.", "source": "Vibrant Venture #GAME#" }
         ]
     },
     "Legendary": {
@@ -127,9 +119,7 @@
             { "id": "hundrec", "name": "Hundrec", "description": "\"This is Hundrec, Production Manager for The Funkin' Crew.\"" },
             { "id": "whitty", "name": "Whitty", "source": "Vs. Whitty #MOD#" },
             { "id": "hex", "name": "Hex", "source": "Vs. Hex #MOD#" },
-            { "id": "harvester-corruption", "name": "The Harvester", "description": "The Harvester harvests the harvest... I mean souls.", "source": "Friday Night Funkin': Corruption #MOD#" },
-            { "id": "rank-goldperfect", "name": "Golden Perfect Rank", "description": "Did you know this rank grants an extra +50% FunkBucks? <s=0.75><c=FFB51C>Well now you do.</c></s>", "special": true, "lockedText": "Complete any song with a certain rank." },
-            { "id": "flowery-deltarune", "name": "Flowery", "description": "\"Heh, how'd you like my jarona?\"", "source": "DELTARUNE #GAME#" }
+            { "id": "rank-goldperfect", "name": "Golden Perfect Rank", "description": "Did you know this rank grants an extra +50% FunkBucks? <s=0.75><c=FFB51C>Well now you do.</c></s>", "special": true, "lockedText": "Complete any song with a certain rank." }
         ]
     },
     "Mythic": {

@@ -14,12 +14,12 @@
 ### Added
 
 - Added a new character: April.
-- Added 59 new pins:
+- Added 49 new pins:
     - 9 Common
     - 12 Uncommon
-    - 16 Rare
-    - 13 Epic
-    - 6 Legendary
+    - 12 Rare
+    - 9 Epic
+    - 4 Legendary
     - 1 Mythic
     - 2 Special
 - Added the "Fancy Coffret" box, with a cost of 200 FunkBucks.
@@ -85,7 +85,12 @@
 
 ### Removals
 
-- Removed Ophelia.
+- "Removed" Ophelia.
+
+### Pin Changes
+
+- Updated Ophelia's design on her pin.
+    - Also changed the pin to be hidden, due to it being unobtainable this update. That way it won't bother new players.
 
 
 
