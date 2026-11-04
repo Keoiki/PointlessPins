@@ -61,7 +61,7 @@ class ZipUtil
      */
     public function packageMod():Void
     {
-        final exportPath:String = '$PATH/export/pointlesspins-${FunkBucks.modVersion.replace('.', '_')}${(exportToMobile ? '-mobile' : '')}.zip';
+        final exportPath:String = '$PATH/export/pointlesspins-2_0_0${(exportToMobile ? '-mobile' : '')}-wip.zip';
         makeEntries(PATH);
         FileUtil.saveFilesAsZIPToPath(zipEntries, exportPath, FileWriteMode.Force);
     }
