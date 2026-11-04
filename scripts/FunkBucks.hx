@@ -84,6 +84,8 @@ class FunkBucks extends Module
     public static var isMouseTooFast:Bool = false;
     public static var dialogueActive:Bool = false;
 
+    public static var modVersion:String = "0.0.0";
+
     /**
      * Set this value to determine how to show the pins on the Pin Board.
      * 
@@ -188,14 +190,13 @@ class FunkBucks extends Module
 
     function versionCheck():Void
     {
-        var localVersion:String = null;
         var onlineVersion:String = "0.0.0";
         var onlineVersionInfo:String = "";
 
         try
         {
             // For 0.9.0: getMetadataById -> getMetadataByModId
-            localVersion = PolymodHandler.modFileSystem.getMetadataById("keoiki.funkbucks", "script_runtime").modVersion.version.join(".");
+            FunkBucks.modVersion = PolymodHandler.modFileSystem.getMetadataById("keoiki.funkbucks", "script_runtime").modVersion.version.join(".");
         }
         catch (err:Dynamic)
         {
@@ -231,7 +232,7 @@ class FunkBucks extends Module
                 onlineVersion = versionData;
             }
 
-            ModStore.register("funkbucksOutdated", VersionUtil.validateVersionStr(onlineVersion, ">" + localVersion));
+            ModStore.register("funkbucksOutdated", VersionUtil.validateVersionStr(onlineVersion, ">" + FunkBucks.modVersion));
             ModStore.register("funkbucksNewVersion", onlineVersion);
             ModStore.register("funkbucksNewVersionInfo", onlineVersionInfo);
         }
@@ -943,10 +944,10 @@ class FunkBucks extends Module
                 trace(getPrevSongs());
             }
 
-            // if (FlxG.keys.pressed.CONTROL && FlxG.keys.pressed.SHIFT && FlxG.keys.justPressed.K)
-            // {
-                // ZIPUtil.zipModFiles(FlxG.keys.pressed.M);
-            // }
+            if (FlxG.keys.pressed.CONTROL && FlxG.keys.pressed.SHIFT && FlxG.keys.pressed.ALT && FlxG.keys.justPressed.K)
+            {
+                new ZipUtil(FlxG.keys.pressed.M).packageMod();
+            }
         }
     }
 
