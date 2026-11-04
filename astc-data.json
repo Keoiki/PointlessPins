@@ -2,18 +2,29 @@
     "input": "./images",
     "output": "./astc-images",
     "quality": "medium",
-    "blocksize": "8x8",
+    "blocksize": "10x10",
     "colorprofile": "cl",
     "custom": [
         {
             "asset": "images/shop/wall.png",
+            "blocksize": "12x12"
+        },
+        {
+            "asset": "images/shop/old/wall.png",
             "blocksize": "12x12"
         }
     ],
     "excludes": [
         "images/shop/lamp/spritemap1.png",
         "images/shop/ophelia/spritemap1.png",
+        "images/shop/april/spritemap1.png",
+        "images/shop/april-eyes/spritemap1.png",
+        "images/shop/april-mouth/spritemap1.png",
         "images/shop/lighting.png",
+        "images/pinsparkle.png",
+        "images/pinunlockglow.png",
+        "images/pinunlockglowsmall.png",
+        "images/menucountdot.png",
         "images/pointlesspins/boxes/"
     ]
 }
