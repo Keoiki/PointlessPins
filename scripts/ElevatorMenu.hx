@@ -6,6 +6,9 @@ import flixel.math.FlxRect;
 import funkin.ui.MusicBeatSubState;
 import funkin.util.TouchUtil;
 
+/**
+ * Was gonna be an easter egg to foreshadow something in 3.0 but I got a better idea sooooooo.......
+ */
 class ElevatorMenu extends MusicBeatSubState
 {
     var options:Array<String> = ['${FBIcon.Lock} Ophelia\'s Office', '${FBIcon.Lock} April\'s Office', '${FBIcon.Lock} The Chest Hall', 'The Shop'];

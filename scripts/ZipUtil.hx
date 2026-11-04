@@ -15,6 +15,7 @@ class ZipUtil
         '.gitignore',
         'astc-data.json',
         'scripts/ZipUtil.hx',
+        'scripts/ElevatorMenu.hx',
         'scripts/TimedCoinsManager.hx',
         'scripts/objects/CloverCoin.hx',
         'scripts/objects/ui/TimedCoinsHUD.hx',

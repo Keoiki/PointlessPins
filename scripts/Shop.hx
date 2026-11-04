@@ -61,8 +61,6 @@ class Shop extends MusicBeatState
     public var dailyBoard:DailyBoard;
     // public var cloverEventButton:FunkinSprite;
 
-    public var elevator:FunkinSprite;
-
     var counterItems = [];
     public var skcItem1:FunkinSprite;
     public var skcItem2:FunkinSprite;
@@ -331,11 +329,6 @@ class Shop extends MusicBeatState
         counterItems.push(lableConverse);
         counterItems.push(lableStats);
 
-        elevator = new FunkinSprite(-2800 - spriteNudge, -50).loadTexture("shop/elevator");
-        elevator.scrollFactor.set(0.85, 1.0);
-        elevator.zIndex = 500;
-        add(elevator);
-
         #if !mobile
         keycapPins = new KeyCap(lablePins.x - 33, 570, "1", null, false);
         keycapPins.zIndex = 512;
@@ -378,7 +371,7 @@ class Shop extends MusicBeatState
         coolBackButton.cameras = [cameraHUD];
         add(coolBackButton);
 
-        statsSheet = new StatsSheet(FlxG.width / 2 - 370, 1000);
+        statsSheet = new StatsSheet(FlxG.width / 2 - 370 + 19, 1000);
         statsSheet.cameras = [cameraHUD];
         add(statsSheet);
 
@@ -625,30 +618,8 @@ class Shop extends MusicBeatState
             viewingStats = true;
             disallowInputs = true;
 
+            FlxTween.cancelTweensOf(statsSheet);
             FlxTween.tween(statsSheet, { y: 200 }, 1, { ease: FlxEase.cubeOut });
-        }
-
-        // Elevator
-
-        if (TouchUtil.pressAction(elevator) && !FunkBucks.isMouseTooFast && !TouchUtil.overlaps(coolBackButton, cameraHUD))
-        {
-            if (isShopkeeperGone || Shopkeeper.caught || TimedCoinsManager.running)
-            {
-                FlxTween.completeTweensOf(cannotDoText);
-                FlxTween.tween(cannotDoText, { alpha: 1 }, 2, { ease: FlxEase.cubeOut, type: 16 });
-                return;
-            }
-
-            disallowInputs = true;
-            var substate = new ElevatorMenu();
-            substate.closeCallback = function()
-            {
-                FlxTween.tween(coolBackButton, { alpha: 0.5 }, 1, { ease: FlxEase.cubeOut });
-            }
-            substate.cameras = [cameraSubState];
-            openSubState(substate);
-
-            FlxTween.tween(coolBackButton, { alpha: 0 }, 1, { ease: FlxEase.cubeIn });
         }
     }
 
@@ -656,6 +627,7 @@ class Shop extends MusicBeatState
     {
         if (viewingStats)
         {
+            FlxTween.cancelTweensOf(statsSheet);
             FlxTween.tween(statsSheet, { y: 1000 }, 1, { ease: FlxEase.cubeIn });
             viewingStats = false;
             disallowInputs = false;
