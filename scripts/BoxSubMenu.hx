@@ -8,7 +8,7 @@ import flixel.tweens.FlxEase;
 import flixel.tweens.FlxTween;
 import flixel.util.FlxTimer;
 import funkbucks.objects.BoxSprite;
-import funkbucks.objects.ui.FBBackButton;
+import funkbucks.objects.ui.BackButton;
 import funkin.audio.FunkinSound;
 import funkin.graphics.FunkinSprite;
 import funkin.mobile.ui.FunkinBackButton;
@@ -108,7 +108,7 @@ class BoxSubMenu extends MusicBeatSubState
         boxHitbox = new FlxObject(leftArrowHitbox.x + leftArrowHitbox.width, leftArrowHitbox.y, rightArrowHitbox.x - leftArrowHitbox.x - leftArrowHitbox.width, leftArrowHitbox.height);
         add(boxHitbox);
 
-        coolBackButton = new FBBackButton(FlxG.width - 220, FlxG.height - 200, goBack, 1.0);
+        coolBackButton = new BackButton(FlxG.width - 220, FlxG.height - 200, goBack, 1.0);
         coolBackButton.cameras = [camera];
         add(coolBackButton);
 

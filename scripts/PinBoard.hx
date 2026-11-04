@@ -10,7 +10,7 @@ import flixel.tweens.FlxTween;
 import flixel.util.FlxSort;
 import funkbucks.objects.KeyCap;
 import funkbucks.objects.PinSprite;
-import funkbucks.objects.ui.FBBackButton;
+import funkbucks.objects.ui.BackButton;
 import funkbucks.objects.ui.PinRarityIconGroup;
 import funkbucks.shaders.ImposePatternShader;
 import funkin.audio.FunkinSound;
@@ -303,7 +303,7 @@ class PinBoard extends MusicBeatSubState
         cursor.x = pinMidpoint.x - cursor.width / 2;
         cursor.y = pinMidpoint.y - cursor.height / 2;
 
-        coolBackButton = new FBBackButton(FlxG.width - 220, 30, goBack, 1.0);
+        coolBackButton = new BackButton(FlxG.width - 220, 30, goBack, 1.0);
         coolBackButton.zIndex = 100000;
         coolBackButton.cameras = [subCamHUD];
         add(coolBackButton);

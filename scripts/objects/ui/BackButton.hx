@@ -11,7 +11,7 @@ import funkin.util.TouchUtil;
  * The built-in one doesn't have mouse support, and my previous attempt was shoddy.
  * (Desktop) You could get accidental presses if you're swiping too quickly, that doesn't happen with this.
  */
-class FBBackButton extends FunkinSprite
+class BackButton extends FunkinSprite
 {
     var isHovering:Bool = false;
     var isHolding:Bool = false;

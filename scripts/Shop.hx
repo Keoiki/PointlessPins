@@ -16,7 +16,7 @@ import funkbucks.objects.Dialogue;
 import funkbucks.objects.shop.Clock;
 import funkbucks.objects.shop.DailyBoard;
 import funkbucks.objects.shop.StatsSheet;
-import funkbucks.objects.ui.FBBackButton;
+import funkbucks.objects.ui.BackButton;
 import pointlesspins.objects.shop.secret.Tuntematon;
 import funkin.audio.FunkinSound;
 import funkin.graphics.FunkinCamera;
@@ -91,7 +91,7 @@ class Shop extends MusicBeatState
     
     var updateText:BAlphabet;
 
-    public var coolBackButton:Dynamic; // it's more like OneOfTwo<FunkinBackButton, FBBackButton>
+    public var coolBackButton:Dynamic; // it's more like OneOfTwo<FunkinBackButton, BackButton>
 
     public static var instance:Shop;
 
@@ -374,7 +374,7 @@ class Shop extends MusicBeatState
         cannotDoText.cameras = [cameraHUD];
         add(cannotDoText);
 
-        coolBackButton = new FBBackButton(FlxG.width - 220, FlxG.height - 200, goBack, 0.75);
+        coolBackButton = new BackButton(FlxG.width - 220, FlxG.height - 200, goBack, 0.75);
         coolBackButton.cameras = [cameraHUD];
         add(coolBackButton);
 
