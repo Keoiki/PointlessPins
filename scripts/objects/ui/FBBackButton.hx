@@ -1,16 +1,15 @@
 package funkbucks.objects.ui;
 
-#if desktop
-import flixel.input.mouse.FlxMouseEvent;
 import flixel.math.FlxMath;
 import flixel.util.FlxTimer;
 import funkin.graphics.FunkinSprite;
 import funkin.audio.FunkinSound;
+import funkin.util.TouchUtil;
 
 /**
- * Custom back button specifically for Desktop versions. Mobile versions use the built-in back button.
+ * Custom back button :DDD
  * The built-in one doesn't have mouse support, and my previous attempt was shoddy.
- * You could get accidental presses if you're swiping too quickly, that doesn't happen with this.
+ * (Desktop) You could get accidental presses if you're swiping too quickly, that doesn't happen with this.
  */
 class FBBackButton extends FunkinSprite
 {
@@ -37,50 +36,42 @@ class FBBackButton extends FunkinSprite
         idleOpacity = _idleOpacity;
         alpha = idleOpacity;
         confirmCallback = onConfirm;
-
-        FlxMouseEvent.add(super, onStartPress, onEndPress, onMouseEnter, onMouseExit);
     }
 
-    function onStartPress(obj:FlxObject)
+    function handleInput():Void
     {
-        if (!enabled) return;
-
-        isHolding = true;
-        animation.play("active");
-        alpha = 1.0;
-        scaleTarget = 0.85;
-    }
-
-    function onEndPress(obj:FlxObject)
-    {
-        if (!enabled) return;
-
-        if (isHolding && isHovering)
+        if (TouchUtil.justPressed)
         {
-            doConfirm();
-            scale.set(1.3, 1.3);
+            isHovering = true;
         }
 
-        isHolding = false;
-        animation.play("idle");
-        alpha = idleOpacity;
-        scaleTarget = 1.0;
-    }
-
-    function onMouseEnter(obj:FlxObject)
-    {
-        if (!enabled) return;
-
-        isHovering = true;
-    }
-
-    function onMouseExit(obj:FlxObject)
-    {
-        if (!enabled) return;
-
-        isHovering = false;
-        if (isHolding)
+        if (TouchUtil.pressed)
         {
+            if (TouchUtil.overlaps(super, super.camera) && isHovering)
+            {
+                isHolding = true;
+                animation.play("active");
+                alpha = 1.0;
+                scaleTarget = 0.85;
+            }
+            else
+            {
+                isHovering = false;
+                isHolding = false;
+                animation.play("idle");
+                alpha = idleOpacity;
+                scaleTarget = 1.0;
+            }
+        }
+        else
+        {
+            if (isHolding && isHovering)
+            {
+                doConfirm();
+                scale.set(1.3, 1.3);
+            }
+
+            isHovering = false;
             isHolding = false;
             animation.play("idle");
             alpha = idleOpacity;
@@ -118,22 +109,11 @@ class FBBackButton extends FunkinSprite
             animation.play("idle");
             scaleTarget = 1.0;
         }
+        else
+        {
+            handleInput();
+        }
 
         super.update(elapsed);
     }
-
-    override function destroy():Void
-    {
-        FlxMouseEvent.remove(super);
-        super.destroy();
-    }
 }
-#else
-class FBBackButton
-{
-    public function new(x:Float, y:Float, ?onConfirm:Void->Void, ?_idleOpacity:Float = 0.5):Void
-    {
-        throw 'FunkBucks specific back button is not supported on mobile!';
-    }
-}
-#end

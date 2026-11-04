@@ -374,12 +374,7 @@ class Shop extends MusicBeatState
         cannotDoText.cameras = [cameraHUD];
         add(cannotDoText);
 
-        #if !mobile
         coolBackButton = new FBBackButton(FlxG.width - 220, FlxG.height - 200, goBack, 0.75);
-        coolBackButton.visible = FunkBucks.isMouseActive;
-        #else
-        coolBackButton = new FunkinBackButton(FlxG.width - 220, FlxG.height - 200, 0xFFFFFFFF, goBack, 0.5);
-        #end
         coolBackButton.cameras = [cameraHUD];
         add(coolBackButton);
 

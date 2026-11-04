@@ -303,12 +303,7 @@ class PinBoard extends MusicBeatSubState
         cursor.x = pinMidpoint.x - cursor.width / 2;
         cursor.y = pinMidpoint.y - cursor.height / 2;
 
-        #if !mobile
         coolBackButton = new FBBackButton(FlxG.width - 220, 30, goBack, 1.0);
-        coolBackButton.visible = FunkBucks.isMouseActive;
-        #else
-        coolBackButton = new FunkinBackButton(FlxG.width - 220, 0, 0xFFFFFFFF, goBack, 1.0, true);
-        #end
         coolBackButton.zIndex = 100000;
         coolBackButton.cameras = [subCamHUD];
         add(coolBackButton);
