@@ -4,7 +4,6 @@ import Date;
 import balphabet.BAlphabet;
 import flixel.FlxObject;
 import flixel.effects.particles.FlxEmitter;
-import flixel.input.mouse.FlxMouseEvent;
 import flixel.math.FlxMath;
 import flixel.math.FlxPoint;
 import flixel.tweens.FlxEase;
@@ -18,6 +17,7 @@ import funkbucks.objects.Dialogue;
 import funkbucks.objects.shop.Clock;
 import funkbucks.objects.shop.DailyBoard;
 import funkbucks.objects.shop.StatsSheet;
+import funkbucks.objects.ui.FBBackButton;
 import pointlesspins.objects.shop.secret.Tuntematon;
 import funkin.audio.FunkinSound;
 import funkin.graphics.FunkinCamera;
@@ -92,7 +92,7 @@ class Shop extends MusicBeatState
     
     var updateText:BAlphabet;
 
-    public var coolBackButton:FunkinBackButton;
+    public var coolBackButton:Dynamic; // it's more like OneOfTwo<FunkinBackButton, FBBackButton>
 
     public static var instance:Shop;
 
@@ -375,10 +375,11 @@ class Shop extends MusicBeatState
         cannotDoText.cameras = [cameraHUD];
         add(cannotDoText);
 
-        coolBackButton = new FunkinBackButton(FlxG.width - 220, FlxG.height - 200, 0xFFFFFFFF, goBack, 0.5);
         #if !mobile
+        coolBackButton = new FBBackButton(FlxG.width - 220, FlxG.height - 200, goBack, 0.75);
         coolBackButton.visible = FunkBucks.isMouseActive;
-        FlxMouseEvent.add(coolBackButton, coolBackButton.playHoldAnim, coolBackButton.playConfirmAnim);
+        #else
+        coolBackButton = new FunkinBackButton(FlxG.width - 220, FlxG.height - 200, 0xFFFFFFFF, goBack, 0.5);
         #end
         coolBackButton.cameras = [cameraHUD];
         add(coolBackButton);
@@ -664,6 +665,7 @@ class Shop extends MusicBeatState
             FlxTween.tween(statsSheet, { y: 1000 }, 1, { ease: FlxEase.cubeIn });
             viewingStats = false;
             disallowInputs = false;
+            #if desktop coolBackButton.enabled = true; #end
             return;
         }
         if (disallowInputs) return;
@@ -868,9 +870,6 @@ class Shop extends MusicBeatState
 
     override function destroy():Void
     {
-        #if !mobile
-        FlxMouseEvent.remove(coolBackButton);
-        #end
         if (dialog != null) remove(dialog);
         camera.bgColor = 0xFF000000;
         super.destroy();

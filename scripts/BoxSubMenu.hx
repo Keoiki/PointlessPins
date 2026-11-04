@@ -8,6 +8,7 @@ import flixel.tweens.FlxEase;
 import flixel.tweens.FlxTween;
 import flixel.util.FlxTimer;
 import funkbucks.objects.BoxSprite;
+import funkbucks.objects.ui.FBBackButton;
 import funkin.audio.FunkinSound;
 import funkin.graphics.FunkinSprite;
 import funkin.mobile.ui.FunkinBackButton;
@@ -35,7 +36,7 @@ class BoxSubMenu extends MusicBeatSubState
     var boxOdds:BAlphabet;
     var boxPurchaseLable:BAlphabet;
 
-    var coolBackButton:FunkinBackButton;
+    var coolBackButton:Dynamic;
 
     var leftArrowHitbox:FlxObject;
     var rightArrowHitbox:FlxObject;
@@ -107,11 +108,11 @@ class BoxSubMenu extends MusicBeatSubState
         boxHitbox = new FlxObject(leftArrowHitbox.x + leftArrowHitbox.width, leftArrowHitbox.y, rightArrowHitbox.x - leftArrowHitbox.x - leftArrowHitbox.width, leftArrowHitbox.height);
         add(boxHitbox);
 
-        coolBackButton = new FunkinBackButton(FlxG.width - 220, FlxG.height - 105, 0xFFFFFFFF, goBack, 1.0, true);
-        coolBackButton.y -= coolBackButton.height / 2;
         #if !mobile
+        coolBackButton = new FBBackButton(FlxG.width - 220, FlxG.height - 200, goBack, 1.0);
         coolBackButton.visible = FunkBucks.isMouseActive;
-        FlxMouseEvent.add(coolBackButton, coolBackButton.playHoldAnim, coolBackButton.playConfirmAnim);
+        #else
+        coolBackButton = new FunkinBackButton(FlxG.width - 220, FlxG.height - 200, 0xFFFFFFFF, goBack, 1.0, true);
         #end
         add(coolBackButton);
 
@@ -340,6 +341,7 @@ class BoxSubMenu extends MusicBeatSubState
         FlxTween.tween(arrowLeft, { alpha: 0 }, 0.5, { ease: FlxEase.quartOut });
         FlxTween.tween(arrowRight, { alpha: 0 }, 0.5, { ease: FlxEase.quartOut });
         FlxTween.tween(coolBackButton, { alpha: 0 }, 0.5, { ease: FlxEase.quartOut });
+        coolBackButton.enabled = false;
         for (i in 0...menuDots.length)
         {
             FlxTween.tween(menuDots[i], { alpha: 0 }, 0.5, { ease: FlxEase.quartOut });
@@ -362,6 +364,7 @@ class BoxSubMenu extends MusicBeatSubState
         FlxTween.tween(arrowLeft, { alpha: 1 }, 0.5, { ease: FlxEase.quartOut });
         FlxTween.tween(arrowRight, { alpha: 1 }, 0.5, { ease: FlxEase.quartOut });
         FlxTween.tween(coolBackButton, { alpha: 1 }, 0.5, { ease: FlxEase.quartOut });
+        coolBackButton.enabled = true;
         for (i in 0...menuDots.length)
         {
             FlxTween.tween(menuDots[i], { alpha: boxIndex == i ? 1 : 0.2 }, 0.5, { ease: FlxEase.quartOut });

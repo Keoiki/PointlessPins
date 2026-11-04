@@ -3,7 +3,6 @@ package funkbucks;
 import balphabet.BAlphabet;
 import flixel.FlxObject;
 import flixel.addons.display.FlxSliceSprite;
-import flixel.input.mouse.FlxMouseEvent;
 import flixel.math.FlxPoint;
 import flixel.math.FlxRect;
 import flixel.tweens.FlxEase;
@@ -11,6 +10,7 @@ import flixel.tweens.FlxTween;
 import flixel.util.FlxSort;
 import funkbucks.objects.KeyCap;
 import funkbucks.objects.PinSprite;
+import funkbucks.objects.ui.FBBackButton;
 import funkbucks.objects.ui.PinRarityIconGroup;
 import funkbucks.shaders.ImposePatternShader;
 import funkin.audio.FunkinSound;
@@ -81,7 +81,7 @@ class PinBoard extends MusicBeatSubState
     var unlockedPins:Int = 0;
     var unlockedPinsPerRarity:Array<Int> = [];
 
-    var coolBackButton:FunkinBackButton;
+    var coolBackButton:Dynamic;
 
     override function new():Void
     {
@@ -303,17 +303,15 @@ class PinBoard extends MusicBeatSubState
         cursor.x = pinMidpoint.x - cursor.width / 2;
         cursor.y = pinMidpoint.y - cursor.height / 2;
 
-        FlxG.touches.swipeThreshold.set(100, 100);
-        coolBackButton = new FunkinBackButton(FlxG.width - 220, 100, 0xFFFFFFFF, goBack, 1.0, true);
-        coolBackButton.y -= coolBackButton.height / 2;
         #if !mobile
+        coolBackButton = new FBBackButton(FlxG.width - 220, 30, goBack, 1.0);
         coolBackButton.visible = FunkBucks.isMouseActive;
-        FlxMouseEvent.add(coolBackButton, coolBackButton.playHoldAnim, coolBackButton.playConfirmAnim);
+        #else
+        coolBackButton = new FunkinBackButton(FlxG.width - 220, 0, 0xFFFFFFFF, goBack, 1.0, true);
         #end
         coolBackButton.zIndex = 100000;
-        add(coolBackButton);
-
         coolBackButton.cameras = [subCamHUD];
+        add(coolBackButton);
 
         refresh();
 
@@ -340,6 +338,8 @@ class PinBoard extends MusicBeatSubState
             currentRarity = selectedPin.rarity;
         }
 
+        FlxG.touches.swipeThreshold.set(100, 100);
+
         super.create();
     }
 
@@ -356,6 +356,7 @@ class PinBoard extends MusicBeatSubState
         handleTouchControls();
 
         coolBackButton.visible = #if mobile true; #else FunkBucks.isMouseActive; #end
+        coolBackButton.instant = isViewingPin;
 
         // trace(FlxG.mouse.wheel);
 
@@ -367,6 +368,7 @@ class PinBoard extends MusicBeatSubState
         if (isViewingPin)
         {
             closePinView();
+            #if desktop coolBackButton.enabled = true; #end
         }
         else
         {
@@ -613,13 +615,5 @@ class PinBoard extends MusicBeatSubState
         selectedPin.visible = true;
         previewPin.visible = false;
         refresh();
-    }
-
-    override function destroy():Void
-    {
-        #if !mobile
-        FlxMouseEvent.remove(coolBackButton);
-        #end
-        super.destroy();
     }
 }

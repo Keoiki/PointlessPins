@@ -76,6 +76,7 @@ This section is subject to change.
     - Zoom In: FREEPLAY - RIGHT
     - Reset Zoom: UI - RESET
         - These are based on what you've set the above keybinds to in the Controls menu.
+- Added an exclusive back button to desktop to stop accidental button presses when swiping quickly.
 
 ### Changed
 

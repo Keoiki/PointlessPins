@@ -1,0 +1,7 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TextureAtlas imagePath="backbutton.png">
+	<!-- Created with Adobe Animate version 22.0.0.93 -->
+	<!-- http://www.adobe.com/products/animate.html -->
+	<SubTexture name="backbutton0000" x="0" y="0" width="160" height="160"/>
+	<SubTexture name="backbutton0001" x="162" y="0" width="160" height="160"/>
+</TextureAtlas>
