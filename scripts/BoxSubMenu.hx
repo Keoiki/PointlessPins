@@ -140,7 +140,7 @@ class BoxSubMenu extends MusicBeatSubState
 
         if (STATE == "CONFIRMING")
         {
-            if (TouchUtil.pressAction() && !TouchUtil.pressAction(boxHitbox, camera) && !FunkBucks.isMouseTooFast)
+            if (TouchUtil.pressAction() && !TouchUtil.pressAction(boxHitbox, camera) && !FunkBucks.isMouseTooFast && !TouchUtil.overlaps(coolBackButton, camera))
             {
                 goBack();
             }
@@ -152,6 +152,7 @@ class BoxSubMenu extends MusicBeatSubState
         }
 
         coolBackButton.visible = #if mobile true; #else FunkBucks.isMouseActive; #end
+        coolBackButton.instant = STATE == "CONFIRMING";
 
         if (prevMouseActive != FunkBucks.isMouseActive)
         {
@@ -171,6 +172,7 @@ class BoxSubMenu extends MusicBeatSubState
             case "CONFIRMING":
                 STATE = "CHOOSING";
                 updatePurchaseLable();
+                coolBackButton.enabled = true;
             default:
         }
     }
