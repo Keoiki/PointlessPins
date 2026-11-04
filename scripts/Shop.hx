@@ -1,6 +1,5 @@
 package funkbucks;
 
-import Date;
 import balphabet.BAlphabet;
 import flixel.FlxObject;
 import flixel.effects.particles.FlxEmitter;
@@ -705,7 +704,7 @@ class Shop extends MusicBeatState
                 }
                 var currentPinchDistance = distance(FlxPoint.weak(firstTouch.gameX, firstTouch.gameY), FlxPoint.weak(secondTouch.gameX, secondTouch.gameY));
                 var pinchRatio:Float = pinchDistance / currentPinchDistance;
-                camera.zoom = previousZoom * pinchRatio;
+                camera.zoom = previousZoom / pinchRatio;
                 camera.zoom = FlxMath.bound(camera.zoom, 0.7, 2);
                 FlxTween.cancelTweensOf(camera);
                 // trace(pinchDistance, currentPinchDistance, pinchRatio);
