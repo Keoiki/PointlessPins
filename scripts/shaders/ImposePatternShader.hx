@@ -16,6 +16,9 @@ class ImposePatternShader extends FlxRuntimeShader
     public function new():Void
     {
         super(Assets.getText(Paths.frag("imposePattern")));
+        this.setFloat("TIME", 0.0);
+        this.setFloatArray("RES", [1280.0, 720.0, 1.0]);
+        this.setFloatArray("DIRECTION", [1.0, 0.5]);
         this.setInt("BLEND", 1);
     }
 

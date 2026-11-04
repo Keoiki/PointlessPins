@@ -1,14 +1,14 @@
 #pragma header
 
-uniform float TIME = 0.0;
-uniform vec3 RES = vec3(1280.0, 720.0, 1.0);
 const vec2 HALF = vec2(0.5);
-uniform vec2 DIRECTION = vec2(1.0, 0.5);
-uniform float SPEED = 0.1;
+uniform float TIME;
+uniform vec3 RES;
+uniform vec2 DIRECTION;
+uniform float SPEED;
 uniform vec4 patternColor;
 uniform sampler2D patternTexture;
 uniform vec2 patternTexSize;
-uniform float patternAngle = 0.0;
+uniform float patternAngle;
 uniform int BLEND;
 
 vec4 applyColor(vec4 base, vec4 blend)
