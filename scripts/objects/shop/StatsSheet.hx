@@ -11,7 +11,7 @@ class StatsSheet extends FunkinGroup
     {
         super(x, y);
 
-        var statsPaper:FunkinSprite = new FunkinSprite(0, 0).loadTexture("statssheet");
+        var statsPaper:FunkinSprite = new FunkinSprite(0, 0).loadTexture("shop/statssheet");
         statsPaper.zIndex = 0;
         statsPaper.localX = -19;
         statsPaper.localY = -60;

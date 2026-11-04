@@ -56,6 +56,8 @@ class Shop extends MusicBeatState
     public var wall:FunkinSprite;
     public var lighting:FunkinSprite;
     public var counter:FunkinSprite;
+    public var counterDoorL:FunkinSprite;
+    public var counterDoorR:FunkinSprite;
 
     public var clock:Clock;
     public var dailyBoard:DailyBoard;
@@ -200,15 +202,26 @@ class Shop extends MusicBeatState
         counter.scrollFactor.set(1, 1);
         add(counter);
 
-        var fbStack1:FunkinSprite = new FunkinSprite(-100 - spriteNudge, 444).loadTexture("shop/rewards/funkbuck01");
+        counterDoorR = new FunkinSprite(684 - spriteNudge, 550).loadTexture("shop/counterdoor");
+        counterDoorR.zIndex = 498;
+        counterDoorR.scrollFactor.set(1, 1);
+        add(counterDoorR);
+
+        counterDoorL = new FunkinSprite(458 - spriteNudge, 550).loadTexture("shop/counterdoor");
+        counterDoorL.zIndex = 498;
+        counterDoorL.scrollFactor.set(1, 1);
+        counterDoorL.flipX = true;
+        add(counterDoorL);
+
+        var fbStack1:FunkinSprite = new FunkinSprite(-100 - spriteNudge, 439).loadTexture("shop/funkbucks1");
         fbStack1.zIndex = 490;
         add(fbStack1);
 
-        var fbStack2:FunkinSprite = new FunkinSprite(2050 - spriteNudge, 424).loadTexture("shop/rewards/funkbuck02");
+        var fbStack2:FunkinSprite = new FunkinSprite(2050 - spriteNudge, 418).loadTexture("shop/funkbucks2");
         fbStack2.zIndex = 491;
         add(fbStack2);
 
-        var fbStack3:FunkinSprite = new FunkinSprite(-700 - spriteNudge, 384).loadTexture("shop/rewards/funkbuck03");
+        var fbStack3:FunkinSprite = new FunkinSprite(-700 - spriteNudge, 370).loadTexture("shop/funkbucks3");
         fbStack3.zIndex = 492;
         add(fbStack3);
 
@@ -227,11 +240,11 @@ class Shop extends MusicBeatState
         }
         else if (shopkeeper.name == "april")
         {
-            skcItem1 = new FunkinSprite(1350 - spriteNudge, 353).loadTexture("shop/aprilDrink");
+            skcItem1 = new FunkinSprite(1350 - spriteNudge, 330).loadTexture("shop/aprildrink");
             skcItem1.zIndex = 490;
             add(skcItem1);
 
-            skcItem2 = new FunkinSprite(900 - spriteNudge, 440).loadTexture("shop/aprilChipBag");
+            skcItem2 = new FunkinSprite(878 - spriteNudge, 430).loadTexture("shop/aprilchipbag");
             skcItem2.zIndex = 490;
             add(skcItem2);
 
@@ -267,7 +280,7 @@ class Shop extends MusicBeatState
             if (FlxG.random.bool(95) && !isShopkeeperGone) lamp.animation.play("on");
         }
 
-        iconPins = new FunkinSprite(-400 - spriteNudge, 330).loadTexture("shop/iconpins");
+        iconPins = new FunkinSprite(-400 - spriteNudge, 324).loadTexture("shop/iconpins");
         iconPins.zIndex = 490;
         add(iconPins);
 
@@ -293,11 +306,11 @@ class Shop extends MusicBeatState
         lableConverse.zIndex = 516;
         add(lableConverse);
 
-        iconStats = new FunkinSprite(1775 - spriteNudge, 279).loadTexture("shop/iconstats");
+        iconStats = new FunkinSprite(1675 - spriteNudge, 373).loadTexture("shop/iconstats");
         iconStats.zIndex = 493;
         add(iconStats);
 
-        lableStats = new BAlphabet(1850 - spriteNudge, 520, "<b>Stats</b>");
+        lableStats = new BAlphabet(1750 - spriteNudge, 520, "<b>Stats</b>");
         lableStats.alignment = "center";
         lableStats.scale.set(0.65, 0.65);
         lableStats.zIndex = 514;
@@ -889,7 +902,7 @@ class Shop extends MusicBeatState
         old_randomBox3.zIndex = 480;
         add(old_randomBox3);
 
-        var old_iconPins:FunkinSprite = new FunkinSprite(49900, 350).loadTexture("shop/iconpins");
+        var old_iconPins:FunkinSprite = new FunkinSprite(49900, 350).loadTexture("shop/old/iconpins");
         old_iconPins.zIndex = 490;
         add(old_iconPins);
 
