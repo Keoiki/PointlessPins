@@ -1,5 +1,6 @@
 package funkbucks;
 
+import Array;
 import Date;
 import balphabet.BAlphabet;
 import haxe.ds.StringMap;
@@ -149,6 +150,22 @@ class FunkBucks extends Module
         {
             FunkBucks.save = FunkBucks.getDefaultSaveValues();
             FunkBucks.flushSave();
+        }
+        else // Otherwise, check for missing or null fields and set them to their default values.
+        {
+            final saveFields:Array<String> = ReflectUtil.fields(FunkBucks.getDefaultSaveValues());
+            final defaultSaveValues:Dynamic = FunkBucks.getDefaultSaveValues();
+            var updatedAnyField:Bool = false;
+            for (field in saveFields)
+            {
+                if (!ReflectUtil.hasField(FunkBucks.save, field) || ReflectUtil.getField(FunkBucks.save, field) == null)
+                {
+                    ReflectUtil.setField(FunkBucks.save, field, ReflectUtil.getField(defaultSaveValues, field));
+                    updatedAnyField = true;
+                }
+            }
+            // Only save if necessary because idk
+            if (updatedAnyField) FunkBucks.flushSave();
         }
 
         loadPinData();
