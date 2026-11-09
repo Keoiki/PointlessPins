@@ -65,8 +65,6 @@ class PinBoard extends MusicBeatSubState
     var pins:Array<PinSprite> = [];
     var menuFooter:FunkinSprite;
     var rarityIcons:PinRarityIconGroup;
-    var leftRarityKeycap:KeyCap;
-    var rightRarityKeycap:KeyCap;
 
     var isViewingPin:Bool = false;
     var previewPin:PinSprite;
@@ -83,7 +81,7 @@ class PinBoard extends MusicBeatSubState
 
     var coolBackButton:Dynamic;
 
-    override function new():Void
+    override public function new():Void
     {
         super();
     }
@@ -227,14 +225,6 @@ class PinBoard extends MusicBeatSubState
         rarityIcons.parentState = super;
         add(rarityIcons);
 
-        // leftRarityKeycap = new KeyCap(40, 635, '← ${controls.getDialogueNameFromToken("FREEPLAY_LEFT", true)}', 120);
-        // leftRarityKeycap.cameras = [subCamHUD];
-        // add(leftRarityKeycap);
-
-        // rightRarityKeycap = new KeyCap(FlxG.width - 160, 635, '${controls.getDialogueNameFromToken("FREEPLAY_RIGHT", true)} →', 120);
-        // rightRarityKeycap.cameras = [subCamHUD];
-        // add(rightRarityKeycap);
-
         pinPreviewBlack = new FunkinSprite(-2, -2).makeSolidColor(FlxG.width + 4, FlxG.height + 4, 0xFF000000);
         pinPreviewBlack.alpha = 0.0;
         add(pinPreviewBlack);
@@ -271,7 +261,6 @@ class PinBoard extends MusicBeatSubState
         pinUnlockCount.cameras = [subCamHUD];
         pinSource.cameras = [subCamHUD];
         previewPin.cameras = [subCamHUD];
-        // menuUnlockedText.cameras = [subCamHUD];
 
         var boardWidth:Float = pins[15].getGraphicMidpoint(pinMidpoint).x - pins[0].getGraphicMidpoint(pinMidpoint).x + 300;
         var boardHeight:Float = pins[pins.length - 1].getGraphicMidpoint(pinMidpoint).y - pins[0].getGraphicMidpoint(pinMidpoint).y + 390;
@@ -352,8 +341,6 @@ class PinBoard extends MusicBeatSubState
 
         coolBackButton.visible = #if mobile true; #else FunkBucks.isMouseActive; #end
         coolBackButton.instant = isViewingPin;
-
-        // trace(FlxG.mouse.wheel);
 
         super.update(elapsed);
     }

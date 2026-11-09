@@ -35,7 +35,7 @@ class DialogBase
      * calling start() here does nothing, presumably it's calling the empty start of this class and not the overriden ones in the subclasses, Ugh 2
      * so now I have to call start() manually in the subclass constructors
      */
-    function new():Void { }
+    public function new():Void { }
 
     /**
      * What happens when the dialogue starts. Includes the dialog object creation and other stuff depending on the dialogue.

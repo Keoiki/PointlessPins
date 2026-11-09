@@ -88,7 +88,7 @@ class BoxSubMenu extends MusicBeatSubState
         boxPurchaseLable.scale.set(0.4, 0.4);
         add(boxPurchaseLable);
 
-        box = new BoxSprite(FlxG.width / 2, 490);
+        box = new BoxSprite(FlxG.width / 2, 482);
         add(box);
         
         arrowLeft = new FunkinSprite(FlxG.width / 2 - 250, 315).loadTexture("shop/boxarrow");
@@ -313,7 +313,7 @@ class BoxSubMenu extends MusicBeatSubState
         new FlxTimer().start(1, function(_:FlxTimer)
         {
             FlxTween.tween(darkOverlay, { alpha: 0.33 }, 1.1 + box.revealTime / 24, { ease: FlxEase.quadInOut });
-            FlxTween.tween(_parentState.camera, { zoom: 1.15 }, 1 + box.revealTime / 24, { ease: FlxEase.quadInOut });
+            FlxTween.tween(_parentState.camera, { zoom: 1.12 }, 1 + box.revealTime / 24, { ease: FlxEase.quadInOut });
             FlxTween.tween(camera, { zoom: 1.25 }, 1 + box.revealTime / 24, { ease: FlxEase.quadInOut });
             FlxTween.tween(FunkBucks.moneyHUD, { alpha: 0 }, 0.5, { ease: FlxEase.quadInOut });
         });

@@ -49,8 +49,5 @@ class ImposePatternShader extends FlxRuntimeShader
     {
         TIME += elapsed;
         this.setFloat("TIME", TIME);
-        // ANGLE += elapsed / 4;
-        // this.setFloat("patternAngle", ANGLE);
-        // super.update(elapsed);
     }
 }

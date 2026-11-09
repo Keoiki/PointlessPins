@@ -2,7 +2,6 @@ package funkbucks;
 
 import balphabet.BAlphabet;
 import flixel.FlxObject;
-import flixel.effects.particles.FlxEmitter;
 import flixel.math.FlxMath;
 import flixel.math.FlxPoint;
 import flixel.tweens.FlxEase;
@@ -82,7 +81,6 @@ class Shop extends MusicBeatState
     public var iconStats:FunkinSprite;
     var lableStats:BAlphabet;
     var keycapStats:KeyCap;
-    var rewardsSparkles:FlxEmitter;
     var viewingStats:Bool = false;
     var statsSheet:StatsSheet;
 
@@ -95,7 +93,7 @@ class Shop extends MusicBeatState
 
     public static var instance:Shop;
 
-    override function new():Void
+    override public function new():Void
     {
         super();
     }
@@ -179,7 +177,6 @@ class Shop extends MusicBeatState
         // cloverEventButton.visible = FunkBucks.getUnlockedPinsCount() >= 30;
         // add(cloverEventButton);
 
-        // lighting = new FunkinSprite(-800, -440).makeSolidColor(3000, 1600, 0xFF3C1B41);
         lighting = new FunkinSprite(-800, -440).makeSolidColor(3000, 1600, 0xFFFFC38B);
         lighting.zIndex = 10000;
         lighting.scrollFactor.set(0, 0);
@@ -234,9 +231,6 @@ class Shop extends MusicBeatState
             skcItem2 = new FunkinSprite(1300 - spriteNudge, 424).loadTexture("shop/rewards/funkbuck02");
             skcItem2.zIndex = 491;
             add(skcItem2);
-
-            // counterItems.push(skcItem1);
-            // counterItems.push(skcItem2);
         }
         else if (shopkeeper.name == "april")
         {
@@ -247,9 +241,6 @@ class Shop extends MusicBeatState
             skcItem2 = new FunkinSprite(878 - spriteNudge, 430).loadTexture("shop/aprilchipbag");
             skcItem2.zIndex = 490;
             add(skcItem2);
-
-            // counterItems.push(skcItem1);
-            // counterItems.push(skcItem2);
         }
 
         if (Shopkeeper.caught)
@@ -315,24 +306,6 @@ class Shop extends MusicBeatState
         lableStats.scale.set(0.65, 0.65);
         lableStats.zIndex = 514;
         add(lableStats);
-
-        // rewardsSparkles = new FlxEmitter(1740 - spriteNudge, 330);
-        // rewardsSparkles.setSize(150, 150);
-        // rewardsSparkles.loadParticles(Paths.image("pinsparkle"), 30, 0);
-        // rewardsSparkles.acceleration.set(1, 1, -1, -3, 5, 5, -5, -10);
-        // rewardsSparkles.scale.set(0.1, null, 0.3, null, 0.0, null, 0.1, null);
-        // rewardsSparkles.keepScaleRatio = true;
-        // rewardsSparkles.color.set(0xFFFFFFFF, 0xFFFFFF00);
-        // rewardsSparkles.speed.set(0, -1, 0, 0);
-        // rewardsSparkles.alpha.set(0.3, 0.9, 0.0, 0.0);
-        // rewardsSparkles.angle.set(-180, 180, -180, 180);
-        // rewardsSparkles.ignoreAngularVelocity = true;
-        // rewardsSparkles.lifespan.set(3, 7);
-        // rewardsSparkles.blend = 0;
-        // rewardsSparkles.zIndex = 502;
-        // add(rewardsSparkles);
-        // rewardsSparkles.focusOn(iconStats);
-        // rewardsSparkles.start(false, 0.25);
 
         counterItems.push(iconPins);
         counterItems.push(iconBoxes);
@@ -575,7 +548,7 @@ class Shop extends MusicBeatState
             substate.cameras = [cameraSubState];
 
             FlxTween.tween(coolBackButton, { alpha: 0 }, 1, { ease: FlxEase.cubeIn });
-            FlxTween.tween(screenBlack, { alpha: 0.5 }, 1, { ease: FlxEase.cubeIn });
+            FlxTween.tween(screenBlack, { alpha: 0.75 }, 1, { ease: FlxEase.cubeIn });
             FunkBucks.moneyHUD.setDisplay(true, false, 0);
             FlxTween.tween(camera, { zoom: 0.9 }, 1, { ease: FlxEase.cubeOut, onComplete: function()
             {

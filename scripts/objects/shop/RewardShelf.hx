@@ -19,7 +19,7 @@ class RewardShelf extends FunkinGroup
         "lock"
     ];
 
-    override function new(x:Float, y:Float):Void
+    override public function new(x:Float, y:Float):Void
     {
         super(x, y);
         this.createShelf();

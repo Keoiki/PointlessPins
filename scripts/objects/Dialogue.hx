@@ -429,14 +429,6 @@ class Dialogue extends FunkinGroup
         else
         {
             var filePath:String = 'data/pointlesspins/dialogue/$id.json';
-            // Dialogue with "dialogueFlavor" set to "nice" will be less meaner.
-            // if (!Preferences.naughtyness || FunkBucks.save.dialogueFlavor == "nice")
-            // {
-                // if (Assets.exists('data/pointlesspins/dialogue/$id-c.json'))
-                // {
-                    // filePath = 'data/pointlesspins/dialogue/$id-c.json';
-                // }
-            // }
             currentDialogue = SerializerUtil.fromJSON(Assets.getText(filePath));
         }
         dialogueIndex = -1;

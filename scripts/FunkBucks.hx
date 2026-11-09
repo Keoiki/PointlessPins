@@ -125,7 +125,7 @@ class FunkBucks extends Module
         ["ophelia-business", 10]
     ];
 
-    function new():Void
+    public function new():Void
     {
         super('FunkBucks', -2000000000);
 
@@ -780,10 +780,10 @@ class FunkBucks extends Module
             /**
              * Clover Coin Event
              */
-            if (FunkBucks.hasPin("clovercoin"))
-            {
+            //if (FunkBucks.hasPin("clovercoin"))
+            //{
 
-            }
+            //}
 
             FunkBucks.save.dailyDate = currentDate;
         }
@@ -917,48 +917,11 @@ class FunkBucks extends Module
         FunkBucks.isMouseTooFast = false;
         #end
 
-        if (FlxG.keys.justPressed.L)
-        {
-            // TimedCoinsManager.startEvent(90);
-        }
-
-        if (FlxG.keys.justPressed.FIVE)
-        {
-            // trace(ReflectUtil.getClassNameOf(FlxG.state));
-            trace(FlxG.mouse.gameX, FlxG.mouse.gameY);
-            trace(FlxG.mouse.x, FlxG.mouse.y);
-        }
-
         if (FlxG.state is MainMenuState && FlxG.state.subState == null)
         {
             if (FlxG.keys.justPressed.P || TouchUtil.pressAction(menuPin))
             {
                 FlxG.switchState(new Shop());
-            }
-
-            if (FlxG.keys.justPressed.Q)
-            {
-                // FunkBucks.save.obtainedMilestones = [];
-                // FunkBucks.flushSave();
-                trace(FunkBucks.getClaimedMilestones());
-            }
-
-            if (FlxG.keys.justPressed.J)
-            {
-                // for (i in 0...101)
-                // {
-                    // trace(i, Math.pow(i, 2) / 1000);
-                // }
-                // trace(0.25 + Math.min(1.0, 0.25 * (1 * (Math.floor(11 / 12)))));
-                // trace(0.25 + Math.min(1.0, 0.25 * (1 * (Math.floor(14 / 12)))));
-                // trace(0.25 + Math.min(1.0, 0.25 * (1 * (Math.floor(26 / 12)))));
-                // trace(0.25 + Math.min(1.0, 0.25 * (1 * (Math.floor(50 / 12)))));
-                trace(getDailies());
-            }
-
-            if (FlxG.keys.justPressed.T)
-            {
-                trace(getPrevSongs());
             }
 
             if (FlxG.keys.pressed.CONTROL && FlxG.keys.pressed.SHIFT && FlxG.keys.pressed.ALT && FlxG.keys.justPressed.K)
@@ -979,7 +942,6 @@ class FunkBucks extends Module
     {
         repositionHUD(0, 0);
 
-        // trace(event.targetState);
         if (event.targetState is MainMenuState)
         {
             menuPin = new PinSprite(100, 100);
@@ -994,16 +956,6 @@ class FunkBucks extends Module
             #end
 
             FunkBucks.moneyHUD.setDisplay(false, false, 0);
-
-            // var aaaa:FunkinSprite = new FunkinSprite(1100, 20).makeSolidColor(70, 70, 0xFFFF00FF);
-            // aaaa.scrollFactor.set(0, 0);
-            // event.targetState.add(aaaa);
-
-            // var test:BAlphabet = new BAlphabet(0, 400, "<b>AA <c=00FF00>Color testing.</c></b>\nAAAAAAA\nBBBBB", { lineHeight: 90 });
-            // test.scale.set(0.75, 0.75);
-            // test.setScrollFactor(0, 0);
-            // event.targetState.add(test);
-            // test.start();
         }
 
         super.onStateChangeEnd(event);
@@ -1016,6 +968,7 @@ class FunkBucks extends Module
         /**
          * Change this later to be on song end instead?
          * So that mods that don't use the default results can still give FunkBucks on song/week completions.
+         * nah.
          */
         if (event.targetState is ResultState)
         {
@@ -1107,7 +1060,7 @@ class FunkBucks extends Module
 
             if (#if keoiki.endlessmode EndlessStatus.isEndless && EndlessStatus.currentLoop < 2 #else false #end)
             {
-                trace("Thought you could easily clear your penalties by giving up immediately in Endless Mode? Think again!");
+                trace("Not so fast.");
             }
             else
             {
@@ -1209,7 +1162,7 @@ class FunkBucks extends Module
      * 
      * This is for; if other mods want to use the unlock queue, they don't have to check if the pin is already unlocked themselves.
      * 
-     * @param pinID The pin ID to push.
+     * @param pinID The pin ID to unlock.
      */
     public static function pushPinToUnlockQueue(pinID:String):Void
     {
@@ -1221,7 +1174,7 @@ class FunkBucks extends Module
 
     /**
      * Alias to `pushPinToUnlockQueue(pinID)` because I typed it wrong in the tutorial file once.
-     * @param pinID 
+     * @param pinID The pin ID to unlock.
      */
     public static function addPinToUnlockQueue(pinID:String):Void
     {

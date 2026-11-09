@@ -28,7 +28,7 @@ class PinUnlockState extends MusicBeatSubState
      * @param pinID The pin ID.
      * @param time The time before the state can be closed.
      */
-    override function new(pinID:String, time:Float = 1.0):Void
+    override public function new(pinID:String, time:Float = 1.0):Void
     {
         this.pinData = FunkBucks.fetchPinByID(pinID);
         this.closeTimer = time;

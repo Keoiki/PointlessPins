@@ -14,6 +14,7 @@ class ZipUtil
         '.gitattributes',
         '.gitignore',
         'astc-data.json',
+        'planned-changelog.md',
         'scripts/ZipUtil.hx',
         'scripts/ElevatorMenu.hx',
         'scripts/TimedCoinsManager.hx',

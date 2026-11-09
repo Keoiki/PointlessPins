@@ -10,7 +10,7 @@ class Clock extends FunkinGroup
     var handHour:FunkinSprite;
     var handMinute:FunkinSprite;
 
-    override function new(x:Float, y:Float):Void
+    override public function new(x:Float, y:Float):Void
     {
         super(x, y);
         this.createClock();

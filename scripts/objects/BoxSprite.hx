@@ -29,7 +29,7 @@ class BoxSprite extends FunkinSprite
     var angerModifier:Float = 1.0;
     var discountModifier:Float = 1.0;
 
-    override function new(x:Float, y:Float)
+    override public function new(x:Float, y:Float)
     {
         pinData = FunkBucks.pinData;
         boxData = FunkBucks.boxData;
@@ -71,6 +71,9 @@ class BoxSprite extends FunkinSprite
                 useRenderTexture: true
             });
         }
+
+        animation.play("Closed", true);
+        animation.curAnim.looped = true;
     }
 
     public function updateBoxInfoByID(id:String, forceSpecial:Bool = false):Void
@@ -131,7 +134,6 @@ class BoxSprite extends FunkinSprite
         });
 
         var randomPin = rarityPins[FlxG.random.int(0, rarityPins.length - 1)];
-        // randomPin.rarity = resultingRarity;
         return randomPin.id;
     }
 

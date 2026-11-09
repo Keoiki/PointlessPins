@@ -12,7 +12,7 @@ class DailyBoard extends FunkinGroup
     var board:FunkinSprite;
     var dailies:BAlphabet;
 
-    override function new(x:Float, y:Float):Void
+    override public function new(x:Float, y:Float):Void
     {
         super(x, y);
         this.createBoard();
