@@ -32,9 +32,9 @@
         "description": "Finally something that looks nice.\nSay goodbye to those Commons!",
         "revealTime": 26,
         "chances": [
-            [ "Uncommon", 646.5 ],
-            [ "Rare", 300 ],
-            [ "Epic", 50 ],
+            [ "Uncommon", 496.5 ],
+            [ "Rare", 400 ],
+            [ "Epic", 100 ],
             [ "Legendary", 2.5 ],
             [ "Mythic", 1 ]
         ],
@@ -42,13 +42,13 @@
         "order": 200
     },
     {
-        "id": "smallgiftbox",
+        "id": "glimmeringpouch",
         "name": "<c=A426FF>Glimmering Pouch</c>",
-        "description": "\"<c=67B1D8>Hey, what?! This isn't a box!</c>\"\nRegardless, it still holds pins within,\nquite rare ones at that.",
+        "description": "&#xE006; <c=67B1D8>Hey, what?! This isn't a box!</c>\nRegardless, it still holds pins within,\nquite rare ones at that.",
         "revealTime": 26,
         "chances": [
-            [ "Rare", 825 ],
-            [ "Epic", 150 ],
+            [ "Rare", 725 ],
+            [ "Epic", 250 ],
             [ "Legendary", 20 ],
             [ "Mythic", 5 ]
         ],
