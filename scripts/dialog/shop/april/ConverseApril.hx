@@ -157,9 +157,14 @@ class ConverseApril extends DialogBase
             if (playAnim) shop.shopkeeper.talk();
         }
 
+        dialog.onSkipLine.add((index) ->
+        {
+            shop.shopkeeper.stopTalking();
+        });
+
         dialog.onCompleteDialogue.add(() ->
         {
-            shop.shopkeeper.playAnimation('normal');
+            shop.shopkeeper.playAnimation('normal', true, true);
             finish();
         });
 

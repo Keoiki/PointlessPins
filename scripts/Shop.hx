@@ -655,16 +655,7 @@ class Shop extends MusicBeatState
 
             new FlxTimer().start(0.5, function(_:FlxTimer)
             {
-                switch (shopkeeper.name)
-                {
-                    //case "ophelia":
-                        //new ConverseOphelia();
-                    case "april":
-                        new ConverseApril();
-                        // new AprilIntro();
-                    default:
-                        return;
-                }
+                new ConverseApril();
             });
 
             disallowInputs = true;

@@ -97,10 +97,10 @@ class Dialogue extends FunkinGroup
 
         patternShader = new ImposePatternShader();
 
-        dialogueBoxBG = new FunkinSprite(0, 0).loadTexture("pointlesspins/dialogue/dialogue-round-bg");
+        dialogueBoxBG = new FunkinSprite(0, 0).loadTexture("ui/funkbucks/dialogue/shape-round-bg");
         this.add(dialogueBoxBG);
 
-        dialogueBox = new FunkinSprite(0, 0).loadTexture("pointlesspins/dialogue/dialogue-round");
+        dialogueBox = new FunkinSprite(0, 0).loadTexture("ui/funkbucks/dialogue/shape-round");
         dialogueBox.localAlpha = 0.9;
         dialogueBox.localX = dialogueBoxBG.localX + 10;
         dialogueBox.localY = dialogueBoxBG.localY + 10;
@@ -125,7 +125,7 @@ class Dialogue extends FunkinGroup
         this.add(speakerName);
 
         advanceIcon = new FunkinSprite(0, 0);
-        advanceIcon.loadSparrow("pointlesspins/dialogue/end-icons");
+        advanceIcon.loadSparrow("ui/funkbucks/dialogue/end-icons");
         advanceIcon.animation.addByPrefix("endIcons", "dialogue-end-icons", 0, false);
         advanceIcon.animation.play("endIcons");
         advanceIcon.localScale.set(0.8, 0.8);
@@ -139,14 +139,14 @@ class Dialogue extends FunkinGroup
             arrowRightHitbox = new FlxSprite(dialogueBoxBG.width - 200, 0).makeGraphic(200, 200, 0x000000FF);
             this.add(arrowRightHitbox);
 
-            arrowLeft = new FunkinSprite(0, 0).loadTexture("shop/boxarrow");
+            arrowLeft = new FunkinSprite(0, 0).loadTexture("ui/funkbucks/menu-arrow");
             arrowLeft.localX = arrowLeftHitbox.x + arrowLeftHitbox.width / 2 - arrowLeft.width / 2;
             arrowLeft.localY = arrowLeftHitbox.y + arrowLeftHitbox.height / 2 - arrowLeft.height / 2;
             arrowLeft.flipX = true;
             arrowLeft.localVisible = false;
             this.add(arrowLeft);
 
-            arrowRight = new FunkinSprite(0, 0).loadTexture("shop/boxarrow");
+            arrowRight = new FunkinSprite(0, 0).loadTexture("ui/funkbucks/menu-arrow");
             arrowRight.localX = arrowRightHitbox.x + arrowRightHitbox.width / 2 - arrowRight.width / 2;
             arrowRight.localY = arrowRightHitbox.y + arrowRightHitbox.height / 2 - arrowRight.height / 2;
             arrowRight.localVisible = false;
@@ -169,7 +169,7 @@ class Dialogue extends FunkinGroup
             final count:Int = currentDialogue.response.options.length;
             for (i in 0...count)
             {
-                var dot:FunkinSprite = new FunkinSprite(0, 0).loadTexture("menucountdot");
+                var dot:FunkinSprite = new FunkinSprite(0, 0).loadTexture("ui/funkbucks/menu-dot");
                 dot.localScale.set(0.75, 0.75);
                 dot.localAlpha = 0.2;
                 dot.localVisible = false;
@@ -252,7 +252,7 @@ class Dialogue extends FunkinGroup
                 if (!dialogueText.finishedText)
                 {
                     onSkipLine.dispatch(dialogueIndex);
-                    dialogueText.finish();
+                    dialogueText.finishText();
                 }
                 else
                 {
@@ -284,7 +284,7 @@ class Dialogue extends FunkinGroup
             {
                 if (!dialogueText.finishedText)
                 {
-                    dialogueText.finish();
+                    dialogueText.finishText();
                     onSkipLine.dispatch(dialogueIndex);
                 }
                 showResponses();
@@ -364,11 +364,11 @@ class Dialogue extends FunkinGroup
 
         if (!isDelayed)
         {
-            dialogueText.start();
+            dialogueText.startText();
 
             if (dialogueLine.instantComplete)
             {
-                dialogueText.finish();
+                dialogueText.finishText();
             }
         }
         else
@@ -403,10 +403,10 @@ class Dialogue extends FunkinGroup
         isDelayed = false;
         if (delayHidden) this.visible = true;
         dialogueText.localVisible = true;
-        dialogueText.start();
+        dialogueText.startText();
         if (dialogueLine.instantComplete)
         {
-            dialogueText.finish();
+            dialogueText.finishText();
         }
     }
 
@@ -428,7 +428,7 @@ class Dialogue extends FunkinGroup
         }
         else
         {
-            var filePath:String = 'data/pointlesspins/dialogue/$id.json';
+            var filePath:String = 'data/funkbucks/dialogue/$id.json';
             currentDialogue = SerializerUtil.fromJSON(Assets.getText(filePath));
         }
         dialogueIndex = -1;
@@ -490,11 +490,11 @@ class Dialogue extends FunkinGroup
 
     function updateDialogueBox(data:FBDialogueTextbox):Void
     {
-        final basePath:String = "pointlesspins/dialogue/";
+        final basePath:String = "ui/funkbucks/dialogue/";
 
         if (data.shape != null && data.shape != prevShape)
         {
-            if (!Assets.exists('images/${basePath}shape-${data.shape}-bg.png') || !Assets.exists('images/${basePath}shape-${data.shape}.png'))
+            if (!Assets.exists('${basePath}shape-${data.shape}-bg.png') || !Assets.exists('${basePath}shape-${data.shape}.png'))
             {
                 data.shape = "round";
             }
@@ -508,7 +508,7 @@ class Dialogue extends FunkinGroup
 
             dialogueText.localX = dialogueBoxBG.width / 2;
 
-            if (!Assets.exists('images/${basePath}speaker-${data.shape}.png'))
+            if (!Assets.exists('${basePath}speaker-${data.shape}.png'))
             {
                 data.shape = "round";
             }
