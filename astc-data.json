@@ -1,30 +1,29 @@
 {
-    "input": "./images",
+    "input": "./ui",
     "output": "./astc-images",
     "quality": "medium",
     "blocksize": "10x10",
     "colorprofile": "cl",
     "custom": [
         {
-            "asset": "images/shop/wall.png",
+            "asset": "ui/funkbucks/shop/wall.png",
             "blocksize": "12x12"
         },
         {
-            "asset": "images/shop/old/wall.png",
+            "asset": "ui/funkbucks/shop/old/wall.png",
             "blocksize": "12x12"
         }
     ],
     "excludes": [
-        "images/shop/lamp/spritemap1.png",
-        "images/shop/ophelia/spritemap1.png",
-        "images/shop/april/spritemap1.png",
-        "images/shop/april-eyes/spritemap1.png",
-        "images/shop/april-mouth/spritemap1.png",
-        "images/shop/lighting.png",
-        "images/pinsparkle.png",
-        "images/pinunlockglow.png",
-        "images/pinunlockglowsmall.png",
-        "images/menucountdot.png",
-        "images/pointlesspins/boxes/"
+        "ui/funkbucks/shop/lamp/spritemap1.png",
+        "ui/funkbucks/shop/april/spritemap1.png",
+        "ui/funkbucks/shop/april-eyes/spritemap1.png",
+        "ui/funkbucks/shop/april-mouth/spritemap1.png",
+        "ui/funkbucks/pin-unlock/glow.png",
+        "ui/funkbucks/pin-unlock/glow-small.png",
+        "ui/funkbucks/pin-unlock/sparkle.png",
+        "ui/funkbucks/menu-dot.png",
+        "ui/funkbucks/boxes/",
+        "ui/funkbucks/pins/funkbuck-pixel.png"
     ]
 }

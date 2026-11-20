@@ -49,7 +49,7 @@ class Shop extends MusicBeatState
     public var talkingToOphelia:Bool = false;
     public var isShopkeeperGone:Bool = false;
     var extendBounds:Bool = false;
-    var cannotDoText:BAText;
+    var statusText:BAText;
 
     // Dialogue
     public var dialog:Dialogue;
@@ -400,12 +400,12 @@ class Shop extends MusicBeatState
         screenBlack.cameras = [cameraHUD];
         add(screenBlack);
 
-        cannotDoText = new BAText(FlxG.width / 2, FlxG.height - 100, "<b><c=FF0000>You cannot do that right now.</c></b>");
-        cannotDoText.alignment = "center";
-        cannotDoText.scale.set(0.5, 0.5);
-        cannotDoText.alpha = 0.0001;
-        cannotDoText.cameras = [cameraHUD];
-        add(cannotDoText);
+        statusText = new BAText(FlxG.width / 2, FlxG.height - 100, "<b><c=FF0000>You cannot do that right now.</c></b>");
+        statusText.alignment = "center";
+        statusText.scale.set(0.5, 0.5);
+        statusText.alpha = 0.0001;
+        statusText.cameras = [cameraHUD];
+        add(statusText);
 
         coolBackButton = new BackButton(FlxG.width - 220, FlxG.height - 200, goBack, 0.75);
         coolBackButton.cameras = [cameraHUD];
@@ -548,8 +548,8 @@ class Shop extends MusicBeatState
         {
             if (extendBounds && cameraFollowPoint.x >= 10000)
             {
-                FlxTween.completeTweensOf(cannotDoText);
-                FlxTween.tween(cannotDoText, { alpha: 1 }, 2, { ease: FlxEase.cubeOut, type: 16 });
+                FlxTween.completeTweensOf(statusText);
+                FlxTween.tween(statusText, { alpha: 1 }, 2, { ease: FlxEase.cubeOut, type: 16 });
                 return;
             }
 
@@ -596,8 +596,8 @@ class Shop extends MusicBeatState
         {
             if (isShopkeeperGone || Shopkeeper.caught)
             {
-                FlxTween.completeTweensOf(cannotDoText);
-                FlxTween.tween(cannotDoText, { alpha: 1 }, 2, { ease: FlxEase.cubeOut, type: 16 });
+                FlxTween.completeTweensOf(statusText);
+                FlxTween.tween(statusText, { alpha: 1 }, 2, { ease: FlxEase.cubeOut, type: 16 });
                 return;
             }
 
@@ -646,8 +646,8 @@ class Shop extends MusicBeatState
         {
             if (isShopkeeperGone || Shopkeeper.caught || !shopkeeper.canInterract)
             {
-                FlxTween.completeTweensOf(cannotDoText);
-                FlxTween.tween(cannotDoText, { alpha: 1 }, 2, { ease: FlxEase.cubeOut, type: 16 });
+                FlxTween.completeTweensOf(statusText);
+                FlxTween.tween(statusText, { alpha: 1 }, 2, { ease: FlxEase.cubeOut, type: 16 });
                 return;
             }
 
@@ -682,8 +682,8 @@ class Shop extends MusicBeatState
         {
             if (Shopkeeper.caught || (extendBounds && cameraFollowPoint.x >= 10000))
             {
-                FlxTween.completeTweensOf(cannotDoText);
-                FlxTween.tween(cannotDoText, { alpha: 1 }, 2, { ease: FlxEase.cubeOut, type: 16 });
+                FlxTween.completeTweensOf(statusText);
+                FlxTween.tween(statusText, { alpha: 1 }, 2, { ease: FlxEase.cubeOut, type: 16 });
                 return;
             }
 
@@ -921,54 +921,54 @@ class Shop extends MusicBeatState
         final offsetDueToScrollFactor:Float = -7500;
         final offsetDueToScrollFactor2:Float = 5000;
 
-        var old_wall:FunkinSprite = new FunkinSprite(49300 + offsetDueToScrollFactor, -220).loadTexture("shop/old/wall");
+        var old_wall:FunkinSprite = new FunkinSprite(49300 + offsetDueToScrollFactor, -220).loadTexture("ui/funkbucks/shop/old/wall");
         old_wall.zIndex = -1000;
         old_wall.scrollFactor.set(0.85, 0.85);
         add(old_wall);
 
-        var old_dailyboard:FunkinSprite = new FunkinSprite(50300 + offsetDueToScrollFactor, 0).loadTexture("shop/old/dailyboard");
+        var old_dailyboard:FunkinSprite = new FunkinSprite(50300 + offsetDueToScrollFactor, 0).loadTexture("ui/funkbucks/shop/old/dailyboard");
         old_dailyboard.zIndex = -998;
         old_dailyboard.scrollFactor.set(0.85, 0.85);
         add(old_dailyboard);
 
-        var old_counter:FunkinSprite = new FunkinSprite(49550, 510).loadTexture("shop/old/counter");
+        var old_counter:FunkinSprite = new FunkinSprite(49550, 510).loadTexture("ui/funkbucks/shop/old/counter");
         old_counter.zIndex = 500;
         old_counter.scrollFactor.set(1, 1);
         old_counter.scale.set(1.5, 1.0);
         add(old_counter);
 
-        var old_fbStack1:FunkinSprite = new FunkinSprite(50700, 446).loadTexture("shop/old/funkbuckstack");
+        var old_fbStack1:FunkinSprite = new FunkinSprite(50700, 446).loadTexture("ui/funkbucks/shop/old/funkbuckstack");
         old_fbStack1.zIndex = 490;
         add(old_fbStack1);
 
-        var old_fbStack2:FunkinSprite = new FunkinSprite(52050, 446).loadTexture("shop/old/funkbuckstack");
+        var old_fbStack2:FunkinSprite = new FunkinSprite(52050, 446).loadTexture("ui/funkbucks/shop/old/funkbuckstack");
         old_fbStack2.zIndex = 490;
         old_fbStack2.flipX = true;
         add(old_fbStack2);
 
-        var old_fbStack3:FunkinSprite = new FunkinSprite(49500, 446).loadTexture("shop/old/funkbuckstack");
+        var old_fbStack3:FunkinSprite = new FunkinSprite(49500, 446).loadTexture("ui/funkbucks/shop/old/funkbuckstack");
         old_fbStack3.zIndex = 490;
         add(old_fbStack3);
 
-        var old_randomBox1:FunkinSprite = new FunkinSprite(51600 + offsetDueToScrollFactor2, 700).loadTexture("shop/old/randombox01");
+        var old_randomBox1:FunkinSprite = new FunkinSprite(51600 + offsetDueToScrollFactor2, 700).loadTexture("ui/funkbucks/shop/old/randombox01");
         old_randomBox1.zIndex = 1100;
         old_randomBox1.scrollFactor.set(1.1, 1.0);
         add(old_randomBox1);
 
-        var old_randomBox2:FunkinSprite = new FunkinSprite(49700 + offsetDueToScrollFactor2, 740).loadTexture("shop/old/randombox01");
+        var old_randomBox2:FunkinSprite = new FunkinSprite(49700 + offsetDueToScrollFactor2, 740).loadTexture("ui/funkbucks/shop/old/randombox01");
         old_randomBox2.zIndex = 1100;
         old_randomBox2.scrollFactor.set(1.1, 1.0);
         add(old_randomBox2);
 
-        var old_randomBox3:FunkinSprite = new FunkinSprite(52070, 350).loadTexture("shop/old/randombox01");
+        var old_randomBox3:FunkinSprite = new FunkinSprite(52070, 350).loadTexture("ui/funkbucks/shop/old/randombox01");
         old_randomBox3.zIndex = 480;
         add(old_randomBox3);
 
-        var old_iconPins:FunkinSprite = new FunkinSprite(49900, 350).loadTexture("shop/old/iconpins");
+        var old_iconPins:FunkinSprite = new FunkinSprite(49900, 350).loadTexture("ui/funkbucks/shop/old/iconpins");
         old_iconPins.zIndex = 490;
         add(old_iconPins);
 
-        var old_iconBoxes:FunkinSprite = new FunkinSprite(50440, 376).loadTexture("shop/iconboxes");
+        var old_iconBoxes:FunkinSprite = new FunkinSprite(50440, 376).loadTexture("ui/funkbucks/shop/iconboxes");
         old_iconBoxes.zIndex = 490;
         add(old_iconBoxes);
     }
