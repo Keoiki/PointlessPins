@@ -1123,7 +1123,7 @@ class FunkBucks extends Module
                     FlxTween.tween(funkBucksText, { y: 20 }, 0.5, { ease: FlxEase.backOut });
                     FlxTween.tween(jewelsText, { x: jewelsText.x - 15 }, 0.75, { ease: FlxEase.backOut, type: 16 });
                     FlxTween.tween(jewelsText.scale, { x: 1.0, y: 1.0 }, 0.75, { ease: FlxEase.bounceOut, type: 16 });
-                    FunkinSound.playOnce(Paths.sound("bluejewel"), 1.5).pitch = 1.5;
+                    FunkinSound.playOnce(Paths.sound("ui/funkbucks/sounds/bluejewel"), 1.5).pitch = 1.5;
                 });
             }
 

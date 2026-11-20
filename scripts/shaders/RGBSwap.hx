@@ -35,7 +35,7 @@ class RGBSwap extends FlxRuntimeShader
 
     public function new()
     {
-        super(Assets.getText(Paths.frag("rgbSwap")));
+        super(Assets.getText(Paths.frag("ui/funkbucks/shaders/rgbSwap")));
         this.setFloat("uApply", 1.0);
     }
 
