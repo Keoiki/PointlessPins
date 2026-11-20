@@ -132,7 +132,9 @@ class Shop extends MusicBeatState
             }
             case "SOUND":
             {
-                //result.push(Paths.music("ui/editors/chart-editor/artistic-expression").audio());
+                // Yes, this is just "Artistic Expression", so why is it copied over here separately?
+                // Mobile versions lack chart editor, thus their assets aren't included, that includes the song.
+                result.push(Paths.music("ui/funkbucks/shop/shop"));
             }
             case "JSON":
             {
@@ -205,7 +207,7 @@ class Shop extends MusicBeatState
         }
         else
         {
-            FunkinSound.playMusic('chartEditorLoop',
+            FunkinSound.playMusic('ui/funkbucks/shop/shop',
             {
                 startingVolume: 0.75,
                 overrideExisting: true,
