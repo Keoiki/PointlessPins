@@ -576,7 +576,7 @@ class Shop extends MusicBeatState
             {
                 Transition.openSubState(() -> substate, {
                     assetQuery: PinBoard.queryAssets,
-                    transition: TransitionType.None,
+                    transition: TransitionType.Throbber,
                     onConstruct: function(_:FlxState)
                     {
                         onSubStateOpen();
@@ -626,7 +626,7 @@ class Shop extends MusicBeatState
             {
                 Transition.openSubState(() -> substate, {
                     assetQuery: BoxSubMenu.queryAssets,
-                    transition: TransitionType.None,
+                    transition: TransitionType.Throbber,
                     onConstruct: function(_:FlxState)
                     {
                         onSubStateOpen();
