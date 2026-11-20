@@ -95,7 +95,7 @@ class PinUnlockState extends MusicBeatSubState
         var pin:PinSprite = new PinSprite(FlxG.width / 2, 400);
         pin.isUnlocked = true;
         pin.pixel = pinData.pixel ?? false;
-        pin.setupPin(pinData.id, pinData.name, pinData.description, 0.2, 1, true);
+        pin.setupPin(pinData.id, pinData.name, pinData.description, 0.2, 1);
         add(pin);
 
         var sparkleGoBoom:Bool = FlxG.random.bool(0.1);

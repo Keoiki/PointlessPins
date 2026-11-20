@@ -79,7 +79,7 @@ class PinSprite extends FunkinSprite
      * @param _description The Pin's description (optional)
      * @param _scale The Pin's scale in the menu (optional, default: 0.5)
      */
-    public function setupPin(_id:String, _name:String, _description:String, _scale:Float = 0.5, alphaDest:Float = 1, loadImmediately:Bool = false)
+    public function setupPin(_id:String, _name:String, _description:String, _scale:Float = 0.5, alphaDest:Float = 1)
     {
         pID = _id;
         name = _name;
@@ -99,40 +99,14 @@ class PinSprite extends FunkinSprite
             scaleOverride = 1;
         }
 
-        if (loadImmediately)
-        {
-            loadTexture(fileToLoad.substring(0, fileToLoad.lastIndexOf(".")));
-            scale.set(scaleOverride, scaleOverride);
-            updateHitbox();
-            x -= width / 2;
-            y -= height / 2;
-            alpha = alphaDest;
-            applyShadowFilter();
-        }
-        else
-        {
-            var fadeTween:Null<FlxTween> = null;
-            fadeTween = FlxTween.tween(super, { alpha: 0 }, 0.25);
-
-            Assets.loadBitmapData(Paths.image(fileToLoad)).onComplete(function(bitmapData:BitmapData)
-            {
-                if (!exists) return;
-
-                loadBitmapData(bitmapData, true);
-                scale.set(scaleOverride, scaleOverride);
-                updateHitbox();
-                x -= width / 2;
-                y -= height / 2;
-                applyShadowFilter();
-
-                if (fadeTween != null)
-                {
-                    fadeTween.cancel();
-                    FlxTween.tween(super, { alpha: alphaDest }, 0.25);
-                }
-            });
-        }
+        loadTexture(fileToLoad.substring(0, fileToLoad.lastIndexOf(".")));
+        scale.set(scaleOverride, scaleOverride);
+        updateHitbox();
+        x -= width / 2;
+        y -= height / 2;
+        alpha = alphaDest;
         antialiasing = !pixel;
+        applyShadowFilter();
 
         pinSpecificSetup();
     }
@@ -153,6 +127,8 @@ class PinSprite extends FunkinSprite
          * Issues with this:
          * - Rotation on the pin board no longer happens from the middle of the sprite, and
          * - it's absolutely fucked on Pixel pins.
+         * 
+         * Now in 0.9 it doesn't even work because state checks like the one below don't work :D
          */
 
         return;
@@ -174,7 +150,6 @@ class PinSprite extends FunkinSprite
         {
             case "pinhead":
             {
-                // replace the shader reference to the actual shader within 0.9, for the time being it's copied over to make this as accurate as possible
                 var replaceColor:FlxRuntimeShader = new FlxRuntimeShader(Assets.getText(Paths.frag("ui/shaders/replace-color")));
                 replaceColor.setFloatArray('uTargetColor', [0, 1, 0.04]);
                 replaceColor.setFloat('uThreshold', 0.12);
@@ -183,7 +158,7 @@ class PinSprite extends FunkinSprite
                 final lum:Float = (80 + Math.random() * 79) / 240;
                 final color:FlxColor = FlxColor.fromHSL(hue, sat, lum);
                 replaceColor.setFloatArray('uReplaceColor', [((color >> 16) & 0xff) / 255.0, ((color >> 8) & 0xff) / 255.0, ((color) & 0xff) / 255.0]);
-                super.shader = replaceColor;
+                shader = replaceColor;
 
                 if (!Preferences.naughtyness)
                 {
@@ -196,7 +171,7 @@ class PinSprite extends FunkinSprite
                 {
                     description = "Behind you.";
                 }
-                else if (/*NewgroundsClient.isLoggedIn() && */NewgroundsClient.user != null)
+                else if (NewgroundsClient.user != null)
                 {
                     if (NewgroundsClient.user.supporter)
                     {
@@ -210,7 +185,7 @@ class PinSprite extends FunkinSprite
             }
             case 'newgrounds':
             {
-                if (/*NewgroundsClient.isLoggedIn() &&*/ NewgroundsClient.user != null)
+                if (NewgroundsClient.user != null)
                 {
                     if (NewgroundsClient.user.supporter)
                     {

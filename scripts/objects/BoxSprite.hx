@@ -21,7 +21,6 @@ class BoxSprite extends FunkinSprite
     var price:Int;
     var revealTime:Int;
     var chances:Array<Array<Dynamic>>;
-    var rollsPins:Bool;
 
     var totalWeight:Int;
 
@@ -53,7 +52,6 @@ class BoxSprite extends FunkinSprite
         description = boxData[boxDataIndex].description;
         revealTime = boxData[boxDataIndex].revealTime;
         chances = boxData[boxDataIndex].chances;
-        rollsPins = boxData[boxDataIndex].rollsPins ?? false;
         totalWeight = 0;
 
         for (weight in chances)
@@ -114,8 +112,6 @@ class BoxSprite extends FunkinSprite
             discountModifier = (1 - discount) * 100;
         }
     }
-
-    public function rollRandomPin():PinData {}
 
     public function rollRandomRarityPin():String
     {

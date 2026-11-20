@@ -210,12 +210,12 @@ class MoneyHUD extends FunkinGroup
             {
                 prefix = "+";
                 _color = "2BFF31";
-                sound = "fav";
+                sound = "favorite";
             }
             else
             {
                 _color = "FF4C50";
-                sound = "unfav";
+                sound = "unfavorite";
             }
         }
 
@@ -225,7 +225,7 @@ class MoneyHUD extends FunkinGroup
         FlxTween.tween(buckDiffText, { localY: 60 }, 4, { ease: FlxEase.circOut });
         FlxTween.tween(buckDiffText, { localAlpha: 1 }, 0.2, { ease: FlxEase.cubeOut });
         FlxTween.tween(buckDiffText, { localAlpha: 0 }, 1, { startDelay: 3, ease: FlxEase.cubeOut });
-        if (sound != "") FunkinSound.playOnce(Paths.sound(sound));
+        if (sound != "") FunkinSound.playOnce(Paths.sound('ui/freeplay/sounds/$sound'));
 
         setDisplay(null, null, currentBGAlpha);
     }
@@ -266,7 +266,7 @@ class MoneyHUD extends FunkinGroup
         FlxTween.tween(jewelDiffText, { localY: 60 }, 4, { ease: FlxEase.circOut });
         FlxTween.tween(jewelDiffText, { localAlpha: 1 }, 0.2, { ease: FlxEase.cubeOut });
         FlxTween.tween(jewelDiffText, { localAlpha: 0 }, 1, { startDelay: 3, ease: FlxEase.cubeOut });
-        if (sound != "") FunkinSound.playOnce(Paths.sound(sound));
+        if (sound != "") FunkinSound.playOnce(Paths.sound('ui/funkbucks/sounds/$sound'));
 
         setDisplay(null, null, currentBGAlpha);
     }
@@ -296,7 +296,7 @@ class MoneyHUD extends FunkinGroup
             });
         }
         
-        FunkinSound.playOnce(Paths.sound("CS_locked"), 0.5);
+        FunkinSound.playOnce(Paths.sound('ui/character-select/sounds/locked'), 0.5);
     }
 
     /**

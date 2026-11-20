@@ -63,7 +63,6 @@ typedef BoxData =
     chances:Array<Array<String, Int>>, // The numerical chance for each rarity as its WEIGHT. Double-check chances in the Box Menu to make sure they're correct.
     cost:Int,
     order:Float,
-    ?rollsPins:Bool, // Does the box directly roll pins? (optional, default: false)
     ?special:Bool // Is the box only obtainable by special means? This makes it not purchasable. (optional, default: false)
 }
 
@@ -942,20 +941,13 @@ class FunkBucks extends Module
         }
     }
 
-    override function onStateChangeBegin(event:StateChangeScriptEvent):Void
-    {
-        super.onStateChangeBegin(event);
-    }
-
     override function onStateChangeEnd(event:StateChangeScriptEvent):Void
     {
-        //repositionHUD(0, 0);
-
         if (event.targetState is MainMenuState)
         {
             menuPin = new PinSprite(100, 100);
             menuPin.isUnlocked = true;
-            menuPin.setupPin("funkbuck", "", "", 0.5, 1, true);
+            menuPin.setupPin("funkbuck", "", "", 0.5, 1);
             menuPin.scrollFactor.set(0, 0);
             event.targetState.add(menuPin);
 
@@ -970,8 +962,6 @@ class FunkBucks extends Module
 
     override function onSubStateOpenEnd(event:SubStateScriptEvent):Void
     {
-        //repositionHUD(0, 0);
-
         /**
          * Change this later to be on song end instead?
          * So that mods that don't use the default results can still give FunkBucks on song/week completions.
