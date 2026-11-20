@@ -1,6 +1,6 @@
 ## Adding a new Pin
 
-Adding a new pin is as simple as a json merge! Create a `pins.json` in `_merge/YOURMOD/data/pointlesspins/` and put the following in:
+Adding a new pin is as simple as a json merge! Create a `pins.json` in `_merge/YOURMOD/data/funkbucks/` and put the following in:
 ```json
 [
     { "op": "add", "path": "/Common/pins/-", "value": { "id": "merge-test", "name": "Merging Test Pin" }}
@@ -8,7 +8,7 @@ Adding a new pin is as simple as a json merge! Create a `pins.json` in `_merge/Y
 ```
 Remember to change the `id` and `name`. The `Common` can be changed to a different rarity to add a pin into that one instead. `Common`, `Uncommon`, `Rare`, `Epic`, `Legendary`, `Mythic`, `Divine`, and `Special` are valid rarities by default.
 
-Images for pins are found in `images/pointlesspins/pins/`. Create this location within your mod to add the pin sprites into.
+Images for pins are found in `ui/funkbucks/pins/`. Create this location within your mod to add the pin sprites into.
 
 Valid pin fields are:
 * `id`: The ID the mod uses to save your pin as in the save data. The file the game looks for to load as a sprite is also named as such.
@@ -57,4 +57,4 @@ Adding a new rarity is just another json merge. You must give it an order, so it
 The order value for all default rarities is at every 100, with Common at `0` and Special at `700`.
 If a rarity has no pins it won't show up on the Pin Board. (Like with `Divine` currently.)
 
-Creating an icon for your new rarity in `images/pinboard/` is also recommended with the name `rarity-YourRarity`. If it doesn't exist the `Common` rarity's icon will be used instead.
+Creating an icon for your new rarity in `ui/funkbucks/pin-board/rarities/` is also recommended with the name `YourRarity`. If it doesn't exist the `Common` rarity's icon will be used instead.
