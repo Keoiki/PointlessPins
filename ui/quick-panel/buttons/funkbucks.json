@@ -1,0 +1,16 @@
+{
+    "version": "1.0.0",
+    "text": "Pointless Pins",
+    "icon": "funkbuck-shop",
+    "description": "Visit the Shop for some completely pointless stuff!",
+    "action": "none",
+    "panel": "mainmenu",
+    "order": 6,
+    "buttonAnim": {
+        "animType": "sparrow",
+        "idleName": "idle",
+        "idlePrefix": "icon-idle0",
+        "acceptName": "accept",
+        "acceptPrefix": "icon-accept0"
+    }
+}
