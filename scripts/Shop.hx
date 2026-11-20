@@ -913,6 +913,7 @@ class Shop extends MusicBeatState
     {
         if (dialog != null) remove(dialog);
         camera.bgColor = 0xFF000000;
+        Shop.instance = null;
         super.destroy();
     }
 

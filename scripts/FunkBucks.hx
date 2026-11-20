@@ -389,7 +389,7 @@ class FunkBucks extends Module
         }
         FunkBucks.flushSave();
         final diff:Int = FunkBucks.getFunkCoins() - previousAmount;
-        Shop.instance.moneyHUD?.showBuckChange(diff);
+        if (FlxG.state is Shop) Shop.instance?.moneyHUD?.showBuckChange(diff);
         trace("Current FunkBucks: " + FunkBucks.getFunkCoins());
         trace("Lifetime FunkBucks: " + FunkBucks.getFunkCoinsLifetime());
     }
@@ -416,7 +416,7 @@ class FunkBucks extends Module
         FunkBucks.save.blueJewels = FunkBucks.getBlueJewels() + amount;
         FunkBucks.flushSave();
         final diff:Int = FunkBucks.getBlueJewels() - previousAmount;
-        Shop.instance.moneyHUD?.showJewelChange(diff);
+        if (FlxG.state is Shop) Shop.instance?.moneyHUD?.showJewelChange(diff);
     }
 
     public static function getBlueJewels():Int
@@ -1140,11 +1140,16 @@ class FunkBucks extends Module
         #end
 
         var wantedPinIDs:Array<String> = [];
+
+        // Because of the rating changes there's no 11 or higher star song, so I won't put the "difficultystar" condition here.... yet.
+
+        // If you know how to script merge, you can try to merge here to add your own song/level IDs.
         switch (completionID)
         {
             case "sserafim", "spaghetti-default": wantedPinIDs.push("spaghetti");
             default:
         }
+
         switch (rank)
         {
             case ScoringRank.PERFECT_GOLD: wantedPinIDs.push("rank-goldperfect");
@@ -1155,6 +1160,7 @@ class FunkBucks extends Module
             case ScoringRank.SHIT: wantedPinIDs.push("rank-shit");
             default: trace("Rank should've default to SHIT?");
         }
+
         if (wantedPinIDs.length > 0)
         {
             for (pinID in wantedPinIDs)
