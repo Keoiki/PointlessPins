@@ -1,0 +1,50 @@
+{
+    "dialogue":
+    [
+        {
+            "text": "...",
+            "canSkip": false,
+            "boxPreset": "april"
+        },
+        {
+            "text": "...",
+            "canSkip": false,
+            "boxPreset": "april"
+        },
+        {
+            "text": "Oh,<d=0.25/> you're here.",
+            "canSkip": false,
+            "boxPreset": "april"
+        },
+        {
+            "text": "Name's April.",
+            "speaker": "April",
+            "canSkip": false
+        },
+        {
+            "text": "Ophelia has decided to take an extended break\nfrom shop duty.",
+            "speaker": "April",
+            "canSkip": false
+        },
+        {
+            "text": "She'll be back someday,<d=0.25/> but until then\nyou'll have to deal with me.",
+            "speaker": "April",
+            "canSkip": false
+        },
+        {
+            "text": "Hopefully I won't be here for as long as she was.",
+            "speaker": "April",
+            "canSkip": false
+        },
+        {
+            "text": "...",
+            "canSkip": false,
+            "boxPreset": "april"
+        },
+        {
+            "text": "I bet she's sleeping in her office\nfor the billionth time...",
+            "speaker": "April",
+            "canSkip": false
+        }
+    ]
+}

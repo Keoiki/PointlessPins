@@ -68,8 +68,8 @@ class PinRarityIconGroup extends FunkinGroup
         final rarityCount:Int = PIN_RARITIES.length;
         for (i in 0...rarityCount)
         {
-            var rarityIcon:FunkinSprite = new FunkinSprite(0, 0).loadTexture('pinboard/rarity-${PIN_RARITIES[i]}');
-            if (rarityIcon.frames == null) rarityIcon.loadTexture('pinboard/rarity-Common');
+            var rarityIcon:FunkinSprite = new FunkinSprite(0, 0).loadTexture('ui/funkbucks/pin-board/rarities/${PIN_RARITIES[i]}');
+            if (rarityIcon.frames == null) rarityIcon.loadTexture('ui/funkbucks/pin-board/rarities/Common');
             rarityIcon.localX = ICON_X_DIFF * i - ICON_X_DIFF / 2 * rarityCount + 10;
             rarityIcon.localY = -rarityIcon.height;
             this.add(rarityIcon);

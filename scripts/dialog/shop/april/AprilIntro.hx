@@ -1,8 +1,5 @@
 package funkbucks.dialog.shop.april;
 
-import flixel.tweens.FlxEase;
-import flixel.tweens.FlxTween;
-import flixel.util.FlxTimer;
 import funkbucks.FunkBucks;
 import funkbucks.Shop;
 import funkbucks.dialog.DialogBase;
@@ -12,7 +9,7 @@ class AprilIntro extends DialogBase
 {
     var shop:Shop;
 
-    override function new():Void
+    override public function new():Void
     {
         super();
         shop = Shop.instance;
@@ -26,7 +23,7 @@ class AprilIntro extends DialogBase
             shop.remove(shop.dialog);
         }
 
-        var dialog:Dialogue = new Dialogue("april-intro");
+        var dialog:Dialogue = new Dialogue("april/intro");
         dialog.cameras = [shop.cameraHUD];
 
         dialog.dialogueText.letterCallback = (code) ->
@@ -44,8 +41,9 @@ class AprilIntro extends DialogBase
                 case 1: shop.shopkeeper.playAnimation('OnPhoneLookUp');
                 case 2: shop.shopkeeper.playAnimation('ForwardLookUp');
                 case 4: shop.shopkeeper.playAnimation('Normal');
-                case 5: shop.shopkeeper.playAnimation('LookUpLeft');
-                case 6: shop.shopkeeper.playAnimation('LookRight');
+                case 6: shop.shopkeeper.playAnimation('LookRightWorried');
+                case 7: shop.shopkeeper.playAnimation('LookRight');
+                case 8: shop.shopkeeper.playAnimation('LookRightUnamused');
             }
         });
 
@@ -55,6 +53,11 @@ class AprilIntro extends DialogBase
             {
                 case 'worried': shop.shopkeeper.playAnimation('LookRightWorried');
             }
+        });
+
+        dialog.onSkipLine.add((index) ->
+        {
+            shop.shopkeeper.stopTalking();
         });
 
         dialog.onCompleteDialogue.add(() ->

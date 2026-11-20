@@ -1,6 +1,6 @@
 package funkbucks.objects;
 
-import balphabet.BAlphabet;
+import balphabet.BAText;
 import flixel.addons.display.FlxSliceSprite;
 import flixel.math.FlxRect;
 import funkin.graphics.FunkinSprite;
@@ -13,17 +13,17 @@ import funkin.group.FunkinGroup;
 class KeyCap extends FunkinGroup
 {
     public var keycap:FunkinSprite;
-    public var letter:BAlphabet;
+    public var letter:BAText;
 
     public function new(x:Float, y:Float, character:String, ?keywidth:Null<Float> = 70, ?isUI:Null<Bool> = true):Void
     {
         super(x, y);
 
-        keycap = new FlxSliceSprite(Assets.getBitmapData("images/keycap70x70.png"), FlxRect.get(13, 0, 44, 70), keywidth, 70);
+        keycap = new FlxSliceSprite(Assets.getBitmapData("ui/funkbucks/keycap-70x70.png"), FlxRect.get(13, 0, 44, 70), keywidth, 70);
         keycap.zIndex = this.zIndex;
         this.add(keycap);
 
-        letter = new BAlphabet(0, 0, character);
+        letter = new BAText(0, 0, character);
         letter.alignment = "center";
         letter.localX = keycap.width / 2;
         letter.localY = 10;

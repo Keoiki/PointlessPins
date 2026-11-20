@@ -1,0 +1,16 @@
+{
+    "canSkipOnRepeat": true,
+    "dialogue": 
+    [
+        {
+            "text": "Nope!",
+            "speaker": "April",
+            "canSkip": false
+        },
+        {
+            "text": "Don't be so <i>poor</i> next time!",
+            "speaker": "April",
+            "canSkip": false
+        }
+    ]
+}

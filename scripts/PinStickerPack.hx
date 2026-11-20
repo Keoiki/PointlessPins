@@ -1,5 +1,8 @@
 package funkbucks;
 
+// I cba to update this right now, I'll only update it if we ever get songs in this mod.
+
+/*
 import funkin.ui.transition.stickers.StickerPack;
 
 class PinStickerPack extends StickerPack
@@ -56,3 +59,4 @@ class PinStickerPack extends StickerPack
         }
     }
 }
+*/

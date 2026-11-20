@@ -1,14 +1,15 @@
 package funkbucks.objects.shop;
 
 import Date;
+import flixel.FlxSprite;
 import funkin.graphics.FunkinSprite;
 import funkin.group.FunkinGroup;
 
 class Clock extends FunkinGroup
 {
     var clock:FunkinSprite;
-    var handHour:FunkinSprite;
-    var handMinute:FunkinSprite;
+    var handHour:FlxSprite;
+    var handMinute:FlxSprite;
 
     override public function new(x:Float, y:Float):Void
     {
@@ -18,7 +19,7 @@ class Clock extends FunkinGroup
 
     function createClock()
     {
-        var clockShadow:FunkinSprite = new FunkinSprite(0, 0).loadTexture("shop/clock");
+        var clockShadow:FunkinSprite = new FunkinSprite(0, 0).loadTexture("ui/funkbucks/shop/clock");
         clockShadow.localY = 10;
         clockShadow.localScale.set(0.925, 1.0);
         clockShadow.scrollFactor.set(0.85, 0.85);
@@ -27,12 +28,13 @@ class Clock extends FunkinGroup
         clockShadow.blend = 9;
         this.add(clockShadow);
 
-        clock = new FunkinSprite(0, 0).loadTexture("shop/clock");
+        clock = new FunkinSprite(0, 0).loadTexture("ui/funkbucks/shop/clock");
         clock.zIndex = 1;
         clock.scrollFactor.set(0.85, 0.85);
         this.add(clock);
 
-        handHour = new FunkinSprite(0, 0).loadTexture("shop/clockHandHour");
+        //handHour = new FunkinSprite(0, 0).loadTexture("shop/clockHandHour");
+        handHour = new FlxSprite(0, 0).makeGraphic(4, 25, 0xFF000000);
         handHour.scrollFactor.set(0.85, 0.85);
         handHour.zIndex = 2;
         handHour.origin.y = handHour.height;
@@ -40,7 +42,8 @@ class Clock extends FunkinGroup
         handHour.localY = 45;
         this.add(handHour);
 
-        handMinute = new FunkinSprite(0, 0).loadTexture("shop/clockHandMinute");
+        //handMinute = new FunkinSprite(0, 0).loadTexture("shop/clockHandMinute");
+        handMinute = new FlxSprite(0, 0).makeGraphic(4, 50, 0xFF000000);
         handMinute.scrollFactor.set(0.85, 0.85);
         handMinute.zIndex = 3;
         handMinute.origin.y = handMinute.height;

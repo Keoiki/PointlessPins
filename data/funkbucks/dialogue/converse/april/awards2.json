@@ -1,0 +1,16 @@
+{
+    "canSkipOnRepeat": true,
+    "dialogue": 
+    [
+        {
+            "text": "Oh and in case you were wondering,",
+            "speaker": "April",
+            "canSkip": false
+        },
+        {
+            "text": "the \"awards\" are the previously promised \"rewards\".",
+            "speaker": "April",
+            "canSkip": false
+        }
+    ]
+}

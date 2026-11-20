@@ -1,6 +1,6 @@
 package funkbucks.objects.ui;
 
-import balphabet.BAlphabet;
+import balphabet.BAText;
 import flixel.addons.display.FlxSliceSprite;
 import flixel.math.FlxRect;
 import flixel.tweens.FlxEase;
@@ -10,16 +10,16 @@ import funkin.group.FunkinGroup;
 
 class MoneyHUD extends FunkinGroup
 {
-    public var buckText:BAlphabet;
-    public var jewelText:BAlphabet;
+    public var buckText:BAText;
+    public var jewelText:BAText;
     public var background:FlxSliceSprite;
 
     public var currentDisplayBucks:Bool = false;
     public var currentDisplayJewels:Bool = false;
     public var currentBGAlpha:Float = DEFAULT_BACKGROUND_ALPHA;
 
-    var buckDiffText:BAlphabet;
-    var jewelDiffText:BAlphabet;
+    var buckDiffText:BAText;
+    var jewelDiffText:BAText;
 
     final DEFAULT_BACKGROUND_ALPHA:Float = 0.75;
 
@@ -27,7 +27,7 @@ class MoneyHUD extends FunkinGroup
     {
         super(x, y);
 
-        background = new FlxSliceSprite(Assets.getBitmapData("images/pointlesspins/dialogue/speaker-round.png"), FlxRect.get(32, 0, 238, 60), 500, 64);
+        background = new FlxSliceSprite(Assets.getBitmapData("ui/funkbucks/dialogue/speaker-round.png"), FlxRect.get(32, 0, 238, 60), 500, 64);
         background.localX = -background.width;
         background.localY = -14;
         background.scrollFactor.set(0, 0);
@@ -37,37 +37,38 @@ class MoneyHUD extends FunkinGroup
         background.localAlpha = 0.75;
         this.add(background);
 
-        buckText = new BAlphabet(0, 0, '<b>${FunkBucks.getFunkCoins()}</b> ${FBIcon.Buck}');
+        buckText = new BAText(0, 0, '<b>${FunkBucks.getFunkCoins()}</b> ${FBIcon.Buck}');
         buckText.alignment = "right";
         buckText.localScale.set(0.65, 0.65);
         buckText.setScrollFactor(0, 0);
         this.add(buckText);
         
-        jewelText = new BAlphabet(0, 0, '<b><c=82E9FF>${FunkBucks.getBlueJewels()}</c></b> ${FBIcon.Jewel}');
+        jewelText = new BAText(0, 0, '<b><c=82E9FF>${FunkBucks.getBlueJewels()}</c></b> ${FBIcon.Jewel}');
         jewelText.alignment = "right";
         jewelText.localScale.set(0.65, 0.65);
         jewelText.setScrollFactor(0, 0);
         jewelText.localX = -(buckText.width - 64);
         this.add(jewelText);
 
-        buckDiffText = new BAlphabet(0, 0, "");
+        buckDiffText = new BAText(0, 0, "");
         buckDiffText.alignment = "center";
         buckDiffText.localScale.set(0.4, 0.4);
         buckDiffText.setScrollFactor(0, 0);
         this.add(buckDiffText);
 
-        jewelDiffText = new BAlphabet(0, 0, "");
+        jewelDiffText = new BAText(0, 0, "");
         jewelDiffText.alignment = "center";
         jewelDiffText.localScale.set(0.4, 0.4);
         jewelDiffText.setScrollFactor(0, 0);
         this.add(jewelDiffText);
 
-        background.width = buckText.width + jewelText.width - 77;
         background.localX = -background.width + 15;
 
         background.localAlpha = 0;
         buckText.localAlpha = 0;
         jewelText.localAlpha = 0;
+
+        setDisplay(true, true);
     }
 
     override function update(elapsed:Float)
@@ -103,6 +104,8 @@ class MoneyHUD extends FunkinGroup
         super.update(elapsed);
     }
 
+    // Stupid ass fix variable because Better Alphabet object's scale isn't updated in time, curse you FunkinGroup!
+    var init:Bool = true;
     public function setDisplay(showBucks:Null<Bool>, showJewels:Null<Bool>, ?bgAlpha:Null<Float>):Void
     {
         if (showBucks != null)
@@ -130,7 +133,7 @@ class MoneyHUD extends FunkinGroup
                 FlxTween.tween(jewelText, { localAlpha: 1 }, 1, { ease: FlxEase.cubeOut });
                 if (showBucks || currentDisplayBucks)
                 {
-                    FlxTween.tween(jewelText, { localX: -(buckText.width + 20) }, 1, { ease: FlxEase.cubeOut });
+                    FlxTween.tween(jewelText, { localX: -(buckText.width * (init ? buckText.localScale.x : 1) + 20) }, 1, { ease: FlxEase.cubeOut });
                 }
             }
             else
@@ -171,7 +174,7 @@ class MoneyHUD extends FunkinGroup
 
         if (updateBGWidth)
         {
-            final desiredWidth:Float = (showBucks ? buckText.width + 30 : 0) + (showJewels ? jewelText.width + 30 : 0);
+            final desiredWidth:Float = (showBucks ? buckText.width * (init ? buckText.localScale.x : 1) + 30 : 0) + (showJewels ? jewelText.width * (init ? jewelText.localScale.x : 1) + 30 : 0);
             FlxTween.completeTweensOf(background);
             FlxTween.tween(background, { width: desiredWidth }, 0.95, { ease: FlxEase.cubeOut, onUpdate: () ->
             {
@@ -181,6 +184,8 @@ class MoneyHUD extends FunkinGroup
                 background.localX = -background.width + 15;
             }});
         }
+
+        init = false;
     }
 
     public function showBuckChange(diff:Float):Void
@@ -304,5 +309,15 @@ class MoneyHUD extends FunkinGroup
         FlxTween.completeTweensOf(jewelText);
         FlxTween.completeTweensOf(buckDiffText);
         FlxTween.completeTweensOf(jewelDiffText);
+    }
+
+    override function destroy():Void
+    {
+        background.destroy();
+        buckText.destroy();
+        jewelText.destroy();
+        buckDiffText.destroy();
+        jewelDiffText.destroy();
+        super.destroy();
     }
 }

@@ -8,7 +8,6 @@ import funkin.util.ReflectUtil;
 
 /**
  * Changed from the previous iteration, boxes now roll their rewards themselves, instead of the Box Menu doing it.
- * TODO: Add support for rolling specific pins instead of a random pin from a rarity.
  */
 class BoxSprite extends FunkinSprite
 {
@@ -34,7 +33,7 @@ class BoxSprite extends FunkinSprite
         pinData = FunkBucks.pinData;
         boxData = FunkBucks.boxData;
 
-        super(x, y, "pointlesspins/boxes/" + boxData[0].id, {
+        super(x, y, "ui/funkbucks/boxes/" + boxData[0].id, {
             applyStageMatrix: true,
             useRenderTexture: true
         });
@@ -66,7 +65,7 @@ class BoxSprite extends FunkinSprite
 
         if (change != 0)
         {
-            loadTextureAtlas("pointlesspins/boxes/" + bID, null, {
+            loadTextureAtlas("ui/funkbucks/boxes/" + bID, null, {
                 applyStageMatrix: true,
                 useRenderTexture: true
             });

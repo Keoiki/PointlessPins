@@ -1,6 +1,6 @@
 package funkbucks;
 
-import balphabet.BAlphabet;
+import balphabet.BAText;
 import flixel.FlxObject;
 import flixel.input.mouse.FlxMouseEvent;
 import flixel.tweens.FlxEase;
@@ -149,7 +149,7 @@ class RewardsSubMenu extends MusicBeatSubState
     var arrowRight:FunkinSprite;
 
     var bottomBar:FunkinSprite;
-    var rewardText:BAlphabet;
+    var rewardText:BAText;
 
     var coolBackButton:FunkinBackButton;
 
@@ -161,7 +161,7 @@ class RewardsSubMenu extends MusicBeatSubState
         bottomBar = new FunkinSprite(0, FlxG.height - 130).makeSolidColor(FlxG.width, 130, 0xBF000000);
         add(bottomBar);
 
-        rewardText = new BAlphabet(FlxG.width / 2, FlxG.height - 110, "Reward Text Here", { lineHeight: 70 });
+        rewardText = new BAText(FlxG.width / 2, FlxG.height - 110, "Reward Text Here", { lineHeight: 70 });
         rewardText.alignment = "center";
         rewardText.scale.set(0.45, 0.45);
         add(rewardText);
@@ -606,7 +606,7 @@ class RewardsSubMenu extends MusicBeatSubState
 class RewardItem extends ScriptedFlxSpriteGroup
 {
     var icon:FunkinSprite;
-    var number:BAlphabet;
+    var number:BAText;
     var lock:FunkinSprite;
     var checkmark:FunkinSprite;
 
@@ -700,7 +700,7 @@ class RewardItem extends ScriptedFlxSpriteGroup
                     default: 30;
                 }
 
-                number = new BAlphabet(0, 0, '<b><c=00FF00>$_rollCount Free</c></b>');
+                number = new BAText(0, 0, '<b><c=00FF00>$_rollCount Free</c></b>');
                 number.alignment = "center";
                 number.scale.set(0.4, 0.4);
             }
@@ -721,13 +721,13 @@ class RewardItem extends ScriptedFlxSpriteGroup
                 icon.x -= icon.width / 2;
                 icon.y -= icon.height - 8;
 
-                number = new BAlphabet(0, 0, '<b>$reward</b> ${FBIcon.Buck}');
+                number = new BAText(0, 0, '<b>$reward</b> ${FBIcon.Buck}');
                 number.alignment = "center";
                 number.scale.set(0.4, 0.4);
             }
             case RewardType.Jewel:
             {
-                number = new BAlphabet(0, 0, '<b>$reward</b> ${FBIcon.Jewel}');
+                number = new BAText(0, 0, '<b>$reward</b> ${FBIcon.Jewel}');
                 number.alignment = "center";
                 number.scale.set(0.4, 0.4);
             }
@@ -737,21 +737,21 @@ class RewardItem extends ScriptedFlxSpriteGroup
             }
             case RewardType.DiscountBox:
             {
-                icon = new BAlphabet(0, -100, '<b>Box\nDiscount</b>');
+                icon = new BAText(0, -100, '<b>Box\nDiscount</b>');
                 icon.alignment = "center";
                 icon.scale.set(0.5, 0.5);
 
-                number = new BAlphabet(0, 0, '<b><c=00FF00>-$reward%</c></b>');
+                number = new BAText(0, 0, '<b><c=00FF00>-$reward%</c></b>');
                 number.alignment = "center";
                 number.scale.set(0.4, 0.4);
             }
             case RewardType.BonusFunkBuck:
             {
-                icon = new BAlphabet(0, -100, '<b>FunkBuck\nBonus</b>');
+                icon = new BAText(0, -100, '<b>FunkBuck\nBonus</b>');
                 icon.alignment = "center";
                 icon.scale.set(0.5, 0.5);
 
-                number = new BAlphabet(0, 0, '<b><c=00FF00>+$reward%</c></b>');
+                number = new BAText(0, 0, '<b><c=00FF00>+$reward%</c></b>');
                 number.alignment = "center";
                 number.scale.set(0.4, 0.4);
             }

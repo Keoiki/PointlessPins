@@ -64,7 +64,7 @@ class DialogBase
         FlxTween.tween(shop.camera, { zoom: shop.savedCamZoom }, 1, { ease: FlxEase.cubeOut });
 
         shop.showMenuItems(true);
-        FunkBucks.moneyHUD.setDisplay(true, true);
+        Shop.instance.moneyHUD.setDisplay(true, true);
     }
 
     /**

@@ -1,6 +1,6 @@
 package funkbucks;
 
-import balphabet.BAlphabet;
+import balphabet.BAText;
 import flixel.FlxObject;
 import flixel.math.FlxMath;
 import flixel.math.FlxPoint;
@@ -16,7 +16,9 @@ import funkbucks.objects.shop.Clock;
 import funkbucks.objects.shop.DailyBoard;
 import funkbucks.objects.shop.StatsSheet;
 import funkbucks.objects.ui.BackButton;
-import pointlesspins.objects.shop.secret.Tuntematon;
+import funkbucks.objects.ui.MoneyHUD;
+import funkin.assets.Paths;
+import funkin.api.newgrounds.NewgroundsClient;
 import funkin.audio.FunkinSound;
 import funkin.graphics.FunkinCamera;
 import funkin.graphics.FunkinSprite;
@@ -24,6 +26,10 @@ import funkin.mobile.ui.FunkinBackButton;
 import funkin.modding.ModStore;
 import funkin.ui.MusicBeatState;
 import funkin.ui.mainmenu.MainMenuState;
+import funkin.ui.quickpanel.QuickPanelState;
+import funkin.ui.transition.FadeType;
+import funkin.ui.transition.Transition;
+import funkin.ui.transition.TransitionType;
 import funkin.util.TouchUtil;
 using StringTools;
 
@@ -43,7 +49,7 @@ class Shop extends MusicBeatState
     public var talkingToOphelia:Bool = false;
     public var isShopkeeperGone:Bool = false;
     var extendBounds:Bool = false;
-    var cannotDoText:BAlphabet;
+    var cannotDoText:BAText;
 
     // Dialogue
     public var dialog:Dialogue;
@@ -67,19 +73,19 @@ class Shop extends MusicBeatState
     public var skcItem2:FunkinSprite;
 
     public var iconPins:FunkinSprite;
-    var lablePins:BAlphabet;
+    var lablePins:BAText;
     var keycapPins:KeyCap;
 
     public var iconBoxes:FunkinSprite;
-    var lableBoxes:BAlphabet;
+    var lableBoxes:BAText;
     var keycapBoxes:KeyCap;
 
     public var iconConverse:FunkinSprite;
-    var lableConverse:BAlphabet;
+    var lableConverse:BAText;
     var keycapConverse:KeyCap;
 
     public var iconStats:FunkinSprite;
-    var lableStats:BAlphabet;
+    var lableStats:BAText;
     var keycapStats:KeyCap;
     var viewingStats:Bool = false;
     var statsSheet:StatsSheet;
@@ -87,11 +93,60 @@ class Shop extends MusicBeatState
     // UI
     public var screenBlack:FunkinSprite;
     
-    var updateText:BAlphabet;
+    var updateText:BAText;
 
-    public var coolBackButton:Dynamic; // it's more like OneOfTwo<FunkinBackButton, BackButton>
+    public var coolBackButton:BackButton;
 
     public static var instance:Shop;
+    public var moneyHUD:MoneyHUD;
+
+    public static function queryAssets(type:AssetType):Array<AssetPath>
+    {
+        var result:Array<AssetPath> = [];
+
+        switch (type)
+        {
+            case "IMAGE":
+            {
+                result.appendUnique([
+                    Paths.animateAtlas('ui/funkbucks/shop/april').image(),
+                    Paths.animateAtlas('ui/funkbucks/shop/april-eyes').image(),
+                    Paths.animateAtlas('ui/funkbucks/shop/april-mouth').image(),
+                    Paths.animateAtlas('ui/funkbucks/shop/lamp').image(),
+                    Paths.image('ui/funkbucks/shop/april-chipbag'),
+                    Paths.image('ui/funkbucks/shop/april-drink'),
+                    Paths.image('ui/funkbucks/shop/clock'),
+                    Paths.image('ui/funkbucks/shop/counter'),
+                    Paths.image('ui/funkbucks/shop/counter-door'),
+                    Paths.image('ui/funkbucks/shop/daily-board'),
+                    Paths.image('ui/funkbucks/shop/funkbucks1'),
+                    Paths.image('ui/funkbucks/shop/funkbucks2'),
+                    Paths.image('ui/funkbucks/shop/funkbucks3'),
+                    Paths.image('ui/funkbucks/shop/icon-boxes'),
+                    Paths.image('ui/funkbucks/shop/icon-pins'),
+                    Paths.image('ui/funkbucks/shop/icon-stats'),
+                    Paths.image('ui/funkbucks/shop/stats-sheet'),
+                    Paths.image('ui/funkbucks/shop/wall'),
+                    Paths.image('ui/funkbucks/backbutton')
+                ]);
+            }
+            case "SOUND":
+            {
+                //result.push(Paths.music("ui/editors/chart-editor/artistic-expression").audio());
+            }
+            case "JSON":
+            {
+                result.appendUnique([
+                    Paths.animateAtlas('ui/funkbucks/shop/april').json(),
+                    Paths.animateAtlas('ui/funkbucks/shop/april-eyes').json(),
+                    Paths.animateAtlas('ui/funkbucks/shop/april-mouth').json(),
+                    Paths.animateAtlas('ui/funkbucks/shop/lamp').json()
+                ]);
+            }
+        }
+
+        return result;
+    }
 
     override public function new():Void
     {
@@ -128,20 +183,23 @@ class Shop extends MusicBeatState
         cameraFollowPointMarker.zIndex = 9999999;
         // add(cameraFollowPointMarker);
 
+        // Money HUD is now shop exclusive because PLUGINS FUCKING SUCK ASS !!!!!!!!!!!!!!!!!
+        moneyHUD = new MoneyHUD(FlxG.width - 25, 25);
+        moneyHUD.cameras [cameraHUD];
+        add(moneyHUD);
+
         final skName:String = FunkBucks.getShopkeeper();
 
         if (FlxG.random.bool(1))
         {
-             isShopkeeperGone = true;
-             if (FlxG.random.bool(50))
-             {
-                 extendBounds = true;
-             }
+            isShopkeeperGone = true;
+            if (FlxG.random.bool(50))
+            {
+                extendBounds = true;
+            }
         }
 
-        if (!isShopkeeperGone) FunkBucks.moneyHUD.setDisplay(true, true);
-
-        if (TimedCoinsManager.running || isShopkeeperGone || Shopkeeper.caught)
+        if (isShopkeeperGone || Shopkeeper.caught)
         {
             FlxG.sound.music.stop();
         }
@@ -158,7 +216,7 @@ class Shop extends MusicBeatState
 
         // Shop
 
-        wall = new FunkinSprite(-950 - spriteNudge, -400).loadTexture("shop/wall");
+        wall = new FunkinSprite(-950 - spriteNudge, -400).loadTexture("ui/funkbucks/shop/wall");
         wall.zIndex = -1000;
         wall.scrollFactor.set(0.85, 0.85);
         add(wall);
@@ -194,51 +252,45 @@ class Shop extends MusicBeatState
         shopkeeper.scrollFactor.set(0.98, 1);
         add(shopkeeperHitbox);
 
-        counter = new FunkinSprite(-950 - spriteNudge, 490).loadTexture("shop/counter");
+        counter = new FunkinSprite(-950 - spriteNudge, 490).loadTexture("ui/funkbucks/shop/counter");
         counter.zIndex = 500;
         counter.scrollFactor.set(1, 1);
         add(counter);
 
-        counterDoorR = new FunkinSprite(684 - spriteNudge, 550).loadTexture("shop/counterdoor");
+        counterDoorR = new FunkinSprite(684 - spriteNudge, 550).loadTexture("ui/funkbucks/shop/counter-door");
         counterDoorR.zIndex = 498;
         counterDoorR.scrollFactor.set(1, 1);
         add(counterDoorR);
 
-        counterDoorL = new FunkinSprite(458 - spriteNudge, 550).loadTexture("shop/counterdoor");
+        counterDoorL = new FunkinSprite(458 - spriteNudge, 550).loadTexture("ui/funkbucks/shop/counter-door");
         counterDoorL.zIndex = 498;
         counterDoorL.scrollFactor.set(1, 1);
         counterDoorL.flipX = true;
         add(counterDoorL);
 
-        var fbStack1:FunkinSprite = new FunkinSprite(-100 - spriteNudge, 439).loadTexture("shop/funkbucks1");
+        var fbStack1:FunkinSprite = new FunkinSprite(-100 - spriteNudge, 439).loadTexture("ui/funkbucks/shop/funkbucks1");
         fbStack1.zIndex = 490;
         add(fbStack1);
 
-        var fbStack2:FunkinSprite = new FunkinSprite(2050 - spriteNudge, 418).loadTexture("shop/funkbucks2");
+        var fbStack2:FunkinSprite = new FunkinSprite(2050 - spriteNudge, 418).loadTexture("ui/funkbucks/shop/funkbucks2");
         fbStack2.zIndex = 491;
         add(fbStack2);
 
-        var fbStack3:FunkinSprite = new FunkinSprite(-700 - spriteNudge, 370).loadTexture("shop/funkbucks3");
+        var fbStack3:FunkinSprite = new FunkinSprite(-700 - spriteNudge, 370).loadTexture("ui/funkbucks/shop/funkbucks3");
         fbStack3.zIndex = 492;
         add(fbStack3);
 
         if (shopkeeper.name == "ophelia")
         {
-            skcItem1 = new FunkinSprite(1000 - spriteNudge, 444).loadTexture("shop/rewards/funkbuck01");
-            skcItem1.zIndex = 490;
-            add(skcItem1);
-
-            skcItem2 = new FunkinSprite(1300 - spriteNudge, 424).loadTexture("shop/rewards/funkbuck02");
-            skcItem2.zIndex = 491;
-            add(skcItem2);
+            
         }
         else if (shopkeeper.name == "april")
         {
-            skcItem1 = new FunkinSprite(1350 - spriteNudge, 330).loadTexture("shop/aprildrink");
+            skcItem1 = new FunkinSprite(1350 - spriteNudge, 330).loadTexture("ui/funkbucks/shop/april-drink");
             skcItem1.zIndex = 490;
             add(skcItem1);
 
-            skcItem2 = new FunkinSprite(878 - spriteNudge, 430).loadTexture("shop/aprilchipbag");
+            skcItem2 = new FunkinSprite(878 - spriteNudge, 430).loadTexture("ui/funkbucks/shop/april-chipbag");
             skcItem2.zIndex = 490;
             add(skcItem2);
         }
@@ -262,7 +314,7 @@ class Shop extends MusicBeatState
         {
             if (Shopkeeper.caught) break;
 
-            var lamp:FunkinSprite = new FunkinSprite(-400 + (i * 1020) - spriteNudge, -460, "shop/lamp");
+            var lamp:FunkinSprite = new FunkinSprite(-400 + (i * 1020) - spriteNudge, -460, "ui/funkbucks/shop/lamp");
             lamp.zIndex = 2000;
             lamp.scrollFactor.set(1.1, 1.0);
             add(lamp);
@@ -271,37 +323,37 @@ class Shop extends MusicBeatState
             if (FlxG.random.bool(95) && !isShopkeeperGone) lamp.animation.play("on");
         }
 
-        iconPins = new FunkinSprite(-400 - spriteNudge, 324).loadTexture("shop/iconpins");
+        iconPins = new FunkinSprite(-400 - spriteNudge, 324).loadTexture("ui/funkbucks/shop/icon-pins");
         iconPins.zIndex = 490;
         add(iconPins);
 
-        lablePins = new BAlphabet(iconPins.x + iconPins.width / 2, 520, "<b>Pins</b>");
+        lablePins = new BAText(iconPins.x + iconPins.width / 2, 520, "<b>Pins</b>");
         lablePins.alignment = "center";
         lablePins.scale.set(0.65, 0.65);
         lablePins.zIndex = 510;
         add(lablePins);
 
-        iconBoxes = new FunkinSprite(160 - spriteNudge, 356).loadTexture("shop/iconboxes");
+        iconBoxes = new FunkinSprite(160 - spriteNudge, 356).loadTexture("ui/funkbucks/shop/icon-boxes");
         iconBoxes.zIndex = 491;
         add(iconBoxes);
 
-        lableBoxes = new BAlphabet(iconBoxes.x + iconBoxes.width / 2, 520, "<b>Boxes</b>");
+        lableBoxes = new BAText(iconBoxes.x + iconBoxes.width / 2, 520, "<b>Boxes</b>");
         lableBoxes.alignment = "center";
         lableBoxes.scale.set(0.65, 0.65);
         lableBoxes.zIndex = 512;
         add(lableBoxes);
 
-        lableConverse = new BAlphabet(1200 - spriteNudge, 520, "<b>Converse</b>");
+        lableConverse = new BAText(1200 - spriteNudge, 520, "<b>Converse</b>");
         lableConverse.scale.set(0.65, 0.65);
         lableConverse.alignment = "center";
         lableConverse.zIndex = 516;
         add(lableConverse);
 
-        iconStats = new FunkinSprite(1675 - spriteNudge, 373).loadTexture("shop/iconstats");
+        iconStats = new FunkinSprite(1675 - spriteNudge, 373).loadTexture("ui/funkbucks/shop/icon-stats");
         iconStats.zIndex = 493;
         add(iconStats);
 
-        lableStats = new BAlphabet(1750 - spriteNudge, 520, "<b>Stats</b>");
+        lableStats = new BAText(1750 - spriteNudge, 520, "<b>Stats</b>");
         lableStats.alignment = "center";
         lableStats.scale.set(0.65, 0.65);
         lableStats.zIndex = 514;
@@ -346,7 +398,7 @@ class Shop extends MusicBeatState
         screenBlack.cameras = [cameraHUD];
         add(screenBlack);
 
-        cannotDoText = new BAlphabet(FlxG.width / 2, FlxG.height - 100, "<b><c=FF0000>You cannot do that right now.</c></b>");
+        cannotDoText = new BAText(FlxG.width / 2, FlxG.height - 100, "<b><c=FF0000>You cannot do that right now.</c></b>");
         cannotDoText.alignment = "center";
         cannotDoText.scale.set(0.5, 0.5);
         cannotDoText.alpha = 0.0001;
@@ -363,7 +415,7 @@ class Shop extends MusicBeatState
 
         if (ModStore.get("funkbucksOutdated") && ModStore.get("funkbucksShownOutdate") == null)
         {
-            var alert:BAlphabet = new BAlphabet(30, 30,
+            var alert:BAText = new BAText(30, 30,
                 '<c=FFB51C><b>New version is available:</c> <c=00FF00>${ModStore.get("funkbucksNewVersion")}</c>\n<s=0.75>${ModStore.get("funkbucksNewVersionInfo")}</s></b>',
                 { lineHeight: 60 });
             alert.scale.set(0.4, 0.4);
@@ -413,6 +465,8 @@ class Shop extends MusicBeatState
         camera.maxScrollY = counter.y + counter.height - 25;
 
         refresh();
+        
+        unlockPinsInQueue();
 
         super.create();
     }
@@ -436,7 +490,7 @@ class Shop extends MusicBeatState
             if (cameraFollowPoint.x >= 10000)
             {
                 final targetUIAlpha:Float = 1.0 - (1.0 * (cameraFollowPoint.x - 10000) / 20000);
-                FunkBucks.moneyHUD.alpha = targetUIAlpha;
+                moneyHUD.alpha = targetUIAlpha;
                 final targetDarkness:Float = 0.35 + Math.min(0.35, (0.35 * (cameraFollowPoint.x - 10000) / 20000));
                 lighting.alpha = targetDarkness;
                 camera.minScrollY = wall.y + 360;
@@ -446,7 +500,7 @@ class Shop extends MusicBeatState
             {
                 camera.minScrollY = wall.y;
                 forceBackButtonInactive = false;
-                FunkBucks.moneyHUD.alpha = 1.0;
+                moneyHUD.alpha = 1.0;
             }
         }
 
@@ -483,14 +537,14 @@ class Shop extends MusicBeatState
             coolBackButton.instant = false;
         }
 
-        handleCameraMovement();
+        handleCameraMovement(elapsed);
         justGainedFocus = false;
 
         // Pins
 
         if (FlxG.keys.justPressed.ONE || (TouchUtil.pressAction(iconPins) && !FunkBucks.isMouseTooFast && !TouchUtil.overlaps(coolBackButton, cameraHUD)))
         {
-            if (TimedCoinsManager.running || (extendBounds && cameraFollowPoint.x >= 10000))
+            if (extendBounds && cameraFollowPoint.x >= 10000)
             {
                 FlxTween.completeTweensOf(cannotDoText);
                 FlxTween.tween(cannotDoText, { alpha: 1 }, 2, { ease: FlxEase.cubeOut, type: 16 });
@@ -504,27 +558,41 @@ class Shop extends MusicBeatState
             var substate = new PinBoard();
             substate.closeCallback = function()
             {
+                QuickPanelState.instance.allowOpen = true;
                 FlxTween.tween(coolBackButton, { alpha: 0.5 }, 1, { ease: FlxEase.cubeOut });
                 FlxTween.tween(camera, { zoom: savedCamZoom }, 1, { ease: FlxEase.cubeOut });
-                FunkBucks.moneyHUD.setDisplay(true, true);
+                moneyHUD.setDisplay(true, true);
                 FlxTween.tween(screenBlack, { alpha: 0 }, 1, { ease: FlxEase.cubeOut });
+                onSubStateClose();
             };
             substate.cameras = [cameraSubState];
 
             FlxTween.tween(coolBackButton, { alpha: 0 }, 1, { ease: FlxEase.cubeIn });
             FlxTween.tween(camera, { zoom: 1.5 }, 1, { ease: FlxEase.cubeIn });
-            FunkBucks.moneyHUD.setDisplay(false, false, 0);
+            moneyHUD.setDisplay(false, false, 0);
             FlxTween.tween(screenBlack, { alpha: 0.8 }, 1, { ease: FlxEase.cubeIn, onComplete: function()
             {
-                openSubState(substate);
+                Transition.openSubState(() -> substate, {
+                    assetQuery: PinBoard.queryAssets,
+                    transition: TransitionType.None,
+                    onConstruct: function(_:FlxState)
+                    {
+                        onSubStateOpen();
+                    },
+                    shouldPurgeCache: false
+                });
             }});
+
+            // Disallow opening the quick panel during the transition.
+            // This would lead to the substate opening on top of the Quick Panel.
+            QuickPanelState.instance.allowOpen = false;
         }
 
         // Boxes
 
         if (FlxG.keys.justPressed.TWO || (TouchUtil.pressAction(iconBoxes) && !FunkBucks.isMouseTooFast && !TouchUtil.overlaps(coolBackButton, cameraHUD)))
         {
-            if (isShopkeeperGone || Shopkeeper.caught || TimedCoinsManager.running)
+            if (isShopkeeperGone || Shopkeeper.caught)
             {
                 FlxTween.completeTweensOf(cannotDoText);
                 FlxTween.tween(cannotDoText, { alpha: 1 }, 2, { ease: FlxEase.cubeOut, type: 16 });
@@ -539,40 +607,56 @@ class Shop extends MusicBeatState
             var substate = new BoxSubMenu();
             substate.closeCallback = function()
             {
+                QuickPanelState.instance.allowOpen = true;
                 FlxTween.tween(coolBackButton, { alpha: 0.5 }, 1, { ease: FlxEase.cubeOut });
                 FlxTween.tween(camera, { zoom: savedCamZoom }, 1, { ease: FlxEase.cubeOut });
-                FunkBucks.moneyHUD.setDisplay(true, true);
+                moneyHUD.setDisplay(true, true);
                 FlxTween.tween(screenBlack, { alpha: 0 }, 1, { ease: FlxEase.cubeOut });
                 showMenuItems();
+                onSubStateClose();
             }
             substate.cameras = [cameraSubState];
 
             FlxTween.tween(coolBackButton, { alpha: 0 }, 1, { ease: FlxEase.cubeIn });
             FlxTween.tween(screenBlack, { alpha: 0.75 }, 1, { ease: FlxEase.cubeIn });
-            FunkBucks.moneyHUD.setDisplay(true, false, 0);
+            moneyHUD.setDisplay(true, false, 0);
             FlxTween.tween(camera, { zoom: 0.9 }, 1, { ease: FlxEase.cubeOut, onComplete: function()
             {
-                openSubState(substate);
+                Transition.openSubState(() -> substate, {
+                    assetQuery: BoxSubMenu.queryAssets,
+                    transition: TransitionType.None,
+                    onConstruct: function(_:FlxState)
+                    {
+                        onSubStateOpen();
+                    },
+                    shouldPurgeCache: false
+                });
             }});
+
+            // Disallow opening the quick panel during the transition.
+            // This would lead to the substate opening on top of the Quick Panel.
+            QuickPanelState.instance.allowOpen = false;
         }
 
         // Converse
 
         if (FlxG.keys.justPressed.THREE || (TouchUtil.pressAction(shopkeeperHitbox) && !FunkBucks.isMouseTooFast && !TouchUtil.overlaps(coolBackButton, cameraHUD)))
         {
-            if (isShopkeeperGone || Shopkeeper.caught || TimedCoinsManager.running || !shopkeeper.canInterract)
+            if (isShopkeeperGone || Shopkeeper.caught || !shopkeeper.canInterract)
             {
                 FlxTween.completeTweensOf(cannotDoText);
                 FlxTween.tween(cannotDoText, { alpha: 1 }, 2, { ease: FlxEase.cubeOut, type: 16 });
                 return;
             }
 
+            return;
+
             new FlxTimer().start(0.5, function(_:FlxTimer)
             {
                 switch (shopkeeper.name)
                 {
-                    case "ophelia":
-                        new ConverseOphelia();
+                    //case "ophelia":
+                        //new ConverseOphelia();
                     case "april":
                         new ConverseApril();
                         // new AprilIntro();
@@ -586,7 +670,7 @@ class Shop extends MusicBeatState
             cameraFollowPoint.setPosition(shopkeeperHitbox.x + shopkeeperHitbox.width / 2, shopkeeperHitbox.y + 115);
             savedCamZoom = camera.zoom;
             FlxTween.tween(camera, { zoom: 1.5 }, 1, { ease: FlxEase.cubeOut });
-            FunkBucks.moneyHUD.setDisplay(false, false, 0);
+            moneyHUD.setDisplay(false, false, 0);
             coolBackButton.visible = false;
         }
 
@@ -594,7 +678,7 @@ class Shop extends MusicBeatState
 
         if (FlxG.keys.justPressed.FOUR || (TouchUtil.pressAction(iconStats) && !FunkBucks.isMouseTooFast && !TouchUtil.overlaps(coolBackButton, cameraHUD)))
         {
-            if (Shopkeeper.caught || TimedCoinsManager.running || (extendBounds && cameraFollowPoint.x >= 10000))
+            if (Shopkeeper.caught || (extendBounds && cameraFollowPoint.x >= 10000))
             {
                 FlxTween.completeTweensOf(cannotDoText);
                 FlxTween.tween(cannotDoText, { alpha: 1 }, 2, { ease: FlxEase.cubeOut, type: 16 });
@@ -617,18 +701,25 @@ class Shop extends MusicBeatState
             FlxTween.tween(statsSheet, { y: 1000 }, 1, { ease: FlxEase.cubeIn });
             viewingStats = false;
             disallowInputs = false;
-            #if desktop coolBackButton.enabled = true; #end
+            coolBackButton.enabled = true;
             return;
         }
-        if (disallowInputs) return;
-        FlxG.switchState(() -> new MainMenuState());
+        
+        // Stop exiting when pressing ESCAPE while the Quick Panel is open.
+        // QuickPanelState.instance.isOpen doesn't work, guess they forgot to set it lol
+        if (disallowInputs || QuickPanelState.instance.panel.bodyActive) return;
+
+        Transition.switchState(() -> new MainMenuState(), {
+            assetQuery: MainMenuState.queryAssets,
+            transition: TransitionType.BlackScreen(FadeType.Fade("North"), FadeType.Fade("South")),
+        });
     }
 
     var touchPoint:Null<FlxPoint>;
     var touchPoint2:Null<FlxPoint>;
     var pinchDistance:Float = 0;
     var previousZoom:Float = 1;
-    function handleCameraMovement():Void
+    function handleCameraMovement(elapsed:Float):Void
     {
         var moveSpeed:Float = 50;
 
@@ -773,7 +864,11 @@ class Shop extends MusicBeatState
             trace("Unlocking next pin in queue: " + nextPin);
             var substate = new PinUnlockState(nextPin);
             substate.cameras = [cameraSubState];
-            openSubState(substate);
+            Transition.openSubState(() -> unlockState, {
+                assetQuery: PinUnlockState.queryAssets.bind(_, randomPin),
+                transition: TransitionType.None,
+                shouldPurgeCache: false
+            });
         }
         else
         {
@@ -796,28 +891,20 @@ class Shop extends MusicBeatState
         super.onFocus();
     }
 
-    override function openSubState(state:FlxSubState):Void
+    override function onSubStateOpen():Void
     {
         cameraSubState.scroll.set(0, 0);
         cameraSubState.follow(null);
         // Necessary, otherwise you can move the camera during transitions, which sets this to false?????
         disallowInputs = true;
-        subToSub = false;
-
-        super.openSubState(state);
     }
 
-    override function closeSubState():Void
+    override function onSubStateClose():Void
     {
         new FlxTimer().start(0.1, function(_:FlxTimer)
         {
             disallowInputs = false;
-            if (!subToSub)
-            {
-                unlockPinsInQueue();
-            }
         });
-        super.closeSubState();
     }
 
     override function destroy():Void

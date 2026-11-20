@@ -1,7 +1,7 @@
 package funkbucks.objects;
 
-import balphabet.BAlphabet;
-import balphabet.BAlphabetTyped;
+import balphabet.BAText;
+import balphabet.BATextTyped;
 import flixel.FlxSprite;
 import flixel.math.FlxMath;
 import flixel.util.FlxSignal;
@@ -66,12 +66,12 @@ class Dialogue extends FunkinGroup
     public var dialogueIndex:Int = -1;
     public var responseIndex:Int = 0;
 
-    public var dialogueText:BAlphabetTyped;
+    public var dialogueText:BATextTyped;
     public var dialogueBoxBG:FunkinSprite;
     public var dialogueBox:FunkinSprite;
     public var patternShader:ImposePatternShader;
     public var speakerBox:FunkinSprite;
-    public var speakerName:BAlphabet;
+    public var speakerName:BAText;
     var advanceIcon:FunkinSprite;
     
     public var onNextLine:FlxSignal2 = new FlxSignal2();
@@ -85,7 +85,7 @@ class Dialogue extends FunkinGroup
     var arrowLeftHitbox:FlxObject;
     var arrowRight:FunkinSprite;
     var arrowRightHitbox:FlxObject;
-    public var responseText:BAlphabet;
+    public var responseText:BAText;
     var responseHitbox:FlxObject;
     var responseDots:Array<FunkinSprite> = [];
 
@@ -107,7 +107,7 @@ class Dialogue extends FunkinGroup
         dialogueBox.color = 0xFF264967;
         this.add(dialogueBox);
 
-        dialogueText = new BAlphabetTyped(0, 0, "");
+        dialogueText = new BATextTyped(0, 0, "");
         dialogueText.localX = dialogueBoxBG.width / 2;
         dialogueText.localY = 48;
         dialogueText.localScale.set(0.5, 0.5);
@@ -117,7 +117,7 @@ class Dialogue extends FunkinGroup
         speakerBox = new FunkinSprite(0, 0);
         this.add(speakerBox);
 
-        speakerName = new BAlphabet(0, 0, "");
+        speakerName = new BAText(0, 0, "");
         speakerName.localX = 24;
         speakerName.localY = 16;
         speakerName.localScale.set(0.5, 0.5);
@@ -157,7 +157,7 @@ class Dialogue extends FunkinGroup
             arrowRight.setColorTransform(0, 0, 0, 1, 255, 255, 255);
             arrowRight.localScale.set(0.7, 0.45);
 
-            responseText = new BAlphabet(0, 0, currentDialogue.response.options[0][0]);
+            responseText = new BAText(0, 0, currentDialogue.response.options[0][0]);
             responseText.localScale.set(0.5, 0.5);
             responseText.alignment = "center";
             responseText.localVisible = false;
@@ -251,8 +251,8 @@ class Dialogue extends FunkinGroup
             {
                 if (!dialogueText.finishedText)
                 {
-                    dialogueText.finish();
                     onSkipLine.dispatch(dialogueIndex);
+                    dialogueText.finish();
                 }
                 else
                 {

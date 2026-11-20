@@ -1,0 +1,36 @@
+{
+    "canSkipOnRepeat": true,
+    "dialogue": 
+    [
+        {
+            "text": "I used to collect pins like you.",
+            "speaker": "April",
+            "canSkip": false
+        },
+        {
+            "text": "Then I was banned for a bit due to\n\"abnormal luck\".",
+            "speaker": "April",
+            "canSkip": false
+        },
+        {
+            "text": "I guess SOMEBODY didn't like me getting\nboth Mythic's so quickly.",
+            "speaker": "April",
+            "canSkip": false
+        },
+        {
+            "text": "I was surprised to get a pin from her just\nfor annoying her.",
+            "speaker": "April",
+            "canSkip": false
+        },
+        {
+            "text": "Did go a bit far though,<d=0.5/> she hiked up prices\nafter a bit...",
+            "speaker": "April",
+            "canSkip": false
+        },
+        {
+            "text": "I wouldn't recommend trying that yourself.",
+            "speaker": "April",
+            "canSkip": false
+        }
+    ]
+}

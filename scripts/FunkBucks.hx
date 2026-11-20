@@ -2,7 +2,7 @@ package funkbucks;
 
 import Array;
 import Date;
-import balphabet.BAlphabet;
+import balphabet.BAText;
 import haxe.ds.StringMap;
 import openfl.net.URLLoader;
 import openfl.net.URLRequest;
@@ -13,10 +13,10 @@ import flixel.util.FlxSort;
 import flixel.util.FlxTimer;
 import funkbucks.objects.KeyCap;
 import funkbucks.objects.PinSprite;
-import funkbucks.objects.ui.MoneyHUD;
 import funkin.Highscore;
 import funkin.audio.FunkinSound;
 import funkin.data.song.SongRegistry;
+import funkin.graphics.FunkinCamera;
 import funkin.graphics.FunkinSprite;
 import funkin.modding.PolymodHandler;
 import funkin.modding.ModStore;
@@ -29,10 +29,15 @@ import funkin.play.scoring.ScoringRank;
 import funkin.save.Save;
 import funkin.ui.mainmenu.MainMenuState;
 import funkin.ui.title.TitleState;
+import funkin.ui.transition.FadeType;
+import funkin.ui.transition.Transition;
+import funkin.ui.transition.TransitionType;
+import funkin.ui.transition.preload.hotreload.HotReloadState;
 import funkin.util.ReflectUtil;
 import funkin.util.SerializerUtil;
 import funkin.util.TouchUtil;
 import funkin.util.VersionUtil;
+import funkin.util.plugins.ReloadAssetsDebugPlugin;
 import lime.app.Application;
 using StringTools;
 
@@ -67,8 +72,6 @@ class FunkBucks extends Module
     var menuPin:PinSprite;
     var menuPin2:PinSprite;
 
-    public static var moneyHUD:MoneyHUD;
-
     public static final penalties:Array<Float> = [1.0, 0.66, 0.33, 0.0, -0.5, -1];
     public static final penaltyColors:Array<String> = ["FFFFFF", "FFAAAA", "FF5555", "FF0000", "AA0000", "550000"];
     public static final opheliaAngerCooldown:Int = 1000 * 60 * 60 * 4;
@@ -76,6 +79,9 @@ class FunkBucks extends Module
     public static final bucksForBlueJewel:Int = 1000;
     public static final dailySongCount:Int = 5;
     public static final skipTalking:Array<Int> = [33, 44, 46, 63];
+
+    @:blacklisted
+    static final supportedModdedVariations:Array<String> = ["remnants", "bfremnants", "gooey", "spookymod", "reimu", "qt", "hundrec"];
 
     public static var save;
 
@@ -85,6 +91,7 @@ class FunkBucks extends Module
     public static var isMouseTooFast:Bool = false;
     public static var dialogueActive:Bool = false;
 
+    @:persistent
     public static var modVersion:String = "0.0.0";
 
     /**
@@ -169,18 +176,6 @@ class FunkBucks extends Module
         }
 
         loadPinData();
-        
-        FlxG.plugins.remove(ModStore.get("FBMoneyHUDPluginInstance"));
-        ModStore.remove("FBMoneyHUDPluginInstance");
-        if (ModStore.get("FBMoneyHUDPluginInstance") == null)
-        {
-            FunkBucks.moneyHUD = new MoneyHUD(FlxG.width - 25, 25);
-            ModStore.register("FBMoneyHUDPluginInstance", FlxG.plugins.addPlugin(FunkBucks.moneyHUD));
-        }
-        else
-        {
-            FunkBucks.moneyHUD = ModStore.get("FBMoneyHUDPluginInstance");
-        }
 
         super.onCreate(event);
     }
@@ -189,22 +184,11 @@ class FunkBucks extends Module
     function gameStartCalls():Void
     {
         versionCheck();
-        FlxG.signals.gameResized.add(repositionHUD);
     }
 
-    // Width and Height aren't actually used since those are the wrong values to use.
-    function repositionHUD(w:Int, h:Int)
-    {
-        if (FunkBucks.moneyHUD == null) return;
-
-        new FlxTimer().start(1 / 24, function(_:FlxTimer)
-        {
-            FunkBucks.moneyHUD.x = FlxG.width - 25;
-            FunkBucks.moneyHUD.buckDiffText.localAlpha = 0;
-            FunkBucks.moneyHUD.jewelDiffText.localAlpha = 0;
-        });
-    }
-
+    /**
+     * `@:persistent` metadata please save me, 0.9.0 save me, kill ModStore
+     */
     function versionCheck():Void
     {
         var onlineVersion:String = "0.0.0";
@@ -212,8 +196,7 @@ class FunkBucks extends Module
 
         try
         {
-            // For 0.9.0: getMetadataById -> getMetadataByModId
-            FunkBucks.modVersion = PolymodHandler.modFileSystem.getMetadataById("keoiki.funkbucks", "script_runtime").modVersion.version.join(".");
+            FunkBucks.modVersion = PolymodHandler.modFileSystem.getMetadataByModId("funkbucks", "script_runtime").modVersion.version.join(".");
         }
         catch (err:Dynamic)
         {
@@ -283,14 +266,55 @@ class FunkBucks extends Module
      */
     function loadPinData():Void
     {
-        FunkBucks.pinData = SerializerUtil.fromJSON(Assets.getText("data/pointlesspins/pins.json"));
+        FunkBucks.pinData = SerializerUtil.fromJSON(Assets.getText("data/funkbucks/pins.json"));
 
-        FunkBucks.boxData = SerializerUtil.fromJSON(Assets.getText("data/pointlesspins/boxes.json"));
+        FunkBucks.boxData = SerializerUtil.fromJSON(Assets.getText("data/funkbucks/boxes.json"));
         var orderByOrder = function(a, b)
         {
             return FlxSort.byValues(-1, FunkBucks.boxData[a].order, FunkBucks.boxData[b].order);
         }
         FunkBucks.boxData.sort(orderByOrder);
+    }
+
+    public static function getAllPinIDs():Array<String>
+    {
+        var ids:Array<String> = [];
+        for (rarity in ReflectUtil.getAnonymousFieldsOf(FunkBucks.pinData))
+        {
+            for (pin in ReflectUtil.getAnonymousField(FunkBucks.pinData, rarity).pins)
+            {
+                ids.push(pin.id);
+            }
+        }
+        return ids;
+    }
+
+    public static function getAllUnlockedPinIDs():Array<String>
+    {
+        if (FunkBucks.debug_pins) return FunkBucks.getAllPinIDs();
+
+        var ids:Array<String> = [];
+        for (rarity in ReflectUtil.getAnonymousFieldsOf(FunkBucks.pinData))
+        {
+            for (pin in ReflectUtil.getAnonymousField(FunkBucks.pinData, rarity).pins)
+            {
+                if (FunkBucks.hasPin(pin.id))
+                {
+                    ids.push(pin.id);
+                }
+            }
+        }
+        return ids;
+    }
+
+    public static function getAllBoxIDs():Array<String>
+    {
+        var ids:Array<String> = [];
+        for (box in FunkBucks.boxData)
+        {
+            ids.push(box.id);
+        }
+        return ids;
     }
 
     /**
@@ -365,7 +389,7 @@ class FunkBucks extends Module
         }
         FunkBucks.flushSave();
         final diff:Int = FunkBucks.getFunkCoins() - previousAmount;
-        FunkBucks.moneyHUD?.showBuckChange(diff);
+        Shop.instance.moneyHUD?.showBuckChange(diff);
         trace("Current FunkBucks: " + FunkBucks.getFunkCoins());
         trace("Lifetime FunkBucks: " + FunkBucks.getFunkCoinsLifetime());
     }
@@ -392,7 +416,7 @@ class FunkBucks extends Module
         FunkBucks.save.blueJewels = FunkBucks.getBlueJewels() + amount;
         FunkBucks.flushSave();
         final diff:Int = FunkBucks.getBlueJewels() - previousAmount;
-        FunkBucks.moneyHUD?.showJewelChange(diff);
+        Shop.instance.moneyHUD?.showJewelChange(diff);
     }
 
     public static function getBlueJewels():Int
@@ -757,7 +781,6 @@ class FunkBucks extends Module
             /**
              * Daily Songs
              */
-            final supportedModdedVariations:Array<String> = FunkBucks.getSupportedModdedVariations();
             var baseGameSongIDs:Array<String> = SongRegistry.instance.listBaseGameEntryIds();
             baseGameSongIDs.remove("test"); // Test isn't easily available. (Does it even work properly? No.)
             baseGameSongIDs.remove("tutorial"); // Boring.
@@ -769,7 +792,7 @@ class FunkBucks extends Module
                 var songVariations:Array<String> = SongRegistry.instance.fetchEntry(songID).variations;
                 songVariations = songVariations.filter(function(variationID:String):Bool
                 {
-                    return Constants.DEFAULT_VARIATION_LIST.contains(variationID) || supportedModdedVariations.contains(variationID);
+                    return Constants.DEFAULT_VARIATION_LIST.contains(variationID) || FunkBucks.supportedModdedVariations.contains(variationID);
                 });
                 dailySongs.push(songID + "-" + songVariations[FlxG.random.int(0, songVariations.length - 1)]);
                 // Only one variation per song, thanks!
@@ -865,21 +888,6 @@ class FunkBucks extends Module
     }
 
     /**
-     * Supported modded variations:
-     * - Funkin' Remnants
-     * - Gooey Mix
-     * - Spooky Mix
-     * - Funkin' Incident (Reimu)
-     * - QT Rewired (Futureproof)
-     * - Hundrec Mix (Futureproof)
-     * @return Array<String>
-     */
-    static function getSupportedModdedVariations():Array<String>
-    {
-        return ["remnants", "bfremnants", "gooey", "spookymod", "reimu", "qt", "hundrec"];
-    }
-
-    /**
      * Can you believe it, workschedules in MY funkin mod?
      * @return Name of the shopkeeper at work.
      */
@@ -921,7 +929,10 @@ class FunkBucks extends Module
         {
             if (FlxG.keys.justPressed.P || TouchUtil.pressAction(menuPin))
             {
-                FlxG.switchState(new Shop());
+                Transition.switchState(() -> new Shop(), {
+                    assetQuery: Shop.queryAssets,
+                    transition: TransitionType.BlackWithThrobber(FadeType.Fade("North"), FadeType.Fade("South"))
+                });
             }
 
             if (FlxG.keys.pressed.CONTROL && FlxG.keys.pressed.SHIFT && FlxG.keys.pressed.ALT && FlxG.keys.justPressed.K)
@@ -933,14 +944,12 @@ class FunkBucks extends Module
 
     override function onStateChangeBegin(event:StateChangeScriptEvent):Void
     {
-        FunkBucks.moneyHUD.quickFinishTweens();
-
         super.onStateChangeBegin(event);
     }
 
     override function onStateChangeEnd(event:StateChangeScriptEvent):Void
     {
-        repositionHUD(0, 0);
+        //repositionHUD(0, 0);
 
         if (event.targetState is MainMenuState)
         {
@@ -954,8 +963,6 @@ class FunkBucks extends Module
             var keycap01 = new KeyCap(125, 125, "P");
             event.targetState.add(keycap01);
             #end
-
-            FunkBucks.moneyHUD.setDisplay(false, false, 0);
         }
 
         super.onStateChangeEnd(event);
@@ -963,7 +970,7 @@ class FunkBucks extends Module
 
     override function onSubStateOpenEnd(event:SubStateScriptEvent):Void
     {
-        repositionHUD(0, 0);
+        //repositionHUD(0, 0);
 
         /**
          * Change this later to be on song end instead?
@@ -1088,7 +1095,7 @@ class FunkBucks extends Module
             trace(currentSongOrWeek, rank, bucksToAward, jewelsToAward, previousSongs);
             trace(awardNormalCompletionJewel, FunkBucks.getBlueJewelPity(), (Math.pow(FunkBucks.getBlueJewelPity(), 2) / 1000) * 2);
 
-            var funkBucksText = new BAlphabet(40, 50, '<b><c=$resultTextColor>${(bucksToAward > 0 ? "+" : "")}$bucksToAward</c></b> ${FBIcon.Buck}');
+            var funkBucksText = new BAText(40, 50, '<b><c=$resultTextColor>${(bucksToAward > 0 ? "+" : "")}$bucksToAward</c></b> ${FBIcon.Buck}');
             funkBucksText.scale.set(0.65, 0.65);
             funkBucksText.alpha = 0;
             funkBucksText.zIndex = 5000;
@@ -1103,7 +1110,7 @@ class FunkBucks extends Module
 
             if (jewelsToAward > 0)
             {
-                var jewelsText = new BAlphabet(30, 70, '<b><c=82E9FF>+${jewelsToAward}</c></b> ${FBIcon.Jewel}');
+                var jewelsText = new BAText(30, 70, '<b><c=82E9FF>+${jewelsToAward}</c></b> ${FBIcon.Jewel}');
                 jewelsText.resetOrigin();
                 jewelsText.scale.set(0.65, 0.65);
                 jewelsText.alpha = 0;

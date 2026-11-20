@@ -1,6 +1,6 @@
 package funkbucks;
 
-import balphabet.BAlphabet;
+import balphabet.BAText;
 import flixel.math.FlxMath;
 import flixel.tweens.FlxEase;
 import flixel.tweens.FlxTween;
@@ -13,7 +13,7 @@ import funkin.ui.story.StoryMenuState;
 class FunkBucksModifierLable extends Module
 {
     var pinModule:Module;
-    var modifierText:BAlphabet;
+    var modifierText:BAText;
 
     var addedToState:Bool = false;
 
@@ -101,7 +101,7 @@ class FunkBucksModifierLable extends Module
 
         bonusPercentage = FlxMath.roundDecimal(FunkBucks.getFunkCoinBonus(), 2);
 
-        modifierText = new BAlphabet(FlxG.width - 20, 640, "", { lineHeight: 70 });
+        modifierText = new BAText(FlxG.width - 20, 640, "", { lineHeight: 70 });
         modifierText.scale.set(0.5, 0.5);
         modifierText.alignment = "right";
         FlxG.state.add(modifierText);
@@ -131,7 +131,7 @@ class FunkBucksModifierLable extends Module
     {
         bonusPercentage = FlxMath.roundDecimal(FunkBucks.getFunkCoinBonus(), 2);
 
-        modifierText = new BAlphabet(20, FlxG.height + 10, "", { lineHeight: 70 });
+        modifierText = new BAText(20, FlxG.height + 10, "", { lineHeight: 70 });
         modifierText.scale.set(0.5, 0.5);
 
         FlxG.state.subState.add(modifierText);

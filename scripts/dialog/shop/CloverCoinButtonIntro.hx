@@ -1,3 +1,0 @@
-package funkbucks.dialog.shop;
-
-

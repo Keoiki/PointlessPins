@@ -1,0 +1,26 @@
+{
+    "canSkipOnRepeat": true,
+    "dialogue": 
+    [
+        {
+            "text": "That's supposed to be a placeholder.",
+            "speaker": "April",
+            "canSkip": false
+        },
+        {
+            "text": "I'll probably throw that paper out\nonce the Awards are finished.",
+            "speaker": "April",
+            "canSkip": false
+        },
+        {
+            "text": "And by I,<d=0.5/> I mean Ophelia.",
+            "speaker": "April",
+            "canSkip": false
+        },
+        {
+            "text": "She wouldn't let that shit fly otherwise.",
+            "speaker": "April",
+            "canSkip": false
+        }
+    ]
+}

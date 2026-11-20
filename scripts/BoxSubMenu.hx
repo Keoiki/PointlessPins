@@ -1,6 +1,6 @@
 package funkbucks;
 
-import balphabet.BAlphabet;
+import balphabet.BAText;
 import flixel.FlxObject;
 import flixel.input.mouse.FlxMouseEvent;
 import flixel.math.FlxMath;
@@ -9,10 +9,13 @@ import flixel.tweens.FlxTween;
 import flixel.util.FlxTimer;
 import funkbucks.objects.BoxSprite;
 import funkbucks.objects.ui.BackButton;
+import funkin.assets.Paths;
 import funkin.audio.FunkinSound;
 import funkin.graphics.FunkinSprite;
 import funkin.mobile.ui.FunkinBackButton;
 import funkin.ui.MusicBeatSubState;
+import funkin.ui.transition.Transition;
+import funkin.ui.transition.TransitionType;
 import funkin.util.ReflectUtil;
 import funkin.util.TouchUtil;
 
@@ -30,17 +33,46 @@ class BoxSubMenu extends MusicBeatSubState
     var menuDots:Array<FunkinSprite> = [];
 
     // Text
-    var boxName:BAlphabet;
-    var boxDescription:BAlphabet;
-    var boxPrice:BAlphabet;
-    var boxOdds:BAlphabet;
-    var boxPurchaseLable:BAlphabet;
+    var boxName:BAText;
+    var boxDescription:BAText;
+    var boxPrice:BAText;
+    var boxOdds:BAText;
+    var boxPurchaseLable:BAText;
 
-    var coolBackButton:Dynamic;
+    var coolBackButton:BackButton;
 
     var leftArrowHitbox:FlxObject;
     var rightArrowHitbox:FlxObject;
     var boxHitbox:FlxObject;
+
+    public static function queryAssets(type:AssetType):Array<AssetPath>
+    {
+        var result:Array<AssetPath> = [];
+
+        final boxIDs:Array<String> = FunkBucks.getAllBoxIDs();
+
+        switch (type)
+        {
+            case "IMAGE":
+            {
+                for (box in boxIDs)
+                {
+                    result.push(Paths.animateAtlas('ui/funkbucks/boxes/$box').image());
+                }
+                result.push(Paths.image("ui/funkbucks/menu-arrow"));
+                result.push(Paths.image("ui/funkbucks/menu-dot"));
+            }
+            case "JSON":
+            {
+                for (box in boxIDs)
+                {
+                    result.push(Paths.animateAtlas('ui/funkbucks/boxes/$box').json());
+                }
+            }
+        }
+
+        return result;
+    }
 
     override function create():Void
     {
@@ -59,31 +91,31 @@ class BoxSubMenu extends MusicBeatSubState
 
         for (i in 0...boxCount)
         {
-            var dot:FunkinSprite = new FunkinSprite(FlxG.width / 2 + 40 * i - 20 * boxCount + 10, 680).loadTexture("menucountdot");
+            var dot:FunkinSprite = new FunkinSprite(FlxG.width / 2 + 40 * i - 20 * boxCount + 10, 680).loadTexture("ui/funkbucks/menu-dot");
             dot.scale.set(0.75, 0.75);
             dot.alpha = 0.2;
             menuDots.push(dot);
             add(dot);
         }
 
-        boxName = new BAlphabet(30, 25, "");
+        boxName = new BAText(30, 25, "");
         boxName.scale.set(0.7, 0.7);
         add(boxName);
 
-        boxPrice = new BAlphabet(FlxG.width / 2, 560, "");
+        boxPrice = new BAText(FlxG.width / 2, 560, "");
         boxPrice.alignment = "center";
         boxPrice.scale.set(0.5, 0.5);
         add(boxPrice);
 
-        boxDescription = new BAlphabet(30, boxName.y + 60, "");
+        boxDescription = new BAText(30, boxName.y + 60, "");
         boxDescription.scale.set(0.4, 0.4);
         add(boxDescription);
 
-        boxOdds = new BAlphabet(30, boxPrice.y, "");
+        boxOdds = new BAText(30, boxPrice.y, "");
         boxOdds.scale.set(0.3, 0.3);
         add(boxOdds);
 
-        boxPurchaseLable = new BAlphabet(FlxG.width / 2, 510, "");
+        boxPurchaseLable = new BAText(FlxG.width / 2, 510, "");
         boxPurchaseLable.alignment = "center";
         boxPurchaseLable.scale.set(0.4, 0.4);
         add(boxPurchaseLable);
@@ -91,11 +123,11 @@ class BoxSubMenu extends MusicBeatSubState
         box = new BoxSprite(FlxG.width / 2, 482);
         add(box);
         
-        arrowLeft = new FunkinSprite(FlxG.width / 2 - 250, 315).loadTexture("shop/boxarrow");
+        arrowLeft = new FunkinSprite(FlxG.width / 2 - 250, 315).loadTexture("ui/funkbucks/menu-arrow");
         arrowLeft.flipX = true;
         add(arrowLeft);
 
-        arrowRight = new FunkinSprite(FlxG.width / 2 + 250, 315).loadTexture("shop/boxarrow");
+        arrowRight = new FunkinSprite(FlxG.width / 2 + 250, 315).loadTexture("ui/funkbucks/menu-arrow");
         arrowRight.x -= arrowRight.width;
         add(arrowRight);
 
@@ -223,11 +255,6 @@ class BoxSubMenu extends MusicBeatSubState
 			FlxTween.tween(arrowLeft.scale, { y: 0.5 }, 0.4, { ease: FlxEase.backOut, type: 16 });
         }
 
-        STATE = "COOLDOWN";
-        new FlxTimer().start(0.25, function(_:FlxTimer) {
-            STATE = "CHOOSING";
-        });
-
         box.updateBoxInfo(change);
         updateBoxInfoText();
     }
@@ -236,7 +263,7 @@ class BoxSubMenu extends MusicBeatSubState
     {
         switch (STATE)
         {
-            case "CHOOSING", "COOLDOWN":
+            case "CHOOSING":
                 boxPurchaseLable.text = FunkBucks.isMouseActive ? "<b><c=2A4DFF>TAP</c> the box to purchase.</b>" : "<b>Press <c=2A4DFF>ACCEPT</c> to purchase.</b>";
             case "CONFIRMING":
                 boxPurchaseLable.text = FunkBucks.isMouseActive ? "<b><c=2BFF31>TAP</c> the box again to confirm.</b>" : "<b>Press <c=2BFF31>ACCEPT</c> again to confirm.</b>";
@@ -286,7 +313,7 @@ class BoxSubMenu extends MusicBeatSubState
         if (FunkBucks.debug_boxes) return true;
         if (FunkBucks.getFunkCoins() < box.price)
         {
-            FunkBucks.moneyHUD.insufficientFunds(true, false);
+            _parentState.moneyHUD.insufficientFunds(true, false);
             return false;
         }
         return true;
@@ -315,7 +342,7 @@ class BoxSubMenu extends MusicBeatSubState
             FlxTween.tween(darkOverlay, { alpha: 0.33 }, 1.1 + box.revealTime / 24, { ease: FlxEase.quadInOut });
             FlxTween.tween(_parentState.camera, { zoom: 1.12 }, 1 + box.revealTime / 24, { ease: FlxEase.quadInOut });
             FlxTween.tween(camera, { zoom: 1.25 }, 1 + box.revealTime / 24, { ease: FlxEase.quadInOut });
-            FlxTween.tween(FunkBucks.moneyHUD, { alpha: 0 }, 0.5, { ease: FlxEase.quadInOut });
+            FlxTween.tween(_parentState.moneyHUD, { alpha: 0 }, 0.5, { ease: FlxEase.quadInOut });
         });
 
         new FlxTimer().start(2.25, function(_:FlxTimer)
@@ -327,7 +354,11 @@ class BoxSubMenu extends MusicBeatSubState
                 FlxTween.tween(camera, { zoom: 1 }, 1, { ease: FlxEase.backOut, onComplete: () -> {
                     STATE = "OPENED";
                 }});
-                openSubState(unlockState);
+                Transition.openSubState(() -> unlockState, {
+                    assetQuery: PinUnlockState.queryAssets.bind(_, randomPin),
+                    transition: TransitionType.None,
+                    shouldPurgeCache: false
+                });
             });
         });
 
@@ -367,6 +398,6 @@ class BoxSubMenu extends MusicBeatSubState
         {
             FlxTween.tween(menuDots[i], { alpha: boxIndex == i ? 1 : 0.2 }, 0.5, { ease: FlxEase.quartOut });
         }
-        FlxTween.tween(FunkBucks.moneyHUD, { alpha: 1 }, 0.5, { ease: FlxEase.quartOut });
+        FlxTween.tween(_parentState.moneyHUD, { alpha: 1 }, 0.5, { ease: FlxEase.quartOut });
     }
 }

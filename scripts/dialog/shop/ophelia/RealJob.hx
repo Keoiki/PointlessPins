@@ -1,10 +1,6 @@
 package funkbucks.dialog.shop.ophelia;
 
-import flixel.tweens.FlxEase;
-import flixel.tweens.FlxTween;
-import flixel.util.FlxTimer;
 import funkbucks.FunkBucks;
-import funkbucks.PinUnlockState;
 import funkbucks.Shop;
 import funkbucks.dialog.DialogBase;
 import funkin.audio.FunkinSound;
@@ -13,7 +9,7 @@ class RealJob extends DialogBase
 {
     var shop:Shop;
 
-    override function new():Void
+    override public function new():Void
     {
         super();
         shop = Shop.instance;

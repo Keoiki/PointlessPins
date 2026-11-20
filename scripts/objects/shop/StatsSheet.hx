@@ -1,6 +1,6 @@
 package funkbucks.objects.shop;
 
-import balphabet.BAlphabet;
+import balphabet.BAText;
 import funkbucks.FunkBucks;
 import funkin.graphics.FunkinSprite;
 import funkin.group.FunkinGroup;
@@ -11,13 +11,13 @@ class StatsSheet extends FunkinGroup
     {
         super(x, y);
 
-        var statsPaper:FunkinSprite = new FunkinSprite(0, 0).loadTexture("shop/statssheet");
+        var statsPaper:FunkinSprite = new FunkinSprite(0, 0).loadTexture("ui/funkbucks/shop/stats-sheet");
         statsPaper.zIndex = 0;
         statsPaper.localX = -19;
         statsPaper.localY = -60;
         this.add(statsPaper);
 
-        var statNames:BAlphabet = new BAlphabet(0, 0, '${FBIcon.Buck} FunkBucks earned:
+        var statNames:BAText = new BAText(0, 0, '${FBIcon.Buck} FunkBucks earned:
 ${FBIcon.Jewel} Melody Stones earned:
 ${FBIcon.Boxes} Total Boxes opened:
 ${FBIcon.CardboardBox} Cardboard Boxes opened:
@@ -29,7 +29,7 @@ ${FBIcon.Calendar} Daily Songs completed:', { baseColor: "2D2E48" });
         statNames.localScale.set(0.5, 0.5);
         this.add(statNames);
 
-        var statCounts:BAlphabet = new BAlphabet(0, 0, '${FunkBucks.getFunkCoinsLifetime()}
+        var statCounts:BAText = new BAText(0, 0, '${FunkBucks.getFunkCoinsLifetime()}
 ${FunkBucks.getBlueJewelsLifetime()}
 ${FunkBucks.getOpenedBoxCount("cardboard") + FunkBucks.getOpenedBoxCount("smallgiftbox") + FunkBucks.getOpenedBoxCount("fancycoffret") + FunkBucks.getOpenedBoxCount("glimmeringpouch")}
 ${FunkBucks.getOpenedBoxCount("cardboard")}

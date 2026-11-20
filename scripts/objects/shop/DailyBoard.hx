@@ -1,6 +1,6 @@
 package funkbucks.objects.shop;
 
-import balphabet.BAlphabet;
+import balphabet.BAText;
 import funkbucks.FunkBucks;
 import funkin.data.song.SongRegistry;
 import funkin.graphics.FunkinSprite;
@@ -10,7 +10,7 @@ using StringTools;
 class DailyBoard extends FunkinGroup
 {
     var board:FunkinSprite;
-    var dailies:BAlphabet;
+    var dailies:BAText;
 
     override public function new(x:Float, y:Float):Void
     {
@@ -20,7 +20,7 @@ class DailyBoard extends FunkinGroup
 
     function createBoard():Void
     {
-        var boardShadow:FunkinSprite = new FunkinSprite(0, 0).loadTexture("shop/dailyboard");
+        var boardShadow:FunkinSprite = new FunkinSprite(0, 0).loadTexture("ui/funkbucks/shop/daily-board");
         boardShadow.localY = 10;
         boardShadow.localScale.set(0.95, 1.0);
         boardShadow.scrollFactor.set(0.85, 0.85);
@@ -29,13 +29,13 @@ class DailyBoard extends FunkinGroup
         boardShadow.blend = 11;
         this.add(boardShadow);
 
-        board = new FunkinSprite(0, 0).loadTexture("shop/dailyboard");
+        board = new FunkinSprite(0, 0).loadTexture("ui/funkbucks/shop/daily-board");
         board.scrollFactor.set(0.85, 0.85);
         board.zIndex = 1;
         this.add(board);
 
-        dailies = new BAlphabet(0, 0, formatDailySongs());
-        dailies.localX = board.x + board.width / 2;
+        dailies = new BAText(0, 0, formatDailySongs());
+        dailies.localX = board.width / 2;
         dailies.localY = board.y + 115;
         dailies.alignment = "center";
         dailies.localScale.set(0.525, 0.525);

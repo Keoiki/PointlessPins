@@ -1,0 +1,11 @@
+{
+    "canSkipOnRepeat": true,
+    "dialogue": 
+    [
+        {
+            "text": "I don't have any more pins\nto offer you right now.",
+            "speaker": "April",
+            "canSkip": false
+        }
+    ]
+}

@@ -1,6 +1,6 @@
 package funkbucks;
 
-import balphabet.BAlphabet;
+import balphabet.BAText;
 import flixel.effects.particles.FlxEmitter;
 import flixel.tweens.FlxEase;
 import flixel.tweens.FlxTween;
@@ -23,6 +23,30 @@ class PinUnlockState extends MusicBeatSubState
     var glow1spin:Float = 0;
     var glow2spin:Float = 0;
     public var debug:Bool = false;
+
+    public static function queryAssets(type:AssetType, pinID:String):Array<AssetPath>
+    {
+        var result:Array<AssetPath> = [];
+
+        switch (type)
+        {
+            case "IMAGE":
+            {
+                result.appendUnique([
+                    Paths.image('ui/funkbucks/pins/$pinID'),
+                    Paths.image('ui/funkbucks/pin-unlock/glow'),
+                    Paths.image('ui/funkbucks/pin-unlock/glow-small'),
+                    Paths.image('ui/funkbucks/pin-unlock/sparkle')
+                ]);
+            }
+            case "SOUND":
+            {
+                result.push(Paths.sound('gameplay/playable-characters/bf/results/sounds/results-perfect/tickle-fight'));
+            }
+        }
+
+        return result;
+    }
 
     /**
      * @param pinID The pin ID.
@@ -52,7 +76,7 @@ class PinUnlockState extends MusicBeatSubState
         darkOverlay.alpha = 0;
         add(darkOverlay);
 
-        glow1 = new FunkinSprite(FlxG.width / 2, 400).loadTexture("pinunlockglow");
+        glow1 = new FunkinSprite(FlxG.width / 2, 400).loadTexture("ui/funkbucks/pin-unlock/glow");
         glow1.x -= glow1.width / 2;
         glow1.y -= glow1.height / 2;
         glow1.alpha = 0;
@@ -60,7 +84,7 @@ class PinUnlockState extends MusicBeatSubState
         glow1.blend = 0;
         add(glow1);
 
-        glow2 = new FunkinSprite(FlxG.width / 2, 400).loadTexture("pinunlockglowsmall");
+        glow2 = new FunkinSprite(FlxG.width / 2, 400).loadTexture("ui/funkbucks/pin-unlock/glow-small");
         glow2.x -= glow2.width / 2;
         glow2.y -= glow2.height / 2;
         glow2.alpha = 0;
@@ -78,7 +102,7 @@ class PinUnlockState extends MusicBeatSubState
         var sparkData = getSparkleData(pinData.rarity);
         sparkles = new FlxEmitter(FlxG.width / 2 - 50, 200);
         sparkles.setSize(100, 100);
-        sparkles.loadParticles(Paths.image("pinsparkle"), sparkleGoBoom ? 5000 : sparkData.amount, 0);
+        sparkles.loadParticles(Paths.image("ui/funkbucks/pin-unlock/sparkle"), sparkleGoBoom ? 5000 : sparkData.amount, 0);
         sparkles.acceleration.set(0, 50, 0, 150, 0, 400, 0, 600);
         sparkles.scale.set(0.3, null, 1.2, null, 0.1, null, 0.7, null);
         sparkles.keepScaleRatio = true;
@@ -110,19 +134,19 @@ class PinUnlockState extends MusicBeatSubState
             }
         }
 
-        var unlockMessage:BAlphabet = new BAlphabet(FlxG.width / 2, 420, unlockMsgText);
+        var unlockMessage:BAText = new BAText(FlxG.width / 2, 420, unlockMsgText);
         unlockMessage.alignment = "center";
         unlockMessage.scale.set(0.55, 0.55);
         add(unlockMessage);
 
-        var unlockedPinName:BAlphabet = new BAlphabet(FlxG.width / 2, 475, '<b><s=0.75><c=$rarityColor>${pinData.rarity}</c></s>\n${pinData.name}</b>');
+        var unlockedPinName:BAText = new BAText(FlxG.width / 2, 475, '<b><s=0.75><c=$rarityColor>${pinData.rarity}</c></s>\n${pinData.name}</b>');
         unlockedPinName.alignment = "center";
         unlockedPinName.scale.set(0.75, 0.75);
         add(unlockedPinName);
 
         if (pinData.description != null && pinData.description != "")
         {
-            var unlockedPinDescription:BAlphabet = new BAlphabet(FlxG.width / 2, unlockedPinName.y + 140, pinData.description, { lineHeight: 60 });
+            var unlockedPinDescription:BAText = new BAText(FlxG.width / 2, unlockedPinName.y + 140, pinData.description, { lineHeight: 60 });
             unlockedPinDescription.alignment = "center";
             unlockedPinDescription.scale.set(0.45, 0.45);
             add(unlockedPinDescription);

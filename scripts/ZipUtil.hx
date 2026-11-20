@@ -16,12 +16,7 @@ class ZipUtil
         'astc-data.json',
         'planned-changelog.md',
         'scripts/ZipUtil.hx',
-        'scripts/ElevatorMenu.hx',
-        'scripts/TimedCoinsManager.hx',
-        'scripts/objects/CloverCoin.hx',
-        'scripts/objects/ui/TimedCoinsHUD.hx',
-        'scripts/objects/ui/TimedCoinsNote.hx',
-        'data/pointlesspins/awards.json'
+        'data/funkbucks/awards.json'
     ];
 
     final EXCLUDED_FOLDERS:Array<String> =
@@ -41,7 +36,8 @@ class ZipUtil
 
     final EXCLUDED_FILE_EXT:Array<String> =
     [
-        '.zip'
+        '.zip',
+        '.fnfmod'
     ];
 
     final PATH:String = 'mods/PointlessPins/';
@@ -63,7 +59,7 @@ class ZipUtil
      */
     public function packageMod():Void
     {
-        final exportPath:String = '$PATH/export/pointlesspins-2_0_0${(exportToMobile ? '-mobile' : '')}-wip.zip';
+        final exportPath:String = '$PATH/export/pointlesspins-2_0_0${(exportToMobile ? '-mobile' : '')}-wip.fnfmod';
         makeEntries(PATH);
         FileUtil.saveFilesAsZIPToPath(zipEntries, exportPath, FileWriteMode.Force);
     }

@@ -6,6 +6,8 @@ import flixel.tweens.FlxTween;
 import flixel.util.FlxColor;
 import funkbucks.FBUtil;
 import funkin.api.newgrounds.NewgroundsClient;
+import funkin.assets.Assets;
+import funkin.assets.Paths;
 import funkin.graphics.FunkinSprite;
 import openfl.filters.BitmapFilter;
 import openfl.filters.DropShadowFilter;
@@ -84,22 +86,22 @@ class PinSprite extends FunkinSprite
         description = _description;
         scaleOverride = _scale;
 
-        var fileToLoad:String = "images/pointlesspins/pins/" + pID + ".png";
+        var fileToLoad:String = "ui/funkbucks/pins/" + pID + ".png";
         
         if ((!Assets.exists(fileToLoad) && isUnlocked) || isUnknown)
         {
-            fileToLoad = "images/unknownpin.png";
+            fileToLoad = "ui/funkbucks/unknown-pin.png";
             scaleOverride = 0.45;
         }
         else if (!isUnlocked)
         {
-            fileToLoad = "images/pinknob.png";
+            fileToLoad = "ui/funkbucks/pin-board/pin-knob.png";
             scaleOverride = 1;
         }
 
         if (loadImmediately)
         {
-            loadTexture(fileToLoad.substring(fileToLoad.indexOf("/") + 1, fileToLoad.lastIndexOf(".")));
+            loadTexture(fileToLoad.substring(0, fileToLoad.lastIndexOf(".")));
             scale.set(scaleOverride, scaleOverride);
             updateHitbox();
             x -= width / 2;
@@ -112,7 +114,7 @@ class PinSprite extends FunkinSprite
             var fadeTween:Null<FlxTween> = null;
             fadeTween = FlxTween.tween(super, { alpha: 0 }, 0.25);
 
-            Assets.loadBitmapData(fileToLoad).onComplete(function(bitmapData:BitmapData)
+            Assets.loadBitmapData(Paths.image(fileToLoad)).onComplete(function(bitmapData:BitmapData)
             {
                 if (!exists) return;
 
@@ -173,7 +175,7 @@ class PinSprite extends FunkinSprite
             case "pinhead":
             {
                 // replace the shader reference to the actual shader within 0.9, for the time being it's copied over to make this as accurate as possible
-                var replaceColor:FlxRuntimeShader = new FlxRuntimeShader(Assets.getText(Paths.frag("replaceColor")));
+                var replaceColor:FlxRuntimeShader = new FlxRuntimeShader(Assets.getText(Paths.frag("ui/shaders/replace-color")));
                 replaceColor.setFloatArray('uTargetColor', [0, 1, 0.04]);
                 replaceColor.setFloat('uThreshold', 0.12);
                 final hue:Float = Math.random() * 360;
@@ -190,7 +192,11 @@ class PinSprite extends FunkinSprite
             }
             case "hundrec":
             {
-                if (NewgroundsClient.isLoggedIn() && NewgroundsClient.user != null)
+                if (FlxG.random.bool(1))
+                {
+                    description = "Behind you.";
+                }
+                else if (/*NewgroundsClient.isLoggedIn() && */NewgroundsClient.user != null)
                 {
                     if (NewgroundsClient.user.supporter)
                     {
@@ -204,7 +210,7 @@ class PinSprite extends FunkinSprite
             }
             case 'newgrounds':
             {
-                if (NewgroundsClient.isLoggedIn() && NewgroundsClient.user != null)
+                if (/*NewgroundsClient.isLoggedIn() &&*/ NewgroundsClient.user != null)
                 {
                     if (NewgroundsClient.user.supporter)
                     {

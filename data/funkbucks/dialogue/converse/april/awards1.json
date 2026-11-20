@@ -1,0 +1,36 @@
+{
+    "canSkipOnRepeat": true,
+    "dialogue": 
+    [
+        {
+            "text": "Those were my idea.",
+            "speaker": "April",
+            "canSkip": false
+        },
+        {
+            "text": "Too bad Ophelia bailed out on\nmaking them available last second.",
+            "speaker": "April",
+            "canSkip": false
+        },
+        {
+            "text": "I think they're clearing out a space\na couple floors up for them.",
+            "speaker": "April",
+            "canSkip": false
+        },
+        {
+            "text": "Unfortunately <i>I</i> don't get to be\nthe one there.",
+            "speaker": "April",
+            "canSkip": false
+        },
+        {
+            "text": "Some new &#xE008; pink haired girl was\n\"more suited\" or something.",
+            "speaker": "April",
+            "canSkip": false
+        },
+        {
+            "text": "Yeah right..",
+            "speaker": "April",
+            "canSkip": false
+        }
+    ]
+}

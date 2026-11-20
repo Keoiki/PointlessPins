@@ -1,14 +1,8 @@
 package funkbucks.dialog.shop.april;
 
-import flixel.tweens.FlxEase;
-import flixel.tweens.FlxTween;
-import flixel.util.FlxTimer;
 import funkbucks.FunkBucks;
-import funkbucks.PinUnlockState;
 import funkbucks.Shop;
-import funkbucks.Shopkeeper;
 import funkbucks.dialog.DialogBase;
-import funkbucks.dialog.shop.OpheliaPin;
 import funkin.audio.FunkinSound;
 
 class ConverseApril extends DialogBase
@@ -16,14 +10,14 @@ class ConverseApril extends DialogBase
     var shop:Shop;
     static var timesNothinged:Int = 0;
 
-    override function new():Void
+    override public function new(?autoStart:Null<String>):Void
     {
         super();
         shop = Shop.instance;
-        start();
+        start(autoStart);
     }
 
-    override function start():Void
+    override function start(?autoStart:Null<String>):Void
     {
         if (shop.dialog != null) 
         {
@@ -48,6 +42,20 @@ class ConverseApril extends DialogBase
         var dialog:Dialogue = new Dialogue("converseApril", dialogue);
         dialog.cameras = [shop.cameraHUD];
 
+        if (autoStart != null)
+        {
+            shouldTalk = false;
+            dialog.doNextLine();
+            for (index => entry in getDialogueOptions())
+            {
+                if (entry[1] == autoStart)
+                {
+                    dialog.changeResponse(index);
+                    break;
+                }
+            }
+        }
+
         dialog.dialogueText.letterCallback = (code) ->
         {
             if (FunkBucks.skipTalking.contains(code)) return;
@@ -55,6 +63,11 @@ class ConverseApril extends DialogBase
             if (playSound) FunkinSound.playOnce(Paths.sound(dialogueSound + FlxG.random.int(dialogueSoundRange[0], dialogueSoundRange[1])), 1.0);
             if (playAnim) shop.shopkeeper.talk();
         }
+
+        dialog.onSkipLine.add((index) ->
+        {
+            shop.shopkeeper.stopTalking();
+        });
 
         dialog.onDialogueResponse.add((response) ->
         {
@@ -72,11 +85,21 @@ class ConverseApril extends DialogBase
                     {
                         finish();
                     }
+                case 'exchange': new ExchangeApril();
+                case 'aboutYourself': new YourselfApril();
+                case 'aboutOphelia': new AboutOphelia();
+                case 'funkbucks': new AboutFunkBucks();
+                case 'melodyStones': new AboutMelodyStones();
+                case 'pins': new AboutPins();
+                case 'boxes': new AboutBoxes();
+                case 'awards': new AboutAwards();
+                case 'stats': new AboutStats();
+                case 'endlessMode': new AboutEndlessMode();
                 default: finish();
             }
         });
 
-        shop.shopkeeper.playAnimation('Normal');
+        shop.shopkeeper.playAnimation('normal', true, true);
         shop.dialog = dialog;
         shop.add(dialog);
     }
@@ -89,7 +112,7 @@ class ConverseApril extends DialogBase
 
         if (FunkBucks.getBlueJewels() > 0 || FunkBucks.getBlueJewelsLifetime() > 0)
         {
-            options.push(['${FBIcon.Jewel} <c=82E9FF>Exchange</c>', 'openExchange']);
+            options.push(['${FBIcon.Jewel} <c=82E9FF>Exchange</c>', 'exchange']);
         }
 
         options.push(['About yourself', 'aboutYourself']);
@@ -103,8 +126,11 @@ class ConverseApril extends DialogBase
 
         options.push(['Pins', 'pins']);
         options.push(['Boxes', 'boxes']);
-        options.push(['Rewards', 'rewards']);
-        options.push(['${FBIcon.Clover} Clover Coins', 'cloverCoins']);
+        options.push(['Awards', 'awards']);
+        options.push(['Stats', 'stats']);
+
+        // Not finished for 2.0.
+        // options.push(['${FBIcon.Clover} Clover Coins', 'cloverCoins']);
 
         #if keoiki.endlessmode
         options.push(['<c=00BBFF>∞</c> Endless Mode <c=00BBFF>∞</c>', 'endlessMode']);
@@ -133,10 +159,9 @@ class ConverseApril extends DialogBase
 
         dialog.onCompleteDialogue.add(() ->
         {
-            shop.shopkeeper.playAnimation('Normal');
+            shop.shopkeeper.playAnimation('normal');
             finish();
         });
-        
 
         shop.dialog = dialog;
         shop.add(dialog);
@@ -144,6 +169,7 @@ class ConverseApril extends DialogBase
 
     override function finish():Void
     {
+        shop.shopkeeper.playAnimation('normal', true, true);
         returnControlShop();
     }
 }

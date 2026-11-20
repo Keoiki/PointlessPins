@@ -8,14 +8,14 @@ import funkbucks.PinUnlockState;
 import funkbucks.Shop;
 import funkbucks.Shopkeeper;
 import funkbucks.dialog.DialogBase;
-import funkbucks.dialog.shop.OpheliaPin;
+import funkbucks.dialog.shop.ophelia.OpheliaPin;
 import funkin.audio.FunkinSound;
 
 class ConverseOphelia extends DialogBase
 {
     var shop:Shop;
 
-    override function new():Void
+    override public function new():Void
     {
         super();
         shop = Shop.instance;

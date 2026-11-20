@@ -1,5 +1,5 @@
 {
-  "id": "keoiki.funkbucks",
+  "id": "funkbucks",
   "title": "Pointless Pins",
   "description": "A true test of luck!",
   "contributors":
@@ -12,13 +12,13 @@
   ],
   "dependencies":
   {
-    "keoiki.betteralphabet": ">=2.0.0 <3.0.0"
+    "betteralphabet": ">=3.0.0"
   },
   "optionalDependencies":
   {
     "keoiki.endlessmode": ">=2.0.0 <3.0.0"
   },
-  "api_version": "0.8.6",
+  "api_version": "0.9.0",
   "mod_version": "2.0.0",
   "license": "Apache-2.0"
 }

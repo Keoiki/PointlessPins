@@ -1,0 +1,17 @@
+{
+    "canSkipOnRepeat": true,
+    "dialogue": 
+    [
+        {
+            "text": "Most commonly you get obtain pins...",
+            "speaker": "April",
+            "canSkip": false
+        },
+        {
+            "text": "what",
+            "speaker": "April",
+            "canSkip": false,
+            "delayLine": true
+        }
+    ]
+}

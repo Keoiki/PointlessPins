@@ -1,6 +1,6 @@
 package funkbucks;
 
-import balphabet.BAlphabet;
+import balphabet.BAText;
 import flixel.FlxObject;
 import flixel.addons.display.FlxSliceSprite;
 import flixel.math.FlxPoint;
@@ -13,6 +13,8 @@ import funkbucks.objects.PinSprite;
 import funkbucks.objects.ui.BackButton;
 import funkbucks.objects.ui.PinRarityIconGroup;
 import funkbucks.shaders.ImposePatternShader;
+import funkin.assets.Assets;
+import funkin.assets.Paths;
 import funkin.audio.FunkinSound;
 import funkin.graphics.FunkinCamera;
 import funkin.graphics.FunkinSprite;
@@ -69,17 +71,48 @@ class PinBoard extends MusicBeatSubState
     var isViewingPin:Bool = false;
     var previewPin:PinSprite;
     var pinPreviewBlack:FunkinSprite;
-    var pinName:BAlphabet;
-    var pinDescription:BAlphabet;
-    var pinArtist:BAlphabet;
-    var pinUnlockCount:BAlphabet;
-    var pinSource:BAlphabet;
+    var pinName:BAText;
+    var pinDescription:BAText;
+    var pinArtist:BAText;
+    var pinUnlockCount:BAText;
+    var pinSource:BAText;
 
     var unlockedPinsData;
     var unlockedPins:Int = 0;
     var unlockedPinsPerRarity:Array<Int> = [];
 
-    var coolBackButton:Dynamic;
+    var coolBackButton:BackButton;
+
+    public static function queryAssets(type:AssetType):Array<AssetPath>
+    {
+        var result:Array<AssetPath> = [];
+
+        switch (type)
+        {
+            case "IMAGE":
+            {
+                final unlockedPins:Array<String> = FunkBucks.getAllUnlockedPinIDs();
+                for (pin in unlockedPins)
+                {
+                    result.push(Paths.image('ui/funkbucks/pins/$pin'));
+                }
+                result.appendUnique([
+                    Paths.image('ui/funkbucks/pin-board/board'),
+                    Paths.image('ui/funkbucks/pin-board/board-extension'),
+                    Paths.image('ui/funkbucks/pin-board/cursor'),
+                    Paths.image('ui/funkbucks/pin-board/pin-knob')
+                ]);
+                result.appendUnique(Assets.listInPath('ui/funkbucks/pin-board/rarities', 'IMAGE'));
+                result.pushUnique(Paths.image('ui/funkbucks/dialogue/pattern-diamonds'));
+            }
+            case "SOUND":
+            {
+                result.push(Paths.sound('ui/freeplay/sounds/unfavorite'));
+            }
+        }
+
+        return result;
+    }
 
     override public function new():Void
     {
@@ -127,7 +160,7 @@ class PinBoard extends MusicBeatSubState
         FlxG.sound.defaultSoundGroup.add(pinMoveSound);
         FlxG.sound.list.add(pinMoveSound);
 
-        cursor = new FunkinSprite(60, 140).loadTexture("cursor");
+        cursor = new FunkinSprite(60, 140).loadTexture("ui/funkbucks/pin-board/cursor");
         add(cursor);
 
         unlockedPinsData = FunkBucks.getUnlockedPins();
@@ -196,7 +229,7 @@ class PinBoard extends MusicBeatSubState
 
             var tc:String = ReflectUtil.getAnonymousField(pinJSON, PIN_RARITIES[i]).color;
             var star:String = unlockedPinsPerRarity[i] >= pinsInRarity ? '${FBIcon.Star} ' : '';
-            var rarityText = new BAlphabet(PIN_X_START - 24, textOffset, '<b>$star<c=$tc>${PIN_RARITIES[i]}</c> <s=0.5>(${(unlockedPinsPerRarity[i] ?? 0)}/$pinsInRarity)</s>${(FunkBucks.debug_pins ? " <c=FF0000>*</c>" : "")}</b>');
+            var rarityText = new BAText(PIN_X_START - 24, textOffset, '<b>$star<c=$tc>${PIN_RARITIES[i]}</c> <s=0.5>(${(unlockedPinsPerRarity[i] ?? 0)}/$pinsInRarity)</s>${(FunkBucks.debug_pins ? " <c=FF0000>*</c>" : "")}</b>');
             rarityText.scale.set(0.8, 0.8);
             add(rarityText);
 
@@ -216,7 +249,7 @@ class PinBoard extends MusicBeatSubState
 
         var __shader:ImposePatternShader = new ImposePatternShader();
         __shader.setBlend(0);
-        __shader.setValues([menuFooter.width, menuFooter.height], Assets.getBitmapData(Paths.image("pointlesspins/dialogue/pattern-diamonds")),
+        __shader.setValues([menuFooter.width, menuFooter.height], Assets.getBitmapData(Paths.image("ui/funkbucks/dialogue/pattern-diamonds")),
             0xFF191919, 5.0, [-0.05, -0.1], 0.5);
         menuFooter.shader = __shader;
 
@@ -229,23 +262,23 @@ class PinBoard extends MusicBeatSubState
         pinPreviewBlack.alpha = 0.0;
         add(pinPreviewBlack);
 
-        pinName = new BAlphabet(FlxG.width / 2, 40, "", { lineHeight: 60, alignment: "center" });
+        pinName = new BAText(FlxG.width / 2, 40, "", { lineHeight: 60, alignment: "center" });
         pinName.scale.set(0.7, 0.7);
         add(pinName);
 
-        pinDescription = new BAlphabet(FlxG.width / 2, 555, "", { lineHeight: 70, alignment: "center" });
+        pinDescription = new BAText(FlxG.width / 2, 555, "", { lineHeight: 70, alignment: "center" });
         pinDescription.scale.set(0.5, 0.5);
         add(pinDescription);
 
-        pinArtist = new BAlphabet(FlxG.width - 25, FlxG.height - 50, "", { alignment: "right" });
+        pinArtist = new BAText(FlxG.width - 25, FlxG.height - 50, "", { alignment: "right" });
         pinArtist.scale.set(0.5, 0.5);
         add(pinArtist);
 
-        pinUnlockCount = new BAlphabet(25, FlxG.height - 50, "");
+        pinUnlockCount = new BAText(25, FlxG.height - 50, "");
         pinUnlockCount.scale.set(0.5, 0.5);
         add(pinUnlockCount);
 
-        pinSource = new BAlphabet(FlxG.width / 2, pinName.y + 60, "", { alignment: "center" });
+        pinSource = new BAText(FlxG.width / 2, pinName.y + 60, "", { alignment: "center" });
         pinSource.scale.set(0.3, 0.3);
         add(pinSource);
 
@@ -264,19 +297,19 @@ class PinBoard extends MusicBeatSubState
 
         var boardWidth:Float = pins[15].getGraphicMidpoint(pinMidpoint).x - pins[0].getGraphicMidpoint(pinMidpoint).x + 300;
         var boardHeight:Float = pins[pins.length - 1].getGraphicMidpoint(pinMidpoint).y - pins[0].getGraphicMidpoint(pinMidpoint).y + 390;
-        var pinBoard:FlxSliceSprite = new FlxSliceSprite(Assets.getBitmapData("images/pinboard.png"), FlxRect.get(60, 60, 180, 180), boardWidth, boardHeight);
+        var pinBoard:FlxSliceSprite = new FlxSliceSprite(Assets.getBitmapData(Paths.image('ui/funkbucks/pin-board/board')), FlxRect.get(60, 60, 180, 180), boardWidth, boardHeight);
         add(pinBoard);
         pinBoard.x = pins[0].getGraphicMidpoint(pinMidpoint).x - 150;
         pinBoard.y = pins[0].getGraphicMidpoint(pinMidpoint).y - 225;
         pinBoard.zIndex = -1000;
 
         var star:String = unlockedPins >= pinCount ? '<s=1.5>${FBIcon.Star}</s><o=20,20/> ' : '';
-        var menuUnlockedText = new BAlphabet(PIN_X_START - 24, pinBoard.y - 50, '$star<b>Total: $unlockedPins/$pinCount${(FunkBucks.debug_pins ? "<c=FF0000>*</c>" : "")}</b>');
+        var menuUnlockedText = new BAText(PIN_X_START - 24, pinBoard.y - 50, '$star<b>Total: $unlockedPins/$pinCount${(FunkBucks.debug_pins ? "<c=FF0000>*</c>" : "")}</b>');
         menuUnlockedText.scale.set(0.7, 0.7);
         menuUnlockedText.zIndex = -990;
         add(menuUnlockedText);
 
-        var pinBoardExt:FlxSliceSprite = new FlxSliceSprite(Assets.getBitmapData("images/pinboardext.png"), FlxRect.get(15, 15, 70, 25),
+        var pinBoardExt:FlxSliceSprite = new FlxSliceSprite(Assets.getBitmapData(Paths.image('ui/funkbucks/pin-board/board-extension')), FlxRect.get(15, 15, 70, 25),
             menuUnlockedText.width + 60, 100);
         add(pinBoardExt);
         pinBoardExt.x = menuUnlockedText.x - 30;

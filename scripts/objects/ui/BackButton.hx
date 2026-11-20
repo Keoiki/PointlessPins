@@ -28,7 +28,7 @@ class BackButton extends FunkinSprite
     {
         super(x, y);
 
-        loadSparrow("pointlesspins/backbutton");
+        loadSparrow("ui/funkbucks/backbutton");
         animation.addByIndices("idle", "backbutton", [0], '', 0, false);
         animation.addByIndices("active", "backbutton", [1], '', 0, false);
         animation.play("idle");
