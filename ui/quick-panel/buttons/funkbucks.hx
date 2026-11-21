@@ -1,4 +1,4 @@
-package funkbucks;
+package funkbucks.ui.quickpanel;
 
 import funkin.ui.quickpanel.PanelEntry;
 import funkin.ui.transition.FadeType;

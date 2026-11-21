@@ -23,7 +23,6 @@ import funkin.audio.FunkinSound;
 import funkin.graphics.FunkinCamera;
 import funkin.graphics.FunkinSprite;
 import funkin.mobile.ui.FunkinBackButton;
-import funkin.modding.ModStore;
 import funkin.ui.MusicBeatState;
 import funkin.ui.mainmenu.MainMenuState;
 import funkin.ui.quickpanel.QuickPanelState;
@@ -415,10 +414,10 @@ class Shop extends MusicBeatState
         statsSheet.cameras = [cameraHUD];
         add(statsSheet);
 
-        if (ModStore.get("funkbucksOutdated") && ModStore.get("funkbucksShownOutdate") == null)
+        if (FunkBucks.isModOutdated && !FunkBucks.hasShownUpdateToast)
         {
             var alert:BAText = new BAText(30, 30,
-                '<c=FFB51C><b>New version is available:</c> <c=00FF00>${ModStore.get("funkbucksNewVersion")}</c>\n<s=0.75>${ModStore.get("funkbucksNewVersionInfo")}</s></b>',
+                '<c=FFB51C><b>New version is available:</c> <c=00FF00>${FunkBucks.updateNewVersion}</c>\n<s=0.75>${FunkBucks.updatePatchnotes}</s></b>',
                 { lineHeight: 60 });
             alert.scale.set(0.4, 0.4);
             alert.zIndex = 100000;
@@ -436,7 +435,7 @@ class Shop extends MusicBeatState
                 FlxTween.tween(alertBG, { alpha: 0 }, 2, { ease: FlxEase.quintOut });
             });
 
-            ModStore.register("funkbucksShownOutdate", true);
+            FunkBucks.hasShownUpdateToast = true;
         }
 
         persistentUpdate = true;

@@ -19,7 +19,6 @@ import funkin.data.song.SongRegistry;
 import funkin.graphics.FunkinCamera;
 import funkin.graphics.FunkinSprite;
 import funkin.modding.PolymodHandler;
-import funkin.modding.ModStore;
 import funkin.modding.module.Module;
 import funkin.play.PlayState;
 import funkin.play.PlayStatePlaylist;
@@ -79,8 +78,7 @@ class FunkBucks extends Module
     public static final dailySongCount:Int = 5;
     public static final skipTalking:Array<Int> = [33, 44, 46, 63];
 
-    @:blacklisted
-    static final supportedModdedVariations:Array<String> = ["remnants", "bfremnants", "gooey", "spookymod", "reimu", "qt", "hundrec"];
+    @:blacklisted static final supportedModdedVariations:Array<String> = ["remnants", "bfremnants", "gooey", "spookymod", "reimu", "qt", "hundrec"];
 
     public static var save;
 
@@ -90,8 +88,21 @@ class FunkBucks extends Module
     public static var isMouseTooFast:Bool = false;
     public static var dialogueActive:Bool = false;
 
-    @:persistent
-    public static var modVersion:String = "0.0.0";
+    // KILLING MODSTORE
+    // Version number failsafe in case failedToFetchVersion is True...
+    public static var versionFailsafe:String = '2.0.0';
+    // Mod version as fetched from the metadata.
+    @:persistent public static var modVersion:String = '0.0.0';
+    // Whether or not the metadata could be fetched if not.
+    @:persistent public static var failedToFetchVersion:Bool = false;
+    // Whether or not there is a new version available or not.
+    @:persistent public static var isModOutdated:Bool = false;
+    // If so, what is that version,
+    @:persistent public static var updateNewVersion:String = '0.0.0';
+    // and what are its patchnotes? (If any)
+    @:persistent public static var updatePatchnotes:String = '';
+    // Whether or not the update toast in the Shop has been shown.
+    @:persistent public static var hasShownUpdateToast:Bool = false;
 
     /**
      * Set this value to determine how to show the pins on the Pin Board.
@@ -161,17 +172,29 @@ class FunkBucks extends Module
         {
             final saveFields:Array<String> = ReflectUtil.fields(FunkBucks.getDefaultSaveValues());
             final defaultSaveValues:Dynamic = FunkBucks.getDefaultSaveValues();
-            var updatedAnyField:Bool = false;
             for (field in saveFields)
             {
                 if (!ReflectUtil.hasField(FunkBucks.save, field) || ReflectUtil.getField(FunkBucks.save, field) == null)
                 {
                     ReflectUtil.setField(FunkBucks.save, field, ReflectUtil.getField(defaultSaveValues, field));
-                    updatedAnyField = true;
                 }
             }
-            // Only save if necessary because idk
-            if (updatedAnyField) FunkBucks.flushSave();
+
+            if (FunkBucks.save.playedVersions.length == 0)
+            {
+                // Let's just assume that if there is existing save data, that every versions prior has been played.
+                FunkBucks.save.playedVersions.appendUnique(['1.0.0', '1.0.1', '1.1.0', '1.1.1', '1.1.2', '1.2.0', '1.3.0']);
+            }
+
+            // Check to see if the unique dialogue about April in 1.3.2 was found, I doubt many will have this lol
+            if (FunkBucks.save?.hasPlayedPreviewFour)
+            {
+                FunkBucks.save.playedVersions.appendUnique(['1.3.1', '1.3.2']);
+            }
+
+            FunkBucks.save.playedVersions.pushUnique((FunkBucks.failedToFetchVersion ? FunkBucks.versionFailsafe : FunkBucks.modVersion));
+
+            FunkBucks.flushSave();
         }
 
         loadPinData();
@@ -187,20 +210,18 @@ class FunkBucks extends Module
 
     /**
      * `@:persistent` metadata please save me, 0.9.0 save me, kill ModStore
+     * HOORAY !!!
      */
     function versionCheck():Void
     {
-        var onlineVersion:String = "0.0.0";
-        var onlineVersionInfo:String = "";
-
         try
         {
             FunkBucks.modVersion = PolymodHandler.modFileSystem.getMetadataByModId("funkbucks", "script_runtime").modVersion.version.join(".");
         }
         catch (err:Dynamic)
         {
+            FunkBucks.failedToFetchVersion = true;
             trace(err);
-            ModStore.register("funkbucksOutdated", false);
             return;
         }
 
@@ -214,33 +235,28 @@ class FunkBucks extends Module
 
             if (versionData == null)
             {
-                ModStore.register("funkbucksOutdated", false);
-                ModStore.register("funkbucksNewVersion", onlineVersion);
-                ModStore.register("funkbucksNewVersionInfo", onlineVersionInfo);
-                trace("Somehow got no version data despite the request being successful?");
-            }
-
-            if (versionData.indexOf("|||") != -1)
-            {
-                var versionInfo:Array<String> = versionData.split("|||");
-                onlineVersion = versionInfo[0];
-                onlineVersionInfo = versionInfo[1];
+                trace("Somehow got no version data despite the request being successful? maybe the repo got deleted somehow, if so rip bozo lmao");
             }
             else
             {
-                onlineVersion = versionData;
-            }
+                // Check if there's patchnotes included.
+                if (versionData.indexOf("|||") != -1)
+                {
+                    var versionInfo:Array<String> = versionData.split("|||");
+                    FunkBucks.updateNewVersion = versionInfo[0];
+                    FunkBucks.updatePatchnotes = versionInfo[1];
+                }
+                else // If not, then it should just be the version.
+                {
+                    FunkBucks.updateNewVersion = versionData;
+                }
 
-            ModStore.register("funkbucksOutdated", VersionUtil.validateVersionStr(onlineVersion, ">" + FunkBucks.modVersion));
-            ModStore.register("funkbucksNewVersion", onlineVersion);
-            ModStore.register("funkbucksNewVersionInfo", onlineVersionInfo);
+                FunkBucks.isModOutdated = VersionUtil.validateVersionStr(FunkBucks.updateNewVersion, ">" + FunkBucks.modVersion);
+            }
         }
 
         var loadFailed = () ->
         {
-            ModStore.register("funkbucksOutdated", false);
-            ModStore.register("funkbucksNewVersion", onlineVersion);
-            ModStore.register("funkbucksNewVersionInfo", onlineVersionInfo);
             trace("Failed to fetch online version!");
         }
 
@@ -251,13 +267,10 @@ class FunkBucks extends Module
 
         // Testing stuff.
 
-        // ModStore.remove("funkbucksOutdated");
-        // ModStore.remove("funkbucksNewVersion");
-        // ModStore.remove("funkbucksNewVersionInfo");
-        // ModStore.remove("funkbucksShownOutdate");
-        // ModStore.register("funkbucksOutdated", true);
-        // ModStore.register("funkbucksNewVersion", "2.1.0");
-        // ModStore.register("funkbucksNewVersionInfo", "- Removed Hundrec.");
+        // FunkBucks.isModOutdated = true;
+        // FunkBucks.updateNewVersion = '2.1.0';
+        // FunkBucks.updatePatchnotes = '- Added nothing.\n- Removed Sentpajim.';
+        // FunkBucks.hasShownUpdateToast = false;
     }
 
     /**
@@ -846,14 +859,14 @@ class FunkBucks extends Module
 
             /**
              * Number of FunkBucks currently held.
-             * Number of FunkBucks obtained ever. Rewards do not increase this value.
+             * Number of FunkBucks obtained ever. Awards do not increase this value.
              */
             funkBucks: 0,
             funkBucksLifetime: 0,
 
             /**
              * Number of Melody Stones currently held.
-             * Number of Melody Stones obtained ever. Rewards do not increase this value.
+             * Number of Melody Stones obtained ever. Awards do not increase this value.
              * The current pity for a Melody Stone. Has a range of 0-100, which equals to 0%-20%. (0%-60% on Dailies)
              */
             blueJewels: 0,
@@ -868,9 +881,6 @@ class FunkBucks extends Module
             opheliaAnger: 0,
             opheliaAngerTotal: 0,
             opheliaAngerTime: -1,
-            
-            // An array of all Reward IDs that have been collected.
-            // obtainedMilestones: new Array(),
 
             /**
              * Map of all event IDs that have been registered.
@@ -882,7 +892,10 @@ class FunkBucks extends Module
             modifierText: "percentage",
 
             // An array of all the dialogue IDs that have been seen.
-            seenDialogue: new Array()
+            seenDialogue: new Array(),
+
+            // Array related to which versions the player has played.
+            playedVersions: new Array()
         }
     }
 
@@ -923,6 +936,11 @@ class FunkBucks extends Module
         FunkBucks.isMouseActive = true;
         FunkBucks.isMouseTooFast = false;
         #end
+
+        if (FlxG.keys.pressed.CONTROL && FlxG.keys.pressed.SHIFT && FlxG.keys.justPressed.SIX)
+        {
+            trace(FunkBucks.save);
+        }
 
         if (FlxG.state is MainMenuState && FlxG.state.subState == null)
         {
