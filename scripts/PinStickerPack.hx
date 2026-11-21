@@ -24,10 +24,10 @@ class PinStickerPack extends StickerPack
             if (pins.contains("funkbuck")) pins.remove("funkbuck");
             for (ind => pin in pins)
             {
-                pins[ind] = "pointlesspins/pins/" + pin;
+                pins[ind] = 'pointlesspins/pins/$pin';
             }
             // Cut out pins that don't have a sprite. (Me when I make pins and unlock them but remove them before I make a sprite for them.)
-            pins = pins.filter(pin -> Assets.exists("images/" + pin + ".png"));
+            pins = pins.filter(pin -> Assets.exists('images/$pin.png'));
             return pins;
         }
         else

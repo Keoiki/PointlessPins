@@ -175,7 +175,7 @@ class FunkBucksModifierLable extends Module
         else
         {
             onRandom = false;
-            var currentSong:String = event.capsule.freeplayData.data.id + "-" + event.variationId;
+            var currentSong:String = '${event.capsule.freeplayData.data.id}-${event.variationId}';
             if (FunkBucks.getDailies().contains(currentSong))
             {
                 modifierText.text = '$bonusDisplay<b><c=00FF00>${formatModifier(1.5)}</c> ${FBIcon.Buck} (Daily)</b>';

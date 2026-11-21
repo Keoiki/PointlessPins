@@ -19,11 +19,11 @@ class PinSprite extends FunkinSprite
     public var name:String;
     public var description:String;
     public var scaleOverride:Float;
-    public var rarity:String = "Unknown";
-    public var artist:String = "Keoiki";
-    public var source(default, set):String = "Unknown";
+    public var rarity:String = 'Unknown';
+    public var artist:String = 'Keoiki';
+    public var source(default, set):String = 'Unknown';
     public var pixel:Bool;
-    public var lockedText(default, set):String = "Unknown";
+    public var lockedText(default, set):String = 'Unknown';
     public var special:Bool = false;
     public var hidden:Bool = false;
     public var isUnlocked:Bool = false;
@@ -33,7 +33,7 @@ class PinSprite extends FunkinSprite
 
     var dropshadowFilter:Array<BitmapFilter> = [new DropShadowFilter(12, 90, 0xFF000000, 1, 48, 48, 1, 1, false, false, false)];
 
-    final tagRegex:EReg = new EReg('#([a-zA-Z0-9_-]+)#', "g");
+    final tagRegex:EReg = new EReg('#([a-zA-Z0-9_-]+)#', 'g');
 
     function set_source(value:String):String
     {
@@ -41,10 +41,10 @@ class PinSprite extends FunkinSprite
         {
             switch (e.matched(1).toLowerCase())
             {
-                case "mod": return FBIcon.Modded;
-                case "internet": return FBIcon.Internet;
-                case "game": return FBIcon.Game;
-                default: return "<color=FF0000>!Unknown Source Tag!</color>";
+                case 'mod': return FBIcon.Modded;
+                case 'internet': return FBIcon.Internet;
+                case 'game': return FBIcon.Game;
+                default: return '<color=FF0000>!Unknown Source Tag!</color>';
             }
         });
 
@@ -58,8 +58,8 @@ class PinSprite extends FunkinSprite
         {
             switch (e.matched(1).toLowerCase())
             {
-                case "april_purchase": return FunkBucks.getEvent("aprilExchangeStarted") == 1 ? "Can be purchased from <c=EA8645>April</c>." : "???";
-                default: return "<color=FF0000>!Unknown Locked Tag!</color>";
+                case 'april_purchase': return FunkBucks.getEvent('aprilExchangeStarted') == 1 ? 'Can be purchased from <c=EA8645>April</c>.' : '???';
+                default: return '<color=FF0000>!Unknown Locked Tag!</color>';
             }
         });
 
@@ -86,20 +86,20 @@ class PinSprite extends FunkinSprite
         description = _description;
         scaleOverride = _scale;
 
-        var fileToLoad:String = "ui/funkbucks/pins/" + pID + ".png";
+        var fileToLoad:String = 'ui/funkbucks/pins/$pID.png';
         
         if ((!Assets.exists(fileToLoad) && isUnlocked) || isUnknown)
         {
-            fileToLoad = "ui/funkbucks/unknown-pin.png";
+            fileToLoad = 'ui/funkbucks/unknown-pin.png';
             scaleOverride = 0.45;
         }
         else if (!isUnlocked)
         {
-            fileToLoad = "ui/funkbucks/pin-board/pin-knob.png";
+            fileToLoad = 'ui/funkbucks/pin-board/pin-knob.png';
             scaleOverride = 1;
         }
 
-        loadTexture(fileToLoad.substring(0, fileToLoad.lastIndexOf(".")));
+        loadTexture(fileToLoad.substring(0, fileToLoad.lastIndexOf('.')));
         scale.set(scaleOverride, scaleOverride);
         updateHitbox();
         x -= width / 2;
@@ -133,7 +133,7 @@ class PinSprite extends FunkinSprite
 
         return;
         
-        if (FlxG.state.subState == "PolymodScriptClass<funkbucks.PinBoard>")
+        if (FlxG.state.subState == 'PolymodScriptClass<funkbucks.PinBoard>')
         {
             filters = dropshadowFilter;
             updateHitbox();
@@ -148,9 +148,9 @@ class PinSprite extends FunkinSprite
     {
         switch (pID)
         {
-            case "pinhead":
+            case 'pinhead':
             {
-                var replaceColor:FlxRuntimeShader = new FlxRuntimeShader(Assets.getText(Paths.frag("ui/shaders/replace-color")));
+                var replaceColor:FlxRuntimeShader = new FlxRuntimeShader(Assets.getText(Paths.frag('ui/shaders/replace-color')));
                 replaceColor.setFloatArray('uTargetColor', [0, 1, 0.04]);
                 replaceColor.setFloat('uThreshold', 0.12);
                 final hue:Float = Math.random() * 360;
@@ -165,11 +165,11 @@ class PinSprite extends FunkinSprite
                     description = 'are you ${FBUtil.getCensor(7)} kidding me';
                 }
             }
-            case "hundrec":
+            case 'hundrec':
             {
                 if (FlxG.random.bool(1))
                 {
-                    description = "Behind you.";
+                    description = 'Behind you.';
                 }
                 else if (NewgroundsClient.user != null)
                 {

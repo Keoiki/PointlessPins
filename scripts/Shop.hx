@@ -853,7 +853,7 @@ class Shop extends MusicBeatState
         var nextPin:String = FunkBucks.pinUnlockQueue.shift();
         if (nextPin != null)
         {
-            trace("Unlocking next pin in queue: " + nextPin);
+            trace('Unlocking next pin in queue: $nextPin');
             var substate = new PinUnlockState(nextPin);
             substate.cameras = [cameraSubState];
             Transition.openSubState(() -> unlockState, {

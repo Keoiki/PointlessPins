@@ -32,7 +32,7 @@ class BoxSprite extends FunkinSprite
         pinData = FunkBucks.pinData;
         boxData = FunkBucks.boxData;
 
-        super(x, y, "ui/funkbucks/boxes/" + boxData[0].id, {
+        super(x, y, 'ui/funkbucks/boxes/${boxData[0].id}', {
             applyStageMatrix: true,
             useRenderTexture: true
         });
@@ -63,7 +63,7 @@ class BoxSprite extends FunkinSprite
 
         if (change != 0)
         {
-            loadTextureAtlas("ui/funkbucks/boxes/" + bID, null, {
+            loadTextureAtlas('ui/funkbucks/boxes/$bID', null, {
                 applyStageMatrix: true,
                 useRenderTexture: true
             });
