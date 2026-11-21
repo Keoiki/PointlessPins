@@ -71,14 +71,15 @@ class FunkBucks extends Module
     var menuPin2:PinSprite;
 
     public static final penalties:Array<Float> = [1.0, 0.66, 0.33, 0.0, -0.5, -1];
-    public static final penaltyColors:Array<String> = ["FFFFFF", "FFAAAA", "FF5555", "FF0000", "AA0000", "550000"];
+    public static final penaltyColors:Array<String> = ['FFFFFF', 'FFAAAA', 'FF5555', 'FF0000', 'AA0000', '550000'];
     public static final opheliaAngerCooldown:Int = 1000 * 60 * 60 * 4;
     public static final maxBlueJewelPity:Int = 100;
     public static final bucksForBlueJewel:Int = 1000;
     public static final dailySongCount:Int = 5;
     public static final skipTalking:Array<Int> = [33, 44, 46, 63];
 
-    @:blacklisted static final supportedModdedVariations:Array<String> = ["remnants", "bfremnants", "gooey", "spookymod", "reimu", "qt", "hundrec"];
+    // Yeeeeaaaah I don't want people changing this
+    @:unreflective static final supportedModdedVariations:Array<String> = ['remnants', 'bfremnants', 'gooey', 'spookymod', 'reimu', 'qt', 'hundrec'];
 
     public static var save;
 
@@ -134,12 +135,12 @@ class FunkBucks extends Module
     public static var pinUnlockQueue:Array<String> = [];
 
     /**
-     * The order in which April will sell her pins in the "Exchange" option, with the ID and Melody Stone price.
+     * The order in which April will sell her pins in the 'Exchange' option, with the ID and Melody Stone price.
      */
     public static final aprilPinOrder:Array<Array<Dynamic>> = [
-        ["april", 2], 
-        ["funkbuck-pixel", 4],
-        ["ophelia-business", 10]
+        ['april', 2], 
+        ['funkbuck-pixel', 4],
+        ['ophelia-business', 10]
     ];
 
     public function new():Void
@@ -160,7 +161,7 @@ class FunkBucks extends Module
 
     function onCreate(event:ScriptEvent):Void
     {
-        FunkBucks.save = Save.instance.getModOptions("keoiki.funkbucks");
+        FunkBucks.save = Save.instance.getModOptions('keoiki.funkbucks');
 
         // Load default values if there are no saved values, such as when a new player begins their journey to gather all of the Pointless Pins. (roll credits)
         if (ReflectUtil.fields(FunkBucks.save).length == 0)
@@ -216,7 +217,7 @@ class FunkBucks extends Module
     {
         try
         {
-            FunkBucks.modVersion = PolymodHandler.modFileSystem.getMetadataByModId("funkbucks", "script_runtime").modVersion.version.join(".");
+            FunkBucks.modVersion = PolymodHandler.modFileSystem.getMetadataByModId('funkbucks', 'script_runtime').modVersion.version.join('.');
         }
         catch (err:Dynamic)
         {
@@ -225,9 +226,9 @@ class FunkBucks extends Module
             return;
         }
 
-        var request:URLRequest = new URLRequest("https://raw.githubusercontent.com/Keoiki/PointlessPins/main/version.txt");
+        var request:URLRequest = new URLRequest('https://raw.githubusercontent.com/Keoiki/PointlessPins/main/version.txt');
         var loader:URLLoader = new URLLoader();
-        loader.dataFormat = "text";
+        loader.dataFormat = 'text';
 
         var loadSuccessful = () ->
         {
@@ -235,14 +236,14 @@ class FunkBucks extends Module
 
             if (versionData == null)
             {
-                trace("Somehow got no version data despite the request being successful? maybe the repo got deleted somehow, if so rip bozo lmao");
+                trace('Somehow got no version data despite the request being successful? maybe the repo got deleted somehow, if so rip bozo lmao');
             }
             else
             {
                 // Check if there's patchnotes included.
-                if (versionData.indexOf("|||") != -1)
+                if (versionData.indexOf('|||') != -1)
                 {
-                    var versionInfo:Array<String> = versionData.split("|||");
+                    var versionInfo:Array<String> = versionData.split('|||');
                     FunkBucks.updateNewVersion = versionInfo[0];
                     FunkBucks.updatePatchnotes = versionInfo[1];
                 }
@@ -251,18 +252,18 @@ class FunkBucks extends Module
                     FunkBucks.updateNewVersion = versionData;
                 }
 
-                FunkBucks.isModOutdated = VersionUtil.validateVersionStr(FunkBucks.updateNewVersion, ">" + FunkBucks.modVersion);
+                FunkBucks.isModOutdated = VersionUtil.validateVersionStr(FunkBucks.updateNewVersion, '>${FunkBucks.modVersion}');
             }
         }
 
         var loadFailed = () ->
         {
-            trace("Failed to fetch online version!");
+            trace('Failed to fetch online version!');
         }
 
-        loader.addEventListener("complete", loadSuccessful);
-        loader.addEventListener("ioError", loadFailed);
-        loader.addEventListener("securityError", loadFailed);
+        loader.addEventListener('complete', loadSuccessful);
+        loader.addEventListener('ioError', loadFailed);
+        loader.addEventListener('securityError', loadFailed);
         loader.load(request);
 
         // Testing stuff.
@@ -278,9 +279,9 @@ class FunkBucks extends Module
      */
     function loadPinData():Void
     {
-        FunkBucks.pinData = SerializerUtil.fromJSON(Assets.getText("data/funkbucks/pins.json"));
+        FunkBucks.pinData = SerializerUtil.fromJSON(Assets.getText('data/funkbucks/pins.json'));
 
-        FunkBucks.boxData = SerializerUtil.fromJSON(Assets.getText("data/funkbucks/boxes.json"));
+        FunkBucks.boxData = SerializerUtil.fromJSON(Assets.getText('data/funkbucks/boxes.json'));
         var orderByOrder = function(a, b)
         {
             return FlxSort.byValues(-1, FunkBucks.boxData[a].order, FunkBucks.boxData[b].order);
@@ -402,8 +403,8 @@ class FunkBucks extends Module
         FunkBucks.flushSave();
         final diff:Int = FunkBucks.getFunkCoins() - previousAmount;
         if (FlxG.state is Shop) Shop.instance?.moneyHUD?.showBuckChange(diff);
-        trace("Current FunkBucks: " + FunkBucks.getFunkCoins());
-        trace("Lifetime FunkBucks: " + FunkBucks.getFunkCoinsLifetime());
+        trace('Current FunkBucks: ${FunkBucks.getFunkCoins()}');
+        trace('Lifetime FunkBucks: ${FunkBucks.getFunkCoinsLifetime()}');
     }
 
     public static function getFunkCoins():Int
@@ -527,7 +528,7 @@ class FunkBucks extends Module
         var isPinSpecial:Bool = fetchPinByID(pinID)?.special ?? false;
         if (!isNewPin && isPinSpecial)
         {
-            trace("Pin is special and has already been unlocked!");
+            trace('Pin is special and has already been unlocked!');
             return false;
         }
         var pinsMap = getUnlockedPins();
@@ -613,13 +614,13 @@ class FunkBucks extends Module
         var prevAngerTimestamp:Float = FunkBucks.save.opheliaAngerTime;
         if (prevAngerTimestamp == -1)
         {
-            // trace("No stored anger timestamp!");
+            // trace('No stored anger timestamp!');
             return 0;
         }
         var currentAnger:Int = FunkBucks.save.opheliaAnger;
         if (currentAnger == 0)
         {
-            // trace("No stored anger!");
+            // trace('No stored anger!');
             return 0;
         }
         var currentTimestamp:Float = Date.now().getTime();
@@ -627,7 +628,7 @@ class FunkBucks extends Module
         // trace(currentTimestamp, prevAngerTimestamp);
         // trace(FunkBucks.save.opheliaAnger);
         // trace(Math.floor(currentTimestamp) - Math.floor(prevAngerTimestamp));
-        // trace("Anger gone: " + angerGone);
+        // trace('Anger gone: $angerGone');
         FunkBucks.save.opheliaAnger = Math.max(0, currentAnger - angerGone);
         if (FunkBucks.save.opheliaAnger == 0)
         {
@@ -794,9 +795,9 @@ class FunkBucks extends Module
              * Daily Songs
              */
             var baseGameSongIDs:Array<String> = SongRegistry.instance.listBaseGameEntryIds();
-            baseGameSongIDs.remove("test"); // Test isn't easily available. (Does it even work properly? No.)
-            baseGameSongIDs.remove("tutorial"); // Boring.
-            // baseGameSongIDs.remove("spaghetti"); // Fine, you get to go.
+            baseGameSongIDs.remove('test'); // Test isn't easily available. (Does it even work properly? No.)
+            baseGameSongIDs.remove('tutorial'); // Boring.
+            // baseGameSongIDs.remove('spaghetti'); // Fine, you get to go.
             var dailySongs:Array<String> = [];
             for (i in 0...FunkBucks.dailySongCount)
             {
@@ -806,7 +807,7 @@ class FunkBucks extends Module
                 {
                     return Constants.DEFAULT_VARIATION_LIST.contains(variationID) || FunkBucks.supportedModdedVariations.contains(variationID);
                 });
-                dailySongs.push(songID + "-" + songVariations[FlxG.random.int(0, songVariations.length - 1)]);
+                dailySongs.push(songID + '-' + songVariations[FlxG.random.int(0, songVariations.length - 1)]);
                 // Only one variation per song, thanks!
                 baseGameSongIDs.remove(songID);
             }
@@ -815,7 +816,7 @@ class FunkBucks extends Module
             /**
              * Clover Coin Event
              */
-            //if (FunkBucks.hasPin("clovercoin"))
+            //if (FunkBucks.hasPin('clovercoin'))
             //{
 
             //}
@@ -826,7 +827,7 @@ class FunkBucks extends Module
 
     public static function flushSave():Void
     {
-        Save.instance.setModOptions("keoiki.funkbucks", FunkBucks.save);
+        Save.instance.setModOptions('keoiki.funkbucks', FunkBucks.save);
     }
 
     /**
@@ -888,8 +889,8 @@ class FunkBucks extends Module
              */
             events: new StringMap(),
 
-            // The current modifier format. Either "multiplier" or "percentage".
-            modifierText: "percentage",
+            // The current modifier format. Either 'multiplier' or 'percentage'.
+            modifierText: 'percentage',
 
             // An array of all the dialogue IDs that have been seen.
             seenDialogue: new Array(),
@@ -906,16 +907,16 @@ class FunkBucks extends Module
     public static function getShopkeeper():String
     {
         // hehe
-        return "april";
+        return 'april';
 
         var date:Date = Date.now();
         var day:Int = date.getDay();
         var hour:Int = date.getHours();
         if (day == 6 || day == 0 || (day == 5 && hour >= 18) || (day == 1 && hour < 12))
         {
-            return "april";
+            return 'april';
         }
-        return "ophelia";
+        return 'ophelia';
     }
 
     function onUpdate(event:UpdateScriptEvent):Void
@@ -948,7 +949,7 @@ class FunkBucks extends Module
             {
                 Transition.switchState(() -> new Shop(), {
                     assetQuery: Shop.queryAssets,
-                    transition: TransitionType.BlackWithThrobber(FadeType.Fade("North"), FadeType.Fade("South"))
+                    transition: TransitionType.BlackWithThrobber(FadeType.Fade('North'), FadeType.Fade('South'))
                 });
             }
 
@@ -965,12 +966,12 @@ class FunkBucks extends Module
         {
             menuPin = new PinSprite(100, 100);
             menuPin.isUnlocked = true;
-            menuPin.setupPin("funkbuck", "", "", 0.5, 1);
+            menuPin.setupPin('funkbuck', '', '', 0.5, 1);
             menuPin.scrollFactor.set(0, 0);
             event.targetState.add(menuPin);
 
             #if !mobile
-            var keycap01 = new KeyCap(125, 125, "P");
+            var keycap01 = new KeyCap(125, 125, 'P');
             event.targetState.add(keycap01);
             #end
         }
@@ -989,7 +990,7 @@ class FunkBucks extends Module
         {
             if (PlayState.instance == null) return;
 
-            // Don't want Practice or Botplay to count as a "played song/week" but also to not give any rewards!
+            // Don't want Practice or Botplay to count as a 'played song/week' but also to not give any rewards!
             // also stop when in playtest results :whattheshit:
             if (PlayState.instance.isPracticeMode ||
                 PlayState.instance.isBotPlayMode ||
@@ -1028,7 +1029,7 @@ class FunkBucks extends Module
             var previousSongs:Array<String> = FunkBucks.getPrevSongs();
             var currentDailies:Array<String> = FunkBucks.getDailies();
             var currentSongOrWeek:String = PlayStatePlaylist.isStoryMode ? PlayStatePlaylist.campaignId :
-                    Std.string(PlayState.instance.currentChart.song.id + "-" + PlayState.instance.currentVariation);
+                    Std.string(PlayState.instance.currentChart.song.id + '-' + PlayState.instance.currentVariation);
             var penaltyCount:Int = previousSongs.filter(entry -> entry == currentSongOrWeek).length;
             var repeatPenalty:Float = FunkBucks.penalties[penaltyCount];
             var resultTextColor:String = FunkBucks.penaltyColors[penaltyCount];
@@ -1045,7 +1046,7 @@ class FunkBucks extends Module
                 var endlessMultiplier:Float = 0.25;
                 endlessMultiplier += Math.min(1.0, 0.25 * (1 * (Math.floor(Math.floor(EndlessStatus.currentLoopFloat) / 12))));
                 bucksToAward *= endlessMultiplier;
-                resultTextColor = "00BBFF";
+                resultTextColor = '00BBFF';
             }
             else #end if (currentDailies.contains(currentSongOrWeek))
             {
@@ -1059,23 +1060,23 @@ class FunkBucks extends Module
                     jewelsToAward = 1;
                 }
                 bucksToAward *= 1.5;
-                resultTextColor = "00FF00";
+                resultTextColor = '00FF00';
                 awardNormalCompletionJewel = FlxG.random.bool((Math.pow(FunkBucks.getBlueJewelPity(), 2) / 1000) * 6);
                 currentDailies.remove(currentSongOrWeek);
                 FunkBucks.save.dailiesCompleted++;
                 FunkBucks.setDailies(currentDailies);
-                trace("Daily Bonus +50%! Remaining dailies: " + currentDailies);
+                trace('Daily Bonus +50%! Remaining dailies: $currentDailies');
             }
             else
             {
                 bucksToAward *= repeatPenalty;
                 awardNormalCompletionJewel = FlxG.random.bool((Math.pow(FunkBucks.getBlueJewelPity(), 2) / 1000) * (PlayStatePlaylist.isStoryMode ? 6 : 2));
-                trace("Repeat penalty: " + repeatPenalty * 100 + "%");
+                trace('Repeat penalty: ${repeatPenalty * 100}%');
             }
 
             if (#if keoiki.endlessmode EndlessStatus.isEndless && EndlessStatus.currentLoop < 2 #else false #end)
             {
-                trace("Not so fast.");
+                trace('Not so fast.');
             }
             else
             {
@@ -1103,7 +1104,7 @@ class FunkBucks extends Module
             trace(currentSongOrWeek, rank, bucksToAward, jewelsToAward, previousSongs);
             trace(awardNormalCompletionJewel, FunkBucks.getBlueJewelPity(), (Math.pow(FunkBucks.getBlueJewelPity(), 2) / 1000) * 2);
 
-            var funkBucksText = new BAText(40, 50, '<b><c=$resultTextColor>${(bucksToAward > 0 ? "+" : "")}$bucksToAward</c></b> ${FBIcon.Buck}');
+            var funkBucksText = new BAText(40, 50, '<b><c=$resultTextColor>${(bucksToAward > 0 ? '+' : '')}$bucksToAward</c></b> ${FBIcon.Buck}');
             funkBucksText.scale.set(0.65, 0.65);
             funkBucksText.alpha = 0;
             funkBucksText.zIndex = 5000;
@@ -1113,7 +1114,7 @@ class FunkBucks extends Module
             new FlxTimer().start(37 / 24, _ -> {
                 funkBucksText.alpha = 1;
                 FlxTween.tween(funkBucksText, { x: funkBucksText.x - 15 }, 0.5, { ease: FlxEase.backOut, type: 16 });
-                FunkinSound.playOnce(Paths.sound(bucksToAward >= 0 ? "fav" : "unfav"), 1.5);
+                FunkinSound.playOnce(Paths.sound('ui/freeplay/sounds/${bucksToAward >= 0 ? '' : 'un'}favorite'), 1.5);
             });
 
             if (jewelsToAward > 0)
@@ -1131,7 +1132,7 @@ class FunkBucks extends Module
                     FlxTween.tween(funkBucksText, { y: 20 }, 0.5, { ease: FlxEase.backOut });
                     FlxTween.tween(jewelsText, { x: jewelsText.x - 15 }, 0.75, { ease: FlxEase.backOut, type: 16 });
                     FlxTween.tween(jewelsText.scale, { x: 1.0, y: 1.0 }, 0.75, { ease: FlxEase.bounceOut, type: 16 });
-                    FunkinSound.playOnce(Paths.sound("ui/funkbucks/sounds/bluejewel"), 1.5).pitch = 1.5;
+                    FunkinSound.playOnce(Paths.sound('ui/funkbucks/sounds/bluejewel'), 1.5).pitch = 1.5;
                 });
             }
 
@@ -1149,24 +1150,24 @@ class FunkBucks extends Module
 
         var wantedPinIDs:Array<String> = [];
 
-        // Because of the rating changes there's no 11 or higher star song, so I won't put the "difficultystar" condition here.... yet.
+        // Because of the rating changes there's no 11 or higher star song, so I won't put the 'difficultystar' condition here.... yet.
 
         // If you know how to script merge, you can try to merge here to add your own song/level IDs.
         switch (completionID)
         {
-            case "sserafim", "spaghetti-default": wantedPinIDs.push("spaghetti");
+            case 'sserafim', 'spaghetti-default': wantedPinIDs.push('spaghetti');
             default:
         }
 
         switch (rank)
         {
-            case ScoringRank.PERFECT_GOLD: wantedPinIDs.push("rank-goldperfect");
-            case ScoringRank.PERFECT: wantedPinIDs.push("rank-perfect");
-            case ScoringRank.EXCELLENT: wantedPinIDs.push("rank-excellent");
-            case ScoringRank.GREAT: wantedPinIDs.push("rank-great");
-            case ScoringRank.GOOD: wantedPinIDs.push("rank-good");
-            case ScoringRank.SHIT: wantedPinIDs.push("rank-shit");
-            default: trace("Rank should've default to SHIT?");
+            case ScoringRank.PERFECT_GOLD: wantedPinIDs.push('rank-goldperfect');
+            case ScoringRank.PERFECT: wantedPinIDs.push('rank-perfect');
+            case ScoringRank.EXCELLENT: wantedPinIDs.push('rank-excellent');
+            case ScoringRank.GREAT: wantedPinIDs.push('rank-great');
+            case ScoringRank.GOOD: wantedPinIDs.push('rank-good');
+            case ScoringRank.SHIT: wantedPinIDs.push('rank-shit');
+            default: trace('Rank should\'ve defaulted to SHIT?');
         }
 
         if (wantedPinIDs.length > 0)
@@ -1208,47 +1209,47 @@ class FunkBucks extends Module
  */
 class FBIcon
 {
-    static final Buck:String = "&#xE000;";
-    static final Jewel:String = "&#xE001;";
-    static final Clover:String = "&#xE002;";
-    static final Ticket:String = "&#xE003;";
-    static final OpheliaMad:String = "&#xE004;";
-    static final Star:String = "&#xE005;";
-    static final Ophelia:String = "&#xE006;";
-    static final April:String = "&#xE007;";
-    static final Reyna:String = "&#xE008;";
-    static final NGSupporter:String = "&#xE009;";
-    static final Lock:String = "&#xE00A;";
-    static final Calendar:String = "&#xE00B;";
+    static final Buck:String = '&#xE000;';
+    static final Jewel:String = '&#xE001;';
+    static final Clover:String = '&#xE002;';
+    static final Ticket:String = '&#xE003;';
+    static final OpheliaMad:String = '&#xE004;';
+    static final Star:String = '&#xE005;';
+    static final Ophelia:String = '&#xE006;';
+    static final April:String = '&#xE007;';
+    static final Reyna:String = '&#xE008;';
+    static final NGSupporter:String = '&#xE009;';
+    static final Lock:String = '&#xE00A;';
+    static final Calendar:String = '&#xE00B;';
 
-    static final Erect:String = "&#xE010;";
-    static final Boyfriend:String = "&#xE011;";
-    static final Pico:String = "&#xE012;";
+    static final Erect:String = '&#xE010;';
+    static final Boyfriend:String = '&#xE011;';
+    static final Pico:String = '&#xE012;';
     
-    static final Common:String = "&#xE020;";
-    static final Uncommon:String = "&#xE021;";
-    static final Rare:String = "&#xE022;";
-    static final Epic:String = "&#xE023;";
-    static final Legendary:String = "&#xE024;";
-    static final Mythic:String = "&#xE025;";
-    static final Divine:String = "&#xE026;";
-    static final Special:String = "&#xE027;";
+    static final Common:String = '&#xE020;';
+    static final Uncommon:String = '&#xE021;';
+    static final Rare:String = '&#xE022;';
+    static final Epic:String = '&#xE023;';
+    static final Legendary:String = '&#xE024;';
+    static final Mythic:String = '&#xE025;';
+    static final Divine:String = '&#xE026;';
+    static final Special:String = '&#xE027;';
     
-    static final Boxes:String = "&#xE030;";
-    static final CardboardBox:String = "&#xE031;";
-    static final SmallGiftbox:String = "&#xE032;";
-    static final FancyCoffret:String = "&#xE033;";
-    static final GlimmeringPouch:String = "&#xE034;";
+    static final Boxes:String = '&#xE030;';
+    static final CardboardBox:String = '&#xE031;';
+    static final SmallGiftbox:String = '&#xE032;';
+    static final FancyCoffret:String = '&#xE033;';
+    static final GlimmeringPouch:String = '&#xE034;';
 
-    static final Modded:String = "&#xE070;";
-    static final Internet:String = "&#xE071;";
-    static final Game:String = "&#xE072;";
+    static final Modded:String = '&#xE070;';
+    static final Internet:String = '&#xE071;';
+    static final Game:String = '&#xE072;';
 
-    static final Hundrec:String = "&#xE080;";
-    static final Gooey:String = "&#xE081;";
-    static final RemnantBF:String = "&#xE082;";
-    static final RemnantPico:String = "&#xE083;";
-    static final Reimu:String = "&#xE084;";
-    static final QT:String = "&#xE085;";
-    static final SpookyKids:String = "&#xE086;";
+    static final Hundrec:String = '&#xE080;';
+    static final Gooey:String = '&#xE081;';
+    static final RemnantBF:String = '&#xE082;';
+    static final RemnantPico:String = '&#xE083;';
+    static final Reimu:String = '&#xE084;';
+    static final QT:String = '&#xE085;';
+    static final SpookyKids:String = '&#xE086;';
 }
