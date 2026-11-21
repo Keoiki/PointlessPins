@@ -153,10 +153,7 @@ class PinBoard extends MusicBeatSubState
         var dzH:Float = 0;
         camera.deadzone = FlxRect.get(camera.width / 4, (camera.height - dzH) / 2 - dzH * 0.25, dzW / 3, dzH);
 
-        pinMoveSound = new FunkinSound();
-        pinMoveSound.loadEmbedded(Paths.sound("unfav"));
-        pinMoveSound.volume = 0.25;
-
+        pinMoveSound = FunkinSound.load("ui/freeplay/sounds/unfavorite", 0.25);
         FlxG.sound.defaultSoundGroup.add(pinMoveSound);
         FlxG.sound.list.add(pinMoveSound);
 
