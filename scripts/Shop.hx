@@ -960,7 +960,7 @@ class Shop extends MusicBeatState
         old_iconPins.zIndex = 490;
         add(old_iconPins);
 
-        var old_iconBoxes:FunkinSprite = new FunkinSprite(50440, 376).loadTexture("ui/funkbucks/shop/iconboxes");
+        var old_iconBoxes:FunkinSprite = new FunkinSprite(50440, 376).loadTexture("ui/funkbucks/shop/old/iconboxes");
         old_iconBoxes.zIndex = 490;
         add(old_iconBoxes);
     }
